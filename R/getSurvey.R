@@ -13,6 +13,7 @@
 #' @importFrom httr POST
 #' @importFrom httr content
 #' @importFrom stringr str_sub
+#' @export
 
 getSurvey <- function(surveyID, headers,
                       base_url = "https://yourdatacenterid.qualtrics.com/API/v3/responseexports/",

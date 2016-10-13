@@ -4,6 +4,7 @@
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API.
 #' @author Jasper Ginn
+#' @export
 
 constructHeader <- function(API.TOKEN) {
   # Construct and return
