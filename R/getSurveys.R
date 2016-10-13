@@ -14,5 +14,5 @@ getSurveys <- function(headers, survey_baseurl = "https://yourdatacenterid.qualt
   # Send GET request to list all surveys
   res <- GET(survey_baseurl, add_headers(headers))
   # Return
-  return(content(res)$result$elements)
+  return(do.call(rbind.data.frame, content(res)$result$elements))
 }

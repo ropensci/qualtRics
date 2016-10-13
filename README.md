@@ -43,7 +43,7 @@ Construct the header information:
 head <- constructHeader(API.TOKEN = "<yourapitoken>")
 ```
 
-Get a list of surveys:
+Get a data frame of surveys:
 
 ```r
 surveys <- getSurveys(head, survey_baseurl="https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/") # URL is for my own institution
@@ -52,7 +52,7 @@ surveys <- getSurveys(head, survey_baseurl="https://leidenuniv.eu.qualtrics.com/
 Export a survey and load it into R:
 
 ```r
-mysurvey <- getSurvey(surveyID = surveys[[6]]$id, headers = head, base_url = "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/", verbose = TRUE)
+mysurvey <- getSurvey(surveyID = surveys$id[6], headers = head, base_url = "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/", verbose = TRUE)
 ```
 
 ## Other information
