@@ -25,7 +25,7 @@ Periodically check this repository for updates and execute `devtools::install_gi
 
 Currently, the package contains three functions. It supports fetching a list of courses and their IDs from qualtrics, as well as downloading and reading a survey export. 
 
-Note that, while requests will work without a [base url](https://api.qualtrics.com/docs/root-url), it is desirable that you supply it to the functions when needed. Supplying the correct url will reduce the number of errors you'll experience. Please refer to the [official documentation](https://api.qualtrics.com/docs/root-url) to find out your institution-specific base url.
+Note that, while requests will work without a [base url](https://api.qualtrics.com/docs/root-url), it is desirable that you supply it to the functions. Supplying the correct url will reduce the number of errors you'll experience. Please refer to the [official documentation](https://api.qualtrics.com/docs/root-url) to find out your institution-specific base url.
 
 Note that you can only export surveys that you own, or to which you have been given explicit administration rights.
 
