@@ -8,7 +8,7 @@
 #' @importFrom httr GET
 #' @importFrom httr content
 
-getSurveyIDs <- function(headers, survey_baseurl = "https://yourdatacenterid.qualtrics.com/API/v3/surveys") {
+getSurveys <- function(headers, survey_baseurl = "https://yourdatacenterid.qualtrics.com/API/v3/surveys") {
   # Send GET request to list all surveys
   res <- GET(survey_baseurl, add_headers(headers))
   # Return
