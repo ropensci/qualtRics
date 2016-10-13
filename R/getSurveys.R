@@ -7,6 +7,7 @@
 #' @author Jasper Ginn
 #' @importFrom httr GET
 #' @importFrom httr content
+#' @importFrom httr add_headers
 #' @export
 
 getSurveys <- function(headers, survey_baseurl = "https://yourdatacenterid.qualtrics.com/API/v3/surveys") {
