@@ -7,10 +7,11 @@
 
 constructHeader <- function(API.TOKEN) {
   # Construct and return
-  "headers" = c(
+  headers = c(
     'X-API-TOKEN' = API.TOKEN,
     'Content-Type' = "application/json",
     'Accept' = '*/*',
     'accept-encoding' = 'gzip, deflate'
   )
+  return(headers)
 }

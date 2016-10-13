@@ -14,7 +14,9 @@
 #' @importFrom httr content
 #' @importFrom stringr str_sub
 
-getSurvey <- function(surveyID, headers, base_url = "https://yourdatacenterid.qualtrics.com/API/v3/responseexports/", verbose = FALSE) {
+getSurvey <- function(surveyID, headers,
+                      base_url = "https://yourdatacenterid.qualtrics.com/API/v3/responseexports/",
+                      verbose = FALSE) {
 
   if(str_sub(base_url, nchar(base_url), nchar(base_url)) != "/") {
     base_url <- paste0(base_url, "/")
@@ -59,7 +61,12 @@ getSurvey <- function(surveyID, headers, base_url = "https://yourdatacenterid.qu
   }
 
   # Download file
-  f <- GET(paste0(check_url, "/file"), add_headers(headers))
+  f <- tryCatch({
+    GET(paste0(check_url, "/file"), add_headers(headers))
+  }, error = function(e) {
+    # Retry if first attempt fails
+    GET(paste0(check_url, "/file"), add_headers(headers))
+  })
   ty <- content(f, "raw")
   # To zip file
   tf <- paste0(tempdir(), "/temp.zip")
