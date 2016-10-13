@@ -1,11 +1,20 @@
 Package: qualtRics
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: Download qualtrics data into R
+Version: 0.1
+Author: Jasper Ginn
+Maintainer: Jasper Ginn <j.h.ginn@fgga.leidenuniv.nl>
+Description: This package contains convenience functions to work with
+    the Qualtrics API. It is under active development.
+Imports:
+    httr,
+    stringr
+URL:
+    https://github.com/JasperHG90/qualtRics
+BugReports:
+    https://github.com/JasperHG90/qualtRics/issues
+License: Apache 2.0
 Encoding: UTF-8
 LazyData: true
+VignetteBuilder: knitr
+RoxygenNote: 5.0.1

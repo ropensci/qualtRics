@@ -1,6 +1,8 @@
 #' Export a survey and download into R
 #'
-#' @param surveyID
+#' Export a qualtrics survey you own and import the survey directly into R. NOTE: If you keep getting errors try to use your institution's base URL. See \url{https://api.qualtrics.com/docs/root-url}.
+#'
+#' @param surveyID Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveyIDs} function.
 #' @param headers 'headers' object - returned by the 'constructHeader' function. See \link[qualtRics]{constructHeader}.
 #' @param base_url Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. If you do not fill in anything, the function will use the default url. Using your institution-specific url can significantly speed up queries.)
 #' @param verbose Print verbose messages to the R console? Defaults to FALSE
@@ -53,7 +55,7 @@ getSurvey <- function(surveyID, headers, base_url = "https://yourdatacenterid.qu
     if( verbose ) {
       print(paste0("Download is ", progress, "% complete."))
     }
-    Sys.sleep(5)
+    Sys.sleep(3)
   }
 
   # Download file
@@ -69,8 +71,9 @@ getSurvey <- function(surveyID, headers, base_url = "https://yourdatacenterid.qu
   }, error = function(e) {
     stop("Error extracting csv from zip file.")
   })
-  file <- setdiff(list.files(tempdir()), SS)
-  data = read.csv(paste0(tempdir(), "/", file), header=TRUE, skip = 1, stringsAsFactors = FALSE)
+  data <- read.csv(u, header=TRUE, skip = 1, stringsAsFactors = FALSE)
+  # Remove tmpfiles
+  p <- file.remove(tf) ; p<- file.remove(u)
   # Return
-  return(data)
+  return(data[-1,])
 }
