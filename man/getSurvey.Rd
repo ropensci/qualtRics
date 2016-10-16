@@ -9,7 +9,7 @@ getSurvey(surveyID, headers,
   verbose = FALSE)
 }
 \arguments{
-\item{surveyID}{Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveyIDs} function.}
+\item{surveyID}{Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.}
 
 \item{headers}{'headers' object - returned by the 'constructHeader' function. See \link[qualtRics]{constructHeader}.}
 
