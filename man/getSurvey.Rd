@@ -20,6 +20,14 @@ getSurvey(surveyID, headers,
 \description{
 Export a qualtrics survey you own and import the survey directly into R. NOTE: If you keep getting errors try to use your institution's base URL. See \url{https://api.qualtrics.com/docs/root-url}.
 }
+\examples{
+\dontrun{
+head <- constructHeader("<YOUR-API-KEY-HERE>")
+surveys <- getSurveys(head, survey_baseurl="https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/") # URL is for my own institution. Substitute with your own institution's url
+mysurvey <- getSurvey(surveyID = surveys$id[6], headers = head,
+                        base_url = "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/", verbose = TRUE)
+}
+}
 \author{
 Jasper Ginn
 }

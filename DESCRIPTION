@@ -4,8 +4,12 @@ Title: Download Qualtrics Data Directly into R
 Version: 0.1
 Author: Jasper Ginn
 Maintainer: Jasper Ginn <j.h.ginn@fgga.leidenuniv.nl>
-Description: Contains convenience functions to work with
-    the Qualtrics API. 
+Description: Qualtrics <https://www.qualtrics.com/about/> 
+    allows users to collect online data through surveys.
+    This package contains convenience functions to pull
+    survey results straight into R using the Qualtrics
+    API. See <https://api.qualtrics.com/> for more 
+    information.
 Imports:
     httr,
     stringr
@@ -17,3 +21,6 @@ License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
