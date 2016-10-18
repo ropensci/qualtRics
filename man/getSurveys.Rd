@@ -18,8 +18,14 @@ Retrieve a list of all active surveys that you own on qualtrics
 \examples{
 \dontrun{
 head <- constructHeader("<YOUR-API-KEY-HERE>")
-surveys <- getSurveys(head, survey_baseurl="https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/") # URL is for my own institution. Substitute with your own institution's url
-mysurvey <- getSurvey(surveyID = surveys$id[6], headers = head, base_url = "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/", verbose = TRUE)
+surveys <- getSurveys(head,
+                      "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/")
+                      # URL is for my own institution.
+                      # Substitute with your own institution's url
+mysurvey <- getSurvey(surveys$id[6],
+                      head,
+                      "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/",
+                      verbose=TRUE)
 }
 }
 \author{

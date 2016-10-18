@@ -1,6 +1,6 @@
 Package: qualtRics
 Type: Package
-Title: Download Qualtrics Data Directly into R
+Title: Download Qualtrics Survey Data Directly into R
 Version: 0.1
 Author: Jasper Ginn
 Maintainer: Jasper Ginn <j.h.ginn@fgga.leidenuniv.nl>
@@ -9,7 +9,7 @@ Description: Qualtrics <https://www.qualtrics.com/about/>
     This package contains convenience functions to pull
     survey results straight into R using the Qualtrics
     API. See <https://api.qualtrics.com/> for more 
-    information.
+    information about the Qualtrics API.
 Imports:
     httr,
     stringr
