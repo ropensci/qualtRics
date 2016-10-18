@@ -9,6 +9,12 @@ Note that your institution must support API access and that it must be enabled f
 To install this package, execute the following in R:
 
 ```r
+install.packages("qualtRics")
+```
+
+Or, if you want to install the latest development version, run:
+
+```r
 install.packages("devtools")
 devtools::install_github("JasperHG90/qualtRics")
 ```
