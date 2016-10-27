@@ -52,7 +52,7 @@ head <- constructHeader(API.TOKEN = "<yourapitoken>")
 Get a data frame of surveys:
 
 ```r
-surveys <- getSurveys(head, survey_baseurl="https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/") # URL is for my own institution
+surveys <- getSurveys(head, survey_baseurl="https://leidenuniv.eu.qualtrics.com/API/v3/surveys/") # URL is for my own institution
 ```
 
 Export a survey and load it into R:
