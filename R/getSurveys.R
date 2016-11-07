@@ -17,7 +17,7 @@
 #' Retrieve a list of all active surveys that you own on qualtrics
 #'
 #' @param headers 'headers' object - returned by the 'constructHeader' function. See \link[qualtRics]{constructHeader}.
-#' @param survey_baseurl Base url for your institution (see \url{https://api.qualtrics.com/docs/root-url}. If you do not fill in anything, the function will use the default url. Using your institution-specific url can significantly speed up queries.)
+#' @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/root-url}. If you do not fill in anything, the function will use the default url. Using your institution-specific url can significantly speed up queries.)
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs} for documentation on the Qualtrics API.
 #' @author Jasper Ginn
@@ -38,14 +38,14 @@
 #'                       verbose=TRUE)
 #' }
 
-getSurveys <- function(headers, survey_baseurl = "https://yourdatacenterid.qualtrics.com") {
+getSurveys <- function(headers, root_url = "https://yourdatacenterid.qualtrics.com") {
   # Function-specific API stuff
-  survey_baseurl <- paste0(survey_baseurl,
-                           ifelse(substr(survey_baseurl, nchar(survey_baseurl), nchar(survey_baseurl)) == "/",
+  root_url <- paste0(root_url,
+                           ifelse(substr(root_url, nchar(root_url), nchar(root_url)) == "/",
                                   "API/v3/surveys",
                                   "/API/v3/surveys"))
   # Send GET request to list all surveys
-  res <- GET(survey_baseurl, add_headers(headers))
+  res <- GET(root_url, add_headers(headers))
   # Return
   return(do.call(rbind.data.frame, content(res)$result$elements))
 }

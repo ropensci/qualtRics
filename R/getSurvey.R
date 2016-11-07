@@ -20,7 +20,7 @@
 #'
 #' @param surveyID Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.
 #' @param headers 'headers' object - returned by the 'constructHeader' function. See \link[qualtRics]{constructHeader}.
-#' @param base_url Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.)
+#' @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.)
 #' @param verbose Print verbose messages to the R console? Defaults to FALSE
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs/csv} for documentation on the Qualtrics API.
@@ -46,12 +46,12 @@
 #' }
 
 getSurvey <- function(surveyID, headers,
-                      base_url,
+                      root_url,
                       verbose = FALSE) {
 
   # Function-specific API stuff
-  survey_baseurl <- paste0(survey_baseurl,
-                           ifelse(substr(survey_baseurl, nchar(survey_baseurl), nchar(survey_baseurl)) == "/",
+  root_url <- paste0(root_url,
+                           ifelse(substr(root_url, nchar(root_url), nchar(root_url)) == "/",
                                   "API/v3/responseexports/",
                                   "/API/v3/responseexports/"))
 
