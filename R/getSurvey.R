@@ -36,22 +36,24 @@
 #' \dontrun{
 #' head <- constructHeader("<YOUR-API-KEY-HERE>")
 #' surveys <- getSurveys(head,
-#'                       "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/")
+#'                       "https://leidenuniv.eu.qualtrics.com")
 #'                       # URL is for my own institution.
 #'                       # Substitute with your own institution's url
 #' mysurvey <- getSurvey(surveys$id[6],
 #'                       head,
-#'                       "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/",
+#'                       "https://leidenuniv.eu.qualtrics.com",
 #'                       verbose=TRUE)
 #' }
 
 getSurvey <- function(surveyID, headers,
-                      base_url = "https://yourdatacenterid.qualtrics.com/API/v3/responseexports/",
+                      base_url,
                       verbose = FALSE) {
 
-  if(str_sub(base_url, nchar(base_url), nchar(base_url)) != "/") {
-    base_url <- paste0(base_url, "/")
-  }
+  # Function-specific API stuff
+  survey_baseurl <- paste0(survey_baseurl,
+                           ifelse(substr(survey_baseurl, nchar(survey_baseurl), nchar(survey_baseurl)) == "/",
+                                  "API/v3/responseexports/",
+                                  "/API/v3/responseexports/"))
 
   # Create raw JSON payload
   raw_payload <- paste0('{"format": "csv", "surveyId": ',

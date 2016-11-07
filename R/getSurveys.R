@@ -24,21 +24,27 @@
 #' @importFrom httr GET
 #' @importFrom httr content
 #' @importFrom httr add_headers
+#' @importFrom stringr substr
 #' @export
 #' @examples
 #' \dontrun{
 #' head <- constructHeader("<YOUR-API-KEY-HERE>")
 #' surveys <- getSurveys(head,
-#'                       "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/")
+#'                       "https://leidenuniv.eu.qualtrics.com")
 #'                       # URL is for my own institution.
 #'                       # Substitute with your own institution's url
 #' mysurvey <- getSurvey(surveys$id[6],
 #'                       head,
-#'                       "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/",
+#'                       "https://leidenuniv.eu.qualtrics.com",
 #'                       verbose=TRUE)
 #' }
 
-getSurveys <- function(headers, survey_baseurl = "https://yourdatacenterid.qualtrics.com/API/v3/surveys") {
+getSurveys <- function(headers, survey_baseurl = "https://yourdatacenterid.qualtrics.com") {
+  # Function-specific API stuff
+  survey_baseurl <- paste0(survey_baseurl,
+                           ifelse(substr(survey_baseurl, nchar(survey_baseurl), nchar(survey_baseurl)) == "/",
+                                  "API/v3/surveys",
+                                  "/API/v3/surveys"))
   # Send GET request to list all surveys
   res <- GET(survey_baseurl, add_headers(headers))
   # Return
