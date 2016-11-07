@@ -31,7 +31,7 @@ Periodically check this repository for updates and execute `devtools::install_gi
 
 Currently, the package contains three functions. It supports fetching a list of courses and their IDs from qualtrics, as well as downloading and reading a survey export. 
 
-Note that, while requests will work without a [base url](https://api.qualtrics.com/docs/root-url), it is desirable that you supply it to the functions. Supplying the correct url will reduce the number of errors you'll experience. Please refer to the [official documentation](https://api.qualtrics.com/docs/root-url) to find out your institution-specific base url.
+Note that, while requests will work without a [base url](https://api.qualtrics.com/docs/root-url) for the `getSurveys` function, it is desirable that you supply it. Supplying the correct url will reduce the number of errors you'll experience. The `getSurvey` function requires you to pass this base url. Please refer to the [official documentation](https://api.qualtrics.com/docs/root-url) to find out your institution-specific base url.
 
 Note that you can only export surveys that you own, or to which you have been given explicit administration rights.
 
@@ -52,13 +52,13 @@ head <- constructHeader(API.TOKEN = "<yourapitoken>")
 Get a data frame of surveys:
 
 ```r
-surveys <- getSurveys(head, survey_baseurl="https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/") # URL is for my own institution
+surveys <- getSurveys(head, survey_baseurl="https://leidenuniv.eu.qualtrics.com") # URL is for my own institution
 ```
 
 Export a survey and load it into R:
 
 ```r
-mysurvey <- getSurvey(surveyID = surveys$id[6], headers = head, base_url = "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/", verbose = TRUE)
+mysurvey <- getSurvey(surveyID = surveys$id[6], headers = head, base_url = "https://leidenuniv.eu.qualtrics.com", verbose = TRUE)
 ```
 
 ## Other information
@@ -76,3 +76,4 @@ If you have a request (like adding a new argument), please leave it [here](https
 ### Changelog
 
 - Added first three functions (`constructHeader`, `getSurvey`, `getSurveyIDs`)
+- base_url parameter is now uniform across functions.
