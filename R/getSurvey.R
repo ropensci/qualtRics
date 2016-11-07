@@ -63,7 +63,7 @@ getSurvey <- function(surveyID, headers,
                         '"useLabels": true',
                         '}')
   # POST request for download
-  res <- POST(base_url,
+  res <- POST(root_url,
               add_headers(
                 headers
               ),
@@ -83,7 +83,7 @@ getSurvey <- function(surveyID, headers,
   ID = cnt$result$id
   # Monitor when export is ready
   progress <- 0
-  check_url <- paste0(base_url, ID)
+  check_url <- paste0(root_url, ID)
   while(progress < 100) {
     CU <- GET(check_url, add_headers(headers))
     progress <- content(CU)$result$percentComplete
