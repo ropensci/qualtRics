@@ -4,12 +4,12 @@
 \alias{getSurveys}
 \title{Retrieve a list of all active surveys that you own on qualtrics}
 \usage{
-getSurveys(headers, survey_baseurl = "https://yourdatacenterid.qualtrics.com")
+getSurveys(headers, root_url = "https://yourdatacenterid.qualtrics.com")
 }
 \arguments{
 \item{headers}{'headers' object - returned by the 'constructHeader' function. See \link[qualtRics]{constructHeader}.}
 
-\item{survey_baseurl}{Base url for your institution (see \url{https://api.qualtrics.com/docs/root-url}. If you do not fill in anything, the function will use the default url. Using your institution-specific url can significantly speed up queries.)}
+\item{root_url}{Base url for your institution (see \url{https://api.qualtrics.com/docs/root-url}. If you do not fill in anything, the function will use the default url. Using your institution-specific url can significantly speed up queries.)}
 }
 \description{
 Retrieve a list of all active surveys that you own on qualtrics
