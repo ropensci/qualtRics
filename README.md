@@ -76,4 +76,4 @@ If you have a request (like adding a new argument), please leave it [here](https
 ### Changelog
 
 - Added first three functions (`constructHeader`, `getSurvey`, `getSurveyIDs`)
-- base_url parameter is now uniform across functions.
+- base_url parameter is now uniform across functions. Parameter is called 'root url' to bring it in line with Qualtrics documentation.
