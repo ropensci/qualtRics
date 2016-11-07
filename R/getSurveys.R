@@ -24,7 +24,6 @@
 #' @importFrom httr GET
 #' @importFrom httr content
 #' @importFrom httr add_headers
-#' @importFrom stringr substr
 #' @export
 #' @examples
 #' \dontrun{

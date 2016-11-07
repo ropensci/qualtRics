@@ -4,8 +4,7 @@
 \alias{getSurveys}
 \title{Retrieve a list of all active surveys that you own on qualtrics}
 \usage{
-getSurveys(headers,
-  survey_baseurl = "https://yourdatacenterid.qualtrics.com/API/v3/surveys")
+getSurveys(headers, survey_baseurl = "https://yourdatacenterid.qualtrics.com")
 }
 \arguments{
 \item{headers}{'headers' object - returned by the 'constructHeader' function. See \link[qualtRics]{constructHeader}.}
@@ -19,12 +18,12 @@ Retrieve a list of all active surveys that you own on qualtrics
 \dontrun{
 head <- constructHeader("<YOUR-API-KEY-HERE>")
 surveys <- getSurveys(head,
-                      "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/")
+                      "https://leidenuniv.eu.qualtrics.com")
                       # URL is for my own institution.
                       # Substitute with your own institution's url
 mysurvey <- getSurvey(surveys$id[6],
                       head,
-                      "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/",
+                      "https://leidenuniv.eu.qualtrics.com",
                       verbose=TRUE)
 }
 }

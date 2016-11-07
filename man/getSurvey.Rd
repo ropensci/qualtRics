@@ -4,16 +4,14 @@
 \alias{getSurvey}
 \title{Export a survey and download into R}
 \usage{
-getSurvey(surveyID, headers,
-  base_url = "https://yourdatacenterid.qualtrics.com/API/v3/responseexports/",
-  verbose = FALSE)
+getSurvey(surveyID, headers, base_url, verbose = FALSE)
 }
 \arguments{
 \item{surveyID}{Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.}
 
 \item{headers}{'headers' object - returned by the 'constructHeader' function. See \link[qualtRics]{constructHeader}.}
 
-\item{base_url}{Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. If you do not fill in anything, the function will use the default url. Using your institution-specific url can significantly speed up queries.)}
+\item{base_url}{Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.)}
 
 \item{verbose}{Print verbose messages to the R console? Defaults to FALSE}
 }
@@ -24,12 +22,12 @@ Export a qualtrics survey you own and import the survey directly into R. NOTE: I
 \dontrun{
 head <- constructHeader("<YOUR-API-KEY-HERE>")
 surveys <- getSurveys(head,
-                      "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/")
+                      "https://leidenuniv.eu.qualtrics.com")
                       # URL is for my own institution.
                       # Substitute with your own institution's url
 mysurvey <- getSurvey(surveys$id[6],
                       head,
-                      "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/",
+                      "https://leidenuniv.eu.qualtrics.com",
                       verbose=TRUE)
 }
 }
