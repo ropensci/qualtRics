@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jasper Ginn" />
 
-<meta name="date" content="2016-11-07" />
+<meta name="date" content="2016-11-08" />
 
 <title>qualtRics</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">qualtRics</h1>
 <h4 class="author"><em>Jasper Ginn</em></h4>
-<h4 class="date"><em>2016-11-07</em></h4>
+<h4 class="date"><em>2016-11-08</em></h4>
 
 
 
@@ -87,7 +87,7 @@ devtools::<span class="kw">install_github</span>(<span class="st">&quot;JasperHG
 <div id="usage" class="section level2">
 <h2>Usage</h2>
 <p>Currently, the package contains three functions. It supports fetching a list of courses and their IDs from qualtrics, as well as downloading and reading a survey export.</p>
-<p>Note that, while requests will work without a <a href="https://api.qualtrics.com/docs/root-url">base url</a> for the <code>getSurveys</code> function, it is desirable that you supply it. Supplying the correct url will reduce the number of errors you’ll experience. The <code>getSurvey</code> function requires you to pass this base url. Please refer to the <a href="https://api.qualtrics.com/docs/root-url">official documentation</a> to find out your institution-specific base url.</p>
+<p>Note that, while requests will work without a <a href="https://api.qualtrics.com/docs/root-url">root url</a> for the <code>getSurveys</code> function, it is desirable that you supply it. Supplying the correct url will reduce the number of errors you’ll experience. The <code>getSurvey</code> function requires you to pass this root url. Please refer to the <a href="https://api.qualtrics.com/docs/root-url">official documentation</a> to find out your institution-specific root url.</p>
 <p>Note that you can only export surveys that you own, or to which you have been given explicit administration rights.</p>
 <div id="commands" class="section level3">
 <h3>Commands</h3>
@@ -96,9 +96,9 @@ devtools::<span class="kw">install_github</span>(<span class="st">&quot;JasperHG
 <p>Construct the header information:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">head &lt;-<span class="st"> </span><span class="kw">constructHeader</span>(<span class="dt">API.TOKEN =</span> <span class="st">&quot;&lt;yourapitoken&gt;&quot;</span>)</code></pre></div>
 <p>Get a data frame of surveys:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">surveys &lt;-<span class="st"> </span><span class="kw">getSurveys</span>(head, <span class="dt">survey_baseurl=</span><span class="st">&quot;https://leidenuniv.eu.qualtrics.com&quot;</span>) <span class="co"># URL is for my own institution</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">surveys &lt;-<span class="st"> </span><span class="kw">getSurveys</span>(head, <span class="dt">root_url=</span><span class="st">&quot;https://leidenuniv.eu.qualtrics.com&quot;</span>) <span class="co"># URL is for my own institution</span></code></pre></div>
 <p>Export a survey and load it into R:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mysurvey &lt;-<span class="st"> </span><span class="kw">getSurvey</span>(<span class="dt">surveyID =</span> surveys$id[<span class="dv">6</span>], <span class="dt">headers =</span> head, <span class="dt">base_url =</span> <span class="st">&quot;https://leidenuniv.eu.qualtrics.com&quot;</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mysurvey &lt;-<span class="st"> </span><span class="kw">getSurvey</span>(<span class="dt">surveyID =</span> surveys$id[<span class="dv">6</span>], <span class="dt">headers =</span> head, <span class="dt">root_url =</span> <span class="st">&quot;https://leidenuniv.eu.qualtrics.com&quot;</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</code></pre></div>
 </div>
 </div>
 <div id="other-information" class="section level2">
