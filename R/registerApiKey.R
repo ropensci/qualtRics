@@ -14,14 +14,13 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Construct a header to send to qualtrics API
-#'
-#' This function is not exported as it is a helper function. It should not be called directly by the user.
+#' Register qualtrics API key
 #'
 #' @param API.TOKEN API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API.
 #' @author Jasper Ginn
+#' @export
 #' @examples
 #' \dontrun{
 #' head <- constructHeader("<YOUR-API-KEY-HERE>")
@@ -34,14 +33,20 @@
 #'                       "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/",
 #'                       verbose=TRUE)
 #' }
+#'
 
-constructHeader <- function(API.TOKEN) {
-  # Construct and return
-  headers = c(
-    'X-API-TOKEN' = API.TOKEN,
-    'Content-Type' = "application/json",
-    'Accept' = '*/*',
-    'accept-encoding' = 'gzip, deflate'
-  )
-  return(headers)
+registerApiKey <- function(API.TOKEN) {
+
+  # Get temporary directory
+  td <- tempdir()
+
+  # Construct header to send to qualtrics API
+  head <- qualtRics:::constructHeader(API.TOKEN)
+
+  # Save to temporary directory
+  saveRDS(head, paste0(td, "/qualtRics_header.rds"))
+
+  # Return
+  return(TRUE)
+
 }
