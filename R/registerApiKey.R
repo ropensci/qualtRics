@@ -30,6 +30,8 @@
 #'                       # URL is for my own institution.
 #'                       # Substitute with your own institution's url
 #' mysurvey <- getSurvey(surveys$id[6],
+#'                       format = "csv",
+#'                       save_dir = tempdir(),
 #'                       "https://leidenuniv.eu.qualtrics.com",
 #'                       verbose=TRUE)
 #' }
