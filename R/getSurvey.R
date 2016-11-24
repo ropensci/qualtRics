@@ -45,9 +45,16 @@
 #'                       verbose=TRUE)
 #' }
 
-getSurvey <- function(surveyID, headers,
+getSurvey <- function(surveyID,
                       root_url,
                       verbose = FALSE) {
+
+  # Look in temporary directory. If file 'qualtRics_header.rds' does not exist, then abort and tell user to register API key first
+  f <- list.files(tempdir())
+  if(!"qualtRics_header.rds" %in% f) stop("You need to register your qualtrics API key first using the 'registerApiKey()' function.")
+
+  # Read headers information
+  headers <- readRDS(paste0(tempdir(), "/qualtRics_header.rds"))
 
   # Function-specific API stuff
   root_url <- paste0(root_url,
