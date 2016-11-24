@@ -148,7 +148,7 @@ getSurvey <- function(surveyID,
   }
   # Remove tmpfiles
   if(save_dir != tempdir()) {
-    p<- file.remove(u)
+    p<- file.remove(tf)
     return(data)
   } else {
     p <- file.remove(tf) ; p<- file.remove(u)
