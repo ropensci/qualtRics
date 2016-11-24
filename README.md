@@ -43,22 +43,22 @@ Load the package:
 library(qualtRics)
 ```
 
-Construct the header information:
+Register your Qualtrics API key. You need to do this only once per R session:
 
 ```r
-head <- constructHeader(API.TOKEN = "<yourapitoken>")
+registerApiKey(API.TOKEN = "<yourapitoken>")
 ```
 
 Get a data frame of surveys:
 
 ```r
-surveys <- getSurveys(head, root_url="https://leidenuniv.eu.qualtrics.com") # URL is for my own institution
+surveys <- getSurveys(root_url="https://leidenuniv.eu.qualtrics.com") # URL is for my own institution
 ```
 
 Export a survey and load it into R:
 
 ```r
-mysurvey <- getSurvey(surveyID = surveys$id[6], headers = head, root_url = "https://leidenuniv.eu.qualtrics.com", verbose = TRUE)
+mysurvey <- getSurvey(surveyID = surveys$id[6], root_url = "https://leidenuniv.eu.qualtrics.com", verbose = TRUE)
 ```
 
 ## Other information
