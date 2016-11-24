@@ -147,8 +147,12 @@ getSurvey <- function(surveyID,
     stop("SPSS files are currently not supported.")
   }
   # Remove tmpfiles
-  p <- file.remove(tf) ; p<- file.remove(u)
-  # Return
-  return(data)
-
+  if(save_dir != tempdir()) {
+    p<- file.remove(u)
+    return(data)
+  } else {
+    p <- file.remove(tf) ; p<- file.remove(u)
+    # Return
+    return(data)
+  }
 }

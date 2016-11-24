@@ -4,12 +4,17 @@
 \alias{getSurvey}
 \title{Export a survey and download into R}
 \usage{
-getSurvey(surveyID, root_url, verbose = FALSE)
+getSurvey(surveyID, root_url, format = c("csv", "json", "xml", "spss"),
+  save_dir = tempdir(), verbose = FALSE)
 }
 \arguments{
 \item{surveyID}{Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.}
 
 \item{root_url}{Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.)}
+
+\item{format}{Type of file that will be downloaded. CSV will return a data frame, JSON and XML will return a list. SPSS is currently not supported. Defaults to CSV.}
+
+\item{save_dir}{Directory where survey results will be stored. Defaults to a temporary directory which is cleaned when your R session is terminated. This parameter is useful if you'd like to store survey results.}
 
 \item{verbose}{Print verbose messages to the R console? Defaults to FALSE}
 }
@@ -23,6 +28,8 @@ surveys <- getSurveys("https://leidenuniv.eu.qualtrics.com")
                       # URL is for my own institution.
                       # Substitute with your own institution's url
 mysurvey <- getSurvey(surveys$id[6],
+                      format = "csv",
+                      save_dir = tempdir(),
                       "https://leidenuniv.eu.qualtrics.com",
                       verbose=TRUE)
 }
