@@ -62,6 +62,20 @@ Export a survey and load it into R:
 mysurvey <- getSurvey(surveyID = surveys$id[6], root_url = "https://leidenuniv.eu.qualtrics.com", verbose = TRUE)
 ```
 
+You can request a CSV, JSON or XML file:
+
+```r
+mysurvey <- getSurvey(surveyID = surveys$id[6], format="csv", root_url = "https://leidenuniv.eu.qualtrics.com", verbose = TRUE) # CSV
+mysurvey <- getSurvey(surveyID = surveys$id[6], format="json", root_url = "https://leidenuniv.eu.qualtrics.com", verbose = TRUE) # JSON
+mysurvey <- getSurvey(surveyID = surveys$id[6], format="xml", root_url = "https://leidenuniv.eu.qualtrics.com", verbose = TRUE) # XML
+```
+
+You may also store the results in a filepath of your choosing:
+
+```r
+mysurvey <- getSurvey(surveyID = surveys$id[6], format="csv", save_dir = "/users/jasper/desktop/", root_url = "https://leidenuniv.eu.qualtrics.com", verbose = TRUE)
+```
+
 ## Other information
 
 For specific information about the Qualtrics API, you can refer to the [official documentation](https://api.qualtrics.com/docs/overview).
