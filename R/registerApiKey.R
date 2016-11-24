@@ -16,6 +16,8 @@
 
 #' Register qualtrics API key
 #'
+#' This function registers the user's qualtrics API key for the remainder of the R session. This function only needs to be called once (at the beginning of each R session).
+#'
 #' @param API.TOKEN API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API.
@@ -23,14 +25,12 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' head <- constructHeader("<YOUR-API-KEY-HERE>")
-#' surveys <- getSurveys(head,
-#'                       "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/")
+#' registerApiKey("<YOUR-QUALTRICS-API-KEY>")
+#' surveys <- getSurveys("https://leidenuniv.eu.qualtrics.com")
 #'                       # URL is for my own institution.
 #'                       # Substitute with your own institution's url
 #' mysurvey <- getSurvey(surveys$id[6],
-#'                       head,
-#'                       "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/",
+#'                       "https://leidenuniv.eu.qualtrics.com",
 #'                       verbose=TRUE)
 #' }
 #'

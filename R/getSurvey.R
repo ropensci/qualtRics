@@ -19,7 +19,6 @@
 #' Export a qualtrics survey you own and import the survey directly into R. NOTE: If you keep getting errors try to use your institution's base URL. See \url{https://api.qualtrics.com/docs/root-url}.
 #'
 #' @param surveyID Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.
-#' @param headers 'headers' object - returned by the 'constructHeader' function. See \link[qualtRics]{constructHeader}.
 #' @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.)
 #' @param verbose Print verbose messages to the R console? Defaults to FALSE
 #'
@@ -34,13 +33,11 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' head <- constructHeader("<YOUR-API-KEY-HERE>")
-#' surveys <- getSurveys(head,
-#'                       "https://leidenuniv.eu.qualtrics.com")
+#' registerApiKey("<YOUR-QUALTRICS-API-KEY>")
+#' surveys <- getSurveys("https://leidenuniv.eu.qualtrics.com")
 #'                       # URL is for my own institution.
 #'                       # Substitute with your own institution's url
 #' mysurvey <- getSurvey(surveys$id[6],
-#'                       head,
 #'                       "https://leidenuniv.eu.qualtrics.com",
 #'                       verbose=TRUE)
 #' }

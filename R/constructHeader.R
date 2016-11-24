@@ -24,14 +24,12 @@
 #' @author Jasper Ginn
 #' @examples
 #' \dontrun{
-#' head <- constructHeader("<YOUR-API-KEY-HERE>")
-#' surveys <- getSurveys(head,
-#'                       "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/")
+#' registerApiKey("<YOUR-QUALTRICS-API-KEY>")
+#' surveys <- getSurveys("https://leidenuniv.eu.qualtrics.com")
 #'                       # URL is for my own institution.
 #'                       # Substitute with your own institution's url
 #' mysurvey <- getSurvey(surveys$id[6],
-#'                       head,
-#'                       "https://leidenuniv.eu.qualtrics.com/API/v3/responseexports/",
+#'                       "https://leidenuniv.eu.qualtrics.com",
 #'                       verbose=TRUE)
 #' }
 
