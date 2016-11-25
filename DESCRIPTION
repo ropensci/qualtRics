@@ -12,7 +12,9 @@ Description: Qualtrics <https://www.qualtrics.com/about/>
     information about the Qualtrics API.
 Imports:
     httr,
-    stringr
+    stringr,
+    XML,
+    jsonlite
 URL:
     https://github.com/JasperHG90/qualtRics
 BugReports:
