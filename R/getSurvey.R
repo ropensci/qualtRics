@@ -57,11 +57,15 @@ getSurvey <- function(surveyID,
   if(format == "spss") {
     stop("SPSS files are currently not supported.")
   } else if(format == "json") {
-    if(!requireNamespace("jsonlite", quietly = TRUE)) {
+    if(require(jsonlite)) {
+      res <- NULL #placeholder
+    } else {
       stop("You requested survey results in JSON format, but the dependency 'jsonlite' is not installed. Please install it using: install.packages('jsonlite').")
     }
   } else if(format == "xml") {
-    if(!requireNamespace("XML", quietly = TRUE)) {
+    if(require(XML)) {
+      res <- NULL #placeholder
+    } else {
       stop("You requested survey results in XML format, but the dependency 'XML' is not installed. Please install it using: install.packages('XML').")
     }
   }
@@ -146,10 +150,10 @@ getSurvey <- function(surveyID,
     # Return minus first row
     data <- read.csv(u, header=TRUE, skip = 1, stringsAsFactors = FALSE)[-1,]
   } else if(format == "json") {
-    data <- jsonlite::fromJSON(u, simplifyDataFrame = FALSE)
+    data <- fromJSON(u, simplifyDataFrame = FALSE)
   } else if(format == "xml") {
     xmlData <- XML::xmlParse(u)
-    data <- XML::xmlToList(xmlData)
+    data <- xmlToList(xmlData)
   } else {
     stop("SPSS files are currently not supported.")
   }
