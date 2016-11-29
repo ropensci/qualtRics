@@ -21,7 +21,9 @@ devtools::install_github("JasperHG90/qualtRics")
 
 ## Dependencies
 
-This package depends on `httr` and `stringr`. Both dependencies will be installed when you install `qualtRics`.
+This package depends on `httr`, `stringr`. Both dependencies will be installed when you install `qualtRics`.
+
+This packages `Suggests` the packages `jsonlite` and `XML` if you would like to download survey results in JSON or XML format.
 
 ## Updates
 
@@ -89,5 +91,15 @@ If you have a request (like adding a new argument), please leave it [here](https
 
 ### Changelog
 
+*[v0.03]*
+- User can choose to save results directly in a folder through 'save_dir' parameter in `getSurvey()`
+- Results can now be requested in .csv, .json or .xml format. The packages `jsonlite` and `XML` are added to 'Suggests' in DESCRIPTION.
+- `constructHeader()` is now deprecated and should no longer be used. Instead, users need to call `registerApiKey()`.
+- Added a new function `registerApiKey()` which saves the user's API key and header information in the `tempdir()` environment. 
+*[v0.02]*
+- Renamed 'base url' to 'root url' such that it corresponds to Qualtrics documentation.
+- The root url no longer requires API-specific endpoints. So e.g. 'https://leidenuniv.eu.qualtrics.com' now works for all functions. The API-specific endpoints are added in the functions itself.
+- Institution-specific root url is now required by `getSurvey()`
+*[v0.01]*
 - Added first three functions (`constructHeader`, `getSurvey`, `getSurveyIDs`)
 - base_url parameter is now uniform across functions. Parameter is called 'root url' to bring it in line with Qualtrics documentation.
