@@ -12,8 +12,7 @@ Description: Qualtrics <https://www.qualtrics.com/about/>
     information about the Qualtrics API.
 Imports:
     httr,
-    stringr
-Suggests:
+    stringr,
     XML,
     jsonlite
 URL:

@@ -21,9 +21,7 @@ devtools::install_github("JasperHG90/qualtRics")
 
 ## Dependencies
 
-This package depends on `httr`, `stringr`. Both dependencies will be installed when you install `qualtRics`.
-
-This packages `Suggests` the packages `jsonlite` and `XML` if you would like to download survey results in JSON or XML format.
+This package depends on `httr`, `stringr`, `jsonlite` and `XML`. All dependencies will be installed when you install `qualtRics`.
 
 ## Updates
 

@@ -32,6 +32,9 @@
 #' @importFrom stringr str_sub
 #' @importFrom utils read.csv
 #' @importFrom utils unzip
+#' @importFrom jsonlite fromJSON
+#' @importFrom XML xmlParse
+#' @importFrom XML xmlToList
 #' @export
 #' @examples
 #' \dontrun{
@@ -54,20 +57,9 @@ getSurvey <- function(surveyID,
 
   # Match arg
   format <- match.arg(format)
+  # Stop if SPSS
   if(format == "spss") {
     stop("SPSS files are currently not supported.")
-  } else if(format == "json") {
-    if(require(jsonlite)) {
-      res <- NULL #placeholder
-    } else {
-      stop("You requested survey results in JSON format, but the dependency 'jsonlite' is not installed. Please install it using: install.packages('jsonlite').")
-    }
-  } else if(format == "xml") {
-    if(require(XML)) {
-      res <- NULL #placeholder
-    } else {
-      stop("You requested survey results in XML format, but the dependency 'XML' is not installed. Please install it using: install.packages('XML').")
-    }
   }
 
   # Check if save_dir exists
@@ -119,7 +111,7 @@ getSurvey <- function(surveyID,
     if( verbose ) {
       print(paste0("Download is ", progress, "% complete."))
     }
-    Sys.sleep(3)
+    Sys.sleep(2)
   }
 
   # Download file
@@ -152,7 +144,7 @@ getSurvey <- function(surveyID,
   } else if(format == "json") {
     data <- fromJSON(u, simplifyDataFrame = FALSE)
   } else if(format == "xml") {
-    xmlData <- XML::xmlParse(u)
+    xmlData <- xmlParse(u)
     data <- xmlToList(xmlData)
   } else {
     stop("SPSS files are currently not supported.")
