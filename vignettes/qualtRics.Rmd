@@ -1,4 +1,13 @@
-# qualtRics
+---
+title: "qualtRics"
+author: "Jasper Ginn"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
 This project contains an R package to interact with the [Qualtrics](https://www.qualtrics.com/) API. It is currently under development. I will add more functionality later.
 
