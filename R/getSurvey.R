@@ -32,9 +32,6 @@
 #' @importFrom stringr str_sub
 #' @importFrom utils read.csv
 #' @importFrom utils unzip
-#' @importFrom jsonlite fromJSON
-#' @importFrom XML xmlParse
-#' @importFrom XML xmlToList
 #' @export
 #' @examples
 #' \dontrun{
@@ -57,7 +54,17 @@ getSurvey <- function(surveyID,
 
   # Match arg
   format <- match.arg(format)
-  if(format == "spss") stop("SPSS files are currently not supported.")
+  if(format == "spss") {
+    stop("SPSS files are currently not supported.")
+  } else if(format == "json") {
+    if(!requireNamespace("jsonlite", quietly = TRUE)) {
+      stop("You requested survey results in JSON format, but the dependency 'jsonlite' is not installed. Please install it using: install.packages('jsonlite').")
+    }
+  } else if(format == "xml") {
+    if(!requireNamespace("XML", quietly = TRUE)) {
+      stop("You requested survey results in XML format, but the dependency 'XML' is not installed. Please install it using: install.packages('XML').")
+    }
+  }
 
   # Check if save_dir exists
   if(!file.info(save_dir)$isdir | is.na(file.info(save_dir)$isdir)) stop(paste0("The directory ", save_dir, " does not exist."))
@@ -141,8 +148,8 @@ getSurvey <- function(surveyID,
   } else if(format == "json") {
     data <- jsonlite::fromJSON(u, simplifyDataFrame = FALSE)
   } else if(format == "xml") {
-    xmlData <- xmlParse(u)
-    data <- xmlToList(xmlData)
+    xmlData <- XML::xmlParse(u)
+    data <- XML::xmlToList(xmlData)
   } else {
     stop("SPSS files are currently not supported.")
   }
