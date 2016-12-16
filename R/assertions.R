@@ -1,5 +1,6 @@
 # Assert that the following works
 
+# Test whether API key is stored
 assert_apikey_stored <- function(dir) {
   # Key should be stored by "registerApiKey"
   if(!assertthat::assert_that(assertthat::is.logical("qualtRics_header.rds" %in% list.files(dir)))) {
@@ -8,3 +9,5 @@ assert_apikey_stored <- function(dir) {
     return(TRUE)
   }
 }
+
+# Test whether

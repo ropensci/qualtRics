@@ -39,7 +39,8 @@
 
 getSurveys <- function(root_url = "https://yourdatacenterid.qualtrics.com") {
 
-  # Look in temporary directory. If file 'qualtRics_header.rds' does not exist, then abort and tell user to register API key first
+  # Look in temporary directory. If file 'qualtRics_header.rds' does not exist,
+  # then abort and tell user to register API key first
   assert_apikey_stored(dir = tempdir())
 
   # Read headers information

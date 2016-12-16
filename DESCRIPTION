@@ -14,7 +14,8 @@ Imports:
     httr,
     stringr,
     XML,
-    jsonlite
+    jsonlite,
+    assertthat
 URL:
     https://github.com/JasperHG90/qualtRics
 BugReports:
