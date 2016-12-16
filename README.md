@@ -2,8 +2,6 @@
 
 [![Build Status](https://travis-ci.org/JasperHG90/qualtRics.svg?branch=master)](https://travis-ci.org/JasperHG90/qualtRics) [![CRAN STATUS](https://www.r-pkg.org/badges/version/qualtRics)](https://cran.r-project.org/web/packages/qualtRics/index.html)
 
-[CRAN Status Badge](http://www.r-pkg.org/badges/version/qualtRics)
-
 This project contains an R package to interact with the [Qualtrics](https://www.qualtrics.com/) API. It is currently under development. I will add more functionality later.
 
 Note that your institution must support API access and that it must be enabled for your account. Whoever manages your Qualtrics account can help you with this. Please refer to the [Qualtrics documentation](https://api.qualtrics.com/docs/authentication) on how to find your API token.
