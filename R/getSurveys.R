@@ -48,7 +48,6 @@ getSurveys <- function(root_url = "https://yourdatacenterid.qualtrics.com") {
     # Read headers information
     headers <- readRDS(paste0(tempdir(), "/qualtRics_header.rds"))
   }
-
   # Function-specific API stuff
   root_url <- paste0(root_url,
                            ifelse(substr(root_url, nchar(root_url), nchar(root_url)) == "/",
@@ -56,6 +55,16 @@ getSurveys <- function(root_url = "https://yourdatacenterid.qualtrics.com") {
                                   "/API/v3/surveys"))
   # Send GET request to list all surveys
   res <- GET(root_url, add_headers(headers))
-  # Return
-  return(do.call(rbind.data.frame, content(res)$result$elements))
+  # Check status code and raise error/warning
+  if(res$status_code == 401) {
+    stop("Qualtrics API raised 401 error - you may not have the required authorization. Please check your API key and root url.")
+  } else if(res$status_code == 200) {
+    # Return
+    return(do.call(rbind.data.frame, content(res)$result$elements))
+  } else {
+    warning(paste0("Qualtrics API raised ", as.character(res$status_code),
+                   " . Trying to return result."))
+    # Try to return
+    return(do.call(rbind.data.frame, content(res)$result$elements))
+  }
 }

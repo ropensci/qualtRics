@@ -9,5 +9,3 @@ assert_apikey_stored <- function(dir) {
     return(TRUE)
   }
 }
-
-# Test whether
