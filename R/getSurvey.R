@@ -102,18 +102,23 @@ getSurvey <- function(surveyID,
   }
   # Get id
   ID = cnt$result$id
-  # Monitor when export is ready
-  progress <- 0
+  # Create a progress bar and monitor when export is ready
+  pbar <- utils::txtProgressBar(min=0,
+                                max=100,
+                                style = 3)
+  # This is the url to use when checking the ID
   check_url <- paste0(root_url, ID)
+  # While download is in progress
+  progress <- 0
   while(progress < 100) {
+    # Get percentage complete
     CU <- GET(check_url, add_headers(headers))
     progress <- content(CU)$result$percentComplete
-    if( verbose ) {
-      print(paste0("Download is ", progress, "% complete."))
-    }
-    Sys.sleep(2)
+    # Set progress
+    utils::setTxtProgressBar(pbar, progress)
   }
-
+  # Kill progress bar
+  close(pbar)
   # Download file
   f <- tryCatch({
     GET(paste0(check_url, "/file"), add_headers(headers))
