@@ -2,5 +2,5 @@ test_that("getSurvey() throws an error", {
   # Register dud API key
   qualtRics::registerApiKey("ABCD")
   # This should fail in 'do.call'
-  expect_error(qualtRics::getSurveys(), "second argument must be a list")
+  expect_error(qualtRics::getSurveys(), "Qualtrics API raised 401 error - you may not have the required authorization. Please check your API key and root url.")
 })
