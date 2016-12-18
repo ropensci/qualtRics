@@ -14,7 +14,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Retrieve a list of all active surveys that you own on qualtrics
+#' Retrieve a data frame of all active surveys on Qualtrics
 #'
 #' @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/root-url}. If you do not fill in anything, the function will use the default url. Using your institution-specific url can significantly speed up queries.)
 #'
@@ -38,10 +38,8 @@
 #' }
 
 getSurveys <- function(root_url = "https://yourdatacenterid.qualtrics.com") {
-
-  # Assert types
+  # Ensure that root url is character
   assertthat::assert_that(assertthat::is.string(root_url))
-
   # Look in temporary directory. If file 'qualtRics_header.rds' does not exist,
   # then abort and tell user to register API key first
   if(assert_apikey_stored(dir = tempdir())){
@@ -55,16 +53,13 @@ getSurveys <- function(root_url = "https://yourdatacenterid.qualtrics.com") {
                                   "/API/v3/surveys"))
   # Send GET request to list all surveys
   res <- GET(root_url, add_headers(headers))
-  # Check status code and raise error/warning
-  if(res$status_code == 401) {
-    stop("Qualtrics API raised 401 error - you may not have the required authorization. Please check your API key and root url.")
-  } else if(res$status_code == 200) {
+  # Check response codes
+  resp <- qualtRicsResponseCodes(res)
+  # Check if status is OK
+  if(resp$OK) {
     # Return
-    return(do.call(rbind.data.frame, content(res)$result$elements))
+    return(do.call(rbind.data.frame, resp$content$result$elements))
   } else {
-    warning(paste0("Qualtrics API raised ", as.character(res$status_code),
-                   " . Trying to return result."))
-    # Try to return
-    return(do.call(rbind.data.frame, content(res)$result$elements))
+    return(resp$content)
   }
 }
