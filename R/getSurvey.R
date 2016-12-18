@@ -68,16 +68,13 @@ getSurvey <- function(surveyID,
   # Look in temporary directory. If file 'qualtRics_header.rds' does not exist, then abort and tell user to register API key first
   f <- list.files(tempdir())
   if(!"qualtRics_header.rds" %in% f) stop("You need to register your qualtrics API key first using the 'registerApiKey()' function.")
-
   # Read headers information
   headers <- readRDS(paste0(tempdir(), "/qualtRics_header.rds"))
-
   # Function-specific API stuff
   root_url <- paste0(root_url,
                            ifelse(substr(root_url, nchar(root_url), nchar(root_url)) == "/",
                                   "API/v3/responseexports/",
                                   "/API/v3/responseexports/"))
-
   # Create raw JSON payload
   raw_payload <- paste0('{"format": ', '"', format, '"' ,
                         ', "surveyId": ', '"', surveyID, '",',
@@ -90,22 +87,23 @@ getSurvey <- function(surveyID,
               ),
               body = raw_payload
   )
-  # Get content
-  cnt <- content(res)
-  # If http status == 200
-  if(! cnt$meta$httpStatus == "200 - OK" ) {
-    stop(paste0("Query returned status ",
-                '"',
-                cnt$meta$httpStatus,
-                '"',
-                ". Please check your code."))
+  # Check response type
+  cnt <- qualtRicsResponseCodes(res)
+  # Check if OK
+  if(cnt$OK) {
+    cnt <- cnt$content
+  } else {
+    # Else is (temporary) internal server error
+    return(cnt$content)
   }
   # Get id
   ID = cnt$result$id
   # Create a progress bar and monitor when export is ready
-  pbar <- utils::txtProgressBar(min=0,
-                                max=100,
-                                style = 3)
+  if(verbose) {
+    pbar <- utils::txtProgressBar(min=0,
+                                  max=100,
+                                  style = 3)
+  }
   # This is the url to use when checking the ID
   check_url <- paste0(root_url, ID)
   # While download is in progress
@@ -115,10 +113,14 @@ getSurvey <- function(surveyID,
     CU <- GET(check_url, add_headers(headers))
     progress <- content(CU)$result$percentComplete
     # Set progress
-    utils::setTxtProgressBar(pbar, progress)
+    if(verbose) {
+      utils::setTxtProgressBar(pbar, progress)
+    }
   }
   # Kill progress bar
-  close(pbar)
+  if(verbose) {
+    close(pbar)
+  }
   # Download file
   f <- tryCatch({
     GET(paste0(check_url, "/file"), add_headers(headers))
