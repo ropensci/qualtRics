@@ -3,5 +3,5 @@ test_that("getSurvey() throws error", {
   qualtRics::registerApiKey("ABCD")
   # Query fake ID with generic root url
   expect_error(qualtRics::getSurvey("1234", "https://yourdatacenterid.qualtrics.com"),
-               'Query returned status "401 - Unauthorized". Please check your code.')
+               'Qualtrics API raised an authentication (401) error - you may not have the required authorization. Please check your API key and root url.')
 })
