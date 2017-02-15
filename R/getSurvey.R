@@ -21,6 +21,7 @@
 #' @param surveyID Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.
 #' @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.)
 #' @param format Type of file that will be downloaded. CSV will return a data frame, JSON and XML will return a list. SPSS is currently not supported. Defaults to CSV.
+#' @param useLabels TRUE to export survey responses as Choice Text or FALSE to export survey responses as values
 #' @param save_dir Directory where survey results will be stored. Defaults to a temporary directory which is cleaned when your R session is terminated. This parameter is useful if you'd like to store survey results.
 #' @param verbose Print verbose messages to the R console? Defaults to FALSE
 #'
@@ -52,6 +53,7 @@
 getSurvey <- function(surveyID,
                       root_url,
                       format = c("csv", "json", "xml", "spss"),
+                      useLabels = TRUE,
                       save_dir = tempdir(),
                       verbose = FALSE) {
 
@@ -76,10 +78,19 @@ getSurvey <- function(surveyID,
                                   "API/v3/responseexports/",
                                   "/API/v3/responseexports/"))
   # Create raw JSON payload
-  raw_payload <- paste0('{"format": ', '"', format, '"' ,
-                        ', "surveyId": ', '"', surveyID, '",',
-                        '"useLabels": true',
-                        '}')
+  raw_payload <- paste0(
+    '{"format": ',
+    '"',
+    format,
+    '"' ,
+    ', "surveyId": ',
+    '"',
+    surveyID,
+    '",',
+    '"useLabels": ',
+    tolower(useLabels),
+    '}'
+  )
   # POST request for download
   res <- POST(root_url,
               add_headers(
