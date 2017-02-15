@@ -5,7 +5,8 @@
 \title{Export a survey and download into R}
 \usage{
 getSurvey(surveyID, root_url, format = c("csv", "json", "xml", "spss"),
-  useLabels = TRUE, save_dir = tempdir(), verbose = FALSE)
+  useLabels = TRUE, lastResponseId = NULL, save_dir = tempdir(),
+  verbose = FALSE)
 }
 \arguments{
 \item{surveyID}{Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.}
@@ -15,6 +16,8 @@ getSurvey(surveyID, root_url, format = c("csv", "json", "xml", "spss"),
 \item{format}{Type of file that will be downloaded. CSV will return a data frame, JSON and XML will return a list. SPSS is currently not supported. Defaults to CSV.}
 
 \item{useLabels}{TRUE to export survey responses as Choice Text or FALSE to export survey responses as values}
+
+\item{lastResponseId}{Export all responses received after the specified response}
 
 \item{save_dir}{Directory where survey results will be stored. Defaults to a temporary directory which is cleaned when your R session is terminated. This parameter is useful if you'd like to store survey results.}
 
