@@ -56,6 +56,8 @@ getSurvey <- function(surveyID,
                       format = c("csv", "json", "xml", "spss"),
                       useLabels = TRUE,
                       lastResponseId=NULL,
+                      startDate=NULL,
+                      endDate=NULL,
                       save_dir = tempdir(),
                       verbose = FALSE) {
 
@@ -87,10 +89,26 @@ getSurvey <- function(surveyID,
       is.null(lastResponseId),
       "",
       paste0('"' ,
-             ', "lastResponseId": ',
-             '"',
-             lastResponseId)
-    ) , '",',
+        ', "lastResponseId": ',
+        '"',
+        lastResponseId)
+    ) ,
+    ifelse(
+      is.null(startDate),
+      "",
+      paste0('"' ,
+        ', "startDate": ',
+        '"',
+          paste0(startDate,"T00:00:00Z"))
+    ) ,
+    ifelse(
+      is.null(endDate),
+      "",
+      paste0('"' ,
+        ', "endDate": ',
+        '"',
+          paste0(endDate,"T00:00:00Z"))
+    ) , '", ',
     '"useLabels": ', tolower(useLabels),
     '}'
   )
