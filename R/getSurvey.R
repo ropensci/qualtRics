@@ -23,6 +23,8 @@
 #' @param format Type of file that will be downloaded. CSV will return a data frame, JSON and XML will return a list. SPSS is currently not supported. Defaults to CSV.
 #' @param useLabels TRUE to export survey responses as Choice Text or FALSE to export survey responses as values
 #' @param lastResponseId Export all responses received after the specified response
+#' @param startDate Date range filter to only exports responses recorded after the specified date. Accepts dates as character strings in format "YYYY-MM-DD"
+#' @param endDate Date range filter to only exports responses recorded before the specified date. Accepts dates as character strings in format "YYYY-MM-DD"
 #' @param save_dir Directory where survey results will be stored. Defaults to a temporary directory which is cleaned when your R session is terminated. This parameter is useful if you'd like to store survey results.
 #' @param verbose Print verbose messages to the R console? Defaults to FALSE
 #'
