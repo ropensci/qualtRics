@@ -134,7 +134,15 @@ getSurvey <- function(surveyID,
     return(cnt$content)
   }
   # Get id
-  ID = cnt$result$id
+  if(is.null(cnt$result$id)) {
+    if(is.null(cnt$content[[1]]$id)) {
+      stop("Something went wrong. Please re-run your query.")
+    } else{
+      ID <- cnt$content[[1]]$id
+    }
+  } else{
+    ID <- cnt$result$id
+  } # NOTE This is not fail safe because ID can still be NULL
   # Create a progress bar and monitor when export is ready
   if(verbose) {
     pbar <- utils::txtProgressBar(min=0,
@@ -166,15 +174,14 @@ getSurvey <- function(surveyID,
     GET(paste0(check_url, "/file"), add_headers(headers))
   })
   # Load raw zip file
-  io <- qualtRicsResponseCodes(f, raw=TRUE)
-  ty <- content(f, "raw")
+  ty <- qualtRicsResponseCodes(f, raw=TRUE)
   # To zip file
   tf <- paste0(save_dir,
                ifelse(substr(save_dir, nchar(save_dir), nchar(save_dir)) == "/",
                       "temp.zip",
                       "/temp.zip"))
   # Write to temporary file
-  writeBin(ty, tf)
+  writeBin(ty$content, tf)
   # Take snapshot
   SS <- list.files(save_dir)
   u <- tryCatch({
