@@ -164,7 +164,7 @@ getSurveyMetadata <- function(surveyID,
     cm <- cnt$result$exportColumnMap
     # Return list of mapping data and quiz information
     md <- data.frame(
-      "question" = names(cm),
+      "question" = gsub("#", "\\.", names(cm)), # Pound signs need to be replaced
       "QID" = sapply(cm, function(x) x$question),
       stringsAsFactors = FALSE
     )
