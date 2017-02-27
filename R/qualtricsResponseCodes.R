@@ -3,8 +3,13 @@
 qualtRicsResponseCodes <- function(res, raw=FALSE) {
   # Check status code and raise error/warning
   if(res$status_code == 200) {
+    if(raw) {
+      result <- content(res, "raw")
+    } else {
+      result <- content(res)
+    }
     return(list(
-      "content" = ifelse(raw, content(res, "raw"), content(res)),
+      "content" = result,
       "OK" = TRUE
       )
     )
