@@ -3,7 +3,7 @@ Type: Package
 Title: Download Qualtrics Survey Data Directly into R
 Version: 0.4
 Author: Jasper Ginn
-Maintainer: Jasper Ginn <j.h.ginn@fgga.leidenuniv.nl>
+Maintainer: Jasper Ginn <jasperginn@gmail.com>
 Description: Qualtrics <https://www.qualtrics.com/about/> 
     allows users to collect online data through surveys.
     This package contains convenience functions to pull
@@ -25,7 +25,8 @@ License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1
-Suggests: knitr,
+Suggests: 
+    knitr,
     rmarkdown,
     testthat
 VignetteBuilder: knitr
