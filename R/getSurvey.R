@@ -192,7 +192,7 @@ getSurvey <- function(surveyID,
   # Read data
   if(format == "csv") {
     # Return minus first row
-    data <- read.csv(u, header=TRUE, skip = 1, stringsAsFactors = FALSE)[-1,]
+    data <- readSurvey(u)
   } else if(format == "json") {
     data <- fromJSON(u, simplifyDataFrame = FALSE)
   } else if(format == "xml") {
