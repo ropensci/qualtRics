@@ -1,10 +1,10 @@
 # Helper function. Checks responses against qualtrics response codes.
 
-qualtRicsResponseCodes <- function(res) {
+qualtRicsResponseCodes <- function(res, raw=FALSE) {
   # Check status code and raise error/warning
   if(res$status_code == 200) {
     return(list(
-      "content" = content(res),
+      "content" = ifelse(raw, content(res, "raw"), content(res)),
       "OK" = TRUE
       )
     )
@@ -15,14 +15,20 @@ qualtRicsResponseCodes <- function(res) {
   } else if(res$status_code == 404) {
     stop("Qualtrics API complains that the requested resource cannot be found (404 error). Please check if you are using the correct survey ID.")
   } else if(res$status_code == 500) {
-    warning("Qualtrics API reports an internal server (500) error. Please contact Qualtrics Support (https://www.qualtrics.com/contact/) with the instanceId and errorCode returned by this function.")
+    warning(paste0("Qualtrics API reports an internal server (500) error. Please contact Qualtrics Support (https://www.qualtrics.com/contact/) and provide the instanceId and errorCode below.", "\n",
+                   "\n",
+                   "instanceId:", " ", content(res)$meta$error$instanceId, "\n",
+                   "errorCode: ", content(res)$meta$error$errorCode))
     return(list(
       "content" = content(res),
       "OK"= FALSE
       )
     )
   } else if(res$status_code == 503) {
-    warning("Qualtrics API reports a temporary internal server (500) error. Please contact Qualtrics Support (https://www.qualtrics.com/contact/) with the instanceId and errorCode returned by this function or retry your query.")
+    warning(paste0("Qualtrics API reports a temporary internal server (500) error. Please contact Qualtrics Support (https://www.qualtrics.com/contact/) with the instanceId and errorCode below or retry your query.", "\n",
+                   "\n",
+                   "instanceId:", " ", content(res)$meta$error$instanceId, "\n",
+                   "errorCode: ", content(res)$meta$error$errorCode))
     return(list(
       "content" = content(res),
       "OK"= FALSE
