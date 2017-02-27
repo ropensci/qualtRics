@@ -1,3 +1,19 @@
+#    Download qualtrics data into R
+#    Copyright (C) 2016 Jasper Ginn
+
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 # Helper function. Checks responses against qualtrics response codes.
 
 qualtRicsResponseCodes <- function(res, raw=FALSE) {
@@ -27,8 +43,7 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
     return(list(
       "content" = content(res),
       "OK"= FALSE
-    )
-    )
+    ))
   } else if(res$status_code == 503) {
     warning(paste0("Qualtrics API reports a temporary internal server (500) error. Please contact Qualtrics Support (https://www.qualtrics.com/contact/) with the instanceId and errorCode below or retry your query.", "\n",
                    "\n",
@@ -45,22 +60,6 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
     stop("You have reached the concurrent request limit.")
   }
 }
-
-#   Download qualtrics data into R
-#    Copyright (C) 2016 Jasper Ginn
-
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #' Construct a header to send to qualtrics API
 #'
@@ -93,22 +92,6 @@ constructHeader <- function(API.TOKEN) {
   )
   return(headers)
 }
-
-#    Download qualtrics data into R
-#    Copyright (C) 2016 Jasper Ginn
-
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #' Retrieve a JSON file containing quiz metadata
 #'
