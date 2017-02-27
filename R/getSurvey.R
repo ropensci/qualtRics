@@ -69,10 +69,8 @@ getSurvey <- function(surveyID,
   if(format == "spss") {
     stop("SPSS files are currently not supported.")
   }
-
   # Check if save_dir exists
   if(!file.info(save_dir)$isdir | is.na(file.info(save_dir)$isdir)) stop(paste0("The directory ", save_dir, " does not exist."))
-
   # Look in temporary directory. If file 'qualtRics_header.rds' does not exist, then abort and tell user to register API key first
   f <- list.files(tempdir())
   if(!"qualtRics_header.rds" %in% f) stop("You need to register your qualtrics API key first using the 'registerApiKey()' function.")
@@ -114,7 +112,6 @@ getSurvey <- function(surveyID,
     '"useLabels": ', tolower(useLabels),
     '}'
   )
-
   # POST request for download
   res <- POST(root_url,
               add_headers(
@@ -126,9 +123,12 @@ getSurvey <- function(surveyID,
   cnt <- qualtRicsResponseCodes(res)
   # Check if OK
   if(cnt$OK) {
-    cnt <- cnt$content
     # If if proxied
-    if(!is.null(cnt$content$meta$notice)) warning(cnt$content$meta$notice)
+    if(!is.null(cnt$content$meta$notice)) {
+      warning(cnt$content$meta$notice)
+    }
+    # Take content
+    cnt <- cnt$content
   } else {
     # Else is (temporary) internal server error
     return(cnt$content)
@@ -166,6 +166,7 @@ getSurvey <- function(surveyID,
     GET(paste0(check_url, "/file"), add_headers(headers))
   })
   # Load raw zip file
+  io <- qualtRicsResponseCodes(f)
   ty <- content(f, "raw")
   # To zip file
   tf <- paste0(save_dir,
