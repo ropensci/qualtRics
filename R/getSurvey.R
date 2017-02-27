@@ -19,8 +19,7 @@
 #' Export a qualtrics survey you own and import the survey directly into R. NOTE: If you keep getting errors try to use your institution's base URL. See \url{https://api.qualtrics.com/docs/root-url}.
 #'
 #' @param surveyID Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.
-#' @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.)
-#' @param format Type of file that will be downloaded. CSV will return a data frame, JSON and XML will return a list. SPSS is currently not supported. Defaults to CSV.
+#' @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.).
 #' @param useLabels TRUE to export survey responses as Choice Text or FALSE to export survey responses as values
 #' @param lastResponseId Export all responses received after the specified response
 #' @param startDate Date range filter to only exports responses recorded after the specified date. Accepts dates as character strings in format "YYYY-MM-DD"
@@ -37,8 +36,6 @@
 #' @importFrom utils read.csv
 #' @importFrom utils unzip
 #' @importFrom jsonlite fromJSON
-#' @importFrom XML xmlParse
-#' @importFrom XML xmlToList
 #' @export
 #' @examples
 #' \dontrun{
@@ -47,7 +44,6 @@
 #'                       # URL is for my own institution.
 #'                       # Substitute with your own institution's url
 #' mysurvey <- getSurvey(surveys$id[6],
-#'                       format = "csv",
 #'                       save_dir = tempdir(),
 #'                       "https://leidenuniv.eu.qualtrics.com",
 #'                       verbose=TRUE)
@@ -55,7 +51,6 @@
 
 getSurvey <- function(surveyID,
                       root_url,
-                      format = c("csv", "json", "xml", "spss"),
                       useLabels = TRUE,
                       lastResponseId=NULL,
                       startDate=NULL,
@@ -63,12 +58,6 @@ getSurvey <- function(surveyID,
                       save_dir = tempdir(),
                       verbose = FALSE) {
 
-  # Match arg
-  format <- match.arg(format)
-  # Stop if SPSS
-  if(format == "spss") {
-    stop("SPSS files are currently not supported.")
-  }
   # Check if save_dir exists
   if(!file.info(save_dir)$isdir | is.na(file.info(save_dir)$isdir)) stop(paste0("The directory ", save_dir, " does not exist."))
   # Look in temporary directory. If file 'qualtRics_header.rds' does not exist, then abort and tell user to register API key first
@@ -83,7 +72,7 @@ getSurvey <- function(surveyID,
                                   "/API/v3/responseexports/"))
   # Create raw JSON payload
   raw_payload <- paste0(
-    '{"format": ', '"', format, '"' ,
+    '{"format": ', '"', 'csv', '"' ,
     ', "surveyId": ', '"', surveyID,
     ifelse(
       is.null(lastResponseId),
@@ -187,20 +176,10 @@ getSurvey <- function(surveyID,
   u <- tryCatch({
     unzip(tf, exdir = save_dir)
   }, error = function(e) {
-    stop(paste0("Error extracting ", format, " from zip file."))
+    stop(paste0("Error extracting ", "csv", " from zip file."))
   })
   # Read data
-  if(format == "csv") {
-    # Return minus first row
-    data <- readSurvey(u)
-  } else if(format == "json") {
-    data <- fromJSON(u, simplifyDataFrame = FALSE)
-  } else if(format == "xml") {
-    xmlData <- xmlParse(u)
-    data <- xmlToList(xmlData)
-  } else {
-    stop("SPSS files are currently not supported.")
-  }
+  data <- readSurvey(u)
   # Remove tmpfiles
   if(save_dir != tempdir()) {
     p<- file.remove(tf)
