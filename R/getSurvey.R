@@ -115,7 +115,6 @@ getSurvey <- function(surveyID,
     '}'
   )
 
-
   # POST request for download
   res <- POST(root_url,
               add_headers(
@@ -128,6 +127,8 @@ getSurvey <- function(surveyID,
   # Check if OK
   if(cnt$OK) {
     cnt <- cnt$content
+    # If if proxied
+    if(!is.null(cnt$content$meta$notice)) warning(cnt$content$meta$notice)
   } else {
     # Else is (temporary) internal server error
     return(cnt$content)
