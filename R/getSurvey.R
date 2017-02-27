@@ -166,7 +166,7 @@ getSurvey <- function(surveyID,
     GET(paste0(check_url, "/file"), add_headers(headers))
   })
   # Load raw zip file
-  io <- qualtRicsResponseCodes(f)
+  io <- qualtRicsResponseCodes(f, raw=TRUE)
   ty <- content(f, "raw")
   # To zip file
   tf <- paste0(save_dir,
