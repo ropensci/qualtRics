@@ -18,7 +18,7 @@
 #' my_data_frame <- readSurvey(my_csv_file)
 #' }
 
-readSurvey <- function(file_name, stripHTML = T) {
+readSurvey <- function(file_name, stripHTML = TRUE) {
     # check if file exists
     if(!file.exists(file_name)) {
         print("File does not exist")
