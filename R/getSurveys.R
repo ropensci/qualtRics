@@ -38,28 +38,12 @@
 #' }
 
 getSurveys <- function(root_url = "https://yourdatacenterid.qualtrics.com") {
-  # Ensure that root url is character
-  assertthat::assert_that(assertthat::is.string(root_url))
-  # Look in temporary directory. If file 'qualtRics_header.rds' does not exist,
-  # then abort and tell user to register API key first
-  if(assert_apikey_stored(dir = tempdir())){
-    # Read headers information
-    headers <- readRDS(paste0(tempdir(), "/qualtRics_header.rds"))
-  }
+  # Check params
+  checkParams(root_url=root_url, check_qualtrics_api_key=TRUE)
   # Function-specific API stuff
-  root_url <- paste0(root_url,
-                           ifelse(substr(root_url, nchar(root_url), nchar(root_url)) == "/",
-                                  "API/v3/surveys",
-                                  "/API/v3/surveys"))
+  root_url <- appendRootUrl(root_url, "surveys")
   # Send GET request to list all surveys
-  res <- GET(root_url, add_headers(headers))
-  # Check response codes
-  resp <- qualtRicsResponseCodes(res)
-  # Check if status is OK
-  if(resp$OK) {
-    # Return
-    return(do.call(rbind.data.frame, resp$content$result$elements))
-  } else {
-    return(resp$content)
-  }
+  resp <- qualtricsApiRequest("GET", root_url)
+  # Bind to data frame & return
+  return(do.call(rbind.data.frame, resp$result$elements))
 }

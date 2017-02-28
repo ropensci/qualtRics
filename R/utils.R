@@ -14,7 +14,9 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Helper function. Checks responses against qualtrics response codes.
+#' Helper function. Checks responses against qualtrics response codes.
+#' @param res response from httr::GET
+#' @param raw if TRUE, add 'raw' flag to httr::content() function.
 
 qualtRicsResponseCodes <- function(res, raw=FALSE) {
   # Check status code and raise error/warning
@@ -36,7 +38,7 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
   } else if(res$status_code == 404) {
     stop("Qualtrics API complains that the requested resource cannot be found (404 error). Please check if you are using the correct survey ID.")
   } else if(res$status_code == 500) {
-    warning(paste0("Qualtrics API reports an internal server (500) error. Please contact Qualtrics Support (https://www.qualtrics.com/contact/) and provide the instanceId and errorCode below.", "\n",
+    stop(paste0("Qualtrics API reports an internal server (500) error. Please contact Qualtrics Support (https://www.qualtrics.com/contact/) and provide the instanceId and errorCode below.", "\n",
                    "\n",
                    "instanceId:", " ", content(res)$meta$error$instanceId, "\n",
                    "errorCode: ", content(res)$meta$error$errorCode))
@@ -45,7 +47,7 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
       "OK"= FALSE
     ))
   } else if(res$status_code == 503) {
-    warning(paste0("Qualtrics API reports a temporary internal server (500) error. Please contact Qualtrics Support (https://www.qualtrics.com/contact/) with the instanceId and errorCode below or retry your query.", "\n",
+    stop(paste0("Qualtrics API reports a temporary internal server (500) error. Please contact Qualtrics Support (https://www.qualtrics.com/contact/) with the instanceId and errorCode below or retry your query.", "\n",
                    "\n",
                    "instanceId:", " ", content(res)$meta$error$instanceId, "\n",
                    "errorCode: ", content(res)$meta$error$errorCode))
@@ -118,53 +120,37 @@ constructHeader <- function(API.TOKEN) {
 
 getSurveyMetadata <- function(surveyID,
                               root_url = "https://yourdatacenterid.qualtrics.com") {
-  # Ensure that root url is character
-  assertthat::assert_that(assertthat::is.string(root_url))
-  # Look in temporary directory. If file 'qualtRics_header.rds' does not exist,
-  # then abort and tell user to register API key first
-  if(assert_apikey_stored(dir = tempdir())){
-    # Read headers information
-    headers <- readRDS(paste0(tempdir(), "/qualtRics_header.rds"))
-  }
+  # Check params
+  checkParams(root_url=root_url, check_qualtrics_api_key=TRUE)
   # Function-specific API stuff
-  root_url <- paste0(root_url,
-                     ifelse(substr(root_url, nchar(root_url), nchar(root_url)) == "/",
-                            "API/v3/surveys",
-                            "/API/v3/surveys"))
-  # Paste survey id
+  root_url <- appendRootUrl(root_url, "surveys")
+  # Add survey id
   root_url <- paste0(root_url,
                      "/",
                      surveyID)
-  # Send GET request to list all surveys
-  res <- GET(root_url, add_headers(headers))
-  # Check response codes
-  resp <- qualtRicsResponseCodes(res)
-  # Check if status is OK
-  if(resp$OK) {
-    cnt <- resp$content
-    # Get question information and map
-    qi <- cnt$result$questions
-    cm <- cnt$result$exportColumnMap
-    # Return list of mapping data and quiz information
-    md <- data.frame(
-      "question" = gsub("#", "\\.", names(cm)), # Pound signs need to be replaced
-      "QID" = sapply(cm, function(x) x$question),
-      stringsAsFactors = FALSE
+  # GET request to download metadata
+  resp <- qualtricsApiRequest("GET", root_url)
+  # Get question information and map
+  qi <- resp$result$questions
+  cm <- resp$result$exportColumnMap
+  # Return list of mapping data and quiz information
+  md <- data.frame(
+    # Replace all special characters
+    "question" = gsub("[^[:alnum:]_]", "\\.", names(cm)),
+    "QID" = sapply(cm, function(x) x$question),
+    stringsAsFactors = FALSE
+  )
+  # Return
+  return(
+    list(
+      "mapping" = md,
+      "questions" = qi
     )
-    # Return
-    return(
-      list(
-        "mapping" = md,
-        "questions" = qi
-      )
-    )
-  } else {
-    return(resp$content)
-  }
+  )
 }
 
-# Check if httr GET result contains a warning and keep track of warnings in temporary file
-# @param resp object returned by 'qualtRicsResponseCodes()'
+#' Check if httr GET result contains a warning
+#' @param resp object returned by 'qualtRicsResponseCodes()'
 
 checkForWarnings <- function(resp) {
   # Raise warning if resp contains notice
@@ -172,4 +158,168 @@ checkForWarnings <- function(resp) {
     warning(resp$content$meta$notice)
   }
   NULL
+}
+
+#' Check if parameters passed to functions are correct
+#' @param save_dir Directory where survey results will be stored. Defaults to a temporary directory which is cleaned when your R session is terminated. This parameter is useful if you'd like to store survey results.
+#' @param check_qualtrics_api_key TRUE/FALSE statement. Does function need to check if qualtrics key exists?
+
+checkParams <- function(save_dir = NULL,
+                        root_url = NULL,
+                        check_qualtrics_api_key = FALSE
+                        ) {
+  ### root_url
+  if(!is.null(root_url)) {
+    # Ensure that root url is character
+    assertthat::assert_that(assertthat::is.string(root_url))
+  }
+  ### save_dir
+  # Check if save_dir exists
+  if(!is.null(save_dir)) {
+    if(!file.info(save_dir)$isdir | is.na(file.info(save_dir)$isdir)) stop(paste0("The directory ", save_dir, " does not exist."))
+  }
+  ### check_qualtrics_api_key
+  if(check_qualtrics_api_key) {
+    # Look in temporary directory. If file 'qualtRics_header.rds' does not exist, then abort and tell user to register API key first
+    assert_apikey_stored(tempdir())
+  }
+  ### ..
+}
+
+#' Append proper end points to create root url
+#' @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.).
+#' @return root url + appended end point
+
+appendRootUrl <- function(root_url, type = c("responseexports", 'surveys')) {
+  # match
+  type <- match.arg(type)
+  # Create root url
+  root_url <- paste0(root_url,
+                     ifelse(substr(root_url, nchar(root_url), nchar(root_url)) == "/",
+                            paste0("API/v3/", type,"/"),
+                            paste0("/API/v3/", type,"/")))
+  # Return
+  return(root_url)
+}
+
+#' Create raw JSON payload to post response exports request
+#' @param
+
+createRawPayload <- function(surveyID,
+                             useLabels=TRUE,
+                             lastResponseId=NULL,
+                             startDate=NULL,
+                             endDate=NULL) {
+  paste0(
+    '{"format": ', '"', 'csv', '"' ,
+    ', "surveyId": ', '"', surveyID,
+    ifelse(
+      is.null(lastResponseId),
+      "",
+      paste0('"' ,
+             ', "lastResponseId": ',
+             '"',
+             lastResponseId)
+    ) ,
+    ifelse(
+      is.null(startDate),
+      "",
+      paste0('"' ,
+             ', "startDate": ',
+             '"',
+             paste0(startDate,"T00:00:00Z"))
+    ) ,
+    ifelse(
+      is.null(endDate),
+      "",
+      paste0('"' ,
+             ', "endDate": ',
+             '"',
+             paste0(endDate,"T00:00:00Z"))
+    ) , '", ',
+    '"useLabels": ', tolower(useLabels),
+    '}'
+  )
+}
+
+#' Send httr requests to qualtrics API
+#' @param
+
+qualtricsApiRequest <- function(verb = c("GET", "POST"), url = url,
+                                body = NULL, raw = FALSE) {
+  # Match arg
+  verb <- match.arg(verb)
+  # Get headers information
+  headers <- readRDS(paste0(tempdir(), "/qualtRics_header.rds"))
+  # Send request to qualtrics API
+  res <- httr::VERB(verb,
+                    url = url,
+                    config = add_headers(
+                              headers
+                            ),
+                    body = body)
+  # Check if response type is OK
+  cnt <- qualtRicsResponseCodes(res, raw = raw)
+  # Check if OK
+  if(cnt$OK) {
+    # If notice occurs, raise warning
+    checkForWarnings(cnt)
+    # return content
+    return(cnt$content)
+  }
+}
+
+#' Download response export
+#' @param
+
+downloadQualtricsExport <- function(check_url, verbose = FALSE) {
+  # Create a progress bar and monitor when export is ready
+  if(verbose) {
+    pbar <- utils::txtProgressBar(min=0,
+                                  max=100,
+                                  style = 3)
+  }
+  # While download is in progress
+  progress <- 0
+  while(progress < 100) {
+    # Get percentage complete
+    CU <- qualtricsApiRequest(check_url)
+    progress <- CU$result$percentComplete
+    # Set progress
+    if(verbose) {
+      utils::setTxtProgressBar(pbar, progress)
+    }
+  }
+  # Kill progress bar
+  if(verbose) {
+    close(pbar)
+  }
+  # Download file
+  f <- tryCatch({
+    GET(paste0(check_url, "/file"), add_headers(headers))
+  }, error = function(e) {
+    # Retry if first attempt fails
+    GET(paste0(check_url, "/file"), add_headers(headers))
+  })
+  # Load raw zip file
+  ty <- qualtRicsResponseCodes(f, raw=TRUE)
+  # Check for notice
+  checkForWarnings(f)
+  # To zip file
+  tf <- paste0(tempdir(),
+               ifelse(substr(tempdir(), nchar(tempdir()), nchar(tempdir())) == "/",
+                      "temp.zip",
+                      "/temp.zip"))
+  # Write to temporary file
+  writeBin(ty$content, tf)
+  # Take snapshot
+  SS <- list.files(tempdir())
+  # Try to unzip
+  u <- tryCatch({
+    unzip(tf, exdir = tempdir())
+  }, error = function(e) {
+    stop(paste0("Error extracting ", "csv", " from zip file. Please re-run your query."))
+  })
+  # Return file location
+  return(u)
 }

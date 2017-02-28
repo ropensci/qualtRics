@@ -51,139 +51,48 @@
 
 getSurvey <- function(surveyID,
                       root_url,
-                      infer_types = FALSE,
-                      useLabels = TRUE,
+                      infer_types=FALSE,
+                      useLabels=TRUE,
                       lastResponseId=NULL,
                       startDate=NULL,
                       endDate=NULL,
-                      save_dir = tempdir(),
-                      verbose = FALSE) {
-
-  # Check if save_dir exists
-  if(!file.info(save_dir)$isdir | is.na(file.info(save_dir)$isdir)) stop(paste0("The directory ", save_dir, " does not exist."))
-  # Look in temporary directory. If file 'qualtRics_header.rds' does not exist, then abort and tell user to register API key first
-  f <- list.files(tempdir())
-  if(!"qualtRics_header.rds" %in% f) stop("You need to register your qualtrics API key first using the 'registerApiKey()' function.")
-  # Read headers information
-  headers <- readRDS(paste0(tempdir(), "/qualtRics_header.rds"))
-  # Function-specific API stuff
-  root_url <- paste0(root_url,
-                           ifelse(substr(root_url, nchar(root_url), nchar(root_url)) == "/",
-                                  "API/v3/responseexports/",
-                                  "/API/v3/responseexports/"))
-  # Create raw JSON payload
-  raw_payload <- paste0(
-    '{"format": ', '"', 'csv', '"' ,
-    ', "surveyId": ', '"', surveyID,
-    ifelse(
-      is.null(lastResponseId),
-      "",
-      paste0('"' ,
-        ', "lastResponseId": ',
-        '"',
-        lastResponseId)
-    ) ,
-    ifelse(
-      is.null(startDate),
-      "",
-      paste0('"' ,
-        ', "startDate": ',
-        '"',
-          paste0(startDate,"T00:00:00Z"))
-    ) ,
-    ifelse(
-      is.null(endDate),
-      "",
-      paste0('"' ,
-        ', "endDate": ',
-        '"',
-          paste0(endDate,"T00:00:00Z"))
-    ) , '", ',
-    '"useLabels": ', tolower(useLabels),
-    '}'
-  )
-  # POST request for download
-  res <- POST(root_url,
-              add_headers(
-                headers
-              ),
-              body = raw_payload
-  )
-  # Check response type
-  cnt <- qualtRicsResponseCodes(res)
-  # Check if OK
-  if(cnt$OK) {
-    # If notice occurs, raise warning
-    W <- checkForWarnings(cnt)
-    # Take content
-    cnt <- cnt$content
-  } else {
-    # Else is (temporary) internal server error
-    return(cnt$content)
+                      save_dir=NULL,
+                      verbose=FALSE) {
+  # Check params
+  checkParams(save_dir, check_qualtrics_api_key = TRUE)
+  # If infer_types == TRUE, then useLabels must likewise be TRUE
+  if(infer_types) {
+    if(useLabels == FALSE) useLabels <- TRUE
   }
+  # add endpoint to root url
+  root_url <- appendRootUrl(root_url, "responseexports")
+  # Create raw JSON payload
+  raw_payload <- createRawPayload(surveyID,
+                                  useLabels,
+                                  lastResponseId,
+                                  startDate,
+                                  endDate)
+  # POST request for download
+  res <- qualtricsApiRequest("POST", body = raw_payload)
   # Get id
-  if(is.null(cnt$result$id)) {
-    if(is.null(cnt$content[[1]]$id)) {
+  if(is.null(res$result$id)) {
+    if(is.null(res$content[[1]]$id)) {
       stop("Something went wrong. Please re-run your query.")
     } else{
-      ID <- cnt$content[[1]]$id
+      ID <- res$content[[1]]$id
     }
   } else{
-    ID <- cnt$result$id
+    ID <- res$result$id
   } # NOTE This is not fail safe because ID can still be NULL
-  # Create a progress bar and monitor when export is ready
-  if(verbose) {
-    pbar <- utils::txtProgressBar(min=0,
-                                  max=100,
-                                  style = 3)
-  }
   # This is the url to use when checking the ID
   check_url <- paste0(root_url, ID)
-  # While download is in progress
-  progress <- 0
-  while(progress < 100) {
-    # Get percentage complete
-    CU <- GET(check_url, add_headers(headers))
-    progress <- content(CU)$result$percentComplete
-    # Set progress
-    if(verbose) {
-      utils::setTxtProgressBar(pbar, progress)
-    }
-  }
-  # Kill progress bar
-  if(verbose) {
-    close(pbar)
-  }
-  # Download file
-  f <- tryCatch({
-    GET(paste0(check_url, "/file"), add_headers(headers))
-  }, error = function(e) {
-    # Retry if first attempt fails
-    GET(paste0(check_url, "/file"), add_headers(headers))
-  })
-  # Load raw zip file
-  ty <- qualtRicsResponseCodes(f, raw=TRUE)
-  # Check for notice
-  checkForWarnings(f)
-  # To zip file
-  tf <- paste0(save_dir,
-               ifelse(substr(save_dir, nchar(save_dir), nchar(save_dir)) == "/",
-                      "temp.zip",
-                      "/temp.zip"))
-  # Write to temporary file
-  writeBin(ty$content, tf)
-  # Take snapshot
-  SS <- list.files(save_dir)
-  u <- tryCatch({
-    unzip(tf, exdir = save_dir)
-  }, error = function(e) {
-    stop(paste0("Error extracting ", "csv", " from zip file. Please re-run your query."))
-  })
+  # Download, unzip and return file path
+  survey.fpath <- downloadQualtricsExport(check_url, verbose = verbose)
   # Read data
   data <- readSurvey(u)
   # Remove tmpfiles
-  if(save_dir != tempdir()) {
-    p<- file.remove(tf)
+  if(!is.null(save_dir)) {
+    # SAVE FILE TO SAVE_DIR
     return(data)
   } else {
     p <- file.remove(tf) ; p<- file.remove(u)
