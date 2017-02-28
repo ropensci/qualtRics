@@ -162,3 +162,14 @@ getSurveyMetadata <- function(surveyID,
     return(resp$content)
   }
 }
+
+# Check if httr GET result contains a warning and keep track of warnings in temporary file
+# @param resp object returned by 'qualtRicsResponseCodes()'
+
+checkForWarnings <- function(resp) {
+  # Raise warning if resp contains notice
+  if(!is.null(resp$content$meta$notice)) {
+    warning(resp$content$meta$notice)
+  }
+  NULL
+}
