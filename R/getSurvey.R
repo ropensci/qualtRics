@@ -20,6 +20,7 @@
 #'
 #' @param surveyID Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.
 #' @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.).
+#' @param infer_types If TRUE, the function will download additional information about the survey from Qualtrics that allow it to assign proper data types. For example, multiple choice questions will be turned into factors with the correct labels (and order), slider questions will be turned into percentages and so on. See the qualtRics vignette for more information.
 #' @param useLabels TRUE to export survey responses as Choice Text or FALSE to export survey responses as values
 #' @param lastResponseId Export all responses received after the specified response
 #' @param startDate Date range filter to only exports responses recorded after the specified date. Accepts dates as character strings in format "YYYY-MM-DD"
@@ -35,7 +36,6 @@
 #' @importFrom stringr str_sub
 #' @importFrom utils read.csv
 #' @importFrom utils unzip
-#' @importFrom jsonlite fromJSON
 #' @export
 #' @examples
 #' \dontrun{
@@ -51,6 +51,7 @@
 
 getSurvey <- function(surveyID,
                       root_url,
+                      infer_types = FALSE,
                       useLabels = TRUE,
                       lastResponseId=NULL,
                       startDate=NULL,
@@ -112,10 +113,8 @@ getSurvey <- function(surveyID,
   cnt <- qualtRicsResponseCodes(res)
   # Check if OK
   if(cnt$OK) {
-    # If if proxied
-    if(!is.null(cnt$content$meta$notice)) {
-      warning(cnt$content$meta$notice)
-    }
+    # If notice occurs, raise warning
+    W <- checkForWarnings(cnt)
     # Take content
     cnt <- cnt$content
   } else {
@@ -164,6 +163,8 @@ getSurvey <- function(surveyID,
   })
   # Load raw zip file
   ty <- qualtRicsResponseCodes(f, raw=TRUE)
+  # Check for notice
+  checkForWarnings(f)
   # To zip file
   tf <- paste0(save_dir,
                ifelse(substr(save_dir, nchar(save_dir), nchar(save_dir)) == "/",
@@ -176,7 +177,7 @@ getSurvey <- function(surveyID,
   u <- tryCatch({
     unzip(tf, exdir = save_dir)
   }, error = function(e) {
-    stop(paste0("Error extracting ", "csv", " from zip file."))
+    stop(paste0("Error extracting ", "csv", " from zip file. Please re-run your query."))
   })
   # Read data
   data <- readSurvey(u)
