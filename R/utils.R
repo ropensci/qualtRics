@@ -312,8 +312,6 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
                       "/temp.zip"))
   # Write to temporary file
   writeBin(ty$content, tf)
-  # Take snapshot
-  SS <- list.files(tempdir())
   # Try to unzip
   u <- tryCatch({
     unzip(tf, exdir = tempdir())
