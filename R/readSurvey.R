@@ -10,9 +10,9 @@
 #'
 #' @author Adrian Brugger, Stefan Borer & Jasper Ginn
 #' @importFrom utils read.csv
-#' @export
 #' @return A data frame. Variable labels are stored as attributes. They are not printed on
 #' the console but are visibile in the RStudio viewer.
+#' @export
 #' @examples
 #' \dontrun{
 #' my_data_frame <- readSurvey(my_csv_file)
