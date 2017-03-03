@@ -37,6 +37,7 @@
 #' @importFrom stringr str_sub
 #' @importFrom utils read.csv
 #' @importFrom utils unzip
+#' @importFrom utils write.csv
 #' @export
 #' @examples
 #' \dontrun{
