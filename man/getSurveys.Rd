@@ -2,7 +2,7 @@
 % Please edit documentation in R/getSurveys.R
 \name{getSurveys}
 \alias{getSurveys}
-\title{Retrieve a list of all active surveys that you own on qualtrics}
+\title{Retrieve a data frame of all active surveys on Qualtrics}
 \usage{
 getSurveys(root_url = "https://yourdatacenterid.qualtrics.com")
 }
@@ -10,7 +10,7 @@ getSurveys(root_url = "https://yourdatacenterid.qualtrics.com")
 \item{root_url}{Base url for your institution (see \url{https://api.qualtrics.com/docs/root-url}. If you do not fill in anything, the function will use the default url. Using your institution-specific url can significantly speed up queries.)}
 }
 \description{
-Retrieve a list of all active surveys that you own on qualtrics
+Retrieve a data frame of all active surveys on Qualtrics
 }
 \examples{
 \dontrun{
