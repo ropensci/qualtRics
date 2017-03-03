@@ -1,7 +1,7 @@
 Package: qualtRics
 Type: Package
 Title: Download Qualtrics Survey Data Directly into R
-Version: 0.4
+Version: 1
 Author: Jasper Ginn
 Maintainer: Jasper Ginn <jasperginn@gmail.com>
 Description: Qualtrics <https://www.qualtrics.com/about/> 
@@ -13,10 +13,10 @@ Description: Qualtrics <https://www.qualtrics.com/about/>
 Imports:
     httr,
     stringr,
-    XML,
     jsonlite,
     assertthat,
-    sjmisc
+    sjmisc,
+    lubridate
 URL:
     https://github.com/JasperHG90/qualtRics
 BugReports:
