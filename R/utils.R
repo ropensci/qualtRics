@@ -304,3 +304,116 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
 # @param
 # @author Jasper Ginn
 
+inferDataTypes <- function(data,
+                           surveyID,
+                           root_url,
+                           verbose = FALSE) {
+  # Download survey metadata
+  sm <- getSurveyMetadata("SV_1BqujvrF9TQc82F", root_url = root_url)
+  # For each column, cycle and assign
+  for(col.name in names(data)) {
+    print(col.name)
+    # These are added to qualtrics surveys
+    qNum <- c("LocationLatitude", "LocationLongitude")
+    qChar <- c('IPAddress','ResponseID','RecipientLastName','RecipientFirstName','RecipientEmail','ExternalDataReference')
+    qFact <- c('ResponseSet')
+    qBin <- c("Finished", "Status")
+    qDate <- c('StartDate','EndDate')
+    # Check for generic data
+    if(col.name %in% qNum) {
+      data[,col.name] <- as.numeric(data[,col.name])
+    } else if(col.name %in% qChar) {
+      data[,col.name] <- as.character(data[,col.name])
+    } else if(col.name %in% qFact) {
+      data[,col.name] <- as.factor(data[,col.name])
+    } else if(col.name %in% qBin) {
+      data[,col.name] <- factor(data[,col.name], levels=c("0", "1"))
+    } else if(col.name %in% qDate) {
+      data[,col.name] <- lubridate::as_datetime(data[,col.name])
+    } else{
+      # does question exist in survey metadata?
+      if(col.name %in% sm$mapping$question) {
+        col.qt <- sm$questions[[sm$mapping[sm$mapping$question == col.name,]$QID]]
+        # This information is so rich, it would be a shame to not attach it to the data as e.g. attributes ...
+
+        # VALIDATION ----
+
+        # Check if data validation is turned on. If so, use that information
+        if(!is.null(col.qt$validation$type)) {
+          type <- col.qt$validation$type
+          if(type == "ValidNumber") {
+            data[,col.name] <- as.numeric(data[,col.name])
+          } else if(type == "ValidEmail") {
+            data[,col.name] <- as.character(data[,col.name])
+          } else if(type == "ValidPhone") {
+            data[,col.name] <- as.character(data[,col.name])
+          } else if(type == "ValidUSState") {
+            data[,col.name] <- as.factor(data[,col.name])
+          } else if(type == "ValidZip") {
+            data[,col.name] <- as.character(data[,col.name])
+          } else if(type == "ValidDate") {
+            if(col.qt$validation$settings$validDateType == "MMDDYYYY") {
+              data[,col.name] <- as.Date(lubridate::mdy(data[,col.name]))
+            } else if(col.qt$validation$settings$validDateType == "YYYYMMDD") {
+              data[,col.name] <- as.Date(lubridate::ymd(data[,col.name]))
+            } else {
+              data[,col.name] <- as.character(data[,col.name])
+            }
+          } else if(type == "ValidTextOnly") {
+            data[,col.name] <- as.character(data[,col.name])
+          }
+        }
+
+        # BY QUESTION TYPE ----
+
+        question.type <- col.qt$questionType$type
+        if(question.type == "Matrix") {
+          if(col.qt$questionType$selector == "Likert") {
+            if(col.qt$questionType$subSelector == "SingleAnswer") {
+              ch <- col.qt$choices
+              # Get name values
+              nv <- sapply(ch, function(x) x$choiceText)
+              # Recode
+              data[,col.name] <- factor(data[,col.name], levels=nv)
+            } else if(col.qt$questionType$subSelector == "MultipleAnswer") {
+              data[,col.name] <- as.character(data[,col.name])
+            }
+          }
+
+        } else if(question.type == "MC") {
+          ch <- col.qt$choices
+          # Get name values
+          nv <- sapply(ch, function(x) x$choiceText)
+          # Recode
+          data[,col.name] <- factor(data[,col.name], levels=nv)
+        }
+
+      }
+
+    }
+
+  }
+
+  if(verbose) {
+    m <- paste0(
+      "Assigned the following data types to survey:\n",
+      "\n",
+      "(","\n",
+      paste0(
+        "\t",names(data), " (", unname(sapply(data, class)), "),", collapse="\n"
+      ), "\n",
+      ")"
+    )
+    cat(m)
+  }
+}
+
+# These data are given by qualtrics for each survey
+#
+# @param
+# @author Jasper Ginn
+
+dataType <- function(data, col.name, survey_metadata) {
+
+
+}
