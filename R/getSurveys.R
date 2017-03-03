@@ -39,7 +39,7 @@
 
 getSurveys <- function(root_url = "https://yourdatacenterid.qualtrics.com") {
   # Check params
-  checkParams(root_url=root_url, check_qualtrics_api_key=TRUE)
+  cp <- checkParams(root_url=root_url, check_qualtrics_api_key=TRUE)
   # Function-specific API stuff
   root_url <- appendRootUrl(root_url, "surveys")
   # Send GET request to list all surveys

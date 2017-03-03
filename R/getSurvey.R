@@ -26,6 +26,7 @@
 #' @param startDate Date range filter to only exports responses recorded after the specified date. Accepts dates as character strings in format "YYYY-MM-DD"
 #' @param endDate Date range filter to only exports responses recorded before the specified date. Accepts dates as character strings in format "YYYY-MM-DD"
 #' @param save_dir Directory where survey results will be stored. Defaults to a temporary directory which is cleaned when your R session is terminated. This parameter is useful if you'd like to store survey results.
+#' @param force_request getSurvey() saves each survey in a temporary directory so that it can quickly be retrieved later. If force_request is TRUE, getSurvey() always downloads the survey from the API instead of loading it from the temporary directory.
 #' @param verbose Print verbose messages to the R console? Defaults to FALSE
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs/csv} for documentation on the Qualtrics API.
@@ -57,12 +58,20 @@ getSurvey <- function(surveyID,
                       startDate=NULL,
                       endDate=NULL,
                       save_dir=NULL,
+                      force_request=FALSE,
                       verbose=FALSE) {
   # Check params
   checkParams(save_dir, check_qualtrics_api_key = TRUE)
   # If infer_types == TRUE, then useLabels must likewise be TRUE
   if(infer_types) {
     if(useLabels == FALSE) useLabels <- TRUE
+  }
+  # See if survey already in tempdir
+  if(!force_request) {
+    if(paste0(surveyID, ".rds") %in% tempdir()) {
+      data <- readRDS(paste0(tempdir(), "/", surveyID, ".rds"))
+      return(data)
+    }
   }
   # add endpoint to root url
   root_url <- appendRootUrl(root_url, "responseexports")
@@ -73,7 +82,7 @@ getSurvey <- function(surveyID,
                                   startDate,
                                   endDate)
   # POST request for download
-  res <- qualtricsApiRequest("POST", body = raw_payload)
+  res <- qualtricsApiRequest("POST", url=root_url, body = raw_payload)
   # Get id
   if(is.null(res$result$id)) {
     if(is.null(res$content[[1]]$id)) {
@@ -89,13 +98,18 @@ getSurvey <- function(surveyID,
   # Download, unzip and return file path
   survey.fpath <- downloadQualtricsExport(check_url, verbose = verbose)
   # Read data
-  data <- readSurvey(u)
+  data <- readSurvey(survey.fpath)
+  # ADD TYPES
+  # Save survey as RDS file in temp folder so that it can be easily retrieved this session.
+  saveRDS(data, paste0(tempdir(), "/", surveyID, ".rds"))
   # Remove tmpfiles
   if(!is.null(save_dir)) {
-    # SAVE FILE TO SAVE_DIR
+    # Save file to directory
+    write.csv(data, file=paste0(save_dir, "/", surveyID, ".csv"))
+    # Return
     return(data)
   } else {
-    p <- file.remove(tf) ; p<- file.remove(u)
+    p<- file.remove(survey.fpath)
     # Return
     return(data)
   }
