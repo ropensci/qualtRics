@@ -14,17 +14,20 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Helper function. Checks responses against qualtrics response codes.
-#' @param res response from httr::GET
-#' @param raw if TRUE, add 'raw' flag to httr::content() function.
+# Helper function. Checks responses against qualtrics response codes.
+#
+# @param res response from httr::GET
+# @param raw if TRUE, add 'raw' flag to httr::content() function.
+#
+# @author Jasper Ginn
 
 qualtRicsResponseCodes <- function(res, raw=FALSE) {
   # Check status code and raise error/warning
   if(res$status_code == 200) {
     if(raw) {
-      result <- content(res, "raw")
+      result <- httr::content(res, "raw")
     } else {
-      result <- content(res)
+      result <- httr::content(res)
     }
     return(list(
       "content" = result,
@@ -43,7 +46,7 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
                    "instanceId:", " ", content(res)$meta$error$instanceId, "\n",
                    "errorCode: ", content(res)$meta$error$errorCode))
     return(list(
-      "content" = content(res),
+      "content" = httr::content(res),
       "OK"= FALSE
     ))
   } else if(res$status_code == 503) {
@@ -52,7 +55,7 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
                    "instanceId:", " ", content(res)$meta$error$instanceId, "\n",
                    "errorCode: ", content(res)$meta$error$errorCode))
     return(list(
-      "content" = content(res),
+      "content" = httr::content(res),
       "OK"= FALSE
     )
     )
@@ -63,26 +66,14 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
   }
 }
 
-#' Construct a header to send to qualtrics API
-#'
-#' This function is not exported as it is a helper function. It should not be called directly by the user.
-#'
-#' @param API.TOKEN API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})
-#'
-#' @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API.
-#' @author Jasper Ginn
-#' @examples
-#' \dontrun{
-#' registerApiKey("<YOUR-QUALTRICS-API-KEY>")
-#' surveys <- getSurveys("https://leidenuniv.eu.qualtrics.com")
-#'                       # URL is for my own institution.
-#'                       # Substitute with your own institution's url
-#' mysurvey <- getSurvey(surveys$id[6],
-#'                       format = "csv",
-#'                       save_dir = tempdir(),
-#'                       "https://leidenuniv.eu.qualtrics.com",
-#'                       verbose=TRUE)
-#' }
+# Construct a header to send to qualtrics API
+#
+# This function is not exported as it is a helper function. It should not be called directly by the user.
+#
+# @param API.TOKEN API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})
+#
+# @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API.
+# @author Jasper Ginn
 
 constructHeader <- function(API.TOKEN) {
   # Construct and return
@@ -95,28 +86,13 @@ constructHeader <- function(API.TOKEN) {
   return(headers)
 }
 
-#' Retrieve a JSON file containing quiz metadata
-#'
-#' @param surveyID Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.
-#' @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/root-url}. If you do not fill in anything, the function will use the default url. Using your institution-specific url can significantly speed up queries.)
-#'
-#' @seealso See \url{https://api.qualtrics.com/docs} for documentation on the Qualtrics API.
-#' @author Jasper Ginn
-#' @importFrom httr GET
-#' @importFrom httr content
-#' @importFrom httr add_headers
-#' @examples
-#' \dontrun{
-#' registerApiKey("<YOUR-QUALTRICS-API-KEY>")
-#' surveys <- getSurveys("https://leidenuniv.eu.qualtrics.com")
-#'                       # URL is for my own institution.
-#'                       # Substitute with your own institution's url
-#' mysurvey <- getSurvey(surveys$id[6],
-#'                       format = "csv",
-#'                       save_dir = tempdir(),
-#'                       "https://leidenuniv.eu.qualtrics.com",
-#'                       verbose=TRUE)
-#' }
+# Retrieve a JSON file containing quiz metadata
+#
+# @param surveyID Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.
+# @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/root-url}. If you do not fill in anything, the function will use the default url. Using your institution-specific url can significantly speed up queries.)
+#
+# @seealso See \url{https://api.qualtrics.com/docs} for documentation on the Qualtrics API.
+# @author Jasper Ginn
 
 getSurveyMetadata <- function(surveyID,
                               root_url = "https://yourdatacenterid.qualtrics.com") {
@@ -149,20 +125,22 @@ getSurveyMetadata <- function(surveyID,
   )
 }
 
-#' Check if httr GET result contains a warning
-#' @param resp object returned by 'qualtRicsResponseCodes()'
+# Check if httr GET result contains a warning
+# @param resp object returned by 'qualtRicsResponseCodes()'
 
 checkForWarnings <- function(resp) {
   # Raise warning if resp contains notice
-  if(!is.null(resp$content$meta$notice)) {
-    warning(resp$content$meta$notice)
+  if(!is.null(resp$content$meta)) {
+    if(!is.null(resp$content$meta$notice)) {
+      warning(resp$content$meta$notice)
+    }
   }
   NULL
 }
 
-#' Check if parameters passed to functions are correct
-#' @param save_dir Directory where survey results will be stored. Defaults to a temporary directory which is cleaned when your R session is terminated. This parameter is useful if you'd like to store survey results.
-#' @param check_qualtrics_api_key TRUE/FALSE statement. Does function need to check if qualtrics key exists?
+# Check if parameters passed to functions are correct
+# @param save_dir Directory where survey results will be stored. Defaults to a temporary directory which is cleaned when your R session is terminated. This parameter is useful if you'd like to store survey results.
+# @param check_qualtrics_api_key TRUE/FALSE statement. Does function need to check if qualtrics key exists?
 
 checkParams <- function(save_dir = NULL,
                         root_url = NULL,
@@ -186,9 +164,9 @@ checkParams <- function(save_dir = NULL,
   ### ..
 }
 
-#' Append proper end points to create root url
-#' @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.).
-#' @return root url + appended end point
+# Append proper end points to create root url
+# @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.).
+# @return root url + appended end point
 
 appendRootUrl <- function(root_url, type = c("responseexports", 'surveys')) {
   # match
@@ -202,8 +180,8 @@ appendRootUrl <- function(root_url, type = c("responseexports", 'surveys')) {
   return(root_url)
 }
 
-#' Create raw JSON payload to post response exports request
-#' @param
+# Create raw JSON payload to post response exports request
+# @param
 
 createRawPayload <- function(surveyID,
                              useLabels=TRUE,
@@ -242,8 +220,8 @@ createRawPayload <- function(surveyID,
   )
 }
 
-#' Send httr requests to qualtrics API
-#' @param
+# Send httr requests to qualtrics API
+# @param
 
 qualtricsApiRequest <- function(verb = c("GET", "POST"), url = url,
                                 body = NULL, raw = FALSE) {
@@ -254,7 +232,7 @@ qualtricsApiRequest <- function(verb = c("GET", "POST"), url = url,
   # Send request to qualtrics API
   res <- httr::VERB(verb,
                     url = url,
-                    config = add_headers(
+                    httr::add_headers(
                               headers
                             ),
                     body = body)
@@ -263,14 +241,14 @@ qualtricsApiRequest <- function(verb = c("GET", "POST"), url = url,
   # Check if OK
   if(cnt$OK) {
     # If notice occurs, raise warning
-    checkForWarnings(cnt)
+    w <- checkForWarnings(cnt)
     # return content
     return(cnt$content)
   }
 }
 
-#' Download response export
-#' @param
+# Download response export
+# @param
 
 downloadQualtricsExport <- function(check_url, verbose = FALSE) {
   # Create a progress bar and monitor when export is ready
@@ -283,7 +261,7 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
   progress <- 0
   while(progress < 100) {
     # Get percentage complete
-    CU <- qualtricsApiRequest(check_url)
+    CU <- qualtricsApiRequest("GET", url = check_url)
     progress <- CU$result$percentComplete
     # Set progress
     if(verbose) {
@@ -296,15 +274,13 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
   }
   # Download file
   f <- tryCatch({
-    GET(paste0(check_url, "/file"), add_headers(headers))
+    httr::GET(paste0(check_url, "/file"), httr::add_headers(headers))
   }, error = function(e) {
     # Retry if first attempt fails
-    GET(paste0(check_url, "/file"), add_headers(headers))
+    httr::GET(paste0(check_url, "/file"), httr::add_headers(headers))
   })
   # Load raw zip file
   ty <- qualtRicsResponseCodes(f, raw=TRUE)
-  # Check for notice
-  checkForWarnings(f)
   # To zip file
   tf <- paste0(tempdir(),
                ifelse(substr(tempdir(), nchar(tempdir()), nchar(tempdir())) == "/",
@@ -314,10 +290,17 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
   writeBin(ty$content, tf)
   # Try to unzip
   u <- tryCatch({
-    unzip(tf, exdir = tempdir())
+    utils::unzip(tf, exdir = tempdir())
   }, error = function(e) {
     stop(paste0("Error extracting ", "csv", " from zip file. Please re-run your query."))
   })
+  # Remove zipfile
+  p <- file.remove(tf)
   # Return file location
   return(u)
 }
+
+# Set proper data types on data
+# @param
+# @author Jasper Ginn
+
