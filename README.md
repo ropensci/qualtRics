@@ -2,9 +2,9 @@
 
 [![Build Status](https://travis-ci.org/JasperHG90/qualtRics.svg?branch=master)](https://travis-ci.org/JasperHG90/qualtRics) [![CRAN STATUS](https://www.r-pkg.org/badges/version/qualtRics)](https://cran.r-project.org/web/packages/qualtRics/index.html) [![CODECOV](https://codecov.io/gh/JasperHG90/qualtRics/branch/master/graphs/badge.svg)](https://codecov.io/gh/JasperHG90/qualtRics)
 
-This project contains an R package to interact with the [Qualtrics](https://www.qualtrics.com/) API. 
+This project contains an R package to download surveys from  [Qualtrics](https://www.qualtrics.com/) using the API. 
 
-Note that your institution must support API access and that it must be enabled for your account. Whoever manages your Qualtrics account can help you with this. Please refer to the [Qualtrics documentation](https://api.qualtrics.com/docs/authentication) on how to find your API token.
+Note that your institution must support API access and that it must be enabled for your account. Whoever manages your Qualtrics account can help you with this. Please refer to the [Qualtrics documentation](https://api.qualtrics.com/docs/authentication) to find your API token.
 
 ## Installation
 
@@ -90,6 +90,16 @@ Should you encounter any bugs or issues, please report them [here](https://githu
 If you have a request (like adding a new argument), please leave it [here](https://github.com/JasperHG90/qualtRics/issues)
 
 ### Changelog
+
+**[v1.0]**
+
+- Added a new function 'readSurvey()'. This function is used in the 'getSurvey()' function but will also work with surveys downloaded manually from Qualtrics. Standard columns (completed survey/startDate/endDate etc.) are now converted to their proper data types. 
+- Added several new parameters to 'getSurvey()' function. HT @samuelkaminsky 
+  * *LastResponseId*: If used, only responses that were filled out later than this ID will be downloaded.
+  * *UseLabels*: If TRUE, download will contain character labels. Else, download will contain choice labels.
+  * *StartDate*: Only download responses after this date.
+  * *EndDate*: Only download responses before this date.
+- Survey downloads should be faster now; getSurvey() no longer sleeps when checking download status. Also added progress bar.
 
 **[v0.03]**
 - User can choose to save results directly in a folder through 'save_dir' parameter in `getSurvey()`
