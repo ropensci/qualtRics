@@ -251,6 +251,8 @@ qualtricsApiRequest <- function(verb = c("GET", "POST"), url = url,
 # @param
 
 downloadQualtricsExport <- function(check_url, verbose = FALSE) {
+  # Get headers
+  headers <- readRDS(paste0(tempdir(), "/", "qualtRics_header.rds"))
   # Create a progress bar and monitor when export is ready
   if(verbose) {
     pbar <- utils::txtProgressBar(min=0,

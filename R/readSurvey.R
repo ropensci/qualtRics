@@ -6,7 +6,8 @@
 #'Repetitive introductions to matrix questions are automatically removed.
 #'Variable labels are stored as attributes.
 #'
-#' @param data A csv data file.
+#' @param file_name A csv data file.
+#' @param stripHTML logical, defaults to true. If TRUE, then remove html tags.
 #'
 #' @author Adrian Brugger, Stefan Borer & Jasper Ginn
 #' @importFrom utils read.csv

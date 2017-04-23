@@ -23,7 +23,7 @@ devtools::install_github("JasperHG90/qualtRics")
 
 ## Dependencies
 
-This package depends on `httr`, `stringr`, `jsonlite` and `XML`. All dependencies will be installed when you install `qualtRics`.
+All dependencies will be installed when you install `qualtRics`.
 
 ## Updates
 
@@ -31,9 +31,11 @@ Periodically check this repository for updates and execute `devtools::install_gi
 
 ## Usage
 
-Currently, the package contains three functions. It supports fetching a list of courses and their IDs from qualtrics, as well as downloading and reading a survey export. 
+Currently, the package contains three functions:
 
-Note that, while requests will work without a [root url](https://api.qualtrics.com/docs/root-url) for the `getSurveys` function, it is desirable that you supply it. Supplying the correct url will reduce the number of errors you'll experience. The `getSurvey` function requires you to pass this root url. Please refer to the [official documentation](https://api.qualtrics.com/docs/root-url) to find out your institution-specific root url.
+  1. *getSurveys()* fetches a list of all surveys that you own or have access to from Qualtrics.
+  2. *getSurvey()* downloads a survey from Qualtrics and loads it into R.
+  3. *readSurvey()* allows you to read CSV files you download manually from Qualtrics.
 
 Note that you can only export surveys that you own, or to which you have been given explicit administration rights.
 
@@ -45,7 +47,7 @@ Load the package:
 library(qualtRics)
 ```
 
-Register your Qualtrics API key. You need to do this only once per R session:
+Register your Qualtrics API key. You need to do this once every R session:
 
 ```r
 registerApiKey(API.TOKEN = "<yourapitoken>")
@@ -57,25 +59,50 @@ Get a data frame of surveys:
 surveys <- getSurveys(root_url="https://leidenuniv.eu.qualtrics.com") # URL is for my own institution
 ```
 
+Note that, while requests will work without a [root url](https://api.qualtrics.com/docs/root-url) for the `getSurveys` function, it is desirable that you supply it. Supplying the correct url will reduce the number of errors you'll experience. The `getSurvey` function requires you to pass this root url. Please refer to the [official documentation](https://api.qualtrics.com/docs/root-url) to find out your institution-specific root url.
+
 Export a survey and load it into R:
 
 ```r
 mysurvey <- getSurvey(surveyID = surveys$id[6], root_url = "https://leidenuniv.eu.qualtrics.com", verbose = TRUE)
 ```
 
-You can request a CSV, JSON or XML file:
+You can add a from/to date to only retrieve responses between those dates:
 
 ```r
-mysurvey <- getSurvey(surveyID = surveys$id[6], format="csv", root_url = "https://leidenuniv.eu.qualtrics.com", verbose = TRUE) # CSV
-mysurvey <- getSurvey(surveyID = surveys$id[6], format="json", root_url = "https://leidenuniv.eu.qualtrics.com", verbose = TRUE) # JSON
-mysurvey <- getSurvey(surveyID = surveys$id[6], format="xml", root_url = "https://leidenuniv.eu.qualtrics.com", verbose = TRUE) # XML
+surv <- getSurvey(survs$id[4],
+                  root_url = "https://leidenuniv.eu.qualtrics.com",
+                  startDate = "2016-09-18",
+                  endDate = "2016-10-01",
+                  useLabels = FALSE,
+                  verbose = TRUE)
 ```
 
-You may also store the results in a filepath of your choosing:
+You may also reference a response ID. `getSurvey` will then download all responses that were submitted after that response:
 
 ```r
-mysurvey <- getSurvey(surveyID = surveys$id[6], format="csv", save_dir = "/users/jasper/desktop/", root_url = "https://leidenuniv.eu.qualtrics.com", verbose = TRUE)
+surv <- getSurvey(survs$id[4],
+                  root_url = "https://leidenuniv.eu.qualtrics.com",
+                  lastResponseId = "R_3mmovCIeMllvsER",
+                  useLabels = FALSE,
+                  verbose = TRUE)
 ```
+
+You can store the results in a specific location if you like:
+
+```r
+mysurvey <- getSurvey(surveyID = surveys$id[6], save_dir = "/users/jasper/desktop/", root_url = "https://leidenuniv.eu.qualtrics.com", verbose = TRUE)
+```
+
+You can read a survey from a local file using `readSurvey`:
+
+```r
+mysurvey <- readSurvey("/users/jasper/desktop/mysurvey.csv")
+```
+
+To avoid special characters (mainly periods) in header names, `readSurvey` uses question labels as the header names. The question belonging to that label is then added using the [sjmisc](https://cran.r-project.org/web/packages/sjmisc/index.html) package. Qualtrics gives names to these labels automatically, but you can easily change them.
+
+![vignettes/qualtricsdf.png]()
 
 ## Other information
 
@@ -93,7 +120,8 @@ If you have a request (like adding a new argument), please leave it [here](https
 
 **[v1.0]**
 
-- Added a new function 'readSurvey()'. This function is used in the 'getSurvey()' function but will also work with surveys downloaded manually from Qualtrics. Standard columns (completed survey/startDate/endDate etc.) are now converted to their proper data types. 
+- Added a new function 'readSurvey()'. This function is used in the 'getSurvey()' function but will also work with surveys downloaded manually from Qualtrics. Standard columns (completed survey/startDate/endDate etc.) are now converted to their proper data types. HT Adrian Brugger & Stefan Borer.
+- User can only download surveys in CSV format, no longer in XML or JSON. 
 - Added several new parameters to 'getSurvey()' function. HT @samuelkaminsky 
   * *LastResponseId*: If used, only responses that were filled out later than this ID will be downloaded.
   * *UseLabels*: If TRUE, download will contain character labels. Else, download will contain choice labels.

@@ -20,7 +20,6 @@
 #'
 #' @param surveyID Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.
 #' @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.).
-#' @param infer_types If TRUE, the function will download additional information about the survey from Qualtrics that allow it to assign proper data types. For example, multiple choice questions will be turned into factors with the correct labels (and order), slider questions will be turned into percentages and so on. See the qualtRics vignette for more information.
 #' @param useLabels TRUE to export survey responses as Choice Text or FALSE to export survey responses as values
 #' @param lastResponseId Export all responses received after the specified response
 #' @param startDate Date range filter to only exports responses recorded after the specified date. Accepts dates as character strings in format "YYYY-MM-DD"
@@ -53,7 +52,6 @@
 
 getSurvey <- function(surveyID,
                       root_url,
-                      infer_types=FALSE,
                       useLabels=TRUE,
                       lastResponseId=NULL,
                       startDate=NULL,
@@ -63,10 +61,6 @@ getSurvey <- function(surveyID,
                       verbose=FALSE) {
   # Check params
   checkParams(save_dir, check_qualtrics_api_key = TRUE)
-  # If infer_types == TRUE, then useLabels must likewise be TRUE
-  if(infer_types) {
-    if(useLabels == FALSE) useLabels <- TRUE
-  }
   # See if survey already in tempdir
   if(!force_request) {
     if(paste0(surveyID, ".rds") %in% tempdir()) {

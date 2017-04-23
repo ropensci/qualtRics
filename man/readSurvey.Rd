@@ -7,7 +7,9 @@
 readSurvey(file_name, stripHTML = TRUE)
 }
 \arguments{
-\item{data}{A csv data file.}
+\item{file_name}{A csv data file.}
+
+\item{stripHTML}{logical, defaults to true. If TRUE, then remove html tags.}
 }
 \value{
 A data frame. Variable labels are stored as attributes. They are not printed on

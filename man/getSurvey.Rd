@@ -4,16 +4,14 @@
 \alias{getSurvey}
 \title{Export a survey and download into R}
 \usage{
-getSurvey(surveyID, root_url, infer_types = FALSE, useLabels = TRUE,
-  lastResponseId = NULL, startDate = NULL, endDate = NULL,
-  save_dir = NULL, force_request = FALSE, verbose = FALSE)
+getSurvey(surveyID, root_url, useLabels = TRUE, lastResponseId = NULL,
+  startDate = NULL, endDate = NULL, save_dir = NULL,
+  force_request = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{surveyID}{Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.}
 
 \item{root_url}{Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.).}
-
-\item{infer_types}{If TRUE, the function will download additional information about the survey from Qualtrics that allow it to assign proper data types. For example, multiple choice questions will be turned into factors with the correct labels (and order), slider questions will be turned into percentages and so on. See the qualtRics vignette for more information.}
 
 \item{useLabels}{TRUE to export survey responses as Choice Text or FALSE to export survey responses as values}
 
@@ -28,6 +26,8 @@ getSurvey(surveyID, root_url, infer_types = FALSE, useLabels = TRUE,
 \item{force_request}{getSurvey() saves each survey in a temporary directory so that it can quickly be retrieved later. If force_request is TRUE, getSurvey() always downloads the survey from the API instead of loading it from the temporary directory.}
 
 \item{verbose}{Print verbose messages to the R console? Defaults to FALSE}
+
+\item{infer_types}{If TRUE, the function will download additional information about the survey from Qualtrics that allow it to assign proper data types. For example, multiple choice questions will be turned into factors with the correct labels (and order), slider questions will be turned into percentages and so on. See the qualtRics vignette for more information.}
 }
 \description{
 Export a qualtrics survey you own and import the survey directly into R. NOTE: If you keep getting errors try to use your institution's base URL. See \url{https://api.qualtrics.com/docs/root-url}.
