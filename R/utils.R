@@ -305,11 +305,11 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
 # @author Jasper Ginn
 
 inferDataTypes <- function(data,
-                           surveyID,
-                           root_url,
+                           #surveyID,
+                           #root_url,
                            verbose = FALSE) {
   # Download survey metadata
-  sm <- getSurveyMetadata(surveyID, root_url = root_url)
+  #sm <- getSurveyMetadata(surveyID, root_url = root_url)
   # For each column, cycle and assign
   for(col.name in names(data)) {
     #print(col.name)
@@ -333,111 +333,12 @@ inferDataTypes <- function(data,
       data[,col.name] <- factor(data[,col.name], levels=c("0", "1"))
     } else if(col.name %in% qDate) {
       data[,col.name] <- lubridate::as_datetime(data[,col.name])
-    } else{
-      # does question exist in survey metadata?
-      if(col.name %in% sm$mapping$question) {
-        col.qt <- tryCatch({
-          sm$questions[[sm$mapping[sm$mapping$question == col.name,]$QID]]
-        }, error = function(e) {
-          tryCatch({
-            sm$questions[[sm$mapping[sm$mapping$question == paste0(col.name, "_1"),]$QID]]
-          }, error= function(e) {
-            sm$questions[[sm$mapping[sm$mapping$question == paste0(col.name, "_TEXT"),]$QID]]
-          })
-        })
-        # This information is so rich, it would be a shame to not attach it to the data as e.g. attributes ...
-
-        # BY QUESTION TYPE ----
-
-        question.type <- col.qt$questionType$type
-        if(question.type == "Matrix") {
-          if(col.qt$questionType$selector == "Likert") {
-            if(col.qt$questionType$subSelector == "SingleAnswer") {
-              ch <- col.qt$choices
-              # Get name values
-              nv <- sapply(ch, function(x) x$choiceText)
-              # Recode
-              data[,col.name] <- factor(data[,col.name], levels=nv)
-            } else if(col.qt$questionType$subSelector == "MultipleAnswer") {
-              data[,col.name] <- as.character(data[,col.name])
-            }
-          }
-        } else if(question.type == "MC") {
-          if(col.qt$questionType$selector == "SAVR") {
-            ch <- col.qt$choices
-            # Get name values
-            nv <- sapply(ch, function(x) x$choiceText)
-            # Recode
-            data[,col.name] <- factor(data[,col.name], levels=nv)
-          } else if(col.qt$questionType$selector == "SAVR")
-            data[,col.name] <- as.character(data[,col.name])
-        } else if(question.type == "TE") {
-          if(col.qt$questionType$selector == "SL") {
-            # Check if data validation is turned on. If so, use that information
-            if(!is.null(col.qt$validation$type)) {
-              type <- col.qt$validation$type
-              if(type == "ValidNumber") {
-                data[,col.name] <- as.numeric(data[,col.name])
-              } else if(type == "ValidEmail") {
-                data[,col.name] <- as.character(data[,col.name])
-              } else if(type == "ValidPhone") {
-                data[,col.name] <- as.character(data[,col.name])
-              } else if(type == "ValidUSState") {
-                data[,col.name] <- as.factor(data[,col.name])
-              } else if(type == "ValidZip") {
-                data[,col.name] <- as.character(data[,col.name])
-              } else if(type == "ValidDate") {
-                if(col.qt$validation$settings$validDateType == "MMDDYYYY") {
-                  data[,col.name] <- as.Date(lubridate::mdy(data[,col.name]))
-                } else if(col.qt$validation$settings$validDateType == "DDMMYYY") {
-                  data[,col.name] <- as.Date(lubridate::dmy(data[,col.name]))
-                } else if(col.qt$validation$settings$validDateType == "YYYYMMDD") {
-                  data[,col.name] <- as.Date(lubridate::ymd(data[,col.name]))
-                } else {
-                  data[,col.name] <- as.character(data[,col.name])
-                }
-              } else if(type == "ValidTextOnly") {
-                data[,col.name] <- as.character(data[,col.name])
-              }
-            }
-          } else {
-            data[,col.name] <- as.character(data[,col.name])
-          }
-        } else if(question.type == "Slider") {
-          if(col.qt$questionType$selector %in% c("HBAR", "HSLIDER")) {
-            data[,col.name] <- as.numeric(data[,col.name])
-          } else if(col.qt$questionType$selector == "STAR") {
-            # There's no way to tell the difference between stars, half stars and continuous values ....
-            data[,col.name] <- as.character(data[,col.name])
-          }
-        }
-
-      }
-
+    } else {
+      NULL
     }
 
   }
 
-  if(verbose) {
-    m <- paste0(
-      "Assigned the following data types to survey:\n",
-      "\n",
-      "(","\n",
-      paste0(
-        "\t",names(data), " (", unname(sapply(data, class)), "),", collapse="\n"
-      ), "\n",
-      ")"
-    )
-    cat(m)
-  }
-}
-
-# These data are given by qualtrics for each survey
-#
-# @param
-# @author Jasper Ginn
-
-dataType <- function(data, col.name, survey_metadata) {
-
-
+  # Return data
+  return(data)
 }
