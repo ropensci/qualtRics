@@ -102,7 +102,7 @@ mysurvey <- readSurvey("/users/jasper/desktop/mysurvey.csv")
 
 To avoid special characters (mainly periods) in header names, `readSurvey` uses question labels as the header names. The question belonging to that label is then added using the [sjmisc](https://cran.r-project.org/web/packages/sjmisc/index.html) package. Qualtrics gives names to these labels automatically, but you can easily change them.
 
-![/vignettes/qualtricsdf.png?raw=true]()
+![/JasperHG90/qualtRics/raw/developing/vignettes/qualtricsdf.png]()
 
 ## Other information
 
