@@ -100,9 +100,6 @@ getSurvey <- function(surveyID,
   survey.fpath <- downloadQualtricsExport(check_url, verbose = verbose)
   # Read data
   data <- readSurvey(survey.fpath)
-  # Add types
-  data <- inferDataTypes(data)
-    # ADD TYPES
   # Save survey as RDS file in temp folder so that it can be easily retrieved this session.
   saveRDS(data, paste0(tempdir(), "/", surveyID, ".rds"))
   # Remove tmpfiles

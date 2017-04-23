@@ -72,5 +72,7 @@ readSurvey <- function(file_name, stripHTML = TRUE) {
     # add variable labels
     # -------------------
     rawdata <- sjmisc::set_label(rawdata, unlist(subquestions))
+    # Add types
+    rawdata <- inferDataTypes(rawdata)
     return(rawdata)
 }
