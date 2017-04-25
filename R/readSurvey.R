@@ -27,12 +27,17 @@ readSurvey <- function(file_name, stripHTML = TRUE) {
     }
     # import data including variable names (row 1) and variable labels (row 2)
     rawdata <- read.csv(file=file_name,
-                        header = F, sep = ',',
+                        header = FALSE,
+                        sep = ',',
                         stringsAsFactors=FALSE,
-                        fileEncoding = "UTF-8-BOM", skip = 2)[-1,]
-    header <- read.csv(file=file_name, header = T,
-                       sep = ',', stringsAsFactors=FALSE,
-                       fileEncoding = "UTF-8-BOM", nrows = 1)
+                        fileEncoding = "UTF-8-BOM",
+                        skip = 3)
+    header <- read.csv(file=file_name,
+                       header = TRUE,
+                       sep = ',',
+                       stringsAsFactors=FALSE,
+                       fileEncoding = "UTF-8-BOM",
+                       nrows = 1)
     # Add names
     names(rawdata) <- names(header)
     # Import importids
