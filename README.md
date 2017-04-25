@@ -99,9 +99,13 @@ mysurvey <- getSurvey(surveyID = surveys$id[6],
                       verbose = TRUE)
 ```
 
-Note that surveys that are stored in this way will be saved as an [RDS](https://stat.ethz.ch/R-manual/R-devel/library/base/html/readRDS.html) file rather than e.g. a CSV.
+Note that surveys that are stored in this way will be saved as an [RDS](https://stat.ethz.ch/R-manual/R-devel/library/base/html/readRDS.html) file rather than e.g. a CSV. Reading an RDS file is as straightforward as this:
 
-You can read a survey from a local file using `readSurvey`:
+```r
+mysurvey <- readRDS(file = "/users/jasper/desktop/mysurvey.rds")
+```
+
+You can read a survey that you downloaded manually using `readSurvey`:
 
 ```r
 mysurvey <- readSurvey("/users/jasper/desktop/mysurvey.csv")
