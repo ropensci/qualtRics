@@ -26,10 +26,9 @@ mysurvey <- getSurvey(surveys$id[6],
 }
 
 }
-\author{
-Jasper Ginn
-}
 \seealso{
 See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API.
 }
-
+\author{
+Jasper Ginn
+}

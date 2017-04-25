@@ -30,4 +30,3 @@ my_data_frame <- readSurvey(my_csv_file)
 \author{
 Adrian Brugger, Stefan Borer & Jasper Ginn
 }
-
