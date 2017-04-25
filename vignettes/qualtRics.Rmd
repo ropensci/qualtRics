@@ -71,7 +71,9 @@ Note that, while requests will work without a [root url](https://api.qualtrics.c
 Export a survey and load it into R:
 
 ```r
-mysurvey <- getSurvey(surveyID = surveys$id[6], root_url = "https://leidenuniv.eu.qualtrics.com", verbose = TRUE)
+mysurvey <- getSurvey(surveyID = surveys$id[6], 
+                      root_url = "https://leidenuniv.eu.qualtrics.com", 
+                      verbose = TRUE)
 ```
 
 You can add a from/to date to only retrieve responses between those dates:
@@ -98,8 +100,13 @@ surv <- getSurvey(survs$id[4],
 You can store the results in a specific location if you like:
 
 ```r
-mysurvey <- getSurvey(surveyID = surveys$id[6], save_dir = "/users/jasper/desktop/", root_url = "https://leidenuniv.eu.qualtrics.com", verbose = TRUE)
+mysurvey <- getSurvey(surveyID = surveys$id[6], 
+                      save_dir = "/users/jasper/desktop/", 
+                      root_url = "https://leidenuniv.eu.qualtrics.com", 
+                      verbose = TRUE)
 ```
+
+Note that surveys that are stored in this way will be saved as an [RDS](https://stat.ethz.ch/R-manual/R-devel/library/base/html/readRDS.html) file rather than e.g. a CSV.
 
 You can read a survey from a local file using `readSurvey`:
 
