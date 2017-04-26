@@ -118,7 +118,7 @@ You can read a survey from a local file using `readSurvey`:
 mysurvey <- readSurvey("/users/jasper/desktop/mysurvey.csv")
 ```
 
-To avoid special characters (mainly periods) in header names, `readSurvey` uses question labels as the header names. The question belonging to that label is then added using the [sjmisc](https://cran.r-project.org/web/packages/sjmisc/index.html) package. Qualtrics gives names to these labels automatically, but you can easily change them.
+To avoid special characters (mainly periods) in header names, `readSurvey` uses question labels as the header names. The question belonging to that label is then added using the [sjmisc](https://CRAN.R-project.org/package=sjmisc) package. Qualtrics gives names to these labels automatically, but you can easily change them.
 
 ![](qualtricsdf.png)
 

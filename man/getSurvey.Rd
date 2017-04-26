@@ -4,9 +4,10 @@
 \alias{getSurvey}
 \title{Export a survey and download into R}
 \usage{
-getSurvey(surveyID, root_url, useLabels = TRUE, lastResponseId = NULL,
-  startDate = NULL, endDate = NULL, save_dir = NULL,
-  force_request = FALSE, verbose = FALSE)
+getSurvey(surveyID, root_url, useLabels = TRUE,
+  convertStandardColumns = TRUE, lastResponseId = NULL, startDate = NULL,
+  endDate = NULL, save_dir = NULL, force_request = FALSE,
+  verbose = FALSE)
 }
 \arguments{
 \item{surveyID}{Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.}
@@ -14,6 +15,8 @@ getSurvey(surveyID, root_url, useLabels = TRUE, lastResponseId = NULL,
 \item{root_url}{Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.).}
 
 \item{useLabels}{TRUE to export survey responses as Choice Text or FALSE to export survey responses as values}
+
+\item{convertStandardColumns}{logical, defaults to TRUE. If TRUE, then the function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format.}
 
 \item{lastResponseId}{Export all responses received after the specified response}
 

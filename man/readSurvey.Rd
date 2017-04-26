@@ -4,12 +4,14 @@
 \alias{readSurvey}
 \title{Read comma separated csv file from Qualtrics.}
 \usage{
-readSurvey(file_name, stripHTML = TRUE)
+readSurvey(file_name, convertStandardColumns = TRUE, stripHTML = TRUE)
 }
 \arguments{
 \item{file_name}{A csv data file.}
 
-\item{stripHTML}{logical, defaults to true. If TRUE, then remove html tags.}
+\item{convertStandardColumns}{logical, defaults to TRUE. If TRUE, then the function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format.}
+
+\item{stripHTML}{logical, defaults to TRUE. If TRUE, then remove html tags.}
 }
 \value{
 A data frame. Variable labels are stored as attributes. They are not printed on
