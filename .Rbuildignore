@@ -1,7 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-.gitignore
-.RData
-.Rhistory
-.travis.yml
-README.md
+^\.gitignore$
+^\.RData$
+^\.Rhistory$
+^\.travis\.yml$
+README\.md$
