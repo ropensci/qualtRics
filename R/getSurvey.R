@@ -21,6 +21,7 @@
 #' @param surveyID Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.
 #' @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.).
 #' @param useLabels TRUE to export survey responses as Choice Text or FALSE to export survey responses as values
+#' @param convertStandardColumns logical, defaults to TRUE. If TRUE, then the function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format.
 #' @param lastResponseId Export all responses received after the specified response
 #' @param startDate Date range filter to only exports responses recorded after the specified date. Accepts dates as character strings in format "YYYY-MM-DD"
 #' @param endDate Date range filter to only exports responses recorded before the specified date. Accepts dates as character strings in format "YYYY-MM-DD"
@@ -53,6 +54,7 @@
 getSurvey <- function(surveyID,
                       root_url,
                       useLabels=TRUE,
+                      convertStandardColumns = TRUE,
                       lastResponseId=NULL,
                       startDate=NULL,
                       endDate=NULL,
@@ -93,7 +95,7 @@ getSurvey <- function(surveyID,
   # Download, unzip and return file path
   survey.fpath <- downloadQualtricsExport(check_url, verbose = verbose)
   # Read data
-  data <- readSurvey(survey.fpath)
+  data <- readSurvey(survey.fpath, convertStandardColumns = convertStandardColumns)
   # Save survey as RDS file in temp folder so that it can be easily retrieved this session.
   saveRDS(data, paste0(tempdir(), "/", surveyID, ".rds"))
   # Remove tmpfiles

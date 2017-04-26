@@ -12,7 +12,7 @@
 
 <meta name="author" content="Jasper Ginn" />
 
-<meta name="date" content="2017-04-23" />
+<meta name="date" content="2017-04-25" />
 
 <title>qualtRics</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">qualtRics</h1>
 <h4 class="author"><em>Jasper Ginn</em></h4>
-<h4 class="date"><em>2017-04-23</em></h4>
+<h4 class="date"><em>2017-04-25</em></h4>
 
 
 
@@ -111,7 +111,9 @@ devtools::<span class="kw">install_github</span>(<span class="st">&quot;JasperHG
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">surveys &lt;-<span class="st"> </span><span class="kw">getSurveys</span>(<span class="dt">root_url=</span><span class="st">&quot;https://leidenuniv.eu.qualtrics.com&quot;</span>) <span class="co"># URL is for my own institution</span></code></pre></div>
 <p>Note that, while requests will work without a <a href="https://api.qualtrics.com/docs/root-url">root url</a> for the <code>getSurveys</code> function, it is desirable that you supply it. Supplying the correct url will reduce the number of errors you’ll experience. The <code>getSurvey</code> function requires you to pass this root url. Please refer to the <a href="https://api.qualtrics.com/docs/root-url">official documentation</a> to find out your institution-specific root url.</p>
 <p>Export a survey and load it into R:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mysurvey &lt;-<span class="st"> </span><span class="kw">getSurvey</span>(<span class="dt">surveyID =</span> surveys$id[<span class="dv">6</span>], <span class="dt">root_url =</span> <span class="st">&quot;https://leidenuniv.eu.qualtrics.com&quot;</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mysurvey &lt;-<span class="st"> </span><span class="kw">getSurvey</span>(<span class="dt">surveyID =</span> surveys$id[<span class="dv">6</span>], 
+                      <span class="dt">root_url =</span> <span class="st">&quot;https://leidenuniv.eu.qualtrics.com&quot;</span>, 
+                      <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>You can add a from/to date to only retrieve responses between those dates:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">surv &lt;-<span class="st"> </span><span class="kw">getSurvey</span>(survs$id[<span class="dv">4</span>],
                   <span class="dt">root_url =</span> <span class="st">&quot;https://leidenuniv.eu.qualtrics.com&quot;</span>,
@@ -126,7 +128,12 @@ devtools::<span class="kw">install_github</span>(<span class="st">&quot;JasperHG
                   <span class="dt">useLabels =</span> <span class="ot">FALSE</span>,
                   <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>You can store the results in a specific location if you like:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mysurvey &lt;-<span class="st"> </span><span class="kw">getSurvey</span>(<span class="dt">surveyID =</span> surveys$id[<span class="dv">6</span>], <span class="dt">save_dir =</span> <span class="st">&quot;/users/jasper/desktop/&quot;</span>, <span class="dt">root_url =</span> <span class="st">&quot;https://leidenuniv.eu.qualtrics.com&quot;</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mysurvey &lt;-<span class="st"> </span><span class="kw">getSurvey</span>(<span class="dt">surveyID =</span> surveys$id[<span class="dv">6</span>], 
+                      <span class="dt">save_dir =</span> <span class="st">&quot;/users/jasper/desktop/&quot;</span>, 
+                      <span class="dt">root_url =</span> <span class="st">&quot;https://leidenuniv.eu.qualtrics.com&quot;</span>, 
+                      <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>Note that surveys that are stored in this way will be saved as an <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/readRDS.html">RDS</a> file rather than e.g. a CSV. Reading an RDS file is as straightforward as this:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mysurvey &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="dt">file =</span> <span class="st">&quot;/users/jasper/desktop/mysurvey.rds&quot;</span>)</code></pre></div>
 <p>You can read a survey from a local file using <code>readSurvey</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mysurvey &lt;-<span class="st"> </span><span class="kw">readSurvey</span>(<span class="st">&quot;/users/jasper/desktop/mysurvey.csv&quot;</span>)</code></pre></div>
 <p>To avoid special characters (mainly periods) in header names, <code>readSurvey</code> uses question labels as the header names. The question belonging to that label is then added using the <a href="https://cran.r-project.org/web/packages/sjmisc/index.html">sjmisc</a> package. Qualtrics gives names to these labels automatically, but you can easily change them.</p>

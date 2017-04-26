@@ -7,7 +7,8 @@
 #'Variable labels are stored as attributes.
 #'
 #' @param file_name A csv data file.
-#' @param stripHTML logical, defaults to true. If TRUE, then remove html tags.
+#' @param convertStandardColumns logical, defaults to TRUE. If TRUE, then the function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format.
+#' @param stripHTML logical, defaults to TRUE. If TRUE, then remove html tags.
 #'
 #' @author Adrian Brugger, Stefan Borer & Jasper Ginn
 #' @importFrom utils read.csv
@@ -19,7 +20,9 @@
 #' my_data_frame <- readSurvey(my_csv_file)
 #' }
 
-readSurvey <- function(file_name, stripHTML = TRUE) {
+readSurvey <- function(file_name,
+                       convertStandardColumns = TRUE,
+                       stripHTML = TRUE) {
     # check if file exists
     if(!file.exists(file_name)) {
         print("File does not exist")
@@ -79,6 +82,8 @@ readSurvey <- function(file_name, stripHTML = TRUE) {
     # -------------------
     rawdata <- sjmisc::set_label(rawdata, unlist(subquestions))
     # Add types
-    rawdata <- inferDataTypes(rawdata)
+    if(convertStandardColumns) {
+      rawdata <- inferDataTypes(rawdata)
+    }
     return(rawdata)
 }

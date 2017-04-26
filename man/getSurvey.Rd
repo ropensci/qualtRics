@@ -21,7 +21,7 @@ getSurvey(surveyID, root_url, useLabels = TRUE, lastResponseId = NULL,
 
 \item{endDate}{Date range filter to only exports responses recorded before the specified date. Accepts dates as character strings in format "YYYY-MM-DD"}
 
-\item{save_dir}{Directory where survey results will be stored. Defaults to a temporary directory which is cleaned when your R session is terminated. This parameter is useful if you'd like to store survey results.}
+\item{save_dir}{Directory where survey results will be stored. Defaults to a temporary directory which is cleaned when your R session is terminated. This parameter is useful if you'd like to store survey results. The downloaded survey will be stored as an RDS file (see \link[base]{readRDS}).}
 
 \item{force_request}{getSurvey() saves each survey in a temporary directory so that it can quickly be retrieved later. If force_request is TRUE, getSurvey() always downloads the survey from the API instead of loading it from the temporary directory.}
 
