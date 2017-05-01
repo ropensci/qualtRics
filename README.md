@@ -129,7 +129,11 @@ If you have a request (like adding a new argument), please leave it [here](https
 
 ### Changelog
 
-**[development/master branch]**
+**[development branch]**
+
+- \* 
+
+**[master branch]**
 
 - `getSurveys` now retrieves > 100 results.
 
