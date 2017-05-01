@@ -44,6 +44,17 @@ getSurveys <- function(root_url = "https://yourdatacenterid.qualtrics.com") {
   root_url <- appendRootUrl(root_url, "surveys")
   # Send GET request to list all surveys
   resp <- qualtricsApiRequest("GET", root_url)
-  # Bind to data frame & return
-  return(do.call(rbind.data.frame, resp$result$elements))
+  # Put results in list
+  master <- list()
+  # Append results
+  master <- append(master, resp$result$elements)
+  # If nextPage != null, keep calling
+  while(!is.null(resp$result$nextPage)) {
+    # Send GET request to list all surveys
+    resp <- qualtricsApiRequest("GET", resp$result$nextPage)
+    # Append results
+    master <- append(master, resp$result$elements)
+  }
+  # Bind to one large data frame & return
+  return(do.call(rbind.data.frame, master))
 }
