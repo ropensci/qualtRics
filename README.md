@@ -129,6 +129,10 @@ If you have a request (like adding a new argument), please leave it [here](https
 
 ### Changelog
 
+**development/master branch**
+
+- `getSurveys` now retrieves > 100 results.
+
 **[v1.0]**
 
 - Added a new function `readSurvey()`. This function is used in the `getSurvey()` function but will also work with surveys downloaded manually from Qualtrics. Standard columns (completed survey/startDate/endDate etc.) are now converted to their proper data types. HT Adrian Brugger & Stefan Borer.
