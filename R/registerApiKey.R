@@ -18,7 +18,7 @@
 #'
 #' This function registers the user's qualtrics API key for the remainder of the R session. This function only needs to be called once (at the beginning of each R session).
 #'
-#' @param API.TOKEN API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})
+#' @param API.TOKEN String. API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API.
 #' @author Jasper Ginn

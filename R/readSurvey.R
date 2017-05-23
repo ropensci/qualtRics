@@ -22,9 +22,9 @@
 #'Repetitive introductions to matrix questions are automatically removed.
 #'Variable labels are stored as attributes.
 #'
-#' @param file_name A csv data file.
-#' @param convertStandardColumns logical, defaults to TRUE. If TRUE, then the function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format.
-#' @param stripHTML logical, defaults to TRUE. If TRUE, then remove html tags.
+#' @param file_name String. A csv data file.
+#' @param convertStandardColumns Boolean. If TRUE, then the function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. defaults to TRUE.
+#' @param stripHTML Boolean. If TRUE, then remove html tags. Defaults to TRUE
 #'
 #' @author Adrian Brugger, Stefan Borer & Jasper Ginn
 #' @importFrom utils read.csv
