@@ -89,7 +89,8 @@ getSurvey <- function(surveyID,
                                   startDate = startDate,
                                   endDate = endDate,
                                   seenUnansweredRecode = seenUnansweredRecode,
-                                  limit = limit)
+                                  limit = limit,
+                                  useLocalTime = useLocalTime)
   # POST request for download
   res <- qualtricsApiRequest("POST", url=root_url, body = raw_payload)
   # Get id
