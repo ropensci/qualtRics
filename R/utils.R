@@ -161,6 +161,7 @@ checkForWarnings <- function(resp) {
 checkParams <- function(save_dir = NULL,
                         root_url = NULL,
                         seenUnansweredRecode = NULL,
+                        limit = NULL,
                         check_qualtrics_api_key = FALSE
                         ) {
   ### root_url
@@ -182,7 +183,12 @@ checkParams <- function(save_dir = NULL,
   if(!is.null(seenUnansweredRecode)) {
     assertthat::assert_that(assertthat::is.string(seenUnansweredRecode))
   }
+  # Check if limit > 0
+  if(!is.null(limit)) {
+    assertthat::assert_that(limit > 0)
+  }
   ### ..
+
 }
 
 # Append proper end points to create root url
@@ -209,45 +215,57 @@ createRawPayload <- function(surveyID,
                              lastResponseId=NULL,
                              startDate=NULL,
                              endDate=NULL,
+                             limit=NULL,
                              seenUnansweredRecode=NULL) {
 
   paste0(
     '{"format": ', '"', 'csv', '"' ,
-    ', "surveyId": ', '"', surveyID,
+    ', "surveyId": ', '"', surveyID, '"',
     ifelse(
       is.null(lastResponseId),
       "",
-      paste0('"' ,
+      paste0(
              ', "lastResponseId": ',
              '"',
-             lastResponseId)
+             lastResponseId,
+             '"')
     ) ,
     ifelse(
       is.null(startDate),
       "",
-      paste0('"' ,
+      paste0(
              ', "startDate": ',
              '"',
-             paste0(startDate,"T00:00:00Z"))
+             paste0(startDate,"T00:00:00Z"),
+             '"')
     ) ,
     ifelse(
       is.null(endDate),
       "",
-      paste0('"' ,
+      paste0(
              ', "endDate": ',
              '"',
-             paste0(endDate,"T00:00:00Z"))
+             paste0(endDate,"T00:00:00Z"),
+             '"')
     ) ,
     ifelse(
       is.null(seenUnansweredRecode),
       "",
-      paste0('"' ,
+      paste0(
              ', "seenUnansweredRecode": ',
              '"',
-             seenUnansweredRecode
-             )
+             seenUnansweredRecode,
+             '"')
     ),
-    '", ',
+    ifelse(
+      is.null(limit),
+      "",
+      paste0(
+             ', "limit": ',
+             limit
+      )
+    ),
+    ', ',
     '"useLabels": ', tolower(useLabels),
     '}'
   )
