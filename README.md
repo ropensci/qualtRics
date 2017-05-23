@@ -135,6 +135,11 @@ If you have a request (like adding a new argument), please leave it [here](https
 
 **[master branch]**
 
+- Updated examples and documentation of functions.
+- Added the following parameters to `getSurvey`:
+  - **seenUnansweredRecode:**  String. Recode seen but unanswered questions with a string value. 
+  - **limit:** Integer. Maximum number of responses exported. Defaults to NULL (all responses).
+  - **useLocalTime:** Boolean. Use local timezone to determine response date values. 
 - `getSurveys` now retrieves > 100 results.
 
 **[v1.0]**
