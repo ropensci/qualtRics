@@ -68,7 +68,11 @@ getSurvey <- function(surveyID,
                       force_request=FALSE,
                       verbose=FALSE) {
   # Check params
-  checkParams(save_dir, check_qualtrics_api_key = TRUE)
+  checkParams(save_dir,
+              root_url=root_url,
+              seenUnansweredRecode = seenUnansweredRecode,
+              limit=limit,
+              check_qualtrics_api_key = TRUE)
   # See if survey already in tempdir
   if(!force_request) {
     if(paste0(surveyID, ".rds") %in% tempdir()) {
@@ -79,12 +83,13 @@ getSurvey <- function(surveyID,
   # add endpoint to root url
   root_url <- appendRootUrl(root_url, "responseexports")
   # Create raw JSON payload
-  raw_payload <- createRawPayload(surveyID,
-                                  useLabels,
-                                  lastResponseId,
-                                  startDate,
-                                  endDate,
-                                  seenUnansweredRecode)
+  raw_payload <- createRawPayload(surveyID = surveyID,
+                                  useLabels = useLabels,
+                                  lastResponseId = lastResponseId,
+                                  startDate = startDate,
+                                  endDate = endDate,
+                                  seenUnansweredRecode = seenUnansweredRecode,
+                                  limit = limit)
   # POST request for download
   res <- qualtricsApiRequest("POST", url=root_url, body = raw_payload)
   # Get id
