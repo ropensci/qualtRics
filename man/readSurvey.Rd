@@ -7,11 +7,11 @@
 readSurvey(file_name, convertStandardColumns = TRUE, stripHTML = TRUE)
 }
 \arguments{
-\item{file_name}{A csv data file.}
+\item{file_name}{String. A csv data file.}
 
-\item{convertStandardColumns}{logical, defaults to TRUE. If TRUE, then the function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format.}
+\item{convertStandardColumns}{Boolean. If TRUE, then the function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. defaults to TRUE.}
 
-\item{stripHTML}{logical, defaults to TRUE. If TRUE, then remove html tags.}
+\item{stripHTML}{Boolean. If TRUE, then remove html tags. Defaults to TRUE}
 }
 \value{
 A data frame. Variable labels are stored as attributes. They are not printed on
