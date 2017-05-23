@@ -45,12 +45,25 @@
 #' @examples
 #' \dontrun{
 #' registerApiKey("<YOUR-QUALTRICS-API-KEY>")
-#' surveys <- getSurveys("https://leidenuniv.eu.qualtrics.com")
+#' # Retrieve a list of surveys
+#' surveys <- getSurveys(root_url = "https://leidenuniv.eu.qualtrics.com")
 #'                       # URL is for my own institution.
 #'                       # Substitute with your own institution's url
-#' mysurvey <- getSurvey(surveys$id[6],
+#' # Retrieve a single survey
+#' mysurvey <- getSurvey(surveyID = surveys$id[6],
+#'                       root_url = "https://leidenuniv.eu.qualtrics.com",
 #'                       save_dir = tempdir(),
-#'                       "https://leidenuniv.eu.qualtrics.com",
+#'                       verbose=TRUE)
+#' # You can use the same parameters as those found in the qualtrics API documentation
+#' # Found here: https://api.qualtrics.com/docs/csv
+#' mysurvey <- getSurvey(surveyID = surveys$id[6],
+#'                       root_url = "https://leidenuniv.eu.qualtrics.com",
+#'                       save_dir = tempdir(),
+#'                       startDate = "2017-01-01",
+#'                       endDate = "2017-01-31",
+#'                       limit = 100,
+#'                       useLabels = TRUE,
+#'                       seenUnansweredRecode = "UNANS",
 #'                       verbose=TRUE)
 #' }
 
