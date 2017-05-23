@@ -147,7 +147,7 @@ If you have a request (like adding a new argument), please leave it [here](https
 - Added a new function `readSurvey()`. This function is used in the `getSurvey()` function but will also work with surveys downloaded manually from Qualtrics. Standard columns (completed survey/startDate/endDate etc.) are now converted to their proper data types. HT Adrian Brugger & Stefan Borer.
 - User can only download surveys in CSV format, no longer in XML or JSON. 
 - Added several new parameters to `getSurvey()` function. HT @samuelkaminsky & @eknud
-  * *LastResponseId*: If used, only responses that were filled out later than this ID will be downloaded.
+  * *LastResponseId*: If used, only responses that were filled out later than this ID will be downloaded. 
   * *UseLabels*: If TRUE, download will contain character labels. Else, download will contain choice labels.
   * *StartDate*: Only download responses after this date.
   * *EndDate*: Only download responses before this date.
