@@ -25,6 +25,7 @@
 #' @param lastResponseId Export all responses received after the specified response
 #' @param startDate Date range filter to only exports responses recorded after the specified date. Accepts dates as character strings in format "YYYY-MM-DD"
 #' @param endDate Date range filter to only exports responses recorded before the specified date. Accepts dates as character strings in format "YYYY-MM-DD"
+#' @param seenUnansweredRecode Recode seen but unanswered questions with a string value. Defaults to NULL.
 #' @param save_dir Directory where survey results will be stored. Defaults to a temporary directory which is cleaned when your R session is terminated. This parameter is useful if you'd like to store survey results. The downloaded survey will be stored as an RDS file (see \link[base]{readRDS}).
 #' @param force_request getSurvey() saves each survey in a temporary directory so that it can quickly be retrieved later. If force_request is TRUE, getSurvey() always downloads the survey from the API instead of loading it from the temporary directory.
 #' @param verbose Print verbose messages to the R console? Defaults to FALSE
@@ -58,6 +59,7 @@ getSurvey <- function(surveyID,
                       lastResponseId=NULL,
                       startDate=NULL,
                       endDate=NULL,
+                      seenUnansweredRecode=NULL,
                       save_dir=NULL,
                       force_request=FALSE,
                       verbose=FALSE) {
@@ -77,7 +79,8 @@ getSurvey <- function(surveyID,
                                   useLabels,
                                   lastResponseId,
                                   startDate,
-                                  endDate)
+                                  endDate,
+                                  seenUnansweredRecode)
   # POST request for download
   res <- qualtricsApiRequest("POST", url=root_url, body = raw_payload)
   # Get id

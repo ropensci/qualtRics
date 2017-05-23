@@ -160,6 +160,7 @@ checkForWarnings <- function(resp) {
 
 checkParams <- function(save_dir = NULL,
                         root_url = NULL,
+                        seenUnansweredRecode = NULL,
                         check_qualtrics_api_key = FALSE
                         ) {
   ### root_url
@@ -176,6 +177,10 @@ checkParams <- function(save_dir = NULL,
   if(check_qualtrics_api_key) {
     # Look in temporary directory. If file 'qualtRics_header.rds' does not exist, then abort and tell user to register API key first
     assert_apikey_stored(tempdir())
+  }
+  # Check if seenUnansweredRecode is NULL or else a string
+  if(!is.null(seenUnansweredRecode)) {
+    assertthat::assert_that(assertthat::is.string(seenUnansweredRecode))
   }
   ### ..
 }
@@ -203,7 +208,9 @@ createRawPayload <- function(surveyID,
                              useLabels=TRUE,
                              lastResponseId=NULL,
                              startDate=NULL,
-                             endDate=NULL) {
+                             endDate=NULL,
+                             seenUnansweredRecode=NULL) {
+
   paste0(
     '{"format": ', '"', 'csv', '"' ,
     ', "surveyId": ', '"', surveyID,
@@ -230,7 +237,17 @@ createRawPayload <- function(surveyID,
              ', "endDate": ',
              '"',
              paste0(endDate,"T00:00:00Z"))
-    ) , '", ',
+    ) ,
+    ifelse(
+      is.null(seenUnansweredRecode),
+      "",
+      paste0('"' ,
+             ', "seenUnansweredRecode": ',
+             '"',
+             seenUnansweredRecode
+             )
+    ),
+    '", ',
     '"useLabels": ', tolower(useLabels),
     '}'
   )
