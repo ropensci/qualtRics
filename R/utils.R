@@ -216,6 +216,7 @@ createRawPayload <- function(surveyID,
                              startDate=NULL,
                              endDate=NULL,
                              limit=NULL,
+                             useLocalTime=FALSE,
                              seenUnansweredRecode=NULL) {
 
   paste0(
@@ -256,6 +257,14 @@ createRawPayload <- function(surveyID,
              '"',
              seenUnansweredRecode,
              '"')
+    ),
+    ifelse(
+      !useLocalTime,
+      "",
+      paste0(
+        ', "useLocalTime": ',
+        tolower(useLocalTime)
+        )
     ),
     ifelse(
       is.null(limit),
