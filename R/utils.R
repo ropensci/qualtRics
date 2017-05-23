@@ -102,45 +102,6 @@ constructHeader <- function(API.TOKEN) {
   return(headers)
 }
 
-# Retrieve a JSON file containing quiz metadata
-#
-# @param surveyID Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.
-# @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/root-url}. If you do not fill in anything, the function will use the default url. Using your institution-specific url can significantly speed up queries.)
-#
-# @seealso See \url{https://api.qualtrics.com/docs} for documentation on the Qualtrics API.
-# @author Jasper Ginn
-
-getSurveyMetadata <- function(surveyID,
-                              root_url = "https://yourdatacenterid.qualtrics.com") {
-  # Check params
-  checkParams(root_url=root_url, check_qualtrics_api_key=TRUE)
-  # Function-specific API stuff
-  root_url <- appendRootUrl(root_url, "surveys")
-  # Add survey id
-  root_url <- paste0(root_url,
-                     "/",
-                     surveyID)
-  # GET request to download metadata
-  resp <- qualtricsApiRequest("GET", root_url)
-  # Get question information and map
-  qi <- resp$result$questions
-  cm <- resp$result$exportColumnMap
-  # Return list of mapping data and quiz information
-  md <- data.frame(
-    # Replace all special characters
-    "question" = gsub("[^[:alnum:]_]", "\\.", names(cm)),
-    "QID" = sapply(cm, function(x) x$question),
-    stringsAsFactors = FALSE
-  )
-  # Return
-  return(
-    list(
-      "mapping" = md,
-      "questions" = qi
-    )
-  )
-}
-
 # Check if httr GET result contains a warning
 # @param resp object returned by 'qualtRicsResponseCodes()'
 
@@ -162,6 +123,7 @@ checkParams <- function(save_dir = NULL,
                         root_url = NULL,
                         seenUnansweredRecode = NULL,
                         limit = NULL,
+                        includedQuestionIds = NULL,
                         check_qualtrics_api_key = FALSE
                         ) {
   ### root_url
@@ -186,6 +148,10 @@ checkParams <- function(save_dir = NULL,
   # Check if limit > 0
   if(!is.null(limit)) {
     assertthat::assert_that(limit > 0)
+  }
+  # Check if includedQuestionIds is a string
+  if(!is.null(includedQuestionIds)) {
+    assertthat::assert_that(mode(includedQuestionIds) == "character")
   }
   ### ..
 
@@ -217,7 +183,8 @@ createRawPayload <- function(surveyID,
                              endDate=NULL,
                              limit=NULL,
                              useLocalTime=FALSE,
-                             seenUnansweredRecode=NULL) {
+                             seenUnansweredRecode=NULL,
+                             includedQuestionIds = NULL) {
 
   paste0(
     '{"format": ', '"', 'csv', '"' ,
@@ -267,11 +234,19 @@ createRawPayload <- function(surveyID,
         )
     ),
     ifelse(
+      is.null(includedQuestionIds),
+      "",
+      paste0(
+             ', "includedQuestionIds": ',
+             '[', paste0('"',includedQuestionIds, '"', collapse=", "), ']'
+      )
+    ),
+    ifelse(
       is.null(limit),
       "",
       paste0(
-             ', "limit": ',
-             limit
+        ', "limit": ',
+        limit
       )
     ),
     ', ',
