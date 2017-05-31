@@ -31,13 +31,18 @@ Periodically check this repository for updates and execute `devtools::install_gi
 
 ## Usage
 
-Currently, the package contains three functions:
+Currently, the package contains three core functions:
 
   1. *getSurveys()* fetches a list of all surveys that you own or have access to from Qualtrics.
   2. *getSurvey()* downloads a survey from Qualtrics and loads it into R.
   3. *readSurvey()* allows you to read CSV files you download manually from Qualtrics.
+  
+It further contains two helper functions:
 
-Note that you can only export surveys that you own, or to which you have been given explicit administration rights.
+  1. *registerApiKey()* stores your qualtRics API key in a temporary file
+  2. *getSurveyQuestions()* retrieves a data frame containing questions and question IDs for a survey
+
+Note that you can only export surveys that you own, or to which you have been given administration rights.
 
 ### Commands
 
