@@ -53,13 +53,10 @@ registerApiKey <- function(API.TOKEN) {
 
   # Get temporary directory
   td <- tempdir()
-
   # Construct header to send to qualtrics API
   head <- constructHeader(API.TOKEN)
-
   # Save to temporary directory
   saveRDS(head, paste0(td, "/qualtRics_header.rds"))
-
   # Return
   return(TRUE)
 

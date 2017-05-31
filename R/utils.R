@@ -128,13 +128,12 @@ checkParams <- function(save_dir = NULL,
                         ) {
   ### root_url
   if(!is.null(root_url)) {
-    # Ensure that root url is character
-    assertthat::assert_that(assertthat::is.string(root_url))
+    assert_rootUrl_string(root_url)
   }
   ### save_dir
   # Check if save_dir exists
   if(!is.null(save_dir)) {
-    if(!file.info(save_dir)$isdir | is.na(file.info(save_dir)$isdir)) stop(paste0("The directory ", save_dir, " does not exist."))
+    assert_saveDir_exists(save_dir)
   }
   ### check_qualtrics_api_key
   if(check_qualtrics_api_key) {
@@ -143,11 +142,11 @@ checkParams <- function(save_dir = NULL,
   }
   # Check if seenUnansweredRecode is NULL or else a string
   if(!is.null(seenUnansweredRecode)) {
-    assertthat::assert_that(assertthat::is.string(seenUnansweredRecode))
+    assert_seenUnansweredRecode_string(seenUnansweredRecode)
   }
   # Check if limit > 0
   if(!is.null(limit)) {
-    assertthat::assert_that(limit > 0)
+    assert_limit_abovezero(limit)
   }
   # Check if includedQuestionIds is a string
   if(!is.null(includedQuestionIds)) {

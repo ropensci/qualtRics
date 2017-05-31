@@ -131,7 +131,8 @@ If you have a request (like adding a new argument), please leave it [here](https
 
 **[development branch]**
 
-- \* 
+- Added a new function `getSurveyQuestions` that allows the user to download a data frame containing question labels and IDs.
+- Added parameter **includedQuestionIds** so user can select questions they want to download. Need to use the QID value from `getSurveyQuestions`.
 
 **[master branch]**
 

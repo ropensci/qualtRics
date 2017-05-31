@@ -65,6 +65,17 @@ mysurvey <- getSurvey(surveyID = surveys$id[6],
                       useLabels = TRUE,
                       seenUnansweredRecode = "UNANS",
                       verbose=TRUE)
+# You can also choose to only download an export with specific questions using the \\link[qualtRics]{getSurveyQuestions} function.
+
+# Retrieve questions for a survey
+questions <- getSurveyQuestions(surveyID = surveys$id[6],
+                                root_url = "https://leidenuniv.eu.qualtrics.com")
+# Retrieve a single survey, filtering for questions I want.
+mysurvey <- getSurvey(surveyID = surveys$id[6],
+                      root_url = "https://leidenuniv.eu.qualtrics.com",
+                      save_dir = tempdir(),
+                      includedQuestionIds = c("QID1", "QID2", "QID3"),
+                      verbose=TRUE)
 }
 }
 \seealso{
