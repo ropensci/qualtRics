@@ -131,17 +131,18 @@ If you have a request (like adding a new argument), please leave it [here](https
 
 **[development branch]**
 
-- Added a new function `getSurveyQuestions` that allows the user to download a data frame containing question labels and IDs.
-- Added parameter **includedQuestionIds** so user can select questions they want to download. Need to use the QID value from `getSurveyQuestions`.
+- \*
 
 **[master branch]**
 
+- Added a new function `getSurveyQuestions()` that allows the user to download a data frame containing question labels and IDs.
+- Added parameter **includedQuestionIds** so user can select questions they want to download. Need to use the QID value from `getSurveyQuestions()`.
 - Updated examples and documentation of functions.
-- Added the following parameters to `getSurvey`:
+- Added the following parameters to `getSurvey()`:
   - **seenUnansweredRecode:**  String. Recode seen but unanswered questions with a string value. 
   - **limit:** Integer. Maximum number of responses exported. Defaults to NULL (all responses).
   - **useLocalTime:** Boolean. Use local timezone to determine response date values. 
-- `getSurveys` now retrieves > 100 results.
+- `getSurveys()` now retrieves > 100 results.
 
 **[v1.0]**
 
