@@ -95,6 +95,20 @@ surv <- getSurvey(survs$id[4],
                   verbose = TRUE)
 ```
 
+You can filter a survey for specific questions:
+
+```r
+# Retrieve questions for a survey
+questions <- getSurveyQuestions(surveyID = surveys$id[6],
+                                root_url = "https://leidenuniv.eu.qualtrics.com")
+# Retrieve a single survey, filtering for questions I want.
+mysurvey <- getSurvey(surveyID = surveys$id[6],
+                      root_url = "https://leidenuniv.eu.qualtrics.com",
+                      save_dir = tempdir(),
+                      includedQuestionIds = c("QID1", "QID2", "QID3"),
+                      verbose=TRUE)
+```
+
 You can store the results in a specific location if you like:
 
 ```r
