@@ -14,14 +14,39 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Assert that the following works
+
+### GETSURVEY
 
 # Test whether API key is stored
 assert_apikey_stored <- function(dir) {
   # Key should be stored by "registerApiKey"
-  if(!"qualtRics_header.rds" %in% list.files(dir)) {
-    stop("You need to register your qualtrics API key first using the 'registerApiKey()' function.")
-  } else {
-    return(TRUE)
-  }
+  assertthat::assert_that("qualtRics_header.rds" %in% list.files(dir),
+                          msg = "You need to register your qualtrics API key first using the 'registerApiKey()' function.")
+}
+
+# Check if save directory exists
+assert_saveDir_exists <- function(save_dir) {
+  assertthat::assert_that(ifelse((!file.info(save_dir)$isdir | is.na(file.info(save_dir)$isdir) == TRUE), FALSE, TRUE),
+                          msg = paste0("The directory ", save_dir, " does not exist."))
+}
+
+# Check if root_url is a string
+assert_rootUrl_string <- function(root_url) {
+  assertthat::assert_that(assertthat::is.string(root_url))
+}
+
+# Check if seenUnansweredRecode is a string
+assert_seenUnansweredRecode_string <- function(seenUnansweredRecode) {
+  assertthat::assert_that(assertthat::is.string(seenUnansweredRecode))
+}
+
+# Check if limit > 0
+assert_limit_abovezero <- function(limit) {
+  assertthat::assert_that(limit > 0, msg="Limit parameter should be at least 1.")
+}
+
+### READSURVEY
+
+assert_surveyFile_exists <- function(file_name) {
+  assertthat::assert_that(file.exists(file_name))
 }

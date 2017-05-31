@@ -40,10 +40,7 @@ readSurvey <- function(file_name,
                        convertStandardColumns = TRUE,
                        stripHTML = TRUE) {
     # check if file exists
-    if(!file.exists(file_name)) {
-        print("File does not exist")
-        return(-1)
-    }
+    assert_surveyFile_exists(file_name)
     # import data including variable names (row 1) and variable labels (row 2)
     rawdata <- read.csv(file=file_name,
                         header = FALSE,
@@ -64,11 +61,6 @@ readSurvey <- function(file_name,
                           header = F, sep = ',',
                           stringsAsFactors = FALSE,
                           fileEncoding = "UTF-8-BOM", skip=2, nrows=1)))
-    # Turn to json
-    #importids <- lapply(importids, function(x) {
-    #  jsonlite::fromJSON(stringr::str_replace_all(x, "'", '"'),
-    #                                flatten = TRUE)
-    #})
     # If Qualtrics adds an empty column at the end, remove it
     if(grepl(",$", readLines(file_name, n = 1))) {
         header <- header[,1:(ncol(header)-1)]
