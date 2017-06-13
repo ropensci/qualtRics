@@ -57,7 +57,7 @@ The second method involves placing a configuration file called `.qualtRics.yml` 
 
 ### Using a configuration file
 
-qualtRics supports the use of a configuration file to store your Qualtrics credentials. Executing `r qualtRics::qualtRicsConfigFile()` returns information that explains how you can do this:
+qualtRics supports the use of a configuration file to store your Qualtrics credentials. Executing `qualtRics::qualtRicsConfigFile()` returns information that explains how you can do this:
 
 ```
 Copy-paste the lines between the dashes into a new plain text file, replace the values for the
@@ -228,16 +228,19 @@ If you have a request (like adding a new argument), please leave it [here](https
 - Survey downloads should be faster now; `getSurvey()` no longer sleeps when checking download status. Also added progress bar.
 
 **[v0.03]**
+
 - User can choose to save results directly in a folder through 'save_dir' parameter in `getSurvey()`
 - Results can now be requested in .csv, .json or .xml format. The packages `jsonlite` and `XML` are added to 'Suggests' in DESCRIPTION.
 - `constructHeader()` is now deprecated and should no longer be used. Instead, users need to call `registerApiKey()`.
 - Added a new function `registerApiKey()` which saves the user's API key and header information in the `tempdir()` environment. 
 
 **[v0.02]**
+
 - Renamed 'base url' to 'root url' such that it corresponds to Qualtrics documentation.
 - The root url no longer requires API-specific endpoints. So e.g. 'https://leidenuniv.eu.qualtrics.com' now works for all functions. The API-specific endpoints are added in the functions itself.
 - Institution-specific root url is now required by `getSurvey()`
 
 **[v0.01]**
+
 - Added first three functions (`constructHeader`, `getSurvey`, `getSurveyIDs`)
 - base_url parameter is now uniform across functions. Parameter is called 'root url' to bring it in line with Qualtrics documentation.
