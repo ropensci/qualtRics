@@ -59,7 +59,7 @@ The second method involves placing a configuration file called `.qualtRics.yml` 
 
 qualtRics supports the use of a configuration file to store your Qualtrics credentials. Executing `r qualtRics::qualtRicsConfigFile()` returns information that explains how you can do this:
 
->Copy-paste the lines between the dashes into a new plain text file, replace the values for the >api_token and root_url if they are not yet filled out and save it in your working directory as >'.qualtRics.yml'. Visit https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file for more information.
+>Copy-paste the lines between the dashes into a new plain text file, replace the values for the api_token and root_url if they are not yet filled out and save it in your working directory as '.qualtRics.yml'. Visit https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file for more information.
 >
 >--------------
 >api_token: <YOUR-API-TOKEN-HERE>
