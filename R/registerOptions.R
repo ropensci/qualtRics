@@ -21,7 +21,8 @@
 #' @param api_token String. API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})
 #' @param root_url String. Root url for your institution (see: \url{https://api.qualtrics.com/docs/root-url})
 #'
-#' @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API.
+#' @seealso See \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file.
+#'
 #' @author Jasper Ginn
 #' @importFrom yaml yaml.load_file
 #' @export

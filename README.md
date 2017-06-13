@@ -37,25 +37,59 @@ Currently, the package contains three core functions:
   2. *getSurvey()* downloads a survey from Qualtrics and loads it into R.
   3. *readSurvey()* allows you to read CSV files you download manually from Qualtrics.
   
-It further contains two helper functions:
+It further contains three helper functions:
 
-  1. *registerApiKey()* stores your qualtRics API key in a temporary file
-  2. *getSurveyQuestions()* retrieves a data frame containing questions and question IDs for a survey
+  1. *registerOptions()* stores your API key and root url in environment variables.
+  2. *getSurveyQuestions()* retrieves a data frame containing questions and question IDs for a survey.
+  3. *qualtRicsConfigFile()* prints information on how to make a .qualtRics.yml configuration file that stores your qualtRics API key and root url in your working directory.
 
 Note that you can only export surveys that you own, or to which you have been given administration rights.
 
-### Commands
+## Registering your Qualtrics credentials
+
+There are two ways to register your qualtRics credentials in R (your API key and institution-specific root url). The first option involves registering your credentials at the start of each R session:
+
+```r
+qualtRics::registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
+```
+
+The second method involves placing a configuration file called `.qualtRics.yml` in your working directory. 
+
+### Using a configuration file
+
+qualtRics supports the use of a configuration file to store your Qualtrics credentials. Executing `r qualtRics::qualtRicsConfigFile()` returns information that explains how you can do this:
+
+```
+Copy-paste the lines between the dashes into a new plain text file, replace the values for the api_token and root_url if they are not yet filled out and save it in your working directory as '.qualtRics.yml'. Visit https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file for more information.
+
+--------------
+api_token: <YOUR-API-TOKEN-HERE>
+root_url: <YOUR-ROOT-URL-HERE>
+--------------
+```
+
+You can also call this function while passing `api_token` and `root_url` values to the function, in which case '<YOUR_API_TOKEN-HERE>' and '<YOUR-ROOT-URL-HERE>' will be replaced by your credentials. You can register your credentials by calling `r registerOption()` without passing any parameters.
+
+When you load the qualtRics package, it will automatically look for a `.qualtRics.yml` file in the working directory, in which case you don't need to call the `registerOption()` function to register your qualtRics credentials.
+
+#### Setting up a config file
+
+Open an existing R project or start a new one. Then, open up an empty text file:
+
+![](/vignettes/config_step1.png)
+
+Execute `r qualtRicsConfigFile(api_token="<YOUR-API-TOKEN-HERE>", root_url="<YOUR-ROOT-URL-HERE>")` and copy-paste the text between the dashes to the empty text file:
+
+![](/vignettes/config_step2.png)
+
+Save the file as `.qualtRics.yml` and execute `r registerOptions()` or restart your R session.
+
+## Commands
 
 Load the package:
 
 ```r
 library(qualtRics)
-```
-
-Register your Qualtrics API key. You need to do this once every R session:
-
-```r
-registerApiKey(API.TOKEN = "<yourapitoken>")
 ```
 
 Get a data frame of surveys:
