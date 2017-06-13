@@ -65,7 +65,8 @@
 #'                       useLabels = TRUE,
 #'                       seenUnansweredRecode = "UNANS",
 #'                       verbose=TRUE)
-#' # You can also choose to only download an export with specific questions using the \link[qualtRics]{getSurveyQuestions} function.
+#' # You can also choose to only download an export with specific questions using
+#' # the \link[qualtRics]{getSurveyQuestions} function.
 #'
 #' # Retrieve questions for a survey
 #' questions <- getSurveyQuestions(surveyID = surveys$id[6],

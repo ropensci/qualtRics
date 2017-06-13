@@ -44,7 +44,7 @@
 
 getSurveyQuestions <- function(surveyID) {
   # Check params
-  checkParams(root_url=root_url, check_qualtrics_api_key=TRUE)
+  checkParams(check_qualtrics_api_key=TRUE)
   # Function-specific API stuff
   root_url <- appendRootUrl(root_url, "surveys")
   # Add survey id
