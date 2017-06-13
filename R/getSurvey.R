@@ -19,7 +19,6 @@
 #' Export a qualtrics survey you own and import the survey directly into R. NOTE: If you keep getting errors try to use your institution's base URL. See \url{https://api.qualtrics.com/docs/root-url}.
 #'
 #' @param surveyID String. Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.
-#' @param root_url String. Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.).
 #' @param useLabels Boolean. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
 #' @param convertStandardColumns Boolean. If TRUE, then the function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. Defaults to TRUE
 #' @param lastResponseId String. Export all responses received after the specified response. Defaults to NULL.

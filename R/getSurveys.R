@@ -16,8 +16,6 @@
 
 #' Retrieve a data frame of all active surveys on Qualtrics
 #'
-#' @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/root-url}. If you do not fill in anything, the function will use the default url. Using your institution-specific url can significantly speed up queries.)
-#'
 #' @seealso See \url{https://api.qualtrics.com/docs} for documentation on the Qualtrics API.
 #' @author Jasper Ginn
 #' @importFrom httr GET
