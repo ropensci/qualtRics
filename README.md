@@ -47,7 +47,7 @@ Note that you can only export surveys that you own, or to which you have been gi
 
 ## Registering your Qualtrics credentials
 
-There are two ways to register your qualtRics credentials in R (your API key and institution-specific root url). The first option involves registering your credentials at the start of each R session:
+There are two ways to register your Qualtrics credentials in R (your API key and institution-specific root url). The first option involves registering your credentials at the start of each R session:
 
 ```r
 qualtRics::registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
@@ -59,14 +59,12 @@ The second method involves placing a configuration file called `.qualtRics.yml` 
 
 qualtRics supports the use of a configuration file to store your Qualtrics credentials. Executing `r qualtRics::qualtRicsConfigFile()` returns information that explains how you can do this:
 
-```
-Copy-paste the lines between the dashes into a new plain text file, replace the values for the api_token and root_url if they are not yet filled out and save it in your working directory as '.qualtRics.yml'. Visit https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file for more information.
-
---------------
-api_token: <YOUR-API-TOKEN-HERE>
-root_url: <YOUR-ROOT-URL-HERE>
---------------
-```
+>Copy-paste the lines between the dashes into a new plain text file, replace the values for the >api_token and root_url if they are not yet filled out and save it in your working directory as >'.qualtRics.yml'. Visit https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file for more information.
+>
+>--------------
+>api_token: <YOUR-API-TOKEN-HERE>
+>root_url: <YOUR-ROOT-URL-HERE>
+>--------------
 
 You can also call this function while passing `api_token` and `root_url` values to the function, in which case '<YOUR_API_TOKEN-HERE>' and '<YOUR-ROOT-URL-HERE>' will be replaced by your credentials. You can register your credentials by calling `r registerOption()` without passing any parameters.
 
