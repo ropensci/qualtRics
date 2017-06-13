@@ -4,13 +4,10 @@
 \alias{getSurveyQuestions}
 \title{Retrieve a data frame containing question IDs and labels}
 \usage{
-getSurveyQuestions(surveyID,
-  root_url = "https://yourdatacenterid.qualtrics.com")
+getSurveyQuestions(surveyID)
 }
 \arguments{
 \item{surveyID}{String. Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.}
-
-\item{root_url}{String. Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.).}
 }
 \description{
 Retrieve a data frame containing question IDs and labels
