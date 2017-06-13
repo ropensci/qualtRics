@@ -365,10 +365,17 @@ inferDataTypes <- function(data,
     } else if(col.name %in% qBin) {
       data[,col.name] <- factor(data[,col.name], levels=c("0", "1"))
     } else if(col.name %in% qDate) {
-      data[,col.name] <- lubridate::as_datetime(data[,col.name])
+      data[,col.name] <- lubridate::as_datetime(data[,col.name], tz=NULL)
     } else {
       NULL
     }
+
+    # Check if warning given
+    if(Sys.getenv("QUALTRICS_WARNING_DATE_GIVEN") == "") {
+      warning("The 'StartDate', 'EndDate' and 'RecordedDate' variables were converted without passing a specific timezone. If you like to set these timestamps to your own timezone, please visit https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/ (under 'User Settings')")
+      Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN"=TRUE)
+    }
+
 
   }
 

@@ -42,7 +42,7 @@ mysurvey <- getSurvey(surveyID = surveys$id[6],
 
 }
 \seealso{
-See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API.
+See \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file.
 }
 \author{
 Jasper Ginn
