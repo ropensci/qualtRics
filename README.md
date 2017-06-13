@@ -47,7 +47,7 @@ Note that you can only export surveys that you own, or to which you have been gi
 
 ## Registering your Qualtrics credentials
 
-There are two ways to register your Qualtrics credentials in R (your API key and institution-specific root url). The first option involves registering your credentials at the start of each R session:
+There are two ways to register your Qualtrics credentials in R (your [API key](https://api.qualtrics.com/docs/finding-qualtrics-ids) and [institution-specific root url](https://api.qualtrics.com/docs/root-url)). The first option involves registering your credentials at the start of each R session:
 
 ```r
 qualtRics::registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
@@ -62,7 +62,8 @@ qualtRics supports the use of a configuration file to store your Qualtrics crede
 ```
 Copy-paste the lines between the dashes into a new plain text file, replace the values for the
 api_token and root_url if they are not yet filled out and save it in your working directory as 
-'.qualtRics.yml'. Visit https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file for more information.
+'.qualtRics.yml'. Visit https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file 
+for more information.
 
 --------------
 api_token: <YOUR-API-TOKEN-HERE>
@@ -70,7 +71,7 @@ root_url: <YOUR-ROOT-URL-HERE>
 --------------
 ```
 
-You can also call this function while passing `api_token` and `root_url` values to the function, in which case '<YOUR_API_TOKEN-HERE>' and '<YOUR-ROOT-URL-HERE>' will be replaced by your credentials. You can register your credentials by calling `r registerOption()` without passing any parameters.
+You can also call this function while passing `api_token` and `root_url` values to the function, in which case "<YOUR-API-TOKEN-HERE>" and "<YOUR-ROOT-URL-HERE>" will be replaced by your credentials. You can register your credentials by calling ```r registerOption()``` without passing any parameters.
 
 When you load the qualtRics package, it will automatically look for a `.qualtRics.yml` file in the working directory, in which case you don't need to call the `registerOption()` function to register your qualtRics credentials.
 
@@ -80,11 +81,11 @@ Open an existing R project or start a new one. Then, open up an empty text file:
 
 ![](/vignettes/config_step1.png)
 
-Execute `r qualtRicsConfigFile(api_token="<YOUR-API-TOKEN-HERE>", root_url="<YOUR-ROOT-URL-HERE>")` and copy-paste the text between the dashes to the empty text file:
+Execute ```r qualtRicsConfigFile(api_token="<YOUR-API-TOKEN-HERE>", root_url="<YOUR-ROOT-URL-HERE>")``` and copy-paste the text between the dashes to the empty text file:
 
 ![](/vignettes/config_step2.png)
 
-Save the file as `.qualtRics.yml` and execute `r registerOptions()` or restart your R session.
+Save the file as `.qualtRics.yml` and execute ```r registerOptions()``` or restart your R session.
 
 ## Commands
 
@@ -94,19 +95,22 @@ Load the package:
 library(qualtRics)
 ```
 
+Register your Qualtrics credentials if required:
+
+```r
+registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
+```
+
 Get a data frame of surveys:
 
 ```r
-surveys <- getSurveys(root_url="https://leidenuniv.eu.qualtrics.com") # URL is for my own institution
+surveys <- getSurveys() 
 ```
-
-Note that, while requests will work without a [root url](https://api.qualtrics.com/docs/root-url) for the `getSurveys` function, it is desirable that you supply it. Supplying the correct url will reduce the number of errors you'll experience. The `getSurvey` function requires you to pass this root url. Please refer to the [official documentation](https://api.qualtrics.com/docs/root-url) to find out your institution-specific root url.
 
 Export a survey and load it into R:
 
 ```r
 mysurvey <- getSurvey(surveyID = surveys$id[6], 
-                      root_url = "https://leidenuniv.eu.qualtrics.com", 
                       verbose = TRUE)
 ```
 
@@ -114,7 +118,6 @@ You can add a from/to date to only retrieve responses between those dates:
 
 ```r
 surv <- getSurvey(survs$id[4],
-                  root_url = "https://leidenuniv.eu.qualtrics.com",
                   startDate = "2016-09-18",
                   endDate = "2016-10-01",
                   useLabels = FALSE,
@@ -125,7 +128,6 @@ You may also reference a response ID. `getSurvey` will then download all respons
 
 ```r
 surv <- getSurvey(survs$id[4],
-                  root_url = "https://leidenuniv.eu.qualtrics.com",
                   lastResponseId = "R_3mmovCIeMllvsER",
                   useLabels = FALSE,
                   verbose = TRUE)
@@ -135,11 +137,9 @@ You can filter a survey for specific questions:
 
 ```r
 # Retrieve questions for a survey
-questions <- getSurveyQuestions(surveyID = surveys$id[6],
-                                root_url = "https://leidenuniv.eu.qualtrics.com")
+questions <- getSurveyQuestions(surveyID = surveys$id[6])
 # Retrieve a single survey, filtering for questions I want.
 mysurvey <- getSurvey(surveyID = surveys$id[6],
-                      root_url = "https://leidenuniv.eu.qualtrics.com",
                       save_dir = tempdir(),
                       includedQuestionIds = c("QID1", "QID2", "QID3"),
                       verbose=TRUE)
@@ -150,7 +150,6 @@ You can store the results in a specific location if you like:
 ```r
 mysurvey <- getSurvey(surveyID = surveys$id[6], 
                       save_dir = "/users/jasper/desktop/", 
-                      root_url = "https://leidenuniv.eu.qualtrics.com", 
                       verbose = TRUE)
 ```
 
