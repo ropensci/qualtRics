@@ -120,16 +120,13 @@ checkForWarnings <- function(resp) {
 # @param check_qualtrics_api_key TRUE/FALSE statement. Does function need to check if qualtrics key exists?
 
 checkParams <- function(save_dir = NULL,
-                        root_url = NULL,
                         seenUnansweredRecode = NULL,
                         limit = NULL,
                         includedQuestionIds = NULL,
                         check_qualtrics_api_key = FALSE
                         ) {
   ### root_url
-  if(!is.null(root_url)) {
-    assert_rootUrl_string(root_url)
-  }
+  assert_rootUrl_stored()
   ### save_dir
   # Check if save_dir exists
   if(!is.null(save_dir)) {
@@ -138,7 +135,7 @@ checkParams <- function(save_dir = NULL,
   ### check_qualtrics_api_key
   if(check_qualtrics_api_key) {
     # Look in temporary directory. If file 'qualtRics_header.rds' does not exist, then abort and tell user to register API key first
-    assert_apikey_stored(tempdir())
+    assert_apikey_stored()
   }
   # Check if seenUnansweredRecode is NULL or else a string
   if(!is.null(seenUnansweredRecode)) {
@@ -261,8 +258,8 @@ qualtricsApiRequest <- function(verb = c("GET", "POST"), url = url,
                                 body = NULL, raw = FALSE) {
   # Match arg
   verb <- match.arg(verb)
-  # Get headers information
-  headers <- readRDS(paste0(tempdir(), "/qualtRics_header.rds"))
+  # Construct header
+  headers <- constructHeader(Sys.getenv("QUALTRICS_API_KEY"))
   # Send request to qualtrics API
   res <- httr::VERB(verb,
                     url = url,
@@ -285,8 +282,8 @@ qualtricsApiRequest <- function(verb = c("GET", "POST"), url = url,
 # @param
 
 downloadQualtricsExport <- function(check_url, verbose = FALSE) {
-  # Get headers
-  headers <- readRDS(paste0(tempdir(), "/", "qualtRics_header.rds"))
+  # Construct header
+  headers <- constructHeader(Sys.getenv("QUALTRICS_API_KEY"))
   # Create a progress bar and monitor when export is ready
   if(verbose) {
     pbar <- utils::txtProgressBar(min=0,

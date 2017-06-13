@@ -49,11 +49,11 @@
 #'                       verbose=TRUE)
 #' }
 
-getSurveys <- function(root_url = "https://yourdatacenterid.qualtrics.com") {
+getSurveys <- function() {
   # Check params
-  cp <- checkParams(root_url=root_url, check_qualtrics_api_key=TRUE)
+  cp <- checkParams(check_qualtrics_api_key=TRUE)
   # Function-specific API stuff
-  root_url <- appendRootUrl(root_url, "surveys")
+  root_url <- appendRootUrl(Sys.getenv("QUALTRICS_ROOT_URL"), "surveys")
   # Send GET request to list all surveys
   resp <- qualtricsApiRequest("GET", root_url)
   # Put results in list

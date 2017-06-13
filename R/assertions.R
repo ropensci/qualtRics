@@ -18,10 +18,10 @@
 ### GETSURVEY
 
 # Test whether API key is stored
-assert_apikey_stored <- function(dir) {
+assert_apikey_stored <- function() {
   # Key should be stored by "registerApiKey"
-  assertthat::assert_that("qualtRics_header.rds" %in% list.files(dir),
-                          msg = "You need to register your qualtrics API key first using the 'registerApiKey()' function.")
+  assertthat::assert_that(Sys.getenv("QUALTRICS_API_KEY") != "",
+                          msg = "You need to register your qualtrics API key and root url using the 'registerOptions()' function.")
 }
 
 # Check if save directory exists
@@ -31,8 +31,9 @@ assert_saveDir_exists <- function(save_dir) {
 }
 
 # Check if root_url is a string
-assert_rootUrl_string <- function(root_url) {
-  assertthat::assert_that(assertthat::is.string(root_url))
+assert_rootUrl_stored <- function(root_url) {
+  assertthat::assert_that(Sys.getenv("QUALTRICS_ROOT_URL") != "",
+                          msg = "You need to register your qualtrics API key and root url using the 'registerOptions()' function.")
 }
 
 # Check if seenUnansweredRecode is a string

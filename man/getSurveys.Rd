@@ -4,7 +4,7 @@
 \alias{getSurveys}
 \title{Retrieve a data frame of all active surveys on Qualtrics}
 \usage{
-getSurveys(root_url = "https://yourdatacenterid.qualtrics.com")
+getSurveys()
 }
 \arguments{
 \item{root_url}{Base url for your institution (see \url{https://api.qualtrics.com/docs/root-url}. If you do not fill in anything, the function will use the default url. Using your institution-specific url can significantly speed up queries.)}

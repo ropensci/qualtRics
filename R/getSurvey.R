@@ -80,7 +80,6 @@
 #' }
 
 getSurvey <- function(surveyID,
-                      root_url,
                       useLabels=TRUE,
                       convertStandardColumns = TRUE,
                       lastResponseId=NULL,
@@ -95,7 +94,6 @@ getSurvey <- function(surveyID,
                       verbose=FALSE) {
   # Check params
   checkParams(save_dir,
-              root_url=root_url,
               seenUnansweredRecode = seenUnansweredRecode,
               limit=limit,
               check_qualtrics_api_key = TRUE)
@@ -107,7 +105,7 @@ getSurvey <- function(surveyID,
     }
   }
   # add endpoint to root url
-  root_url <- appendRootUrl(root_url, "responseexports")
+  root_url <- appendRootUrl(Sys.getenv("QUALTRICS_ROOT_URL"), "responseexports")
   # Create raw JSON payload
   raw_payload <- createRawPayload(surveyID = surveyID,
                                   useLabels = useLabels,
