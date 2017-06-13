@@ -124,6 +124,8 @@ surv <- getSurvey(survs$id[4],
                   verbose = TRUE)
 ```
 
+Note that your date and time settings may not have been changed yet to your own timezone. You can find out how to do this [here](https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/#user-settings).
+
 You may also reference a response ID. `getSurvey` will then download all responses that were submitted after that response:
 
 ```r
@@ -144,6 +146,17 @@ mysurvey <- getSurvey(surveyID = surveys$id[6],
                       includedQuestionIds = c("QID1", "QID2", "QID3"),
                       verbose=TRUE)
 ```
+
+Setting `convertStandardColumns` to TRUE converts common variables such as 'StartDate', 'EndDate' and Longitude, Latitude to their proper data types. 
+
+```r
+surv <- getSurvey(survs$id[5],
+                  convertStandardColumns = TRUE,
+                  useLabels = TRUE,
+                  verbose = TRUE)
+```
+
+Note that dates are converted without a specific timezone in mind. You can specify your own timezone using [these instructions](https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/).
 
 You can store the results in a specific location if you like:
 
@@ -190,6 +203,7 @@ If you have a request (like adding a new argument), please leave it [here](https
 - Added a new script called `zzz.R`. When the package is loaded, the .onLoad() function in this file scans the working directory for a `.qualtRics.yml` configuration file so that the user doesn't have to register this information manually.
 - Added a new function `qualtRicsConfigFile()` that prints instructions for the user on how to set up a configuration file to the R Console.
 - Removed the `root_url` parameter from all functions that required it.
+- Dates are now converted without a specific timezone.
 
 **[master branch]**
 
