@@ -17,7 +17,6 @@
 #' Retrieve a data frame containing question IDs and labels
 #'
 #' @param surveyID String. Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.
-#' @param root_url String. Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.).
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs} for documentation on the Qualtrics API.
 #' @author Jasper Ginn
@@ -43,8 +42,7 @@
 #'                       verbose=TRUE)
 #' }
 
-getSurveyQuestions <- function(surveyID,
-                               root_url = "https://yourdatacenterid.qualtrics.com") {
+getSurveyQuestions <- function(surveyID) {
   # Check params
   checkParams(root_url=root_url, check_qualtrics_api_key=TRUE)
   # Function-specific API stuff
