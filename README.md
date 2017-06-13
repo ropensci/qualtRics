@@ -71,7 +71,7 @@ root_url: <YOUR-ROOT-URL-HERE>
 --------------
 ```
 
-You can also call this function while passing `api_token` and `root_url` values to the function, in which case "<YOUR-API-TOKEN-HERE>" and "<YOUR-ROOT-URL-HERE>" will be replaced by your credentials. You can register your credentials by calling ```r registerOption()``` without passing any parameters.
+You can also call this function while passing `api_token` and `root_url` values to the function, in which case `<YOUR-API-TOKEN-HERE>` and `<YOUR-ROOT-URL-HERE>` will be replaced by your credentials. You can register your credentials by calling `registerOption()` without passing any parameters.
 
 When you load the qualtRics package, it will automatically look for a `.qualtRics.yml` file in the working directory, in which case you don't need to call the `registerOption()` function to register your qualtRics credentials.
 
@@ -81,11 +81,11 @@ Open an existing R project or start a new one. Then, open up an empty text file:
 
 ![](/vignettes/config_step1.png)
 
-Execute ```r qualtRicsConfigFile(api_token="<YOUR-API-TOKEN-HERE>", root_url="<YOUR-ROOT-URL-HERE>")``` and copy-paste the text between the dashes to the empty text file:
+Execute `qualtRicsConfigFile(api_token="<YOUR-API-TOKEN-HERE>", root_url="<YOUR-ROOT-URL-HERE>")` and copy-paste the text between the dashes to the empty text file:
 
 ![](/vignettes/config_step2.png)
 
-Save the file as `.qualtRics.yml` and execute ```r registerOptions()``` or restart your R session.
+Save the file as `.qualtRics.yml` and execute `registerOptions()` or restart your R session.
 
 ## Commands
 
