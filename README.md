@@ -198,15 +198,16 @@ If you have a request (like adding a new argument), please leave it [here](https
 
 **[development branch]**
 
+- \*
+
+**[master branch]**
+
 - Added support for a configuration file to store API key and root url in the working directory.
 - `registerApiKey()` has been replaced by `registerOptions()`. This function stores both a user's API key and root url. Function also scans for a configuration file `.qualtRics.yml` that contains this information.
 - Added a new script called `zzz.R`. When the package is loaded, the .onLoad() function in this file scans the working directory for a `.qualtRics.yml` configuration file so that the user doesn't have to register this information manually.
 - Added a new function `qualtRicsConfigFile()` that prints instructions for the user on how to set up a configuration file to the R Console.
 - Removed the `root_url` parameter from all functions that required it.
 - Dates are now converted without a specific timezone.
-
-**[master branch]**
-
 - Added a new function `getSurveyQuestions()` that allows the user to download a data frame containing question labels and IDs.
 - Added parameter **includedQuestionIds** so user can select questions they want to download. Need to use the QID value from `getSurveyQuestions()`.
 - Updated examples and documentation of functions.
