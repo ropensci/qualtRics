@@ -85,7 +85,7 @@ Execute `qualtRicsConfigFile(api_token="<YOUR-API-TOKEN-HERE>", root_url="<YOUR-
 
 ![](/vignettes/config_step2.png)
 
-Save the file as `.qualtRics.yml` and execute `registerOptions()` or restart your R session.
+Save the file as `.qualtRics.yml` and execute `registerOptions()` or restart your R session and execute `library(qualtRics)` to load the configuration file.
 
 ## Commands
 
