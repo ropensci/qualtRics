@@ -124,7 +124,7 @@ surv <- getSurvey(survs$id[4],
                   verbose = TRUE)
 ```
 
-Note that your date and time settings may not have been changed yet to your own timezone. You can find out how to do this [here](https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/#user-settings).
+Note that your date and time settings may not correspond to your own timezone. You can find out how to do this [here](https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/#user-settings).
 
 You may also reference a response ID. `getSurvey` will then download all responses that were submitted after that response:
 
