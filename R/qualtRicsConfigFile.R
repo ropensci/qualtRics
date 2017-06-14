@@ -24,7 +24,8 @@
 #' @export
 #' @examples
 #' \dontrun{
-#'  qualtRicsConfigFile()
+#' # Execute this line to get instructions on how to make a .qualtrics.yml config file.
+#' qualtRicsConfigFile()
 #' }
 #'
 

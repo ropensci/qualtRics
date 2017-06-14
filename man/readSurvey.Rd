@@ -26,7 +26,7 @@ Variable labels are stored as attributes.
 }
 \examples{
 \dontrun{
-my_data_frame <- readSurvey(my_csv_file)
+my_data_frame <- readSurvey("<YOUR-PATH-TO-CSV-FILE>")
 }
 }
 \author{

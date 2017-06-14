@@ -14,17 +14,14 @@ Retrieve a data frame containing question IDs and labels
 }
 \examples{
 \dontrun{
-registerApiKey("<YOUR-QUALTRICS-API-KEY>")
+# Register your Qualtrics credentials if you haven't already
+registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
 # Retrieve a list of surveys
-surveys <- getSurveys(root_url = "https://leidenuniv.eu.qualtrics.com")
-                      # URL is for my own institution.
-                      # Substitute with your own institution's url
+surveys <- getSurveys()
 # Retrieve questions for a survey
-questions <- getSurveyQuestions(surveyID = surveys$id[6],
-                                root_url = "https://leidenuniv.eu.qualtrics.com")
+questions <- getSurveyQuestions(surveyID = surveys$id[6])
 # Retrieve a single survey, filtering for questions I want.
 mysurvey <- getSurvey(surveyID = surveys$id[6],
-                      root_url = "https://leidenuniv.eu.qualtrics.com",
                       save_dir = tempdir(),
                       includedQuestionIds = c("QID1", "QID2", "QID3"),
                       verbose=TRUE)
