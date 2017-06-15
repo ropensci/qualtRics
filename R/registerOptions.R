@@ -18,10 +18,10 @@
 #'
 #' This function registers the user's qualtrics API key, root url and other options for the remainder of the R session. This function only needs to be called once (at the beginning of each R session).
 #'
-#' @param api_token String. API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})
-#' @param root_url String. Root url for your institution (see: \url{https://api.qualtrics.com/docs/root-url})
+#' @param verbose Verbose. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
+#' @param ... Either empty or both a parameter called 'api_token' and 'root_url' to register the Qualtrics api key and institution-specific root url manually. (see example).
 #'
-#' @seealso See \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file.
+#' @seealso See \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file. See: \url{https://api.qualtrics.com/docs/authentication} to find your Qualtrics API key and \url{https://api.qualtrics.com/docs/root-url} for more information about the institution-specific root url.
 #'
 #' @author Jasper Ginn
 #' @importFrom yaml yaml.load_file
@@ -49,10 +49,15 @@
 #' }
 #'
 
-registerOptions <- function(api_token = NULL, root_url = NULL) {
+registerOptions <- function(verbose=TRUE, ...) {
 
+  # Take additional arguments
+  args <- list(...)
+  # Store root_url/api_token. Else give NULL as value
+  root_url <- ifelse("root_url" %in% names(args), args$root_url, NA)
+  api_token <- ifelse("api_token" %in% names(args), args$api_token, NA)
   # If API token or root url are NULL, then look for .qualtRics in the current directory
-  if(is.null(api_token) & is.null(root_url)) {
+  if(is.na(api_token) & is.na(root_url)) {
     ex <- file.exists(".qualtRics.yml")
     # Throw error if file does not exist
     assertthat::assert_that(ex == TRUE, msg = "No .qualtRics.yml configuration file found in working directory. Either set your api token and root url using the 'registerOptions' function or create a configuration file. Execute 'qualtRicsConfigFile()' to view an example of a configuration file.")
@@ -62,14 +67,17 @@ registerOptions <- function(api_token = NULL, root_url = NULL) {
     assertthat::assert_that(length(names(cred)) == 2, msg="Either the 'api_token' or 'root_url' arguments are missing in your .qualtRics.yml configuration file. Execute 'qualtRicsConfigFile()' for an example of how this file should look")
     assertthat::assert_that(names(cred)[1] == "api_token", msg = "The first line of the .qualtRics.yml file must be named 'api_token'. Execute 'qualtRicsConfigFile()' to view an example of the configuration file.")
     assertthat::assert_that(names(cred)[2] == "root_url", msg = "The second line of the .qualtRics.yml file must be named 'root_url'. Execute 'qualtRicsConfigFile()' to view an example of the configuration file.")
+    # If verbose, print message
+    if(verbose) message(paste0("Found a .qualtRics.yml configuration file in ", getwd(), ". Using these credentials."))
     # Set vars
     api_token <- cred[[1]]
     root_url <- cred[[2]]
   }
   # If either is still NULL, throw error
-  assertthat::assert_that(!is.null(root_url), msg="'root_url' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.")
-  assertthat::assert_that(!is.null(api_token), msg="'api_token' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.")
+  assertthat::assert_that(!is.na(root_url), msg="'root_url' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.")
+  assertthat::assert_that(!is.na(api_token), msg="'api_token' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.")
   # Set environment variables
-  Sys.setenv("QUALTRICS_API_KEY" = api_token, "QUALTRICS_ROOT_URL" = root_url)
+  Sys.setenv("QUALTRICS_API_KEY" = api_token, "QUALTRICS_ROOT_URL" = root_url,
+             "QUALTRICS_VERBOSE" = verbose)
 
 }

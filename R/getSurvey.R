@@ -30,7 +30,6 @@
 #' @param includedQuestionIds Vector of strings (e.g. c('QID1', 'QID2', 'QID3'). Export only specified questions. Defaults to NULL.
 #' @param save_dir String. Directory where survey results will be stored. Defaults to a temporary directory which is cleaned when your R session is terminated. This parameter is useful if you'd like to store survey results. The downloaded survey will be stored as an RDS file (see \link[base]{readRDS}).
 #' @param force_request Boolean. getSurvey() saves each survey in a temporary directory so that it can quickly be retrieved later. If force_request is TRUE, getSurvey() always downloads the survey from the API instead of loading it from the temporary directory. Defaults to FALSE.
-#' @param verbose Print verbose messages to the R console? Defaults to FALSE.
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs/csv} for documentation on the Qualtrics API.
 #' @author Jasper Ginn
@@ -85,8 +84,7 @@ getSurvey <- function(surveyID,
                       useLocalTime = FALSE,
                       includedQuestionIds = NULL,
                       save_dir=NULL,
-                      force_request=FALSE,
-                      verbose=FALSE) {
+                      force_request=FALSE) {
   # Check params
   checkParams(save_dir,
               seenUnansweredRecode = seenUnansweredRecode,
@@ -99,6 +97,8 @@ getSurvey <- function(surveyID,
       return(data)
     }
   }
+  # Print verbose messages?
+  verbose <- as.logical(Sys.getenv("QUALTRICS_VERBOSE"))
   # add endpoint to root url
   root_url <- appendRootUrl(Sys.getenv("QUALTRICS_ROOT_URL"), "responseexports")
   # Create raw JSON payload

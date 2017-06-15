@@ -5,7 +5,6 @@
 
 .onLoad <- function(libname = find.package("qualtRics"), pkgname="qualtRics") {
   if(file.exists(".qualtRics.yml")) {
-    packageStartupMessage(paste0("Found a .qualtRics.yml configuration file in ", getwd(), ". Using these credentials."))
     suppressWarnings(registerOptions()) # This throws a warning
   }
 }

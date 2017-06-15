@@ -4,4 +4,5 @@
 ^\.RData$
 ^\.Rhistory$
 ^\.travis\.yml$
+^\.qualtRics\.yml$
 README\.md$
