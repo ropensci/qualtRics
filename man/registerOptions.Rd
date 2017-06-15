@@ -4,12 +4,12 @@
 \alias{registerOptions}
 \title{Register qualtrics API key, root url and other options}
 \usage{
-registerOptions(api_token = NULL, root_url = NULL)
+registerOptions(verbose = TRUE, ...)
 }
 \arguments{
-\item{api_token}{String. API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})}
+\item{verbose}{Verbose. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.}
 
-\item{root_url}{String. Root url for your institution (see: \url{https://api.qualtrics.com/docs/root-url})}
+\item{...}{Either empty or both a parameter called 'api_token' and 'root_url' to register the Qualtrics api key and institution-specific root url manually. (see example).}
 }
 \description{
 This function registers the user's qualtrics API key, root url and other options for the remainder of the R session. This function only needs to be called once (at the beginning of each R session).
@@ -38,7 +38,7 @@ mysurvey <- getSurvey(surveyID = surveys$id[6],
 
 }
 \seealso{
-See \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file.
+See \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file. See: \url{https://api.qualtrics.com/docs/authentication} to find your Qualtrics API key and \url{https://api.qualtrics.com/docs/root-url} for more information about the institution-specific root url.
 }
 \author{
 Jasper Ginn

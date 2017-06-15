@@ -7,8 +7,7 @@
 getSurvey(surveyID, useLabels = TRUE, convertStandardColumns = TRUE,
   lastResponseId = NULL, startDate = NULL, endDate = NULL,
   seenUnansweredRecode = NULL, limit = NULL, useLocalTime = FALSE,
-  includedQuestionIds = NULL, save_dir = NULL, force_request = FALSE,
-  verbose = FALSE)
+  includedQuestionIds = NULL, save_dir = NULL, force_request = FALSE)
 }
 \arguments{
 \item{surveyID}{String. Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.}
@@ -34,8 +33,6 @@ getSurvey(surveyID, useLabels = TRUE, convertStandardColumns = TRUE,
 \item{save_dir}{String. Directory where survey results will be stored. Defaults to a temporary directory which is cleaned when your R session is terminated. This parameter is useful if you'd like to store survey results. The downloaded survey will be stored as an RDS file (see \link[base]{readRDS}).}
 
 \item{force_request}{Boolean. getSurvey() saves each survey in a temporary directory so that it can quickly be retrieved later. If force_request is TRUE, getSurvey() always downloads the survey from the API instead of loading it from the temporary directory. Defaults to FALSE.}
-
-\item{verbose}{Print verbose messages to the R console? Defaults to FALSE.}
 }
 \description{
 Export a qualtrics survey you own and import the survey directly into R. NOTE: If you keep getting errors try to use your institution's base URL. See \url{https://api.qualtrics.com/docs/root-url}.
