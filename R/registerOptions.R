@@ -19,6 +19,9 @@
 #' This function registers the user's qualtrics API key, root url and other options for the remainder of the R session. This function only needs to be called once (at the beginning of each R session).
 #'
 #' @param verbose Verbose. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
+#' @param useLabels Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
+#' @param convertStandardColumns Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. Defaults to TRUE.
+#' @param useLocalTime Logical. Use local timezone to determine response date values? Defaults to FALSE.
 #' @param ... Either empty or both a parameter called 'api_token' and 'root_url' to register the Qualtrics api key and institution-specific root url manually. (see example).
 #'
 #' @seealso See \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file. See: \url{https://api.qualtrics.com/docs/authentication} to find your Qualtrics API key and \url{https://api.qualtrics.com/docs/root-url} for more information about the institution-specific root url.
@@ -49,7 +52,11 @@
 #' }
 #'
 
-registerOptions <- function(verbose=TRUE, ...) {
+registerOptions <- function(verbose=TRUE,
+                            useLabels=TRUE,
+                            convertStandardColumns=TRUE,
+                            useLocalTime=FALSE,
+                            ...) {
 
   # Take additional arguments
   args <- list(...)
@@ -69,20 +76,41 @@ registerOptions <- function(verbose=TRUE, ...) {
     # Load file
     cred <- yaml::yaml.load_file(".qualtRics.yml")
     # Assert that names are "api_token" and "root_url"
-    assertthat::assert_that(length(names(cred)) == 2, msg="Either the 'api_token' or 'root_url' arguments are missing in your .qualtRics.yml configuration file. Execute 'qualtRicsConfigFile()' to view an example of the configuration file.")
-    assertthat::assert_that(names(cred)[1] == "api_token", msg = "The first line of the .qualtRics.yml file must be named 'api_token'. Execute 'qualtRicsConfigFile()' to view an example of the configuration file.")
-    assertthat::assert_that(names(cred)[2] == "root_url", msg = "The second line of the .qualtRics.yml file must be named 'root_url'. Execute 'qualtRicsConfigFile()' to view an example of the configuration file.")
+    assertthat::assert_that(c("api_token", "root_url") %in% names(cred), msg="Either the 'api_token' or 'root_url' arguments are missing in your .qualtRics.yml configuration file. Execute 'qualtRicsConfigFile()' to view an example of the configuration file.")
     # If verbose, print message
     if(verbose) message(paste0("Found a .qualtRics.yml configuration file in ", getwd(), ". Using these credentials."))
     # Set vars
-    api_token <- cred[[1]]
-    root_url <- cred[[2]]
+    api_token <- cred$api_token
+    root_url <- cred$root_url
+    # Set optional vars
+    if("verbose" %in% names(cred)) {
+      verbose <- cred$verbose
+      assertthat::assert_that(assertthat::is.flag(verbose), msg=paste0("'verbose' must be either TRUE or FALSE but is ", as.character(verbose), " in your config file."))
+    }
+    if("convertstandardcolumns" %in% names(cred)) {
+      convertStandardColumns <- cred$convertstandardcolumns
+      assertthat::assert_that(assertthat::is.flag(convertStandardColumns), msg=paste0("'convertstandardcolumns' must be either TRUE or FALSE but is ", as.character(convertStandardColumns), " in your config file."))
+    }
+    if("uselabels" %in% names(cred)) {
+      useLabels <- cred$uselabels
+      assertthat::assert_that(assertthat::is.flag(useLabels), msg=paste0("'uselabels' must be either TRUE or FALSE but is ", as.character(useLabels), " in your config file."))
+    }
+    if("uselocaltime" %in% names(cred)) {
+      useLocalTime <- cred$uselocaltime
+      assertthat::assert_that(assertthat::is.flag(useLocalTime), msg=paste0("'useLocalTime' must be either TRUE or FALSE but is ", as.character(useLocalTime), " in your config file."))
+    }
   }
-  # If either is still NULL, throw error
-  assertthat::assert_that(!is.na(root_url), msg="'root_url' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.")
-  assertthat::assert_that(!is.na(api_token), msg="'api_token' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.")
+  # If either is still NA, throw error
+  assertthat::assert_that(!is.na(root_url) & Sys.getenv("QUALTRICS_ROOT_URL") != "", msg="'root_url' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.")
+  assertthat::assert_that(!is.na(api_token) & Sys.getenv("QUALTRICS_API_KEY") != "", msg="'api_token' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.")
   # Set environment variables
-  Sys.setenv("QUALTRICS_API_KEY" = api_token, "QUALTRICS_ROOT_URL" = root_url,
-             "QUALTRICS_VERBOSE" = verbose)
-
+  if(!is.na(api_token)) Sys.setenv("QUALTRICS_API_KEY" = api_token)
+  if(!is.na(root_url)) Sys.setenv("QUALTRICS_ROOT_URL" = root_url)
+  # Set flag options
+  options(
+    "QUALTRICS_VERBOSE" = verbose,
+    "QUALTRICS_USELABELS" = useLabels,
+    "QUALTRICS_CONVERTSTANDARDCOLUMNS" = convertStandardColumns,
+    "QUALTRICS_USELOCALTIME" = convertLocalTime
+  )
 }
