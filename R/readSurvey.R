@@ -28,6 +28,7 @@
 #'
 #' @author Adrian Brugger, Stefan Borer & Jasper Ginn
 #' @importFrom utils read.csv
+#' @importFrom sjlabelled set_label
 #' @return A data frame. Variable labels are stored as attributes. They are not printed on
 #' the console but are visibile in the RStudio viewer.
 #' @export
@@ -88,7 +89,7 @@ readSurvey <- function(file_name,
     # -------------------
     # add variable labels
     # -------------------
-    rawdata <- sjmisc::set_label(rawdata, unlist(subquestions))
+    rawdata <- set_label(rawdata, unlist(subquestions))
     # Add types
     if(convertStandardColumns) {
       rawdata <- inferDataTypes(rawdata)
