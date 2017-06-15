@@ -53,10 +53,15 @@ registerOptions <- function(verbose=TRUE, ...) {
 
   # Take additional arguments
   args <- list(...)
-  # Store root_url/api_token. Else give NULL as value
+  # Store root_url/api_token. Else give NA as value
   root_url <- ifelse("root_url" %in% names(args), args$root_url, NA)
   api_token <- ifelse("api_token" %in% names(args), args$api_token, NA)
-  # If API token or root url are NULL, then look for .qualtRics in the current directory
+  # If environment variables are already set and user just wants to change verbose argument
+  if(Sys.getenv("QUALTRICS_ROOT_URL") != "" & Sys.getenv("QUALTRICS_API_KEY") != "") {
+    Sys.setenv("QUALTRICS_VERBOSE" = verbose)
+    return(invisible(NULL))
+  }
+  # If API token and root url are NA, then look for .qualtRics.yml in the current directory
   if(is.na(api_token) & is.na(root_url)) {
     ex <- file.exists(".qualtRics.yml")
     # Throw error if file does not exist
@@ -64,7 +69,7 @@ registerOptions <- function(verbose=TRUE, ...) {
     # Load file
     cred <- yaml::yaml.load_file(".qualtRics.yml")
     # Assert that names are "api_token" and "root_url"
-    assertthat::assert_that(length(names(cred)) == 2, msg="Either the 'api_token' or 'root_url' arguments are missing in your .qualtRics.yml configuration file. Execute 'qualtRicsConfigFile()' for an example of how this file should look")
+    assertthat::assert_that(length(names(cred)) == 2, msg="Either the 'api_token' or 'root_url' arguments are missing in your .qualtRics.yml configuration file. Execute 'qualtRicsConfigFile()' to view an example of the configuration file.")
     assertthat::assert_that(names(cred)[1] == "api_token", msg = "The first line of the .qualtRics.yml file must be named 'api_token'. Execute 'qualtRicsConfigFile()' to view an example of the configuration file.")
     assertthat::assert_that(names(cred)[2] == "root_url", msg = "The second line of the .qualtRics.yml file must be named 'root_url'. Execute 'qualtRicsConfigFile()' to view an example of the configuration file.")
     # If verbose, print message
