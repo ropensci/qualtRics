@@ -22,6 +22,7 @@
 #' @param useLabels Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
 #' @param convertStandardColumns Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. Defaults to TRUE.
 #' @param useLocalTime Logical. Use local timezone to determine response date values? Defaults to FALSE.
+#' @param dateWarning Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
 #' @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API. See \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file.
 #' @author Jasper Ginn
 #' @export
@@ -32,7 +33,9 @@
 #' }
 #'
 
-qualtRicsConfigFile <- function(api_token = NULL, root_url=NULL, verbose=TRUE) {
+qualtRicsConfigFile <- function(api_token = NULL, root_url=NULL, verbose=TRUE,
+                                useLabels=TRUE, convertStandardColumns=TRUE,
+                                useLocalTime=FALSE, dateWarning=TRUE) {
 
   msg <- paste0(
     "Copy-paste the lines between the dashes into a new plain text file, replace the values for the api_token and root_url if they are not yet filled out. and save it in your working directory as '.qualtRics.yml'. Execute '?qualtRics::qualtRicsConfigFile' to view an explanation of the additional arguments. Visit https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file for more information.", "\n\n",
@@ -45,6 +48,7 @@ qualtRicsConfigFile <- function(api_token = NULL, root_url=NULL, verbose=TRUE) {
     'uselabels: ', useLabels, "\n",
     'convertstandardcolumns: ', convertStandardColumns, "\n",
     'uselocaltime: ', useLocalTime, "\n",
+    'dateWarning: ', dateWarning, "\n",
     "--------------"
   )
   cat(msg)
