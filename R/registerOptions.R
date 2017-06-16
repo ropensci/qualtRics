@@ -22,7 +22,7 @@
 #' @param verbose Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
 #' @param useLabels Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
 #' @param convertStandardColumns Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. Defaults to TRUE.
-#' @param useLocalTime Logical. Use local timezone to determine response date values? Defaults to FALSE.
+#' @param useLocalTime Logical. Use local timezone to determine response date values? Defaults to FALSE. See \url{https://api.qualtrics.com/docs/dates-and-times} for more information.
 #' @param dateWarning Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
 #' @param ... Either one or both of 'api_token' and 'root_url' to register the Qualtrics api key and institution-specific root url manually. (see example). See also \code{\link{qualtRicsConfigFile}} for an explanation of the root_url and api_token parameters.
 #'

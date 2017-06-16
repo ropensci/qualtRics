@@ -370,7 +370,7 @@ inferDataTypes <- function(data,
 
     # Check if warning given
     if(Sys.getenv("QUALTRICS_WARNING_DATE_GIVEN") == "") {
-      warning("The 'StartDate', 'EndDate' and 'RecordedDate' variables were converted without passing a specific timezone. If you like to set these timestamps to your own timezone, please visit https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/ (under 'User Settings')")
+      warning("The 'StartDate', 'EndDate' and 'RecordedDate' variables were converted without passing a specific timezone. If you like to set these timestamps to your own timezone, please visit https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/ (under 'User Settings'). See https://api.qualtrics.com/docs/dates-and-times for more information about how the Qualtrics API handles dates and times.")
       Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN"=TRUE)
     }
 
