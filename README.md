@@ -57,7 +57,7 @@ You can set some global options via the `registerOptions()` function:
 
 1. **verbose:** Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
 2. [useLabels](https://api.qualtrics.com/docs/create-response-export): Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
-3. **convertStandardColumns:** Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. Defaults to TRUE.
+3. **convertStandardColumns:** Logical. If TRUE, then the `getSurvey()` function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. Defaults to TRUE.
 4. [useLocalTime](https://api.qualtrics.com/docs/dates-and-times): Logical. Use local timezone to determine response date values? Defaults to FALSE.
 5. **dateWarning:** Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
 
@@ -111,6 +111,8 @@ Execute `qualtRicsConfigFile(api_token="<YOUR-API-TOKEN-HERE>", root_url="<YOUR-
 ![](/vignettes/config_step2.png)
 
 Save the file as `.qualtRics.yml` and execute `registerOptions()` or restart your R session and execute `library(qualtRics)` to load the configuration file.
+
+You can edit your configuration file by executing `file.edit(".qualtRics.yml")` in the R console.
 
 ## Commands
 
