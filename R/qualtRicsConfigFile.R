@@ -51,6 +51,6 @@ qualtRicsConfigFile <- function(api_token = NULL, root_url=NULL, verbose=TRUE,
     'dateWarning: ', dateWarning, "\n",
     "--------------"
   )
-  message(msg)
+  cat(msg)
 
 }
