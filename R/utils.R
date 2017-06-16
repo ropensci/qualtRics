@@ -126,10 +126,10 @@ checkParams <- function(...) {
   assert_apikey_stored()
   ### Options
   if(all(c("verbose", "convertStandardColumns",
-           "useLocalTime", "useLabels")) %in% names(args)) {
+           "useLocalTime", "useLabels") %in% names(args))) {
     assert_options_logical(
       args$verbose,
-      args$convertStandardOptions,
+      args$convertStandardColumns,
       args$useLocalTime,
       args$useLabels
     )
@@ -158,7 +158,7 @@ checkParams <- function(...) {
     if(!is.null(args$limit)) assert_limit_abovezero(args$limit)
   }
   # Check if includedQuestionIds is a string
-  if("includedQuestionIds") {
+  if("includedQuestionIds" %in% names(args)) {
     if(!is.null(args$includedQuestionIds)) assert_includedQuestionIds_string(args$includedQuestionIds)
   }
 }
