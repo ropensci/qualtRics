@@ -117,7 +117,7 @@ registerOptions <- function(verbose=TRUE,
       useLocalTime <- cred$uselocaltime
       assertthat::assert_that(assertthat::is.flag(useLocalTime), msg=paste0("'useLocalTime' must be either TRUE or FALSE but is ", as.character(useLocalTime), " in your config file."))
     }
-    if("dateWarning" %in% names(cred)) {
+    if("datewarning" %in% names(cred)) {
       dateWarning <- cred$dateWarning
       assertthat::assert_that(assertthat::is.flag(dateWarning), msg=paste0("'dateWarning' must be either TRUE or FALSE but is ", as.character(dateWarning), " in your config file."))
     }
