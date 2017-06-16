@@ -123,7 +123,7 @@ checkParams <- function(save_dir = NULL,
                         seenUnansweredRecode = NULL,
                         limit = NULL,
                         includedQuestionIds = NULL,
-                        check_qualtrics_api_key = FALSE,
+                        check_qualtrics_api_key = FALSE
                         ) {
   ### root_url
   assert_rootUrl_stored()
