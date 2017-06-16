@@ -9,7 +9,11 @@ test_that("registerOptions() can read from file", {
     "uselocaltime"= FALSE,
     "datewarning"= TRUE
   ))
+  # Set environment variables to ""
+  Sys.setenv("QUALTRICS_API_KEY"="",
+             "QUALTRICS_ROOT_URL"="")
   setwd(tempdir())
   write(io, ".qualtRics.yml")
-  expect_silent(qualtRics::registerOptions())
+  expect_message(qualtRics::registerOptions(),
+                 "Found a .qualtRics.yml configuration file")
 })
