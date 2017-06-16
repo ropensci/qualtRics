@@ -30,7 +30,7 @@ getSurvey(surveyID, lastResponseId = NULL, startDate = NULL,
 \item{...}{optional arguments. See \code{\link{registerOptions}} for arguments.}
 }
 \description{
-Export a qualtrics survey you own and import the survey directly into R. NOTE: If you keep getting errors try to use your institution's base URL. See \url{https://api.qualtrics.com/docs/root-url}.
+Export a qualtrics survey you own and import the survey directly into R.
 }
 \examples{
 \dontrun{

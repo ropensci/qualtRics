@@ -28,7 +28,8 @@ This function registers the user's qualtrics API key, root url and other options
 \examples{
 \dontrun{
 # Register your Qualtrics credentials if you haven't already
-# Note that you need to pass both the 'api_token' and 'root_url' parameters if you call this function for the first time.
+# Note that you need to pass both the 'api_token' and 'root_url'
+# parameters if you call this function for the first time.
 registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
 # Register a different root url
 registerOptions(root_url="<YOUR-OTHER-ROOT-URL>")
