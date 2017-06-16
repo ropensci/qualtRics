@@ -22,6 +22,7 @@
 #' @param useLabels Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
 #' @param convertStandardColumns Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. Defaults to TRUE.
 #' @param useLocalTime Logical. Use local timezone to determine response date values? Defaults to FALSE.
+#' @param dateWarning Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
 #' @param ... Either empty or both a parameter called 'api_token' and 'root_url' to register the Qualtrics api key and institution-specific root url manually. (see example).
 #'
 #' @seealso See \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file. See: \url{https://api.qualtrics.com/docs/authentication} to find your Qualtrics API key and \url{https://api.qualtrics.com/docs/root-url} for more information about the institution-specific root url.
@@ -56,6 +57,7 @@ registerOptions <- function(verbose=TRUE,
                             useLabels=TRUE,
                             convertStandardColumns=TRUE,
                             useLocalTime=FALSE,
+                            dateWarning=TRUE,
                             ...) {
 
   # Take additional arguments
@@ -99,6 +101,10 @@ registerOptions <- function(verbose=TRUE,
       useLocalTime <- cred$uselocaltime
       assertthat::assert_that(assertthat::is.flag(useLocalTime), msg=paste0("'useLocalTime' must be either TRUE or FALSE but is ", as.character(useLocalTime), " in your config file."))
     }
+    if("dateWarning" %in% names(cred)) {
+      dateWarning <- cred$dateWarning
+      assertthat::assert_that(assertthat::is.flag(dateWarning), msg=paste0("'dateWarning' must be either TRUE or FALSE but is ", as.character(dateWarning), " in your config file."))
+    }
   }
   # If either is still NA AND environment is empty, throw error
   assertthat::assert_that(!is.na(root_url) | Sys.getenv("QUALTRICS_ROOT_URL") != "", msg="'root_url' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.")
@@ -112,5 +118,8 @@ registerOptions <- function(verbose=TRUE,
     "QUALTRICS_USELABELS" = useLabels,
     "QUALTRICS_CONVERTSTANDARDCOLUMNS" = convertStandardColumns,
     "QUALTRICS_USELOCALTIME" = useLocalTime
-  ) # This does not yet work
+  )
+  # Set warning
+  invisible(ifelse(dateWarning == FALSE, Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN"=TRUE),
+         TRUE))
 }
