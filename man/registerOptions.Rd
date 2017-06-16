@@ -4,10 +4,17 @@
 \alias{registerOptions}
 \title{Register qualtrics API key, root url and other options}
 \usage{
-registerOptions(verbose = TRUE, ...)
+registerOptions(verbose = TRUE, useLabels = TRUE,
+  convertStandardColumns = TRUE, useLocalTime = FALSE, ...)
 }
 \arguments{
 \item{verbose}{Verbose. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.}
+
+\item{useLabels}{Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.}
+
+\item{convertStandardColumns}{Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. Defaults to TRUE.}
+
+\item{useLocalTime}{Logical. Use local timezone to determine response date values? Defaults to FALSE.}
 
 \item{...}{Either empty or both a parameter called 'api_token' and 'root_url' to register the Qualtrics api key and institution-specific root url manually. (see example).}
 }

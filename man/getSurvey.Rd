@@ -12,10 +12,6 @@ getSurvey(surveyID, useLabels = TRUE, convertStandardColumns = TRUE,
 \arguments{
 \item{surveyID}{String. Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.}
 
-\item{useLabels}{Boolean. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.}
-
-\item{convertStandardColumns}{Boolean. If TRUE, then the function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. Defaults to TRUE}
-
 \item{lastResponseId}{String. Export all responses received after the specified response. Defaults to NULL.}
 
 \item{startDate}{Date. Filter to only exports responses recorded after the specified date. Accepts dates as character strings in format "YYYY-MM-DD". Defaults to NULL.}
@@ -25,8 +21,6 @@ getSurvey(surveyID, useLabels = TRUE, convertStandardColumns = TRUE,
 \item{seenUnansweredRecode}{String. Recode seen but unanswered questions with a string value. Defaults to NULL.}
 
 \item{limit}{Integer. Maximum number of responses exported. Defaults to NULL (all responses).}
-
-\item{useLocalTime}{Boolean. Use local timezone to determine response date values. Defaults to FALSE.}
 
 \item{includedQuestionIds}{Vector of strings (e.g. c('QID1', 'QID2', 'QID3'). Export only specified questions. Defaults to NULL.}
 

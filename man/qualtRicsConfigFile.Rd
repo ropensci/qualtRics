@@ -4,12 +4,20 @@
 \alias{qualtRicsConfigFile}
 \title{Prints an example of a qualtRics configuration file to the console.}
 \usage{
-qualtRicsConfigFile(api_token = NULL, root_url = NULL)
+qualtRicsConfigFile(api_token = NULL, root_url = NULL, verbose = TRUE)
 }
 \arguments{
 \item{api_token}{String. API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})}
 
 \item{root_url}{String. Root url for your institution (see: \url{https://api.qualtrics.com/docs/root-url})}
+
+\item{verbose}{Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.}
+
+\item{useLabels}{Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.}
+
+\item{convertStandardColumns}{Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. Defaults to TRUE.}
+
+\item{useLocalTime}{Logical. Use local timezone to determine response date values? Defaults to FALSE.}
 }
 \description{
 Prints an example of a qualtRics configuration file to the console.
