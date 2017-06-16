@@ -4,7 +4,9 @@
 \alias{qualtRicsConfigFile}
 \title{Prints an example of a qualtRics configuration file to the console.}
 \usage{
-qualtRicsConfigFile(api_token = NULL, root_url = NULL, verbose = TRUE)
+qualtRicsConfigFile(api_token = NULL, root_url = NULL, verbose = TRUE,
+  useLabels = TRUE, convertStandardColumns = TRUE, useLocalTime = FALSE,
+  dateWarning = TRUE)
 }
 \arguments{
 \item{api_token}{String. API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})}
@@ -18,6 +20,8 @@ qualtRicsConfigFile(api_token = NULL, root_url = NULL, verbose = TRUE)
 \item{convertStandardColumns}{Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. Defaults to TRUE.}
 
 \item{useLocalTime}{Logical. Use local timezone to determine response date values? Defaults to FALSE.}
+
+\item{dateWarning}{Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.}
 }
 \description{
 Prints an example of a qualtRics configuration file to the console.

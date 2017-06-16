@@ -9,7 +9,7 @@ registerOptions(verbose = TRUE, useLabels = TRUE,
   ...)
 }
 \arguments{
-\item{verbose}{Verbose. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.}
+\item{verbose}{Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.}
 
 \item{useLabels}{Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.}
 
@@ -22,7 +22,7 @@ registerOptions(verbose = TRUE, useLabels = TRUE,
 \item{...}{Either empty or both a parameter called 'api_token' and 'root_url' to register the Qualtrics api key and institution-specific root url manually. (see example).}
 }
 \description{
-This function registers the user's qualtrics API key, root url and other options for the remainder of the R session. This function only needs to be called once (at the beginning of each R session).
+This function registers the user's qualtrics API key, root url and other options for the remainder of the R session. This function only needs to be called once (at the beginning of each R session). You may also use a configuration file. See \code{\link{qualtRicsConfigFile}} or \link{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file}
 }
 \examples{
 \dontrun{
