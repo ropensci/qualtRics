@@ -16,9 +16,9 @@
 
 #' Register qualtrics API key, root url and other options
 #'
-#' This function registers the user's qualtrics API key, root url and other options for the remainder of the R session. This function only needs to be called once (at the beginning of each R session).
+#' This function registers the user's qualtrics API key, root url and other options for the remainder of the R session. This function only needs to be called once (at the beginning of each R session). You may also use a configuration file. See \code{\link{qualtRicsConfigFile}} or \link{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file}
 #'
-#' @param verbose Verbose. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
+#' @param verbose Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
 #' @param useLabels Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
 #' @param convertStandardColumns Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. Defaults to TRUE.
 #' @param useLocalTime Logical. Use local timezone to determine response date values? Defaults to FALSE.
@@ -67,7 +67,20 @@ registerOptions <- function(verbose=TRUE,
   api_token <- ifelse("api_token" %in% names(args), args$api_token, NA)
   # If environment variables are already set and user just wants to change verbose argument
   if(Sys.getenv("QUALTRICS_ROOT_URL") != "" & Sys.getenv("QUALTRICS_API_KEY") != "") {
-    Sys.setenv("QUALTRICS_VERBOSE" = verbose)
+    # If user just wants to pass options, do:
+    options(
+      "QUALTRICS_VERBOSE" = verbose,
+      "QUALTRICS_USELABELS" = useLabels,
+      "QUALTRICS_CONVERTSTANDARDCOLUMNS" = convertStandardColumns,
+      "QUALTRICS_USELOCALTIME" = useLocalTime
+    )
+    # Set warning
+    invisible(ifelse(dateWarning == FALSE, Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN"=TRUE),
+                     TRUE))
+    # Set root url and api token if not NA
+    if(!is.na(root_url)) Sys.setenv("QUALTRICS_ROOT_URL" = root_url)
+    if(!is.na(api_token)) Sys.setenv("QUALTRICS_API_KEY" = root_url)
+    # Quietly quit
     return(invisible(NULL))
   }
   # If API token and root url are NA, then look for .qualtRics.yml in the current directory
