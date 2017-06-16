@@ -22,7 +22,7 @@ assert_apikey_stored <- function() {
 }
 
 # Check if root_url is stored
-assert_rootUrl_stored <- function(root_url) {
+assert_rootUrl_stored <- function() {
   assertthat::assert_that(Sys.getenv("QUALTRICS_ROOT_URL") != "",
                           msg = "You need to register your qualtrics API key and root url using the 'registerOptions()' function.")
 }
@@ -36,6 +36,25 @@ assert_saveDir_exists <- function(save_dir) {
 # Check if seenUnansweredRecode is a string
 assert_seenUnansweredRecode_string <- function(seenUnansweredRecode) {
   assertthat::assert_that(assertthat::is.string(seenUnansweredRecode))
+}
+
+# Check if lastResponseId is a string
+assert_lastResponseId_string <- function(lastResponseId) {
+  assertthat::assert_that(assertthat::is.string(lastResponseId))
+}
+
+# Check if startDate/EndDate are strings
+assert_startDate_string <- function(startDate) {
+  assertthat::assert_that(assertthat::is.string(startDate))
+}
+assert_endDate_string <- function(endDate) {
+  assertthat::assert_that(assertthat::is.string(endDate))
+}
+
+# Check if includedQuestionIds are string(s)
+assert_includedQuestionIds_string <- function(includedQuestionIds) {
+  assertthat::assert_that(mode(includedQuestionIds) == "character",
+                          msg="'includedQuestionIds' must be a character vector.")
 }
 
 # Check if limit > 0
