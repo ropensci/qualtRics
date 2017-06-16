@@ -149,9 +149,6 @@ checkParams <- function(save_dir = NULL,
   if(!is.null(includedQuestionIds)) {
     assertthat::assert_that(mode(includedQuestionIds) == "character")
   }
-  # Check if flags are logical
-
-
 }
 
 # Append proper end points to create root url
