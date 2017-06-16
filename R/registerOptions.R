@@ -76,7 +76,7 @@ registerOptions <- function(verbose=TRUE,
     # Load file
     cred <- yaml::yaml.load_file(".qualtRics.yml")
     # Assert that names are "api_token" and "root_url"
-    assertthat::assert_that(c("api_token", "root_url") %in% names(cred), msg="Either the 'api_token' or 'root_url' arguments are missing in your .qualtRics.yml configuration file. Execute 'qualtRicsConfigFile()' to view an example of the configuration file.")
+    assertthat::assert_that(all(c("api_token", "root_url") %in% names(cred)), msg="Either the 'api_token' or 'root_url' arguments are missing in your .qualtRics.yml configuration file. Execute 'qualtRicsConfigFile()' to view an example of the configuration file.")
     # If verbose, print message
     if(verbose) message(paste0("Found a .qualtRics.yml configuration file in ", getwd(), ". Using these credentials."))
     # Set vars
@@ -100,9 +100,9 @@ registerOptions <- function(verbose=TRUE,
       assertthat::assert_that(assertthat::is.flag(useLocalTime), msg=paste0("'useLocalTime' must be either TRUE or FALSE but is ", as.character(useLocalTime), " in your config file."))
     }
   }
-  # If either is still NA, throw error
-  assertthat::assert_that(!is.na(root_url) & Sys.getenv("QUALTRICS_ROOT_URL") != "", msg="'root_url' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.")
-  assertthat::assert_that(!is.na(api_token) & Sys.getenv("QUALTRICS_API_KEY") != "", msg="'api_token' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.")
+  # If either is still NA AND environment is empty, throw error
+  assertthat::assert_that(!is.na(root_url) | Sys.getenv("QUALTRICS_ROOT_URL") != "", msg="'root_url' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.")
+  assertthat::assert_that(!is.na(api_token) | Sys.getenv("QUALTRICS_API_KEY") != "", msg="'api_token' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.")
   # Set environment variables
   if(!is.na(api_token)) Sys.setenv("QUALTRICS_API_KEY" = api_token)
   if(!is.na(root_url)) Sys.setenv("QUALTRICS_ROOT_URL" = root_url)
@@ -111,6 +111,6 @@ registerOptions <- function(verbose=TRUE,
     "QUALTRICS_VERBOSE" = verbose,
     "QUALTRICS_USELABELS" = useLabels,
     "QUALTRICS_CONVERTSTANDARDCOLUMNS" = convertStandardColumns,
-    "QUALTRICS_USELOCALTIME" = convertLocalTime
-  )
+    "QUALTRICS_USELOCALTIME" = useLocalTime
+  ) # This does not yet work
 }

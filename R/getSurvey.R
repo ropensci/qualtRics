@@ -71,17 +71,35 @@
 #' }
 
 getSurvey <- function(surveyID,
-                      useLabels=TRUE,
-                      convertStandardColumns = TRUE,
                       lastResponseId=NULL,
                       startDate=NULL,
                       endDate=NULL,
                       seenUnansweredRecode=NULL,
                       limit = NULL,
-                      useLocalTime = FALSE,
                       includedQuestionIds = NULL,
                       save_dir=NULL,
-                      force_request=FALSE) {
+                      force_request=FALSE,
+                      ...) {
+  # Options
+  opts <- list(...)
+  verbose <- ifelse("verbose" %in% names(opts), opts$verbose,
+                    getOption("QUALTRICS_VERBOSE"))
+  convertStandardColumns <- ifelse("convertStandardColumns" %in% names(opts),
+                                   opts$convertStandardColumns,
+                                   getOption("QUALTRICS_CONVERTSTANDARDCOLUMNS"))
+  useLocalTime <- ifelse("useLocalTime" %in% names(opts), opts$useLocalTime,
+                         getOption("QUALTRICS_USELOCALTIME"))
+  useLabels <- ifelse("useLabels" %in% names(opts), opts$useLabels,
+                      getOption("QUALTRICS_USELABELS"))
+  # Check if flag
+  assertthat::assert_that(assertthat::is.flag(verbose),
+                          msg="'verbose' must be TRUE or FALSE.")
+  assertthat::assert_that(assertthat::is.flag(convertStandardColumns),
+                          msg="'convertStandardColumns' must be TRUE or FALSE.")
+  assertthat::assert_that(assertthat::is.flag(useLocalTime),
+                          msg="'useLocalTime' must be TRUE or FALSE.")
+  assertthat::assert_that(assertthat::is.flag(useLabels),
+                          msg="'useLabels' must be TRUE or FALSE.")
   # Check params
   checkParams(save_dir,
               seenUnansweredRecode = seenUnansweredRecode,
@@ -94,8 +112,6 @@ getSurvey <- function(surveyID,
       return(data)
     }
   }
-  # Print verbose messages?
-  verbose <- as.logical(Sys.getenv("QUALTRICS_VERBOSE"))
   # add endpoint to root url
   root_url <- appendRootUrl(Sys.getenv("QUALTRICS_ROOT_URL"), "responseexports")
   # Create raw JSON payload
