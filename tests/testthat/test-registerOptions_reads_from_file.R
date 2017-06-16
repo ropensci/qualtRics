@@ -11,6 +11,5 @@ test_that("registerOptions() can read from file", {
   ))
   setwd(tempdir())
   write(io, ".qualtRics.yml")
-  expect_message(qualtRics::registerOptions(),
-                 "Found a .qualtRics.yml configuration file in")
+  expect_silent(qualtRics::registerOptions())
 })
