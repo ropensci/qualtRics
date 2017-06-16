@@ -6,3 +6,5 @@
 ^\.travis\.yml$
 ^\.qualtRics\.yml$
 README\.md$
+^appveyor\.yml$
+^\.gitattributes$
