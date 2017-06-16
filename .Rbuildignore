@@ -5,6 +5,7 @@
 ^\.Rhistory$
 ^\.travis\.yml$
 ^\.qualtRics\.yml$
+^\.qualtRicstmp\.yml$
 README\.md$
 ^appveyor\.yml$
 ^\.gitattributes$
