@@ -92,20 +92,18 @@ getSurvey <- function(surveyID,
                          getOption("QUALTRICS_USELOCALTIME"))
   useLabels <- ifelse("useLabels" %in% names(opts), opts$useLabels,
                       getOption("QUALTRICS_USELABELS"))
-  # Check if flag
-  assertthat::assert_that(assertthat::is.flag(verbose),
-                          msg="'verbose' must be TRUE or FALSE.")
-  assertthat::assert_that(assertthat::is.flag(convertStandardColumns),
-                          msg="'convertStandardColumns' must be TRUE or FALSE.")
-  assertthat::assert_that(assertthat::is.flag(useLocalTime),
-                          msg="'useLocalTime' must be TRUE or FALSE.")
-  assertthat::assert_that(assertthat::is.flag(useLabels),
-                          msg="'useLabels' must be TRUE or FALSE.")
   # Check params
-  checkParams(save_dir,
-              seenUnansweredRecode = seenUnansweredRecode,
-              limit=limit,
-              check_qualtrics_api_key = TRUE)
+  checkParams(verbose,
+              convertStandardColumns,
+              useLocalTime,
+              useLabels,
+              lastResponseId,
+              startDate,
+              endDate,
+              includedQuestionIds,
+              save_dir,
+              seenUnansweredRecode,
+              limit)
   # See if survey already in tempdir
   if(!force_request) {
     if(paste0(surveyID, ".rds") %in% tempdir()) {
