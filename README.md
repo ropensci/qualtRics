@@ -225,11 +225,12 @@ If you have a request (like adding a new argument), please leave it [here](https
 
 **[development branch]**
 
-- `registerOptions()` now takes more arguments. User can now set global options. See `qualtRicsConfigFile()` for more information. Same options are now passed through `...` in specific functions.
-- Added appveyor testing.
+- \*
 
 **[master branch]**
 
+- `registerOptions()` now takes more arguments. User can now set global options. See `qualtRicsConfigFile()` for more information. Same options are now passed through `...` in specific functions.
+- Added appveyor testing.
 - Added support for a configuration file to store API key and root url in the working directory.
 - `registerApiKey()` has been replaced by `registerOptions()`. This function stores both a user's API key and root url. Function also scans for a configuration file `.qualtRics.yml` that contains this information.
 - Added a new script called `zzz.R`. When the package is loaded, the .onLoad() function in this file scans the working directory for a `.qualtRics.yml` configuration file so that the user doesn't have to register this information manually.
@@ -240,7 +241,7 @@ If you have a request (like adding a new argument), please leave it [here](https
 - Added parameter **includedQuestionIds** so user can select questions they want to download. Need to use the QID value from `getSurveyQuestions()`.
 - Updated examples and documentation of functions.
 - Added the following parameters to `getSurvey()`:
-  - **seenUnansweredRecode:**  String. Recode seen but unanswered questions with a string value. 
+  - **seenUnansweredRecode:**  String. Recode seen but unanswered questions with a string value.
   - **limit:** Integer. Maximum number of responses exported. Defaults to NULL (all responses).
   - **useLocalTime:** Boolean. Use local timezone to determine response date values. 
 - `getSurveys()` now retrieves > 100 results.
