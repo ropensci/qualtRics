@@ -48,7 +48,7 @@ qualtRicsConfigFile <- function(api_token = NULL, root_url=NULL, verbose=TRUE,
     'uselabels: ', useLabels, "\n",
     'convertstandardcolumns: ', convertStandardColumns, "\n",
     'uselocaltime: ', useLocalTime, "\n",
-    'dateWarning: ', dateWarning, "\n",
+    'datewarning: ', dateWarning, "\n",
     "--------------"
   )
   cat(msg)
