@@ -116,38 +116,50 @@ checkForWarnings <- function(resp) {
 }
 
 # Check if parameters passed to functions are correct
-# @param save_dir Directory where survey results will be stored. Defaults to a temporary directory which is cleaned when your R session is terminated. This parameter is useful if you'd like to store survey results.
-# @param check_qualtrics_api_key TRUE/FALSE statement. Does function need to check if qualtrics key exists?
+# @param ... options passed to checkParams
 
-checkParams <- function(save_dir = NULL,
-                        seenUnansweredRecode = NULL,
-                        limit = NULL,
-                        includedQuestionIds = NULL,
-                        check_qualtrics_api_key = FALSE
-                        ) {
+checkParams <- function(...) {
+  args <- list(...)
   ### root_url
   assert_rootUrl_stored()
-  ### save_dir
-  # Check if save_dir exists
-  if(!is.null(save_dir)) {
-    assert_saveDir_exists(save_dir)
+  ### API Token
+  assert_apikey_stored()
+  ### Options
+  if(all(c("verbose", "convertStandardColumns",
+           "useLocalTime", "useLabels")) %in% names(args)) {
+    assert_options_logical(
+      args$verbose,
+      args$convertStandardOptions,
+      args$useLocalTime,
+      args$useLabels
+    )
   }
-  ### check_qualtrics_api_key
-  if(check_qualtrics_api_key) {
-    # Look in temporary directory. If file 'qualtRics_header.rds' does not exist, then abort and tell user to register API key first
-    assert_apikey_stored()
+
+  # Check if params are of the right type
+  if("startDate" %in% names(args)) {
+    if(!is.null(args$startDate)) assert_startDate_string(args$startDate)
+  }
+  if("endDate" %in% names(args)) {
+    if(!is.null(args$endDate)) assert_endDate_string(args$endDate)
+  }
+  if("lastResponseId" %in% names(args)) {
+    if(!is.null(args$lastResponseId)) assert_lastResponseId_string(args$lastResponseId)
+  }
+  # Check if save_dir exists
+  if("save_dir" %in% names(args)) {
+    if(!is.null(args$save_dir)) assert_saveDir_exists(args$save_dir)
   }
   # Check if seenUnansweredRecode is NULL or else a string
-  if(!is.null(seenUnansweredRecode)) {
-    assert_seenUnansweredRecode_string(seenUnansweredRecode)
+  if("seenUnansweredRecode" %in% names(args)) {
+    if(!is.null(args$seenUnansweredRecode)) assert_seenUnansweredRecode_string(args$seenUnansweredRecode)
   }
   # Check if limit > 0
-  if(!is.null(limit)) {
-    assert_limit_abovezero(limit)
+  if("limit" %in% names(args)) {
+    if(!is.null(args$limit)) assert_limit_abovezero(args$limit)
   }
   # Check if includedQuestionIds is a string
-  if(!is.null(includedQuestionIds)) {
-    assertthat::assert_that(mode(includedQuestionIds) == "character")
+  if("includedQuestionIds") {
+    if(!is.null(args$includedQuestionIds)) assert_includedQuestionIds_string(args$includedQuestionIds)
   }
 }
 
