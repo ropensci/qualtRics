@@ -82,7 +82,7 @@ registerOptions <- function(verbose=TRUE,
                      TRUE))
     # Set root url and api token if not NA
     if(!is.na(root_url)) Sys.setenv("QUALTRICS_ROOT_URL" = root_url)
-    if(!is.na(api_token)) Sys.setenv("QUALTRICS_API_KEY" = root_url)
+    if(!is.na(api_token)) Sys.setenv("QUALTRICS_API_KEY" = api_token)
     # Quietly quit
     return(invisible(NULL))
   }
