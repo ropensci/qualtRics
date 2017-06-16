@@ -93,17 +93,17 @@ getSurvey <- function(surveyID,
   useLabels <- ifelse("useLabels" %in% names(opts), opts$useLabels,
                       getOption("QUALTRICS_USELABELS"))
   # Check params
-  checkParams(verbose,
-              convertStandardColumns,
-              useLocalTime,
-              useLabels,
-              lastResponseId,
-              startDate,
-              endDate,
-              includedQuestionIds,
-              save_dir,
-              seenUnansweredRecode,
-              limit)
+  checkParams(verbose=verbose,
+              convertStandardColumns=convertStandardColumns,
+              useLocalTime=useLocalTime,
+              useLabels=useLabels,
+              lastResponseId=lastResponseId,
+              startDate=startDate,
+              endDate=endDate,
+              includedQuestionIds=includedQuestionIds,
+              save_dir=save_dir,
+              seenUnansweredRecode=seenUnansweredRecode,
+              limit=limit)
   # See if survey already in tempdir
   if(!force_request) {
     if(paste0(surveyID, ".rds") %in% tempdir()) {
