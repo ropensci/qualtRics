@@ -89,7 +89,7 @@ readSurvey <- function(file_name,
     # -------------------
     # add variable labels
     # -------------------
-    rawdata <- set_label(rawdata, unlist(subquestions))
+    rawdata <- sjlabelled::set_label(rawdata, unlist(subquestions))
     # Add types
     if(convertStandardColumns) {
       rawdata <- inferDataTypes(rawdata)
