@@ -19,15 +19,19 @@ registerOptions(verbose = TRUE, useLabels = TRUE,
 
 \item{dateWarning}{Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.}
 
-\item{...}{Either empty or both a parameter called 'api_token' and 'root_url' to register the Qualtrics api key and institution-specific root url manually. (see example).}
+\item{...}{Either one or both of 'api_token' and 'root_url' to register the Qualtrics api key and institution-specific root url manually. (see example). See also \code{\link{qualtRicsConfigFile}} for an explanation of the root_url and api_token parameters.}
 }
 \description{
-This function registers the user's qualtrics API key, root url and other options for the remainder of the R session. This function only needs to be called once (at the beginning of each R session). You may also use a configuration file. See \code{\link{qualtRicsConfigFile}} or \link{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file}
+This function registers the user's qualtrics API key, root url and other options for the remainder of the R session. This function only needs to be called once (at the beginning of each R session). You may also use a configuration file. See \code{\link{qualtRicsConfigFile}} or \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file}
+. Note that you must pass both an api token and a root url if you call this function for the first time in a session and you're not using a config file. Thereafter, you can pass these options individually.
 }
 \examples{
 \dontrun{
 # Register your Qualtrics credentials if you haven't already
+# Note that you need to pass both the 'api_token' and 'root_url' parameters if you call this function for the first time.
 registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
+# Register a different root url
+registerOptions(root_url="<YOUR-OTHER-ROOT-URL>")
 # Retrieve a list of surveys
 surveys <- getSurveys()
 # Retrieve a single survey
@@ -41,9 +45,7 @@ mysurvey <- getSurvey(surveyID = surveys$id[6],
                       startDate = "2017-01-01",
                       endDate = "2017-01-31",
                       limit = 100,
-                      useLabels = TRUE,
-                      seenUnansweredRecode = "UNANS",
-                      verbose=TRUE)
+                      seenUnansweredRecode = "UNANS")
 }
 
 }

@@ -16,14 +16,15 @@
 
 #' Register qualtrics API key, root url and other options
 #'
-#' This function registers the user's qualtrics API key, root url and other options for the remainder of the R session. This function only needs to be called once (at the beginning of each R session). You may also use a configuration file. See \code{\link{qualtRicsConfigFile}} or \link{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file}
+#' This function registers the user's qualtrics API key, root url and other options for the remainder of the R session. This function only needs to be called once (at the beginning of each R session). You may also use a configuration file. See \code{\link{qualtRicsConfigFile}} or \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file}
+#' . Note that you must pass both an api token and a root url if you call this function for the first time in a session and you're not using a config file. Thereafter, you can pass these options individually.
 #'
 #' @param verbose Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
 #' @param useLabels Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
 #' @param convertStandardColumns Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. Defaults to TRUE.
 #' @param useLocalTime Logical. Use local timezone to determine response date values? Defaults to FALSE.
 #' @param dateWarning Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
-#' @param ... Either empty or both a parameter called 'api_token' and 'root_url' to register the Qualtrics api key and institution-specific root url manually. (see example).
+#' @param ... Either one or both of 'api_token' and 'root_url' to register the Qualtrics api key and institution-specific root url manually. (see example). See also \code{\link{qualtRicsConfigFile}} for an explanation of the root_url and api_token parameters.
 #'
 #' @seealso See \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file. See: \url{https://api.qualtrics.com/docs/authentication} to find your Qualtrics API key and \url{https://api.qualtrics.com/docs/root-url} for more information about the institution-specific root url.
 #'
@@ -33,7 +34,10 @@
 #' @examples
 #' \dontrun{
 #' # Register your Qualtrics credentials if you haven't already
+#' # Note that you need to pass both the 'api_token' and 'root_url' parameters if you call this function for the first time.
 #' registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
+#' # Register a different root url
+#' registerOptions(root_url="<YOUR-OTHER-ROOT-URL>")
 #' # Retrieve a list of surveys
 #' surveys <- getSurveys()
 #' # Retrieve a single survey
@@ -47,9 +51,7 @@
 #'                       startDate = "2017-01-01",
 #'                       endDate = "2017-01-31",
 #'                       limit = 100,
-#'                       useLabels = TRUE,
-#'                       seenUnansweredRecode = "UNANS",
-#'                       verbose=TRUE)
+#'                       seenUnansweredRecode = "UNANS")
 #' }
 #'
 

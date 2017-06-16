@@ -41,7 +41,7 @@ It further contains three helper functions:
 
   1. *registerOptions()* stores your API key and root url in environment variables.
   2. *getSurveyQuestions()* retrieves a data frame containing questions and question IDs for a survey.
-  3. *qualtRicsConfigFile()* prints information on how to make a .qualtRics.yml configuration file that stores your qualtRics API key and root url in your working directory.
+  3. *qualtRicsConfigFile()* prints information on how to make a .qualtRics.yml configuration file that stores your qualtRics API key, root url and other options in your working directory.
 
 Note that you can only export surveys that you own, or to which you have been given administration rights.
 

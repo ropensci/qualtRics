@@ -16,7 +16,7 @@
 
 #' Export a survey and download into R
 #'
-#' Export a qualtrics survey you own and import the survey directly into R. NOTE: If you keep getting errors try to use your institution's base URL. See \url{https://api.qualtrics.com/docs/root-url}.
+#' Export a qualtrics survey you own and import the survey directly into R.
 #'
 #' @param surveyID String. Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.
 #' @param lastResponseId String. Export all responses received after the specified response. Defaults to NULL.
