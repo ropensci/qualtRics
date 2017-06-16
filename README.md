@@ -47,33 +47,58 @@ Note that you can only export surveys that you own, or to which you have been gi
 
 ## Registering your Qualtrics credentials
 
-There are two ways to register your Qualtrics credentials in R (your [API key](https://api.qualtrics.com/docs/finding-qualtrics-ids) and [institution-specific root url](https://api.qualtrics.com/docs/root-url)). The first option involves registering your credentials at the start of each R session:
+There are two ways to register your Qualtrics credentials (your [API key](https://api.qualtrics.com/docs/finding-qualtrics-ids) and [institution-specific root url](https://api.qualtrics.com/docs/root-url)) and other options in R. As in earlier versions of the qualtRics package, you can register your credentials at the start of each R session:
 
 ```r
-qualtRics::registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
+registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
+```
+
+You can set some global options via the `registerOptions()` function:
+
+1. **verbose:** Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
+2. [useLabels](https://api.qualtrics.com/docs/create-response-export): Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
+3. **convertStandardColumns:** Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. Defaults to TRUE.
+4. [useLocalTime](https://api.qualtrics.com/docs/dates-and-times): Logical. Use local timezone to determine response date values? Defaults to FALSE.
+5. **dateWarning:** Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
+
+You can change some of these options without having to pass the `api_token` or `root_url` parameters every time as long as you have registered the api token and root url previously:
+
+```r
+registerOptions(verbose=FALSE, useLocalTime=TRUE)
 ```
 
 The second method involves placing a configuration file called `.qualtRics.yml` in your working directory. 
 
 ### Using a configuration file
 
-qualtRics supports the use of a configuration file to store your Qualtrics credentials. Executing `qualtRics::qualtRicsConfigFile()` returns information that explains how you can do this:
+qualtRics supports the use of a configuration file to store your Qualtrics credentials. Executing `qualtRicsConfigFile()` returns information that explains how you can do this:
 
 ```
 Copy-paste the lines between the dashes into a new plain text file, replace the values for the
-api_token and root_url if they are not yet filled out and save it in your working directory as 
-'.qualtRics.yml'. Visit https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file 
+api_token and root_url if they are not yet filled out. and save it in your working directory 
+as '.qualtRics.yml'. Execute '?qualtRics::qualtRicsConfigFile' to view an explanation of the additional arguments. Visit https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file 
 for more information.
 
 --------------
 api_token: <YOUR-API-TOKEN-HERE>
 root_url: <YOUR-ROOT-URL-HERE>
+verbose: TRUE
+uselabels: TRUE
+convertstandardcolumns: TRUE
+uselocaltime: FALSE
+dateWarning: TRUE
 --------------
 ```
 
-You can also call this function while passing `api_token` and `root_url` values to the function, in which case `<YOUR-API-TOKEN-HERE>` and `<YOUR-ROOT-URL-HERE>` will be replaced by your credentials. You can register your credentials by calling `registerOption()` without passing any parameters.
+You can also call this function while passing `api_token` and `root_url` values to the function, in which case `<YOUR-API-TOKEN-HERE>` and `<YOUR-ROOT-URL-HERE>` will be replaced by your credentials. After saving the file, you can register your credentials by calling `registerOption()` without passing any parameters.
 
-When you load the qualtRics package, it will automatically look for a `.qualtRics.yml` file in the working directory, in which case you don't need to call the `registerOption()` function to register your qualtRics credentials.
+When you load the qualtRics package, it will automatically look for a `.qualtRics.yml` file in the working directory, in which case you don't need to call the `registerOption()` function to register your qualtRics credentials at the beginning of your session.
+
+You can override your configuration file settings by calling `registerOption()` with the changes you want to make:
+
+```r
+registerOptions(verbose=FALSE, useLabels=FALSE, root_url="myinstitution.qualtrics.com")
+```
 
 #### Setting up a config file
 
@@ -111,7 +136,8 @@ Export a survey and load it into R:
 
 ```r
 mysurvey <- getSurvey(surveyID = surveys$id[6], 
-                      verbose = TRUE)
+                      verbose = TRUE) # You can set this option globally
+                                      # or pass it to the function.
 ```
 
 You can add a from/to date to only retrieve responses between those dates:
@@ -120,11 +146,12 @@ You can add a from/to date to only retrieve responses between those dates:
 surv <- getSurvey(survs$id[4],
                   startDate = "2016-09-18",
                   endDate = "2016-10-01",
-                  useLabels = FALSE,
-                  verbose = TRUE)
+                  useLabels = FALSE) # You can set this option 
+                                     # globally or pass it to this
+                                     # function.
 ```
 
-Note that your date and time settings may not correspond to your own timezone. You can find out how to do this [here](https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/#user-settings).
+Note that your date and time settings may not correspond to your own timezone. You can find out how to do this [here](https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/#user-settings). See [this page](https://api.qualtrics.com/docs/dates-and-times) for more information about how Qualtrics handles dates and times.
 
 You may also reference a response ID. `getSurvey` will then download all responses that were submitted after that response:
 
@@ -178,7 +205,7 @@ You can read a survey that you downloaded manually using `readSurvey`:
 mysurvey <- readSurvey("/users/jasper/desktop/mysurvey.csv")
 ```
 
-To avoid special characters (mainly periods) in header names, `readSurvey` uses question labels as the header names. The question belonging to that label is then added using the [sjmisc](https://CRAN.R-project.org/package=sjmisc) package. Qualtrics gives names to these labels automatically, but you can easily change them.
+To avoid special characters (mainly periods) in header names, `readSurvey` uses question labels as the header names. The question belonging to that label is then added using the [sjlabelled](https://CRAN.R-project.org/package=sjlabelled) package. Qualtrics gives names to these labels automatically, but you can easily change them.
 
 ![](/vignettes/qualtricsdf.png)
 
@@ -198,7 +225,8 @@ If you have a request (like adding a new argument), please leave it [here](https
 
 **[development branch]**
 
-- \*
+- `registerOptions()` now takes more arguments. User can now set global options. See `qualtRicsConfigFile()` for more information. Same options are now passed through `...` in specific functions.
+- Added appveyor testing.
 
 **[master branch]**
 
