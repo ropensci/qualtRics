@@ -5,7 +5,8 @@
 \title{Register qualtrics API key, root url and other options}
 \usage{
 registerOptions(verbose = TRUE, useLabels = TRUE,
-  convertStandardColumns = TRUE, useLocalTime = FALSE, ...)
+  convertStandardColumns = TRUE, useLocalTime = FALSE, dateWarning = TRUE,
+  ...)
 }
 \arguments{
 \item{verbose}{Verbose. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.}
@@ -15,6 +16,8 @@ registerOptions(verbose = TRUE, useLabels = TRUE,
 \item{convertStandardColumns}{Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. Defaults to TRUE.}
 
 \item{useLocalTime}{Logical. Use local timezone to determine response date values? Defaults to FALSE.}
+
+\item{dateWarning}{Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.}
 
 \item{...}{Either empty or both a parameter called 'api_token' and 'root_url' to register the Qualtrics api key and institution-specific root url manually. (see example).}
 }

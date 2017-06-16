@@ -4,19 +4,18 @@
 \alias{getSurvey}
 \title{Export a survey and download into R}
 \usage{
-getSurvey(surveyID, useLabels = TRUE, convertStandardColumns = TRUE,
-  lastResponseId = NULL, startDate = NULL, endDate = NULL,
-  seenUnansweredRecode = NULL, limit = NULL, useLocalTime = FALSE,
-  includedQuestionIds = NULL, save_dir = NULL, force_request = FALSE)
+getSurvey(surveyID, lastResponseId = NULL, startDate = NULL,
+  endDate = NULL, seenUnansweredRecode = NULL, limit = NULL,
+  includedQuestionIds = NULL, save_dir = NULL, force_request = FALSE, ...)
 }
 \arguments{
 \item{surveyID}{String. Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.}
 
 \item{lastResponseId}{String. Export all responses received after the specified response. Defaults to NULL.}
 
-\item{startDate}{Date. Filter to only exports responses recorded after the specified date. Accepts dates as character strings in format "YYYY-MM-DD". Defaults to NULL.}
+\item{startDate}{String. Filter to only exports responses recorded after the specified date. Accepts dates as character strings in format "YYYY-MM-DD". Defaults to NULL.}
 
-\item{endDate}{Date. Filter to only exports responses recorded before the specified date. Accepts dates as character strings in format "YYYY-MM-DD". Defaults to NULL.}
+\item{endDate}{String. Filter to only exports responses recorded before the specified date. Accepts dates as character strings in format "YYYY-MM-DD". Defaults to NULL.}
 
 \item{seenUnansweredRecode}{String. Recode seen but unanswered questions with a string value. Defaults to NULL.}
 
@@ -26,7 +25,9 @@ getSurvey(surveyID, useLabels = TRUE, convertStandardColumns = TRUE,
 
 \item{save_dir}{String. Directory where survey results will be stored. Defaults to a temporary directory which is cleaned when your R session is terminated. This parameter is useful if you'd like to store survey results. The downloaded survey will be stored as an RDS file (see \link[base]{readRDS}).}
 
-\item{force_request}{Boolean. getSurvey() saves each survey in a temporary directory so that it can quickly be retrieved later. If force_request is TRUE, getSurvey() always downloads the survey from the API instead of loading it from the temporary directory. Defaults to FALSE.}
+\item{force_request}{Logical. getSurvey() saves each survey in a temporary directory so that it can quickly be retrieved later. If force_request is TRUE, getSurvey() always downloads the survey from the API instead of loading it from the temporary directory. Defaults to FALSE.}
+
+\item{...}{optional arguments. See \code{\link{registerOptions}} for arguments.}
 }
 \description{
 Export a qualtrics survey you own and import the survey directly into R. NOTE: If you keep getting errors try to use your institution's base URL. See \url{https://api.qualtrics.com/docs/root-url}.
@@ -52,7 +53,7 @@ mysurvey <- getSurvey(surveyID = surveys$id[6],
                       seenUnansweredRecode = "UNANS",
                       verbose=TRUE)
 # You can also choose to only download an export with specific questions using
-# the \\link[qualtRics]{getSurveyQuestions} function.
+# the \\code{\\link[getSurveyQuestions]{getSurveyQuestions}} function.
 
 # Retrieve questions for a survey
 questions <- getSurveyQuestions(surveyID = surveys$id[6])
