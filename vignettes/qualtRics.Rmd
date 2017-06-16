@@ -9,8 +9,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-[![Build Status](https://travis-ci.org/JasperHG90/qualtRics.svg?branch=master)](https://travis-ci.org/JasperHG90/qualtRics) [![CRAN STATUS](https://www.r-pkg.org/badges/version/qualtRics)](https://CRAN.R-project.org/package=qualtRics) [![DOWNLOADS](https://cranlogs.r-pkg.org/badges/qualtRics)](https://www.r-pkg.org/pkg/qualtRics) [![CODECOV](https://codecov.io/gh/JasperHG90/qualtRics/branch/master/graphs/badge.svg)](https://codecov.io/gh/JasperHG90/qualtRics)
-
 This project contains an R package to download surveys from  [Qualtrics](https://www.qualtrics.com/) using the API. 
 
 Note that your institution must support API access and that it must be enabled for your account. Whoever manages your Qualtrics account can help you with this. Please refer to the [Qualtrics documentation](https://api.qualtrics.com/docs/authentication) to find your API token.
@@ -50,39 +48,64 @@ It further contains three helper functions:
 
   1. *registerOptions()* stores your API key and root url in environment variables.
   2. *getSurveyQuestions()* retrieves a data frame containing questions and question IDs for a survey.
-  3. *qualtRicsConfigFile()* prints information on how to make a .qualtRics.yml configuration file that stores your qualtRics API key and root url in your working directory.
+  3. *qualtRicsConfigFile()* prints information on how to make a .qualtRics.yml configuration file that stores your qualtRics API key, root url and other options in your working directory.
 
 Note that you can only export surveys that you own, or to which you have been given administration rights.
 
 ## Registering your Qualtrics credentials
 
-There are two ways to register your Qualtrics credentials in R (your [API key](https://api.qualtrics.com/docs/finding-qualtrics-ids) and [institution-specific root url](https://api.qualtrics.com/docs/root-url)). The first option involves registering your credentials at the start of each R session:
+There are two ways to register your Qualtrics credentials (your [API key](https://api.qualtrics.com/docs/finding-qualtrics-ids) and [institution-specific root url](https://api.qualtrics.com/docs/root-url)) and other options in R. As in earlier versions of the qualtRics package, you can register your credentials at the start of each R session:
 
 ```r
-qualtRics::registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
+registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
+```
+
+You can set some global options via the `registerOptions()` function:
+
+1. **verbose:** Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
+2. [useLabels](https://api.qualtrics.com/docs/create-response-export): Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
+3. **convertStandardColumns:** Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. Defaults to TRUE.
+4. [useLocalTime](https://api.qualtrics.com/docs/dates-and-times): Logical. Use local timezone to determine response date values? Defaults to FALSE.
+5. **dateWarning:** Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
+
+You can change some of these options without having to pass the `api_token` or `root_url` parameters every time as long as you have registered the api token and root url previously:
+
+```r
+registerOptions(verbose=FALSE, useLocalTime=TRUE)
 ```
 
 The second method involves placing a configuration file called `.qualtRics.yml` in your working directory. 
 
 ### Using a configuration file
 
-qualtRics supports the use of a configuration file to store your Qualtrics credentials. Executing `qualtRics::qualtRicsConfigFile()` returns information that explains how you can do this:
+qualtRics supports the use of a configuration file to store your Qualtrics credentials. Executing `qualtRicsConfigFile()` returns information that explains how you can do this:
 
 ```
 Copy-paste the lines between the dashes into a new plain text file, replace the values for the
-api_token and root_url if they are not yet filled out and save it in your working directory as 
-'.qualtRics.yml'. Visit https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file 
+api_token and root_url if they are not yet filled out. and save it in your working directory 
+as '.qualtRics.yml'. Execute '?qualtRics::qualtRicsConfigFile' to view an explanation of the additional arguments. Visit https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file 
 for more information.
 
 --------------
 api_token: <YOUR-API-TOKEN-HERE>
 root_url: <YOUR-ROOT-URL-HERE>
+verbose: TRUE
+uselabels: TRUE
+convertstandardcolumns: TRUE
+uselocaltime: FALSE
+dateWarning: TRUE
 --------------
 ```
 
-You can also call this function while passing `api_token` and `root_url` values to the function, in which case `<YOUR-API-TOKEN-HERE>` and `<YOUR-ROOT-URL-HERE>` will be replaced by your credentials. You can register your credentials by calling `registerOption()` without passing any parameters.
+You can also call this function while passing `api_token` and `root_url` values to the function, in which case `<YOUR-API-TOKEN-HERE>` and `<YOUR-ROOT-URL-HERE>` will be replaced by your credentials. After saving the file, you can register your credentials by calling `registerOption()` without passing any parameters.
 
-When you load the qualtRics package, it will automatically look for a `.qualtRics.yml` file in the working directory, in which case you don't need to call the `registerOption()` function to register your qualtRics credentials.
+When you load the qualtRics package, it will automatically look for a `.qualtRics.yml` file in the working directory, in which case you don't need to call the `registerOption()` function to register your qualtRics credentials at the beginning of your session.
+
+You can override your configuration file settings by calling `registerOption()` with the changes you want to make:
+
+```r
+registerOptions(verbose=FALSE, useLabels=FALSE, root_url="myinstitution.qualtrics.com")
+```
 
 #### Setting up a config file
 
@@ -120,7 +143,8 @@ Export a survey and load it into R:
 
 ```r
 mysurvey <- getSurvey(surveyID = surveys$id[6], 
-                      verbose = TRUE)
+                      verbose = TRUE) # You can set this option globally
+                                      # or pass it to the function.
 ```
 
 You can add a from/to date to only retrieve responses between those dates:
@@ -129,11 +153,12 @@ You can add a from/to date to only retrieve responses between those dates:
 surv <- getSurvey(survs$id[4],
                   startDate = "2016-09-18",
                   endDate = "2016-10-01",
-                  useLabels = FALSE,
-                  verbose = TRUE)
+                  useLabels = FALSE) # You can set this option 
+                                     # globally or pass it to this
+                                     # function.
 ```
 
-Note that your date and time settings may not correspond to your own timezone. You can find out how to do this [here](https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/#user-settings).
+Note that your date and time settings may not correspond to your own timezone. You can find out how to do this [here](https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/#user-settings). See [this page](https://api.qualtrics.com/docs/dates-and-times) for more information about how Qualtrics handles dates and times.
 
 You may also reference a response ID. `getSurvey` will then download all responses that were submitted after that response:
 
@@ -187,7 +212,7 @@ You can read a survey that you downloaded manually using `readSurvey`:
 mysurvey <- readSurvey("/users/jasper/desktop/mysurvey.csv")
 ```
 
-To avoid special characters (mainly periods) in header names, `readSurvey` uses question labels as the header names. The question belonging to that label is then added using the [sjmisc](https://CRAN.R-project.org/package=sjmisc) package. Qualtrics gives names to these labels automatically, but you can easily change them.
+To avoid special characters (mainly periods) in header names, `readSurvey` uses question labels as the header names. The question belonging to that label is then added using the [sjlabelled](https://CRAN.R-project.org/package=sjlabelled) package. Qualtrics gives names to these labels automatically, but you can easily change them.
 
 ![](qualtricsdf.png)
 
@@ -205,52 +230,4 @@ If you have a request (like adding a new argument), please leave it [here](https
 
 ### Changelog
 
-**[development branch]**
-
-- \*
-
-**[master branch]**
-
-- Added support for a configuration file to store API key and root url in the working directory.
-- `registerApiKey()` has been replaced by `registerOptions()`. This function stores both a user's API key and root url. Function also scans for a configuration file `.qualtRics.yml` that contains this information.
-- Added a new script called `zzz.R`. When the package is loaded, the .onLoad() function in this file scans the working directory for a `.qualtRics.yml` configuration file so that the user doesn't have to register this information manually.
-- Added a new function `qualtRicsConfigFile()` that prints instructions for the user on how to set up a configuration file to the R Console.
-- Removed the `root_url` parameter from all functions that required it.
-- Dates are now converted without a specific timezone.
-- Added a new function `getSurveyQuestions()` that allows the user to download a data frame containing question labels and IDs.
-- Added parameter **includedQuestionIds** so user can select questions they want to download. Need to use the QID value from `getSurveyQuestions()`.
-- Updated examples and documentation of functions.
-- Added the following parameters to `getSurvey()`:
-  - **seenUnansweredRecode:**  String. Recode seen but unanswered questions with a string value. 
-  - **limit:** Integer. Maximum number of responses exported. Defaults to NULL (all responses).
-  - **useLocalTime:** Boolean. Use local timezone to determine response date values. 
-- `getSurveys()` now retrieves > 100 results.
-
-**[v1.0]**
-
-- Added a new function `readSurvey()`. This function is used in the `getSurvey()` function but will also work with surveys downloaded manually from Qualtrics. Standard columns (completed survey/startDate/endDate etc.) are now converted to their proper data types. HT Adrian Brugger & Stefan Borer.
-- User can only download surveys in CSV format, no longer in XML or JSON. 
-- Added several new parameters to `getSurvey()` function. HT @samuelkaminsky & @eknud
-  * *LastResponseId*: If used, only responses that were filled out later than this ID will be downloaded. 
-  * *UseLabels*: If TRUE, download will contain character labels. Else, download will contain choice labels.
-  * *StartDate*: Only download responses after this date.
-  * *EndDate*: Only download responses before this date.
-- Survey downloads should be faster now; `getSurvey()` no longer sleeps when checking download status. Also added progress bar.
-
-**[v0.03]**
-
-- User can choose to save results directly in a folder through 'save_dir' parameter in `getSurvey()`
-- Results can now be requested in .csv, .json or .xml format. The packages `jsonlite` and `XML` are added to 'Suggests' in DESCRIPTION.
-- `constructHeader()` is now deprecated and should no longer be used. Instead, users need to call `registerApiKey()`.
-- Added a new function `registerApiKey()` which saves the user's API key and header information in the `tempdir()` environment. 
-
-**[v0.02]**
-
-- Renamed 'base url' to 'root url' such that it corresponds to Qualtrics documentation.
-- The root url no longer requires API-specific endpoints. So e.g. 'https://leidenuniv.eu.qualtrics.com' now works for all functions. The API-specific endpoints are added in the functions itself.
-- Institution-specific root url is now required by `getSurvey()`
-
-**[v0.01]**
-
-- Added first three functions (`constructHeader`, `getSurvey`, `getSurveyIDs`)
-- base_url parameter is now uniform across functions. Parameter is called 'root url' to bring it in line with Qualtrics documentation.
+Click [here](https://github.com/JasperHG90/qualtRics/blob/master/README.md#changelog) to view the changelog for qualtRics
