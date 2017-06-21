@@ -90,11 +90,11 @@ dateWarning: TRUE
 --------------
 ```
 
-You can also call this function while passing `api_token` and `root_url` values to the function, in which case `<YOUR-API-TOKEN-HERE>` and `<YOUR-ROOT-URL-HERE>` will be replaced by your credentials. After saving the file, you can register your credentials by calling `registerOption()` without passing any parameters.
+You can also call this function while passing `api_token` and `root_url` values to the function, in which case `<YOUR-API-TOKEN-HERE>` and `<YOUR-ROOT-URL-HERE>` will be replaced by your credentials. After saving the file, you can register your credentials by calling `registerOptions()` without passing any parameters.
 
-When you load the qualtRics package, it will automatically look for a `.qualtRics.yml` file in the working directory, in which case you don't need to call the `registerOption()` function to register your qualtRics credentials at the beginning of your session.
+When you load the qualtRics package, it will automatically look for a `.qualtRics.yml` file in the working directory, in which case you don't need to call the `registerOptions()` function to register your qualtRics credentials at the beginning of your session.
 
-You can override your configuration file settings by calling `registerOption()` with the changes you want to make:
+You can override your configuration file settings by calling `registerOptions()` with the changes you want to make:
 
 ```r
 registerOptions(verbose=FALSE, useLabels=FALSE, root_url="myinstitution.qualtrics.com")
