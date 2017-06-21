@@ -86,7 +86,7 @@ verbose: TRUE
 uselabels: TRUE
 convertstandardcolumns: TRUE
 uselocaltime: FALSE
-dateWarning: TRUE
+datewarning: TRUE
 --------------
 ```
 
