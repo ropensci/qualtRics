@@ -231,6 +231,10 @@ If you have a request (like adding a new argument), please leave it [here](https
 
 **[master branch]**
 
+- \*
+
+**[v2.0]**
+
 - `registerOptions()` now takes more arguments. User can now set global options. See `qualtRicsConfigFile()` for more information. Same options are now passed through `...` in specific functions.
 - Added appveyor testing.
 - Added support for a configuration file to store API key and root url in the working directory.
