@@ -9,3 +9,4 @@
 README\.md$
 ^appveyor\.yml$
 ^\.gitattributes$
+Changelog\.md$
