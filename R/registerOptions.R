@@ -62,7 +62,6 @@ registerOptions <- function(verbose=TRUE,
                             useLocalTime=FALSE,
                             dateWarning=TRUE,
                             ...) {
-
   # Take additional arguments
   args <- list(...)
   # Store root_url/api_token. Else give NA as value
@@ -70,6 +69,12 @@ registerOptions <- function(verbose=TRUE,
   api_token <- ifelse("api_token" %in% names(args), args$api_token, NA)
   # If environment variables are already set and user just wants to change verbose argument
   if(Sys.getenv("QUALTRICS_ROOT_URL") != "" & Sys.getenv("QUALTRICS_API_KEY") != "") {
+    # Check
+    assertthat::assert_that(assertthat::is.flag(verbose), msg=paste0("'verbose' must be either TRUE or FALSE."))
+    assertthat::assert_that(assertthat::is.flag(convertStandardColumns), msg=paste0("'convertstandardcolumns' must be either TRUE or FALSE."))
+    assertthat::assert_that(assertthat::is.flag(useLabels), msg=paste0("'uselabels' must be either TRUE or FALSE."))
+    assertthat::assert_that(assertthat::is.flag(useLabels), msg=paste0("'uselabels' must be either TRUE or FALSE."))
+    assertthat::assert_that(assertthat::is.flag(dateWarning), msg=paste0("'dateWarning' must be either TRUE or FALSE."))
     # If user just wants to pass options, do:
     options(
       "QUALTRICS_VERBOSE" = verbose,
@@ -122,6 +127,7 @@ registerOptions <- function(verbose=TRUE,
       assertthat::assert_that(assertthat::is.flag(dateWarning), msg=paste0("'dateWarning' must be either TRUE or FALSE but is ", as.character(dateWarning), " in your config file."))
     }
   }
+  # Check arguments
   # If either is still NA AND environment is empty, throw error
   assertthat::assert_that(!is.na(root_url) | Sys.getenv("QUALTRICS_ROOT_URL") != "", msg="'root_url' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.")
   assertthat::assert_that(!is.na(api_token) | Sys.getenv("QUALTRICS_API_KEY") != "", msg="'api_token' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.")
