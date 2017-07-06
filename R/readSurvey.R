@@ -29,6 +29,7 @@
 #' @author Adrian Brugger, Stefan Borer & Jasper Ginn
 #' @importFrom utils read.csv
 #' @importFrom sjlabelled set_label
+#' @importFrom jsonlite fromJSON
 #' @return A data frame. Variable labels are stored as attributes. They are not printed on
 #' the console but are visibile in the RStudio viewer.
 #' @export
