@@ -6,6 +6,8 @@ This project contains an R package to download surveys from  [Qualtrics](https:/
 
 Note that your institution must support API access and that it must be enabled for your account. Whoever manages your Qualtrics account can help you with this. Please refer to the [Qualtrics documentation](https://api.qualtrics.com/docs/authentication) to find your API token.
 
+I am not affiliated with Qualtrics and they do not offer support for this package.
+
 ## Installation
 
 To install this package, execute the following in R:
