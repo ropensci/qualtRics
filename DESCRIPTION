@@ -9,7 +9,9 @@ Description: Qualtrics <https://www.qualtrics.com/about/>
     This package contains convenience functions to pull
     survey results straight into R using the Qualtrics
     API. See <https://api.qualtrics.com/> for more 
-    information about the Qualtrics API.
+    information about the Qualtrics API. This package is 
+    community-maintained and is not officially supported 
+    by Qualtrics.
 Imports:
     httr,
     stringr,
