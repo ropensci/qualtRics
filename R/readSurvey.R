@@ -51,7 +51,7 @@ readSurvey <- function(file_name,
                         sep = ',',
                         stringsAsFactors=FALSE,
                         fileEncoding = fileEncoding,
-                        skip = 3)
+                        skip = 2)
     header <- read.csv(file=file_name,
                        header = TRUE,
                        sep = ',',
@@ -60,12 +60,6 @@ readSurvey <- function(file_name,
                        nrows = 1)
     # Add names
     names(rawdata) <- names(header)
-    # Import importids
-    importids <- unname(unlist(read.csv(file = file_name,
-                          header = F, sep = ',',
-                          stringsAsFactors = FALSE,
-                          fileEncoding = fileEncoding,
-                          skip=2, nrows=1)))
     # If Qualtrics adds an empty column at the end, remove it
     if(grepl(",$", readLines(file_name, n = 1))) {
         header <- header[,1:(ncol(header)-1)]
