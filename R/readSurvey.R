@@ -26,6 +26,7 @@
 #' @param convertStandardColumns Logical. If TRUE, then the function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. defaults to TRUE.
 #' @param stripHTML Logical. If TRUE, then remove html tags. Defaults to TRUE
 #' @param fileEncoding Set this argument to import your survey using a specific encoding. (see \code{\link{utils}{read.csv}} and the 'Encoding' section in \code{\link{base}{file}})
+#' @param legacyFormat Logical. If TRUE, then import "legacy" format csv files (as of 2017). Defaults to FALSE
 #'
 #' @author Adrian Brugger, Stefan Borer & Jasper Ginn
 #' @importFrom utils read.csv
@@ -42,16 +43,18 @@
 readSurvey <- function(file_name,
                        convertStandardColumns = TRUE,
                        stripHTML = TRUE,
-                       fileEncoding = "") {
+                       fileEncoding = "",
+                       legacyFormat = FALSE) {
     # check if file exists
     assert_surveyFile_exists(file_name)
+    skipNr <- ifelse(legacyFormat, 2, 3)
     # import data including variable names (row 1) and variable labels (row 2)
     rawdata <- read.csv(file=file_name,
                         header = FALSE,
                         sep = ',',
                         stringsAsFactors=FALSE,
                         fileEncoding = fileEncoding,
-                        skip = 2)
+                        skip = skipNr)
     header <- read.csv(file=file_name,
                        header = TRUE,
                        sep = ',',
@@ -60,6 +63,12 @@ readSurvey <- function(file_name,
                        nrows = 1)
     # Add names
     names(rawdata) <- names(header)
+    # Import importids
+    importids <- unname(unlist(read.csv(file = file_name,
+                          header = F, sep = ',',
+                          stringsAsFactors = FALSE,
+                          fileEncoding = fileEncoding,
+                          skip=2, nrows=1)))
     # If Qualtrics adds an empty column at the end, remove it
     if(grepl(",$", readLines(file_name, n = 1))) {
         header <- header[,1:(ncol(header)-1)]
