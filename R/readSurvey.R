@@ -45,61 +45,63 @@ readSurvey <- function(file_name,
                        stripHTML = TRUE,
                        fileEncoding = "",
                        legacyFormat = FALSE) {
-    # check if file exists
-    assert_surveyFile_exists(file_name)
-    skipNr <- ifelse(legacyFormat, 2, 3)
-    # import data including variable names (row 1) and variable labels (row 2)
-    rawdata <- read.csv(file=file_name,
-                        header = FALSE,
-                        sep = ',',
-                        stringsAsFactors=FALSE,
-                        fileEncoding = fileEncoding,
-                        skip = skipNr)
-    header <- read.csv(file=file_name,
-                       header = TRUE,
-                       sep = ',',
-                       stringsAsFactors=FALSE,
-                       fileEncoding = fileEncoding,
-                       nrows = 1)
-    # Add names
-    names(rawdata) <- names(header)
-    # Import importids
-    importids <- unname(unlist(read.csv(file = file_name,
-                          header = F, sep = ',',
-                          stringsAsFactors = FALSE,
-                          fileEncoding = fileEncoding,
-                          skip=2, nrows=1)))
-    # If Qualtrics adds an empty column at the end, remove it
-    if(grepl(",$", readLines(file_name, n = 1))) {
-        header <- header[,1:(ncol(header)-1)]
-        rawdata <- rawdata[,1:(ncol(rawdata)-1)]
-    }
-    # extract second row, remove it from df
-    secondrow <- unlist(header)
-    row.names(rawdata) <- NULL
-    # ----------------------------------------------------
-    # clean variable labels (row 2)
-    # ----------------------------------------------------
-    if(stripHTML) {
-        # weird regex to strip HTML tags, leaving only content
-        # https://www.r-bloggers.com/htmltotext-extracting-text-from-html-via-xpath/
-        pattern <- "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>"
-        secondrow <- gsub(pattern, "\\4", secondrow)
-    }
-    # Scale Question with subquestion:
-    # If it matches one of ".?!" followed by "-", take subsequent part
-    subquestions <- stringr::str_match(secondrow, ".*[:punct:]\\s*-(.*)")[,2]
-    # Else if subquestion returns NA, use whole string
-    subquestions[is.na(subquestions)] <- unlist(secondrow[is.na(subquestions)])
-    # Remaining NAs default to 'empty string'
-    subquestions[is.na(subquestions)] <- ""
-    # -------------------
-    # add variable labels
-    # -------------------
-    rawdata <- sjlabelled::set_label(rawdata, unlist(subquestions))
-    # Add types
-    if(convertStandardColumns) {
-      rawdata <- inferDataTypes(rawdata)
-    }
-    return(rawdata)
+  # check if file exists
+  assert_surveyFile_exists(file_name)
+  skipNr <- ifelse(legacyFormat, 2, 3)
+  # import data including variable names (row 1) and variable labels (row 2)
+  rawdata <- read.csv(file = file_name,
+                      header = FALSE,
+                      sep = ',',
+                      stringsAsFactors = FALSE,
+                      fileEncoding = fileEncoding,
+                      skip = skipNr)
+  header <- read.csv(file = file_name,
+                     header = TRUE,
+                     sep = ',',
+                     stringsAsFactors = FALSE,
+                     fileEncoding = fileEncoding,
+                     nrows = 1)
+  # Add names
+  names(rawdata) <- names(header)
+  # Import importids
+  importids <- unname(unlist(read.csv(file = file_name,
+                                      header = F,
+                                      sep = ',',
+                                      stringsAsFactors = FALSE,
+                                      fileEncoding = fileEncoding,
+                                      skip = 2,
+                                      nrows = 1)))
+  # If Qualtrics adds an empty column at the end, remove it
+  if(grepl(",$", readLines(file_name, n = 1))) {
+    header <- header[, 1:(ncol(header)-1)]
+    rawdata <- rawdata[, 1:(ncol(rawdata)-1)]
+  }
+  # extract second row, remove it from df
+  secondrow <- unlist(header)
+  row.names(rawdata) <- NULL
+  # ----------------------------------------------------
+  # clean variable labels (row 2)
+  # ----------------------------------------------------
+  if(stripHTML) {
+    # weird regex to strip HTML tags, leaving only content
+    # https://www.r-bloggers.com/htmltotext-extracting-text-from-html-via-xpath/
+    pattern <- "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>"
+    secondrow <- gsub(pattern, "\\4", secondrow)
+  }
+  # Scale Question with subquestion:
+  # If it matches one of ".?!" followed by "-", take subsequent part
+  subquestions <- stringr::str_match(secondrow, ".*[:punct:]\\s*-(.*)")[,2]
+  # Else if subquestion returns NA, use whole string
+  subquestions[is.na(subquestions)] <- unlist(secondrow[is.na(subquestions)])
+  # Remaining NAs default to 'empty string'
+  subquestions[is.na(subquestions)] <- ""
+  # -------------------
+  # add variable labels
+  # -------------------
+  rawdata <- sjlabelled::set_label(rawdata, unlist(subquestions))
+  # Add types
+  if(convertStandardColumns) {
+    rawdata <- inferDataTypes(rawdata)
+  }
+  return(rawdata)
 }
