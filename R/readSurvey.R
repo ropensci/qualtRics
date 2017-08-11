@@ -49,8 +49,8 @@ readSurvey <- function(file_name,
   assert_surveyFile_exists(file_name)
   # skip 2 rows if legacyFormat, else 3 when loading the data
   skipNr <- ifelse(legacyFormat, 2, 3)
-  # set fileEncoding to UTF-8-BOM if it's not set and legacyFormat is specified
-  fileEncoding <- ifelse(legacyFormat & fileEncoding != "", "UTF-8-BOM", fileEncoding)
+  # set fileEncoding to UTF-8-BOM if not set otherwise and legacyFormat is specified
+  fileEncoding <- ifelse(legacyFormat & fileEncoding == "", "UTF-8-BOM", fileEncoding)
   # import data including variable names (row 1) and variable labels (row 2)
   rawdata <- read.csv(file = file_name,
                       header = FALSE,
