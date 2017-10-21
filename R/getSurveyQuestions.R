@@ -19,7 +19,7 @@
 #' @param surveyID String. Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs} for documentation on the Qualtrics API.
-#' @author Jasper Ginn
+#' @author Jasper Ginn, Phoebe Wong
 #' @importFrom httr GET
 #' @importFrom httr content
 #' @importFrom httr add_headers
