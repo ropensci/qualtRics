@@ -52,10 +52,12 @@ getSurveyQuestions <- function(surveyID) {
   resp <- qualtricsApiRequest("GET", root_url)
   # Get question information and map
   qi <- resp$result$questions
-  # Add questions
+  # Add questionss
   quest <- data.frame(
     "qid" = names(qi),
     "question" = sapply(qi, function(x) x$questionText),
+    "qlabel" = sapply(qi, function(x) x$questionLabel),
+    "force_resp" = sapply(qi, function(x) x$validation$doesForceResponses)
     stringsAsFactors = FALSE
   )
   # Row names
