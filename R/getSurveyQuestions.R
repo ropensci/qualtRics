@@ -57,7 +57,7 @@ getSurveyQuestions <- function(surveyID) {
     "qid" = names(qi),
     "question" = sapply(qi, function(x) x$questionText),
     "qlabel" = sapply(qi, function(x) x$questionLabel),
-    "force_resp" = sapply(qi, function(x) x$validation$doesForceResponses)
+    "force_resp" = sapply(qi, function(x) x$validation$doesForceResponses),
     stringsAsFactors = FALSE
   )
   # Row names
