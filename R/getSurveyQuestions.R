@@ -52,7 +52,7 @@ getSurveyQuestions <- function(surveyID) {
   resp <- qualtricsApiRequest("GET", root_url)
   # Get question information and map
   qi <- resp$result$questions
-  # Add questionss
+  # Add questions
   quest <- data.frame(
     "qid" = names(qi),
     "question" = sapply(qi, function(x) x$questionText),
