@@ -99,7 +99,7 @@ registerOptions <- function(verbose=TRUE,
     # Load file
     cred <- yaml::yaml.load_file(".qualtRics.yml")
     # Assert that names are "api_token" and "root_url"
-    assertthat::assert_that(all(c("api_token", "root_url") %in% names(cred)), msg="Either the 'api_token' or 'root_url' arguments are missing in your .qualtRics.yml configuration file. Execute 'qualtRicsConfigFile()' to view an example of the configuration file.")
+    assertthat::assert_that(all(c("api_token", "root_url") %in% names(cred)), msg="Either the 'api_token' or 'root_url' arguments are missing in your .qualtRics.yml configuration file. Execute 'qualtRicsConfigFile()' to view an example of the configuration file. Execute 'file.edit('.qualtRics.yml')' to edit your configuration file.")
     # If verbose, print message
     if(verbose) message(paste0("Found a .qualtRics.yml configuration file in ", getwd(), ". Using these credentials."))
     # Set vars
