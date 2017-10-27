@@ -31,5 +31,5 @@ mysurvey <- getSurvey(surveyID = surveys$id[6],
 See \url{https://api.qualtrics.com/docs} for documentation on the Qualtrics API.
 }
 \author{
-Jasper Ginn
+Jasper Ginn, Phoebe Wong
 }
