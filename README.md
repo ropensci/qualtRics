@@ -228,3 +228,7 @@ If you have a request (like adding a new argument), please leave it [here](https
 ### Changelog
 
 View the changelog [here](https://github.com/JasperHG90/qualtRics/blob/master/Changelog.md)
+
+### Thanks!
+
+Thanks to everyone who lets me know about issues, bugs etc. I appreciate your help a lot. Special thanks to those who add code! h/t @phoebewong, @samuelkaminsky, @eknud, @strengejacke, Adrian Brugger and Stefan Borer. 
