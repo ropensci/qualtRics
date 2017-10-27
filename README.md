@@ -155,7 +155,7 @@ surv <- getSurvey(survs$id[4],
                                      # function.
 ```
 
-Note that your date and time settings may not correspond to your own timezone. You can find out how to do this [here](https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/#user-settings). See [this page](https://api.qualtrics.com/docs/dates-and-times) for more information about how Qualtrics handles dates and times.
+Note that your date and time settings may not correspond to your own timezone. You can find out how to do this [here](https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/#user-settings). See [this page](https://api.qualtrics.com/docs/dates-and-times) for more information about how Qualtrics handles dates and times. **Keep in mind that this is important if you plan on using times / dates as cut-off points to filter data**.
 
 You may also reference a response ID. `getSurvey` will then download all responses that were submitted after that response:
 
