@@ -55,13 +55,17 @@ getSurveyQuestions <- function(surveyID) {
   # Add questions, question labels and force response info
   qlabel <- unlist(sapply(qi, function(x) as.character(x$questionLabel))) #question label
   
-  quest <- data.frame(
-    "qid" = names(qi),
-    "question" = sapply(qi, function(x) x$questionText),
-    "qlabel" <- ifelse(length(qlabel) == 0, NA, sapply(qi, function(x) as.character(x$questionLabel))), #Replace NULL NA for no question labels
-    "force_resp" = sapply(qi, function(x) x$validation$doesForceResponses),
-    stringsAsFactors = FALSE
-  )
+  quest <- data.frame(qid = names(qi), 
+                      question = sapply(qi,function(x) x$questionText), 
+                      force_resp = sapply(qi, function(x) x$validation$doesForceResponse), 
+                      stringsAsFactors = FALSE)
+  
+  if (length(qlabel) == 0){
+    quest$qlabel <- rep(NA, nrow(quest))
+  } else {
+    quest$qlabel <- sapply(qi, function(x) as.character(x$questionLabel))
+  }
+  
   # Row names
   row.names(quest) <- 1:nrow(quest)
   # Return
