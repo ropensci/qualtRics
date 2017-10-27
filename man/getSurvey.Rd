@@ -27,7 +27,7 @@ getSurvey(surveyID, lastResponseId = NULL, startDate = NULL,
 
 \item{force_request}{Logical. getSurvey() saves each survey in a temporary directory so that it can quickly be retrieved later. If force_request is TRUE, getSurvey() always downloads the survey from the API instead of loading it from the temporary directory. Defaults to FALSE.}
 
-\item{...}{optional arguments. You can pass all arguments listed in \code{\link{registerOptions}}. You can also pass a argument 'fileEncoding' (see 'fileEncoding' argument in \code{\link{readSurvey}}) to import your survey using a specific encoding.}
+\item{...}{optional arguments. You can pass all arguments listed in \code{\link{registerOptions}} (except a different root url / api key). You can also pass a argument 'fileEncoding' (see 'fileEncoding' argument in \code{\link{readSurvey}}) to import your survey using a specific encoding.}
 }
 \description{
 Export a qualtrics survey you own and import the survey directly into R.
