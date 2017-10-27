@@ -6,6 +6,9 @@
 
 - `readSurvey()` now takes an additional argument, fileEncoding, so that user can import surveys using a specific encoding. 'fileEncoding' can also be passed as optional argument in `getSurvey()`. Added new parameter that reads legacy data format.
 - Better argument checking.
+- `getSurveyQuestions()` now returns additional information. h/t @phoebewong
+- Fixes several bugs and stability issues
+- More informative error messages
 
 **[v2.0]**
 
