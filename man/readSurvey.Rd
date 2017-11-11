@@ -5,7 +5,7 @@
 \title{Read comma separated csv file from Qualtrics.}
 \usage{
 readSurvey(file_name, convertStandardColumns = TRUE, stripHTML = TRUE,
-  fileEncoding = "", legacyFormat = FALSE)
+  fileEncoding = "UTF-8", legacyFormat = FALSE)
 }
 \arguments{
 \item{file_name}{String. A csv data file.}
