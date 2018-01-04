@@ -353,28 +353,30 @@ inferDataTypes <- function(data,
                            verbose = FALSE) {
   # Download survey metadata
   #sm <- getSurveyMetadata(surveyID, root_url = root_url)
+
+  # These are added to qualtrics surveys
+  qNum <- c("LocationLatitude", "LocationLongitude", "Progress",
+            "Duration..in.seconds",
+            # legacy
+            "LocationAccuracy")
+  qChar <- c('IPAddress','ResponseID','RecipientLastName',
+             'RecipientFirstName','RecipientEmail','ExternalDataReference',
+             'ExternalReference', 'DistributionChannel', # Last two are unclear
+             # legacy
+             "V1", "V3", "V4", "V5", "V6")
+  qFact <- c('ResponseSet',
+             # legacy
+             "V2")
+  qBin <- c("Finished", "Status",
+            # legacy
+            "V7", "V10")
+  qDate <- c('StartDate','EndDate', 'RecordedDate',
+             # legacy
+             "V8", "V9")
+
   # For each column, cycle and assign
   for(col.name in names(data)) {
     #print(col.name)
-    # These are added to qualtrics surveys
-    qNum <- c("LocationLatitude", "LocationLongitude", "Progress",
-              "Duration..in.seconds",
-              # legacy
-              "LocationAccuracy")
-    qChar <- c('IPAddress','ResponseID','RecipientLastName',
-               'RecipientFirstName','RecipientEmail','ExternalDataReference',
-               'ExternalReference', 'DistributionChannel', # Last two are unclear
-               # legacy
-                "V1", "V3", "V4", "V5", "V6")
-    qFact <- c('ResponseSet',
-               # legacy
-               "V2")
-    qBin <- c("Finished", "Status",
-              # legacy
-              "V7", "V10")
-    qDate <- c('StartDate','EndDate', 'RecordedDate',
-               # legacy
-               "V8", "V9")
     # Check for generic data
     if(col.name %in% qNum) {
       data[,col.name] <- as.numeric(data[,col.name])
@@ -385,7 +387,7 @@ inferDataTypes <- function(data,
     } else if(col.name %in% qBin) {
       data[,col.name] <- factor(data[,col.name], levels=c("0", "1"))
     } else if(col.name %in% qDate) {
-      data[,col.name] <- lubridate::as_datetime(data[,col.name], tz=NULL)
+      # data[,col.name] <- lubridate::as_datetime(data[,col.name], tz=NULL)
     } else {
       NULL
     }
