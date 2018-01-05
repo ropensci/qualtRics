@@ -15,6 +15,7 @@ Description: Qualtrics <https://www.qualtrics.com/about/>
 Imports:
     httr,
     stringr,
+    readr,
     jsonlite,
     assertthat,
     sjlabelled,
