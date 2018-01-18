@@ -22,4 +22,20 @@ Loads qualtRics credentials automatically when package is loaded and ".qualtRics
   if(file.exists(".qualtRics.yml")) {
     suppressWarnings(registerOptions()) # This throws a warning
   }
+  # Set global qualtrics options
+  options(
+    "QUALTRICS_GLOBAL_OPTIONS" = list("question_types_supported" = c("MC"))
+  )
+}
+
+.onUnload <- function(libname = find.package("qualtRics"), pkgname="qualtRics") {
+  # If user unloads/detaches package make sure that these values are erased
+  Sys.setenv("QUALTRICS_ROOT_URL" = "")
+  Sys.setenv("QUALTRICS_API_KEY" = "")
+}
+
+.onDetach <- function(libname = find.package("qualtRics"), pkgname="qualtRics") {
+  # If user unloads/detaches package make sure that these values are erased
+  Sys.setenv("QUALTRICS_ROOT_URL" = "")
+  Sys.setenv("QUALTRICS_API_KEY" = "")
 }
