@@ -409,7 +409,7 @@ metadata <- function(surveyID,
                                 "comments"=FALSE),
                      ...) {
   # Check params
-  cp <- qualtRics:::checkParams() # REMOVE ::: WHEN NO LONGER NEEDED
+  cp <- checkParams() # REMOVE ::: WHEN NO LONGER NEEDED
   # Check if illegal options were passed by user
   allowed <- c("metadata","questions","responsecounts",
                "blocks","flow","embedded_data","comments")
