@@ -376,7 +376,11 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
 # @author Jasper Ginn
 
 inferDataTypes <- function(data,
+                           convert = c("all", "none", "meta"),
                            verbose = FALSE) {
+  # Match arg
+  convert <- match.arg(convert)
+
   # Download survey metadata
   #sm <- getSurveyMetadata(surveyID, root_url = root_url)
 
