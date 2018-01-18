@@ -31,10 +31,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 '
-utils.R contains helper functions
+utils.R contains helper functions for the qualtRics package. These functions should not be called directly by the user and should not be exported.
 '
 
-# Helper function. Checks responses against qualtrics response codes.
+# Checks responses against qualtrics response codes and returns error message.
 #
 # @param res response from httr::GET
 # @param raw if TRUE, add 'raw' flag to httr::content() function.
@@ -88,8 +88,6 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
 
 # Construct a header to send to qualtrics API
 #
-# This function is not exported as it is a helper function. It should not be called directly by the user.
-#
 # @param API.TOKEN API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})
 #
 # @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API.
@@ -107,7 +105,10 @@ constructHeader <- function(API.TOKEN) {
 }
 
 # Check if httr GET result contains a warning
+#
 # @param resp object returned by 'qualtRicsResponseCodes()'
+#
+# @author Jasper Ginn
 
 checkForWarnings <- function(resp) {
   # Raise warning if resp contains notice
@@ -120,7 +121,10 @@ checkForWarnings <- function(resp) {
 }
 
 # Check if parameters passed to functions are correct
+#
 # @param ... options passed to checkParams
+#
+# @author: Jasper Ginn
 
 checkParams <- function(...) {
   args <- list(...)
@@ -168,8 +172,12 @@ checkParams <- function(...) {
 }
 
 # Append proper end points to create root url
+#
 # @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.).
+#
 # @return root url + appended end point
+#
+# @author: Jasper Ginn
 
 appendRootUrl <- function(root_url, type = c("responseexports", 'surveys')) {
   # match
@@ -184,7 +192,12 @@ appendRootUrl <- function(root_url, type = c("responseexports", 'surveys')) {
 }
 
 # Create raw JSON payload to post response exports request
-# @param
+#
+# @param: see getSurveys() and registerOptions() functions
+#
+# @return: returns json file with options to send to API
+#
+# @author: Jasper Ginn
 
 createRawPayload <- function(surveyID,
                              useLabels=TRUE,
@@ -266,10 +279,14 @@ createRawPayload <- function(surveyID,
 }
 
 # Send httr requests to qualtrics API
-# @param
+#
+# @param verb type of request to be sent (@seealso ?httr::VERB)
+# @param url qualtrics endpoint url created by appendRootUrl() function
+# @param body options created by createRawPayload() function
+# @param raw does response
 
 qualtricsApiRequest <- function(verb = c("GET", "POST"), url = url,
-                                body = NULL, raw = FALSE) {
+                                body = NULL) {
   # Match arg
   verb <- match.arg(verb)
   # Construct header
@@ -282,7 +299,7 @@ qualtricsApiRequest <- function(verb = c("GET", "POST"), url = url,
                             ),
                     body = body)
   # Check if response type is OK
-  cnt <- qualtRicsResponseCodes(res, raw = raw)
+  cnt <- qualtRicsResponseCodes(res)
   # Check if OK
   if(cnt$OK) {
     # If notice occurs, raise warning
