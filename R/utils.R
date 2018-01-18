@@ -390,3 +390,95 @@ inferDataTypes <- function(data,
   # Return data
   return(data)
 }
+
+# Get survey metadata
+#
+# @param surveyID unique id for survey
+# @param get list of elements to return, can turn elements off / on
+# @param ... optional add survey question names
+#
+# @author Jasper Ginn
+
+metadata <- function(surveyID,
+                     get = list("metadata"=TRUE,
+                                "questions"=TRUE,
+                                "responsecounts"=TRUE,
+                                "blocks"=FALSE,
+                                "flow"=FALSE,
+                                "embedded_data"=FALSE,
+                                "comments"=FALSE),
+                     ...) {
+  # Check params
+  cp <- qualtRics:::checkParams() # REMOVE ::: WHEN NO LONGER NEEDED
+  # Check if illegal options were passed by user
+  allowed <- c("metadata","questions","responsecounts",
+               "blocks","flow","embedded_data","comments")
+  check <- union(allowed, names(get))
+  assertthat::assert_that(length(check) <= length(allowed),
+                          msg="One or more options you passed to 'get' are not valid. Please check your input and try again.")
+  # Other options
+  opts <- list(...)
+  if("questions" %in% names(opts)) {
+    q_select <- opts$questions
+  } else {
+    q_select <- NULL
+  }
+
+  ### Get metadata
+
+  # Function-specific API stuff
+  root_url <- appendRootUrl(Sys.getenv("QUALTRICS_ROOT_URL"), "surveys")
+  # Append survey ID
+  root_url <- paste0(root_url, surveyID)
+  # Send GET request to list all surveys
+  resp <- qualtricsApiRequest("GET", root_url)
+  # Filter
+  resp_filt <- resp$result
+
+  ### Reshape
+
+  # Metadata
+  metadata <- data.frame(
+    "id" = resp_filt$id,
+    "name"= resp_filt$name,
+    "ownerId" = resp_filt$ownerId,
+    "organizationId"=resp_filt$organizationId,
+    "isActive" = resp_filt$isActive,
+    "creationDate" = resp_filt$creationDate,
+    "lastModifiedDate"=resp_filt$lastModifiedDate,
+    "expiration_startdate"=ifelse(is.null(resp_filt$expiration$startDate),NA,resp_filt$expiration$startDate),
+    "expiration_endDate"=ifelse(is.null(resp_filt$expiration$endDate),NA,resp_filt$expiration$endDate)
+  )
+  # Response counts
+  responsecounts <- data.frame(
+    "auditable"=resp_filt$responseCounts$auditable,
+    "generated"=resp_filt$responseCounts$generated,
+    "deleted"=resp_filt$responseCounts$deleted
+  )
+  # Questions
+  if(!is.null(q_select)) {
+    qnames <- sapply(resp_filt$questions, function(x) {
+      x$questionName
+    })
+    if(all(q_select %in% qnames)) {
+      questions <- resp_filt$questions[which(qnames %in% q_select)]
+    } else {
+      warning(paste0("One or more questions you queried are not present in your survey. Returning all questions instead."))
+      questions <- resp_filt$questions
+    }
+  } else {
+    questions <- resp_filt$questions
+  }
+  # Construct metadata
+  met <- list("metadata"=metadata,
+              "questions"=questions,
+              "responsecounts"=responsecounts,
+              "blocks"=resp_filt$blocks,
+              "flow"=resp_filt$flow,
+              "embedded_data"=resp_filt$embeddedData,
+              "comments"=resp_filt$comments)
+  # Make subset
+  met_ss <- met[names(get[vapply(get,function(x) x==TRUE, TRUE)])]
+  # Return
+  return(met_ss)
+}
