@@ -283,7 +283,8 @@ createRawPayload <- function(surveyID,
 # @param verb type of request to be sent (@seealso ?httr::VERB)
 # @param url qualtrics endpoint url created by appendRootUrl() function
 # @param body options created by createRawPayload() function
-# @param raw does response
+#
+# @author: Jasper Ginn
 
 qualtricsApiRequest <- function(verb = c("GET", "POST"), url = url,
                                 body = NULL) {
@@ -310,7 +311,11 @@ qualtricsApiRequest <- function(verb = c("GET", "POST"), url = url,
 }
 
 # Download response export
-# @param
+#
+# @param check_url url provided by qualtrics API that shows the download percentage completneness
+# @param verbose see getSurvey()
+#
+# @author Jasper Ginn
 
 downloadQualtricsExport <- function(check_url, verbose = FALSE) {
   # Construct header
@@ -364,13 +369,13 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
   return(u)
 }
 
-# Set proper data types on data
-# @param
+# Set proper data types on survey data.
+#
+# @param data imported qualtrics survey
+# @param convert either 'none' [no data converted], 'all' [all columns converted] or 'meta' [metadata converted]
 # @author Jasper Ginn
 
 inferDataTypes <- function(data,
-                           #surveyID,
-                           #root_url,
                            verbose = FALSE) {
   # Download survey metadata
   #sm <- getSurveyMetadata(surveyID, root_url = root_url)
