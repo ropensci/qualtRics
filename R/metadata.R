@@ -62,7 +62,6 @@ metadata <- function(surveyID,
   if(length(get) > 0) {
     for(g in names(get)) {
       standard_list[[g]] <- get[[g]]
-
     }
   }
   # Other options
@@ -129,7 +128,7 @@ metadata <- function(surveyID,
               "embedded_data"=resp_filt$embeddedData,
               "comments"=resp_filt$comments)
   # Make subset
-  met_ss <- met[names(get[vapply(get,function(x) x==TRUE, TRUE)])]
+  met_ss <- met[names(standard_list[vapply(standard_list,function(x) x==TRUE, TRUE)])]
   # Return
   return(met_ss)
 }
