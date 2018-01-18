@@ -376,59 +376,15 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
 # @author Jasper Ginn
 
 inferDataTypes <- function(data,
-                           convert = c("all", "none", "meta"),
                            verbose = FALSE) {
-  # Match arg
-  convert <- match.arg(convert)
 
   # Download survey metadata
   #sm <- getSurveyMetadata(surveyID, root_url = root_url)
 
-  # These are added to qualtrics surveys
-  qNum <- c("LocationLatitude", "LocationLongitude", "Progress",
-            "Duration..in.seconds",
-            # legacy
-            "LocationAccuracy")
-  qChar <- c('IPAddress','ResponseID','RecipientLastName',
-             'RecipientFirstName','RecipientEmail','ExternalDataReference',
-             'ExternalReference', 'DistributionChannel', # Last two are unclear
-             # legacy
-             "V1", "V3", "V4", "V5", "V6")
-  qFact <- c('ResponseSet',
-             # legacy
-             "V2")
-  qBin <- c("Finished", "Status",
-            # legacy
-            "V7", "V10")
-  qDate <- c('StartDate','EndDate', 'RecordedDate',
-             # legacy
-             "V8", "V9")
-
-  # For each column, cycle and assign
-  for(col.name in names(data)) {
-    #print(col.name)
-    # Check for generic data
-    if(col.name %in% qNum) {
-      data[,col.name] <- as.numeric(data[,col.name])
-    } else if(col.name %in% qChar) {
-      data[,col.name] <- as.character(data[,col.name])
-    } else if(col.name %in% qFact) {
-      data[,col.name] <- as.factor(data[,col.name])
-    } else if(col.name %in% qBin) {
-      data[,col.name] <- factor(data[,col.name], levels=c("0", "1"))
-    } else if(col.name %in% qDate) {
-      # data[,col.name] <- lubridate::as_datetime(data[,col.name], tz=NULL)
-    } else {
-      NULL
-    }
-
-    # Check if warning given
-    if(Sys.getenv("QUALTRICS_WARNING_DATE_GIVEN") == "") {
-      warning("The 'StartDate', 'EndDate' and 'RecordedDate' variables were converted without passing a specific timezone. If you like to set these timestamps to your own timezone, please visit https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/ (under 'User Settings'). See https://api.qualtrics.com/docs/dates-and-times for more information about how the Qualtrics API handles dates and times.")
-      Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN"=TRUE)
-    }
-
-
+  # Check if warning given
+  if(Sys.getenv("QUALTRICS_WARNING_DATE_GIVEN") == "") {
+    warning("The 'StartDate', 'EndDate' and 'RecordedDate' variables were converted without passing a specific timezone. If you like to set these timestamps to your own timezone, please visit https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/ (under 'User Settings'). See https://api.qualtrics.com/docs/dates-and-times for more information about how the Qualtrics API handles dates and times.")
+    Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN"=TRUE)
   }
 
   # Return data
