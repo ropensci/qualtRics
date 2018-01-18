@@ -10,5 +10,6 @@ surveyDesignTemplate.rds
 qualcred.R
 testsurvey.rds
 /documentation/*
+/dev/*
 .qualtRics.yml
 .qualtRicstmp.yml
