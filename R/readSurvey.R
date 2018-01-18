@@ -50,9 +50,11 @@ readSurvey <- function(file_name,
   # import data including variable names (row 1) and variable labels (row 2)
   rawdata <- readr::read_csv(file = file_name,
                              col_names = FALSE,
+                             col_types = FALSE,
                              skip = skipNr)
   header <- readr::read_csv(file = file_name,
                             col_names = TRUE,
+                            col_types = FALSE,
                             n_max = 1)
   # make them data.frame's, else the factor conversion in `inferDataTypes` crashes
   rawdata <- as.data.frame(rawdata)
