@@ -3,6 +3,7 @@
 export(getSurvey)
 export(getSurveyQuestions)
 export(getSurveys)
+export(metadata)
 export(qualtRicsConfigFile)
 export(readSurvey)
 export(registerOptions)
