@@ -4,7 +4,8 @@
 
 **[master branch]**
 
-- \*
+- We found that surveys that use new lines in the questions break the readSurvey function.
+The problem is, that read.csv (and read.table as well as the readr library implementation) ignore the quote = "\"" option when a skip = 2 or skip = 3 parameter is set. As a result the read function slices off the questions row somewhere in the middle when first importing just the table body using skip.
 
 **[v2.2]**
 
