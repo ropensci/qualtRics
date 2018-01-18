@@ -30,6 +30,8 @@
 #'
 #' @author Jasper Ginn
 #' @importFrom yaml yaml.load_file
+#' @importFrom assertthat assert_that
+#' @importFrom assertthat is.flag
 #' @export
 #' @examples
 #' \dontrun{

@@ -18,9 +18,6 @@
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs} for documentation on the Qualtrics API.
 #' @author Jasper Ginn
-#' @importFrom httr GET
-#' @importFrom httr content
-#' @importFrom httr add_headers
 #' @export
 #' @examples
 #' \dontrun{

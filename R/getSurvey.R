@@ -31,13 +31,6 @@
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs/csv} for documentation on the Qualtrics API.
 #' @author Jasper Ginn
-#' @importFrom httr GET
-#' @importFrom httr POST
-#' @importFrom httr content
-#' @importFrom stringr str_sub
-#' @importFrom utils read.csv
-#' @importFrom utils unzip
-#' @importFrom utils write.csv
 #' @export
 #' @examples
 #' \dontrun{

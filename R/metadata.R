@@ -23,7 +23,7 @@
 #' @param ... additional options. User may pass an argument called 'questions', which should be a vector containing the names of questions for which you want to return metadata.
 #'
 #' @author Jasper Ginn
-#' @importFrom yaml yaml.load_file
+#' @importFrom assertthat assert_that
 #' @export
 #' @examples
 #' \dontrun{
