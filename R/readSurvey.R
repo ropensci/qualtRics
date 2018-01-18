@@ -48,17 +48,15 @@ readSurvey <- function(file_name,
   # skip 2 rows if legacyFormat, else 3 when loading the data
   skipNr <- ifelse(legacyFormat, 2, 3)
   # import data including variable names (row 1) and variable labels (row 2)
-  rawdata <- readr::read_csv(file = file_name,
+  rawdata <- suppressMessages(readr::read_csv(file = file_name,
                              col_names = FALSE,
-                             col_types = FALSE,
-                             skip = skipNr)
-  header <- readr::read_csv(file = file_name,
+                             skip = skipNr))
+  header <- suppressMessages(readr::read_csv(file = file_name,
                             col_names = TRUE,
-                            col_types = FALSE,
-                            n_max = 1)
+                            n_max = 1))
   # make them data.frame's, else the factor conversion in `inferDataTypes` crashes
-  rawdata <- as.data.frame(rawdata)
-  header <- as.data.frame(header)
+  #rawdata <- as.data.frame(rawdata)
+  #header <- as.data.frame(header)
   # Add names
   names(rawdata) <- names(header)
 
