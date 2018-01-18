@@ -22,9 +22,9 @@ Loads qualtRics credentials automatically when package is loaded and ".qualtRics
   if(file.exists(".qualtRics.yml")) {
     suppressWarnings(registerOptions()) # This throws a warning
   }
-  # Set global qualtrics options
+  # Set internal qualtRics settings
   options(
-    "QUALTRICS_GLOBAL_OPTIONS" = list("question_types_supported" = c("MC"))
+    "QUALTRICS_INTERNAL_SETTINGS" = list("question_types_supported" = c("MC"))
   )
 }
 
