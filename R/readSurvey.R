@@ -42,7 +42,6 @@
 #' }
 
 readSurvey <- function(file_name,
-                       convertStandardColumns = TRUE,
                        stripHTML = TRUE,
                        legacyFormat = FALSE) {
   # check if file exists
@@ -90,9 +89,5 @@ readSurvey <- function(file_name,
   # add variable labels
   # -------------------
   rawdata <- sjlabelled::set_label(rawdata, unlist(subquestions))
-  # Add types
-  if(convertStandardColumns) {
-    rawdata <- inferDataTypes(rawdata)
-  }
   return(rawdata)
 }
