@@ -10,6 +10,7 @@ surveyDesignTemplate.rds
 qualcred.R
 testsurvey.rds
 /documentation/*
+/man/qualtRicsResponseCodes.Rd
 /dev/*
 .qualtRics.yml
 .qualtRicstmp.yml
