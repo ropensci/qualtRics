@@ -138,7 +138,11 @@ getSurvey <- function(surveyID,
   # Download, unzip and return file path
   survey.fpath <- downloadQualtricsExport(check_url, verbose = verbose)
   # Read data
-  data <- readSurvey(survey.fpath, convertStandardColumns = convertStandardColumns)
+  data <- readSurvey(survey.fpath)
+  # Add types
+  if(convertStandardColumns) {
+    data <- inferDataTypes(data, surveyID)
+  }
   # Save survey as RDS file in temp folder so that it can be easily retrieved this session.
   saveRDS(data, paste0(tempdir(), "/", surveyID, ".rds"))
   # Remove tmpfiles
