@@ -1,8 +1,7 @@
 test_that("readSurvey() reads data in qualtrics standard and legacy format and converts columns", {
 
   # Test if can read standard format
-  survey <- suppressWarnings(qualtRics::readSurvey("files/sample.csv",
-                                                   convertStandardColumns = TRUE))
+  survey <- suppressWarnings(qualtRics::readSurvey("files/sample.csv"))
   # Tests
   expect_equal(dim(survey)[1], 1)
   expect_equal(dim(survey)[2], 20)
@@ -11,7 +10,6 @@ test_that("readSurvey() reads data in qualtrics standard and legacy format and c
 
   # Test if can read legacy format
   survey_legacy <- suppressWarnings(qualtRics::readSurvey("files/sample_legacy.csv",
-                                                   convertStandardColumns = TRUE,
                                                    legacyFormat = TRUE))
   # Tests
   expect_equal(dim(survey_legacy)[1], 1)
