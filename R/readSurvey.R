@@ -23,7 +23,6 @@
 #'Variable labels are stored as attributes.
 #'
 #' @param file_name String. A csv data file.
-#' @param convertStandardColumns Logical. If TRUE, then the function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. defaults to TRUE.
 #' @param stripHTML Logical. If TRUE, then remove html tags. Defaults to TRUE
 #' @param legacyFormat Logical. If TRUE, then import "legacy" format csv files (as of 2017). Defaults to FALSE
 #'

@@ -4,13 +4,10 @@
 \alias{readSurvey}
 \title{Read comma separated csv file from Qualtrics.}
 \usage{
-readSurvey(file_name, convertStandardColumns = TRUE, stripHTML = TRUE,
-  legacyFormat = FALSE)
+readSurvey(file_name, stripHTML = TRUE, legacyFormat = FALSE)
 }
 \arguments{
 \item{file_name}{String. A csv data file.}
-
-\item{convertStandardColumns}{Logical. If TRUE, then the function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. defaults to TRUE.}
 
 \item{stripHTML}{Logical. If TRUE, then remove html tags. Defaults to TRUE}
 
