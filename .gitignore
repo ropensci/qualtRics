@@ -3,14 +3,10 @@
 .RData
 .Ruserdata
 .qualtRics
+.qualtRics.yml
+.qualtRicstmp.yml
 inst/doc
-unfinished.R
-test.R
-surveyDesignTemplate.rds
-qualcred.R
-testsurvey.rds
 /documentation/*
 /man/qualtRicsResponseCodes.Rd
 /dev/*
-.qualtRics.yml
-.qualtRicstmp.yml
+
