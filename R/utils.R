@@ -376,10 +376,53 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
 # @author Jasper Ginn
 
 inferDataTypes <- function(data,
+                           surveyID,
                            verbose = FALSE) {
 
   # Download survey metadata
-  #sm <- getSurveyMetadata(surveyID, root_url = root_url)
+  md <- metadata(surveyID, get=list("questions"=TRUE,
+                                    "metadata"=FALSE,
+                                    "responsecounts"=FALSE))[[1]]
+  # Check which questions are of type allowed
+  interest <- lapply(md, function(x) {
+    # Check if question type supported
+    type_supp <- ifelse(!is.null(x$questionType$type),
+                        x$questionType$type %in%
+                          getOption("QUALTRICS_INTERNAL_SETTINGS")$question_types_supported$type,
+                        FALSE
+    ) # This one is the most important so ifelse
+    selector_supp <- ifelse(!is.null(x$questionType$selector),
+                            x$questionType$selector %in%
+                              getOption("QUALTRICS_INTERNAL_SETTINGS")$question_types_supported$selector,
+                            FALSE)
+    if(!is.null(x$questionType$subSelector)) {
+      subselector_supp <- x$questionType$subSelector %in%
+        getOption("QUALTRICS_INTERNAL_SETTINGS")$question_types_supported$subSelector
+    } else {
+      subselector_supp <- NA
+    }
+    # Evaluate
+    supported <- ifelse(all(selector_supp, type_supp), TRUE, FALSE)
+    # Check if question in survey
+    question_is_in_survey <- x$questionName %in% names(data)
+    # If both true, return element
+    if(supported & question_is_in_survey) {
+      return(x)
+    }
+  })
+  # Remove NULL values
+  interest <- interest[!vapply(interest, is.null, FALSE)]
+  # Get value names
+  mc <- vapply(interest, function(x) x$questionName, "character", USE.NAMES = FALSE)
+  # Unfortunately, something goes wrong with the labels so we need to do this
+  lab <- sjlabelled::get_label(data)
+  # For each, convert
+  for(m in mc) {
+    t <- data %>%
+      wrapper_mc(., m, interest)
+  }
+  # Return labels
+  t <- sjlabelled::set_label(t, lab)
 
   # Check if warning given
   if(Sys.getenv("QUALTRICS_WARNING_DATE_GIVEN") == "") {
@@ -389,4 +432,16 @@ inferDataTypes <- function(data,
 
   # Return data
   return(data)
+}
+
+# Convert multiple choice questions to ordered factors
+wrapper_mc <- function(data, col_name, survey_meta) {
+  # Get question data from metadata
+  meta <- survey_meta[vapply(survey_meta, function(x) x$questionName == col_name, TRUE)]
+  # Level names
+  ln <- vapply(meta[[1]]$choices, function(x) x$choiceText, "character", USE.NAMES = FALSE)
+  # Convert
+  data %>%
+    mutate(., !!col_name := readr::parse_factor(data %>% select(!!col_name) %>% pull(), levels=ln,
+                                                       ordered = TRUE))
 }
