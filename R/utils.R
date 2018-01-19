@@ -30,9 +30,13 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-'
-utils.R contains helper functions for the qualtRics package. These functions should not be called directly by the user and should not be exported.
-'
+#' utils.R contains helper functions for the qualtRics package. These functions should not be called directly by the user and should not be exported.
+#' @importFrom dplyr '%>%'
+#' @importFrom dplyr mutate
+#' @importFrom rlang ':='
+#' @importFrom dplyr select
+#' @importFrom dplyr pull
+#' @importFrom readr parse_factor
 
 # Checks responses against qualtrics response codes and returns error message.
 #
@@ -372,7 +376,6 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
 # Set proper data types on survey data.
 #
 # @param data imported qualtrics survey
-# @param convert either 'none' [no data converted], 'all' [all columns converted] or 'meta' [metadata converted]
 # @author Jasper Ginn
 
 inferDataTypes <- function(data,
@@ -417,12 +420,13 @@ inferDataTypes <- function(data,
   # Unfortunately, something goes wrong with the labels so we need to do this
   lab <- sjlabelled::get_label(data)
   # For each, convert
+  #browser()
   for(m in mc) {
-    t <- data %>%
+    data <- data %>%
       wrapper_mc(., m, interest)
   }
   # Return labels
-  t <- sjlabelled::set_label(t, lab)
+  data <- sjlabelled::set_label(data, lab)
 
   # Check if warning given
   if(Sys.getenv("QUALTRICS_WARNING_DATE_GIVEN") == "") {
