@@ -24,7 +24,11 @@ Loads qualtRics credentials automatically when package is loaded and ".qualtRics
   }
   # Set internal qualtRics settings
   options(
-    "QUALTRICS_INTERNAL_SETTINGS" = list("question_types_supported" = c("MC"))
+    "QUALTRICS_INTERNAL_SETTINGS" = list("question_types_supported" =
+                                           list("type"=c("MC"),
+                                                "selector"=c("SAVR"),
+                                                "subSelector"=c("TX"))
+                                         )
   )
 }
 
