@@ -72,7 +72,7 @@ assert_surveyFile_exists <- function(file_name) {
 }
 
 # Check if these arguments are logical
-assert_options_logical <- function(verbose, convertStandardColumns,
+assert_options_logical <- function(verbose, convertVariables,
                                    useLocalTime, useLabels) {
   assertthat::assert_that(assertthat::is.flag(verbose),
                           msg="'verbose' must be TRUE or FALSE.")

@@ -78,9 +78,9 @@ getSurvey <- function(surveyID,
   opts <- list(...)
   verbose <- ifelse("verbose" %in% names(opts), opts$verbose,
                     getOption("QUALTRICS_VERBOSE"))
-  convertStandardColumns <- ifelse("convertStandardColumns" %in% names(opts),
-                                   opts$convertStandardColumns,
-                                   getOption("QUALTRICS_CONVERTSTANDARDCOLUMNS"))
+  convertVariables <- ifelse("convertVariables" %in% names(opts),
+                                   opts$convertVariables,
+                                   getOption("QUALTRICS_CONVERTVARIABLES"))
   useLocalTime <- ifelse("useLocalTime" %in% names(opts), opts$useLocalTime,
                          getOption("QUALTRICS_USELOCALTIME"))
   useLabels <- ifelse("useLabels" %in% names(opts), opts$useLabels,
@@ -90,7 +90,7 @@ getSurvey <- function(surveyID,
 
   # Check params
   checkParams(verbose=verbose,
-              convertStandardColumns=convertStandardColumns,
+              convertVariables=convertVariables,
               useLocalTime=useLocalTime,
               useLabels=useLabels,
               lastResponseId=lastResponseId,
@@ -140,7 +140,7 @@ getSurvey <- function(surveyID,
   # Read data
   data <- readSurvey(survey.fpath)
   # Add types
-  if(convertStandardColumns) {
+  if(convertVariables) {
     data <- inferDataTypes(data, surveyID)
   }
   # Save survey as RDS file in temp folder so that it can be easily retrieved this session.
