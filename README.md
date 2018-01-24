@@ -241,15 +241,6 @@ mysurvey <- getSurvey(surveyID = surveys$id[6],
                       verbose=TRUE)
 ```
 
-Setting `convertStandardColumns` to TRUE converts common variables such as 'StartDate', 'EndDate' and Longitude, Latitude to their proper data types. 
-
-```r
-surv <- getSurvey(survs$id[5],
-                  convertStandardColumns = TRUE,
-                  useLabels = TRUE,
-                  verbose = TRUE)
-```
-
 Note that dates are converted without a specific timezone in mind. You can specify your own timezone using [these instructions](https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/).
 
 You can store the results in a specific location if you like:
