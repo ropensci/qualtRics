@@ -1,13 +1,14 @@
 **[development branch]**
 
+- \*
+
+**[master branch]**
+
 - convertstandardcolumns deprecated since readr::read_csv does this automagically. 
 - Added .onUnload and .onDetach conditions so that environment variables (root url and API key) are removed when package is unloaded. This prevents issues if user decides to load the package again.
 - Cleaned up code
 - Added 'metadata' function that allows the user to retrieve detailed metadata about survey.
 - Tinkering with option to convert specific question types to R counterparts
-
-**[master branch]**
-
 - We found that surveys that use new lines in the questions break the readSurvey function.
 The problem is, that read.csv (and read.table as well as the readr library implementation) ignore the quote = "\"" option when a skip = 2 or skip = 3 parameter is set. As a result the read function slices off the questions row somewhere in the middle when first importing just the table body using skip.
 
