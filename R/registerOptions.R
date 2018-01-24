@@ -112,10 +112,21 @@ registerOptions <- function(verbose=TRUE,
       verbose <- cred$verbose
       assertthat::assert_that(assertthat::is.flag(verbose), msg=paste0("'verbose' must be either TRUE or FALSE but is ", as.character(verbose), " in your config file."))
     }
-    if("convertvariables" %in% names(cred)) {
-      convertVariables <- cred$convertVariables
-      assertthat::assert_that(assertthat::is.flag(convertVariables), msg=paste0("'convertvariables' must be either TRUE or FALSE but is ", as.character(convertVariables), " in your config file."))
+    # If 'convertStandardColumns' is found in credentials then emit a warning
+    if('convertstandardcolumns' %in% names(cred) & !'convertvariables' %in% names(cred)) {
+      message("'convertstandardcolumns' has been deprecated and will be ignored. Please replace it by 'convertvariables' in your '.qualtRics.yml' file. Visit <URL TO INFORMATION> for more information.")
+      convertVariables <- TRUE
+    } else if(c('convertstandardcolumns', 'convertvariables') %in% names(cred)) {
+        message("'convertstandardcolumns' has been deprecated and will be ignored. Please remove it from your '.qualtRics.yml' file. Visit <URL TO INFORMATION> for more information.")
+      convertVariables <- cred$convertvariables
+    } else {
+      convertVariables <- cred$convertvariables
     }
+    # Check
+    assertthat::assert_that(assertthat::is.flag(convertVariables),
+                            msg=paste0("'convertvariables' must be either TRUE or FALSE but is ",
+                                       as.character(convertVariables),
+                                       " in your config file."))
     if("uselabels" %in% names(cred)) {
       useLabels <- cred$uselabels
       assertthat::assert_that(assertthat::is.flag(useLabels), msg=paste0("'uselabels' must be either TRUE or FALSE but is ", as.character(useLabels), " in your config file."))
