@@ -448,6 +448,6 @@ wrapper_mc <- function(data, col_name, survey_meta) {
   ln <- vapply(meta[[1]]$choices, function(x) x$choiceText, "character", USE.NAMES = FALSE)
   # Convert
   data %>%
-    mutate(., !!col_name := readr::parse_factor(data %>% select(!!col_name) %>% pull(), levels=ln,
+    mutate(., !!col_name := readr::parse_factor(data %>% select(!!col_name) %>% pull(), levels=ln[length(ln):1],
                                                        ordered = TRUE))
 }
