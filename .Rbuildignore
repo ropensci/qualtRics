@@ -6,6 +6,7 @@
 ^\.travis\.yml$
 ^\.qualtRics\.yml$
 ^\.qualtRicstmp\.yml$
+^\_config\.yml
 README\.md$
 ^appveyor\.yml$
 ^\.gitattributes$
