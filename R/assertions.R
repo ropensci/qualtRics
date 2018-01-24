@@ -76,8 +76,8 @@ assert_options_logical <- function(verbose, convertVariables,
                                    useLocalTime, useLabels) {
   assertthat::assert_that(assertthat::is.flag(verbose),
                           msg="'verbose' must be TRUE or FALSE.")
-  assertthat::assert_that(assertthat::is.flag(convertStandardColumns),
-                          msg="'convertStandardColumns' must be TRUE or FALSE.")
+  assertthat::assert_that(assertthat::is.flag(convertVariables),
+                          msg="'convertVariables' must be TRUE or FALSE.")
   assertthat::assert_that(assertthat::is.flag(useLocalTime),
                           msg="'useLocalTime' must be TRUE or FALSE.")
   assertthat::assert_that(assertthat::is.flag(useLabels),

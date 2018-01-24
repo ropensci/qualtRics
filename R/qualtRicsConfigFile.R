@@ -34,7 +34,7 @@
 #'
 
 qualtRicsConfigFile <- function(api_token = NULL, root_url=NULL, verbose=TRUE,
-                                useLabels=TRUE, convertStandardColumns=TRUE,
+                                useLabels=TRUE, convertVariables=TRUE,
                                 useLocalTime=FALSE, dateWarning=TRUE) {
 
   msg <- paste0(
@@ -46,7 +46,7 @@ qualtRicsConfigFile <- function(api_token = NULL, root_url=NULL, verbose=TRUE,
                                 paste0(root_url)), "\n",
     'verbose: ', verbose, "\n",
     'uselabels: ', useLabels, "\n",
-    'convertstandardcolumns: ', convertStandardColumns, "\n",
+    'convertvariables: ', convertVariables, "\n",
     'uselocaltime: ', useLocalTime, "\n",
     'datewarning: ', dateWarning, "\n",
     "--------------"
