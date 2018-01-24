@@ -116,7 +116,7 @@ registerOptions <- function(verbose=TRUE,
     if('convertstandardcolumns' %in% names(cred) & !'convertvariables' %in% names(cred)) {
       message("'convertstandardcolumns' has been deprecated and will be ignored. Please replace it by 'convertvariables' in your '.qualtRics.yml' file. Visit <URL TO INFORMATION> for more information.")
       convertVariables <- TRUE
-    } else if(c('convertstandardcolumns', 'convertvariables') %in% names(cred)) {
+    } else if(all(c('convertstandardcolumns', 'convertvariables') %in% names(cred))) {
         message("'convertstandardcolumns' has been deprecated and will be ignored. Please remove it from your '.qualtRics.yml' file. Visit <URL TO INFORMATION> for more information.")
       convertVariables <- cred$convertvariables
     } else {
