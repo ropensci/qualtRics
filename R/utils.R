@@ -70,8 +70,8 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
   } else if(res$status_code == 500) {
     stop(paste0("Qualtrics API reports an internal server (500) error. Please contact Qualtrics Support (https://www.qualtrics.com/contact/) and provide the instanceId and errorCode below.", "\n",
                    "\n",
-                   "instanceId:", " ", content(res)$meta$error$instanceId, "\n",
-                   "errorCode: ", content(res)$meta$error$errorCode))
+                   "instanceId:", " ", httr::content(res)$meta$error$instanceId, "\n",
+                   "errorCode: ", httr::content(res)$meta$error$errorCode))
     return(list(
       "content" = httr::content(res),
       "OK"= FALSE
