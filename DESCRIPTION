@@ -20,7 +20,9 @@ Imports:
     assertthat,
     sjlabelled,
     lubridate,
-    yaml
+    yaml,
+    dplyr,
+    rlang
 URL:
     https://github.com/JasperHG90/qualtRics
 BugReports:

@@ -1,6 +1,10 @@
 **[development branch]**
 
-- \*
+- convertstandardcolumns deprecated since readr::read_csv does this automagically. 
+- Added .onUnload and .onDetach conditions so that environment variables (root url and API key) are removed when package is unloaded. This prevents issues if user decides to load the package again.
+- Cleaned up code
+- Added 'metadata' function that allows the user to retrieve detailed metadata about survey.
+- Tinkering with option to convert specific question types to R counterparts
 
 **[master branch]**
 

@@ -1,5 +1,5 @@
 #   Download qualtrics data into R
-#    Copyright (C) 2017 Jasper Ginn
+#    Copyright (C) 2018 Jasper Ginn
 
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -31,13 +31,6 @@
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs/csv} for documentation on the Qualtrics API.
 #' @author Jasper Ginn
-#' @importFrom httr GET
-#' @importFrom httr POST
-#' @importFrom httr content
-#' @importFrom stringr str_sub
-#' @importFrom utils read.csv
-#' @importFrom utils unzip
-#' @importFrom utils write.csv
 #' @export
 #' @examples
 #' \dontrun{
@@ -145,7 +138,11 @@ getSurvey <- function(surveyID,
   # Download, unzip and return file path
   survey.fpath <- downloadQualtricsExport(check_url, verbose = verbose)
   # Read data
-  data <- readSurvey(survey.fpath, convertStandardColumns = convertStandardColumns)
+  data <- readSurvey(survey.fpath)
+  # Add types
+  if(convertStandardColumns) {
+    data <- inferDataTypes(data, surveyID)
+  }
   # Save survey as RDS file in temp folder so that it can be easily retrieved this session.
   saveRDS(data, paste0(tempdir(), "/", surveyID, ".rds"))
   # Remove tmpfiles

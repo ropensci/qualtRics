@@ -1,5 +1,5 @@
 #   Download qualtrics data into R
-#    Copyright (C) 2017 Jasper Ginn
+#    Copyright (C) 2018 Jasper Ginn
 
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -20,9 +20,6 @@
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs} for documentation on the Qualtrics API.
 #' @author Jasper Ginn, Phoebe Wong
-#' @importFrom httr GET
-#' @importFrom httr content
-#' @importFrom httr add_headers
 #' @export
 #' @examples
 #' \dontrun{
@@ -54,18 +51,18 @@ getSurveyQuestions <- function(surveyID) {
   qi <- resp$result$questions
   # Add questions, question labels and force response info
   qlabel <- unlist(sapply(qi, function(x) as.character(x$questionLabel))) #question label
-  
-  quest <- data.frame(qid = names(qi), 
-                      question = sapply(qi,function(x) x$questionText), 
-                      force_resp = sapply(qi, function(x) x$validation$doesForceResponse), 
+
+  quest <- data.frame(qid = names(qi),
+                      question = sapply(qi,function(x) x$questionText),
+                      force_resp = sapply(qi, function(x) x$validation$doesForceResponse),
                       stringsAsFactors = FALSE)
-  
+
   if (length(qlabel) == 0){
     quest$qlabel <- rep(NA, nrow(quest))
   } else {
     quest$qlabel <- sapply(qi, function(x) as.character(x$questionLabel))
   }
-  
+
   # Row names
   row.names(quest) <- 1:nrow(quest)
   # Return

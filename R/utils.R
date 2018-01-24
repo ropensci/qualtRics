@@ -1,5 +1,5 @@
 #   Download qualtrics data into R
-#    Copyright (C) 2017 Jasper Ginn
+#    Copyright (C) 2018 Jasper Ginn
 
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -30,7 +30,15 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Helper function. Checks responses against qualtrics response codes.
+#' utils.R contains helper functions for the qualtRics package. These functions should not be called directly by the user and should not be exported.
+#' @importFrom dplyr '%>%'
+#' @importFrom dplyr mutate
+#' @importFrom rlang ':='
+#' @importFrom dplyr select
+#' @importFrom dplyr pull
+#' @importFrom readr parse_factor
+
+# Checks responses against qualtrics response codes and returns error message.
 #
 # @param res response from httr::GET
 # @param raw if TRUE, add 'raw' flag to httr::content() function.
@@ -84,8 +92,6 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
 
 # Construct a header to send to qualtrics API
 #
-# This function is not exported as it is a helper function. It should not be called directly by the user.
-#
 # @param API.TOKEN API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})
 #
 # @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API.
@@ -103,7 +109,10 @@ constructHeader <- function(API.TOKEN) {
 }
 
 # Check if httr GET result contains a warning
+#
 # @param resp object returned by 'qualtRicsResponseCodes()'
+#
+# @author Jasper Ginn
 
 checkForWarnings <- function(resp) {
   # Raise warning if resp contains notice
@@ -116,7 +125,10 @@ checkForWarnings <- function(resp) {
 }
 
 # Check if parameters passed to functions are correct
+#
 # @param ... options passed to checkParams
+#
+# @author: Jasper Ginn
 
 checkParams <- function(...) {
   args <- list(...)
@@ -164,8 +176,12 @@ checkParams <- function(...) {
 }
 
 # Append proper end points to create root url
+#
 # @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.).
+#
 # @return root url + appended end point
+#
+# @author: Jasper Ginn
 
 appendRootUrl <- function(root_url, type = c("responseexports", 'surveys')) {
   # match
@@ -180,7 +196,12 @@ appendRootUrl <- function(root_url, type = c("responseexports", 'surveys')) {
 }
 
 # Create raw JSON payload to post response exports request
-# @param
+#
+# @param: see getSurveys() and registerOptions() functions
+#
+# @return: returns json file with options to send to API
+#
+# @author: Jasper Ginn
 
 createRawPayload <- function(surveyID,
                              useLabels=TRUE,
@@ -262,10 +283,15 @@ createRawPayload <- function(surveyID,
 }
 
 # Send httr requests to qualtrics API
-# @param
+#
+# @param verb type of request to be sent (@seealso ?httr::VERB)
+# @param url qualtrics endpoint url created by appendRootUrl() function
+# @param body options created by createRawPayload() function
+#
+# @author: Jasper Ginn
 
 qualtricsApiRequest <- function(verb = c("GET", "POST"), url = url,
-                                body = NULL, raw = FALSE) {
+                                body = NULL) {
   # Match arg
   verb <- match.arg(verb)
   # Construct header
@@ -278,7 +304,7 @@ qualtricsApiRequest <- function(verb = c("GET", "POST"), url = url,
                             ),
                     body = body)
   # Check if response type is OK
-  cnt <- qualtRicsResponseCodes(res, raw = raw)
+  cnt <- qualtRicsResponseCodes(res)
   # Check if OK
   if(cnt$OK) {
     # If notice occurs, raise warning
@@ -289,7 +315,11 @@ qualtricsApiRequest <- function(verb = c("GET", "POST"), url = url,
 }
 
 # Download response export
-# @param
+#
+# @param check_url url provided by qualtrics API that shows the download percentage completneness
+# @param verbose see getSurvey()
+#
+# @author Jasper Ginn
 
 downloadQualtricsExport <- function(check_url, verbose = FALSE) {
   # Construct header
@@ -343,64 +373,79 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
   return(u)
 }
 
-# Set proper data types on data
-# @param
+# Set proper data types on survey data.
+#
+# @param data imported qualtrics survey
 # @author Jasper Ginn
 
 inferDataTypes <- function(data,
-                           #surveyID,
-                           #root_url,
+                           surveyID,
                            verbose = FALSE) {
+
   # Download survey metadata
-  #sm <- getSurveyMetadata(surveyID, root_url = root_url)
-
-  # These are added to qualtrics surveys
-  qNum <- c("LocationLatitude", "LocationLongitude", "Progress",
-            "Duration..in.seconds",
-            # legacy
-            "LocationAccuracy")
-  qChar <- c('IPAddress','ResponseID','RecipientLastName',
-             'RecipientFirstName','RecipientEmail','ExternalDataReference',
-             'ExternalReference', 'DistributionChannel', # Last two are unclear
-             # legacy
-             "V1", "V3", "V4", "V5", "V6")
-  qFact <- c('ResponseSet',
-             # legacy
-             "V2")
-  qBin <- c("Finished", "Status",
-            # legacy
-            "V7", "V10")
-  qDate <- c('StartDate','EndDate', 'RecordedDate',
-             # legacy
-             "V8", "V9")
-
-  # For each column, cycle and assign
-  for(col.name in names(data)) {
-    #print(col.name)
-    # Check for generic data
-    if(col.name %in% qNum) {
-      data[,col.name] <- as.numeric(data[,col.name])
-    } else if(col.name %in% qChar) {
-      data[,col.name] <- as.character(data[,col.name])
-    } else if(col.name %in% qFact) {
-      data[,col.name] <- as.factor(data[,col.name])
-    } else if(col.name %in% qBin) {
-      data[,col.name] <- factor(data[,col.name], levels=c("0", "1"))
-    } else if(col.name %in% qDate) {
-      # data[,col.name] <- lubridate::as_datetime(data[,col.name], tz=NULL)
+  md <- metadata(surveyID, get=list("questions"=TRUE,
+                                    "metadata"=FALSE,
+                                    "responsecounts"=FALSE))[[1]]
+  # Check which questions are of type allowed
+  interest <- lapply(md, function(x) {
+    # Check if question type supported
+    type_supp <- ifelse(!is.null(x$questionType$type),
+                        x$questionType$type %in%
+                          getOption("QUALTRICS_INTERNAL_SETTINGS")$question_types_supported$type,
+                        FALSE
+    ) # This one is the most important so ifelse
+    selector_supp <- ifelse(!is.null(x$questionType$selector),
+                            x$questionType$selector %in%
+                              getOption("QUALTRICS_INTERNAL_SETTINGS")$question_types_supported$selector,
+                            FALSE)
+    if(!is.null(x$questionType$subSelector)) {
+      subselector_supp <- x$questionType$subSelector %in%
+        getOption("QUALTRICS_INTERNAL_SETTINGS")$question_types_supported$subSelector
     } else {
-      NULL
+      subselector_supp <- NA
     }
-
-    # Check if warning given
-    if(Sys.getenv("QUALTRICS_WARNING_DATE_GIVEN") == "") {
-      warning("The 'StartDate', 'EndDate' and 'RecordedDate' variables were converted without passing a specific timezone. If you like to set these timestamps to your own timezone, please visit https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/ (under 'User Settings'). See https://api.qualtrics.com/docs/dates-and-times for more information about how the Qualtrics API handles dates and times.")
-      Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN"=TRUE)
+    # Evaluate
+    supported <- ifelse(all(selector_supp, type_supp), TRUE, FALSE)
+    # Check if question in survey
+    question_is_in_survey <- x$questionName %in% names(data)
+    # If both true, return element
+    if(supported & question_is_in_survey) {
+      return(x)
     }
+  })
+  # Remove NULL values
+  interest <- interest[!vapply(interest, is.null, FALSE)]
+  # Get value names
+  mc <- vapply(interest, function(x) x$questionName, "character", USE.NAMES = FALSE)
+  # Unfortunately, something goes wrong with the labels so we need to do this
+  lab <- sjlabelled::get_label(data)
+  # For each, convert
+  #browser()
+  for(m in mc) {
+    data <- data %>%
+      wrapper_mc(., m, interest)
+  }
+  # Return labels
+  data <- sjlabelled::set_label(data, lab)
 
-
+  # Check if warning given
+  if(Sys.getenv("QUALTRICS_WARNING_DATE_GIVEN") == "") {
+    warning("The 'StartDate', 'EndDate' and 'RecordedDate' variables were converted without passing a specific timezone. If you like to set these timestamps to your own timezone, please visit https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/ (under 'User Settings'). See https://api.qualtrics.com/docs/dates-and-times for more information about how the Qualtrics API handles dates and times.")
+    Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN"=TRUE)
   }
 
   # Return data
   return(data)
+}
+
+# Convert multiple choice questions to ordered factors
+wrapper_mc <- function(data, col_name, survey_meta) {
+  # Get question data from metadata
+  meta <- survey_meta[vapply(survey_meta, function(x) x$questionName == col_name, TRUE)]
+  # Level names
+  ln <- vapply(meta[[1]]$choices, function(x) x$choiceText, "character", USE.NAMES = FALSE)
+  # Convert
+  data %>%
+    mutate(., !!col_name := readr::parse_factor(data %>% select(!!col_name) %>% pull(), levels=ln,
+                                                       ordered = TRUE))
 }
