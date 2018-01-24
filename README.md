@@ -110,7 +110,7 @@ Open an existing R project or start a new one. Then, open up an empty text file:
 
 Execute `qualtRicsConfigFile(api_token="<YOUR-API-TOKEN-HERE>", root_url="<YOUR-ROOT-URL-HERE>")` and copy-paste the text between the dashes to the empty text file:
 
-![](/vignettes/config_step2.png)
+![](https://raw.githubusercontent.com/JasperHG90/qualtRics/master/vignettes/config_step2.png)
 
 Save the file as `.qualtRics.yml` and execute `registerOptions()` or restart your R session and execute `library(qualtRics)` to load the configuration file.
 
@@ -211,7 +211,7 @@ mysurvey <- readSurvey("/users/jasper/desktop/mysurvey.csv")
 
 To avoid special characters (mainly periods) in header names, `readSurvey` uses question labels as the header names. The question belonging to that label is then added using the [sjlabelled](https://CRAN.R-project.org/package=sjlabelled) package. Qualtrics gives names to these labels automatically, but you can easily change them.
 
-![](/vignettes/qualtricsdf.png)
+![](https://raw.githubusercontent.com/JasperHG90/qualtRics/master/vignettes/qualtricsdf.png)
 
 ## Other information
 
