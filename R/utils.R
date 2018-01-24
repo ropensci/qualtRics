@@ -137,11 +137,11 @@ checkParams <- function(...) {
   ### API Token
   assert_apikey_stored()
   ### Options
-  if(all(c("verbose", "convertStandardColumns",
+  if(all(c("verbose", "convertVariables",
            "useLocalTime", "useLabels") %in% names(args))) {
     assert_options_logical(
       args$verbose,
-      args$convertStandardColumns,
+      args$convertVariables,
       args$useLocalTime,
       args$useLabels
     )

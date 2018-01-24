@@ -21,7 +21,7 @@
 #'
 #' @param verbose Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
 #' @param useLabels Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
-#' @param convertStandardColumns Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. Defaults to TRUE.
+#' @param convertVariables Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert certain question types (e.g. multiple choice) to proper data type in R. Defaults to TRUE.
 #' @param useLocalTime Logical. Use local timezone to determine response date values? Defaults to FALSE. See \url{https://api.qualtrics.com/docs/dates-and-times} for more information.
 #' @param dateWarning Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
 #' @param ... Either one or both of 'api_token' and 'root_url' to register the Qualtrics api key and institution-specific root url manually. (see example). See also \code{\link{qualtRicsConfigFile}} for an explanation of the root_url and api_token parameters.
@@ -60,7 +60,7 @@
 
 registerOptions <- function(verbose=TRUE,
                             useLabels=TRUE,
-                            convertStandardColumns=TRUE,
+                            convertVariables=TRUE,
                             useLocalTime=FALSE,
                             dateWarning=TRUE,
                             ...) {
@@ -73,7 +73,7 @@ registerOptions <- function(verbose=TRUE,
   if(Sys.getenv("QUALTRICS_ROOT_URL") != "" & Sys.getenv("QUALTRICS_API_KEY") != "") {
     # Check
     assertthat::assert_that(assertthat::is.flag(verbose), msg=paste0("'verbose' must be either TRUE or FALSE."))
-    assertthat::assert_that(assertthat::is.flag(convertStandardColumns), msg=paste0("'convertstandardcolumns' must be either TRUE or FALSE."))
+    assertthat::assert_that(assertthat::is.flag(convertVariables), msg=paste0("'convertvariables' must be either TRUE or FALSE."))
     assertthat::assert_that(assertthat::is.flag(useLabels), msg=paste0("'uselabels' must be either TRUE or FALSE."))
     assertthat::assert_that(assertthat::is.flag(useLabels), msg=paste0("'uselabels' must be either TRUE or FALSE."))
     assertthat::assert_that(assertthat::is.flag(dateWarning), msg=paste0("'dateWarning' must be either TRUE or FALSE."))
@@ -81,7 +81,7 @@ registerOptions <- function(verbose=TRUE,
     options(
       "QUALTRICS_VERBOSE" = verbose,
       "QUALTRICS_USELABELS" = useLabels,
-      "QUALTRICS_CONVERTSTANDARDCOLUMNS" = convertStandardColumns,
+      "QUALTRICS_CONVERTVARIABLES" = convertVariables,
       "QUALTRICS_USELOCALTIME" = useLocalTime
     )
     # Set warning
@@ -112,10 +112,21 @@ registerOptions <- function(verbose=TRUE,
       verbose <- cred$verbose
       assertthat::assert_that(assertthat::is.flag(verbose), msg=paste0("'verbose' must be either TRUE or FALSE but is ", as.character(verbose), " in your config file."))
     }
-    if("convertstandardcolumns" %in% names(cred)) {
-      convertStandardColumns <- cred$convertstandardcolumns
-      assertthat::assert_that(assertthat::is.flag(convertStandardColumns), msg=paste0("'convertstandardcolumns' must be either TRUE or FALSE but is ", as.character(convertStandardColumns), " in your config file."))
+    # If 'convertStandardColumns' is found in credentials then emit a warning
+    if('convertstandardcolumns' %in% names(cred) & !'convertvariables' %in% names(cred)) {
+      message("'convertstandardcolumns' has been deprecated and will be ignored. Please replace it by 'convertvariables' in your '.qualtRics.yml' file. Visit <URL TO INFORMATION> for more information.")
+      convertVariables <- TRUE
+    } else if(c('convertstandardcolumns', 'convertvariables') %in% names(cred)) {
+        message("'convertstandardcolumns' has been deprecated and will be ignored. Please remove it from your '.qualtRics.yml' file. Visit <URL TO INFORMATION> for more information.")
+      convertVariables <- cred$convertvariables
+    } else {
+      convertVariables <- cred$convertvariables
     }
+    # Check
+    assertthat::assert_that(assertthat::is.flag(convertVariables),
+                            msg=paste0("'convertvariables' must be either TRUE or FALSE but is ",
+                                       as.character(convertVariables),
+                                       " in your config file."))
     if("uselabels" %in% names(cred)) {
       useLabels <- cred$uselabels
       assertthat::assert_that(assertthat::is.flag(useLabels), msg=paste0("'uselabels' must be either TRUE or FALSE but is ", as.character(useLabels), " in your config file."))
@@ -140,7 +151,7 @@ registerOptions <- function(verbose=TRUE,
   options(
     "QUALTRICS_VERBOSE" = verbose,
     "QUALTRICS_USELABELS" = useLabels,
-    "QUALTRICS_CONVERTSTANDARDCOLUMNS" = convertStandardColumns,
+    "QUALTRICS_CONVERTVARIABLES" = convertVariables,
     "QUALTRICS_USELOCALTIME" = useLocalTime
   )
   # Set warning
