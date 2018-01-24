@@ -21,7 +21,7 @@ Loads qualtRics credentials automatically when package is loaded and ".qualtRics
 .onLoad <- function(libname = find.package("qualtRics"), pkgname="qualtRics") {
   if(file.exists(".qualtRics.yml")) {
     # Silently load 'registeroptions()'
-    invisible(registerOptions()) #
+    suppressMessages(registerOptions()) #
     # Startup message
     packageStartupMessage(paste0("Found a .qualtRics.yml configuration file in ",
                                  getwd(),

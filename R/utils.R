@@ -426,7 +426,7 @@ inferDataTypes <- function(data,
   #browser()
   for(m in mc) {
     data <- data %>%
-      wrapper_mc(., m, interest)
+      wrapper_mc(m, interest)
   }
   # Return labels
   data <- sjlabelled::set_label(data, lab)
