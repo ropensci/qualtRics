@@ -108,7 +108,7 @@ registerOptions(verbose=FALSE, useLabels=FALSE, root_url="myinstitution.qualtric
 
 Open an existing R project or start a new one. Then, open up an empty text file:
 
-![](/vignettes/config_step1.png)
+![](https://raw.githubusercontent.com/JasperHG90/qualtRics/master/vignettes/config_step1.png)
 
 Execute `qualtRicsConfigFile(api_token="<YOUR-API-TOKEN-HERE>", root_url="<YOUR-ROOT-URL-HERE>")` and copy-paste the text between the dashes to the empty text file:
 
