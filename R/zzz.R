@@ -20,7 +20,12 @@ Loads qualtRics credentials automatically when package is loaded and ".qualtRics
 
 .onLoad <- function(libname = find.package("qualtRics"), pkgname="qualtRics") {
   if(file.exists(".qualtRics.yml")) {
-    suppressWarnings(registerOptions()) # This throws a warning
+    # Silently load 'registeroptions()'
+    invisible(registerOptions()) #
+    # Startup message
+    packageStartupMessage(paste0("Found a .qualtRics.yml configuration file in ",
+                                 getwd(),
+                                 ". Using these credentials."))
   }
   # Set internal qualtRics settings
   options(
@@ -32,13 +37,8 @@ Loads qualtRics credentials automatically when package is loaded and ".qualtRics
   )
 }
 
+# On unload
 .onUnload <- function(libname = find.package("qualtRics"), pkgname="qualtRics") {
-  # If user unloads/detaches package make sure that these values are erased
-  Sys.setenv("QUALTRICS_ROOT_URL" = "")
-  Sys.setenv("QUALTRICS_API_KEY" = "")
-}
-
-.onDetach <- function(libname = find.package("qualtRics"), pkgname="qualtRics") {
   # If user unloads/detaches package make sure that these values are erased
   Sys.setenv("QUALTRICS_ROOT_URL" = "")
   Sys.setenv("QUALTRICS_API_KEY" = "")

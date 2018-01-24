@@ -30,7 +30,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#' utils.R contains helper functions for the qualtRics package. These functions should not be called directly by the user and should not be exported.
+# utils.R contains helper functions for the qualtRics package. These functions should not be called directly by the user and should not be exported.
+
 #' @importFrom dplyr '%>%'
 #' @importFrom dplyr mutate
 #' @importFrom rlang ':='
@@ -435,12 +436,12 @@ inferDataTypes <- function(data,
     warning("The 'StartDate', 'EndDate' and 'RecordedDate' variables were converted without passing a specific timezone. If you like to set these timestamps to your own timezone, please visit https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/ (under 'User Settings'). See https://api.qualtrics.com/docs/dates-and-times for more information about how the Qualtrics API handles dates and times.")
     Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN"=TRUE)
   }
-
   # Return data
   return(data)
 }
 
 # Convert multiple choice questions to ordered factors
+# Idea: add ORDER = TRUE/FALSE (if user wants factors to be ordered). Add # REVERSE = TRUE/FALSE if user wants the factor levels to be reversed
 wrapper_mc <- function(data, col_name, survey_meta) {
   # Get question data from metadata
   meta <- survey_meta[vapply(survey_meta, function(x) x$questionName == col_name, TRUE)]
@@ -448,6 +449,7 @@ wrapper_mc <- function(data, col_name, survey_meta) {
   ln <- vapply(meta[[1]]$choices, function(x) x$choiceText, "character", USE.NAMES = FALSE)
   # Convert
   data %>%
-    mutate(., !!col_name := readr::parse_factor(data %>% select(!!col_name) %>% pull(), levels=ln[length(ln):1],
+    mutate(!!col_name := readr::parse_factor(data %>% select(!!col_name) %>% pull(),
+                                             levels=ln[length(ln):1],
                                                        ordered = TRUE))
 }
