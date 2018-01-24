@@ -79,8 +79,8 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
   } else if(res$status_code == 503) {
     stop(paste0("Qualtrics API reports a temporary internal server (500) error. Please contact Qualtrics Support (https://www.qualtrics.com/contact/) with the instanceId and errorCode below or retry your query.", "\n",
                    "\n",
-                   "instanceId:", " ", content(res)$meta$error$instanceId, "\n",
-                   "errorCode: ", content(res)$meta$error$errorCode))
+                   "instanceId:", " ", httr::content(res)$meta$error$instanceId, "\n",
+                   "errorCode: ", httr::content(res)$meta$error$errorCode))
     return(list(
       "content" = httr::content(res),
       "OK"= FALSE
