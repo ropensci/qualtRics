@@ -39,11 +39,12 @@ Currently, the package contains three core functions:
   2. *getSurvey()* downloads a survey from Qualtrics and loads it into R.
   3. *readSurvey()* allows you to read CSV files you download manually from Qualtrics.
   
-It further contains three helper functions:
+It further contains four helper functions:
 
   1. *registerOptions()* stores your API key and root url in environment variables.
   2. *getSurveyQuestions()* retrieves a data frame containing questions and question IDs for a survey.
   3. *qualtRicsConfigFile()* prints information on how to make a .qualtRics.yml configuration file that stores your qualtRics API key, root url and other options in your working directory.
+  4. *metadata()* retrieves metadata about your survey, such as questions, survey flow, number of responses etc.
 
 Note that you can only export surveys that you own, or to which you have been given administration rights.
 
@@ -59,7 +60,7 @@ You can set some global options via the `registerOptions()` function:
 
 1. **verbose:** Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
 2. [useLabels](https://api.qualtrics.com/docs/create-response-export): Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
-3. **convertStandardColumns:** Logical. If TRUE, then the `getSurvey()` function will convert general data columns (first name, last name, lat, lon, ip address, startdate, enddate etc.) to their proper format. Defaults to TRUE.
+3. **convertvariables:** Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert certain question types (e.g. multiple choice) to proper data type in R. Defaults to TRUE. (see below for more information)
 4. [useLocalTime](https://api.qualtrics.com/docs/dates-and-times): Logical. Use local timezone to determine response date values? Defaults to FALSE.
 5. **dateWarning:** Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
 
@@ -86,7 +87,7 @@ api_token: <YOUR-API-TOKEN-HERE>
 root_url: <YOUR-ROOT-URL-HERE>
 verbose: TRUE
 uselabels: TRUE
-convertstandardcolumns: TRUE
+convertvariables: TRUE
 uselocaltime: FALSE
 datewarning: TRUE
 --------------
@@ -115,6 +116,68 @@ Execute `qualtRicsConfigFile(api_token="<YOUR-API-TOKEN-HERE>", root_url="<YOUR-
 Save the file as `.qualtRics.yml` and execute `registerOptions()` or restart your R session and execute `library(qualtRics)` to load the configuration file.
 
 You can edit your configuration file by executing `file.edit(".qualtRics.yml")` in the R console.
+
+## Automatic conversion of variables
+
+From version 2.5, qualtRics supports the automatic conversion of specific variable types (see table below) since users already specify most information needed for such a conversion when they design their survey. 
+
+For example, using the `metadata()` function, you can pull in metadata about your survey questions:
+
+```r
+# Get metadata for a survey
+md <- metadata(id)
+# Filter for questions
+md.f <- md$questions
+# Pick specific question
+QOI <- md.f$QID172807686
+# View question type
+QOI$questionType
+```
+
+```
+$type
+[1] "MC"
+
+$selector
+[1] "SAVR"
+
+$subSelector
+[1] "TX"
+```
+
+We see that this is a multiple choice question ("MC") with a single answer ("SAVR"). The data supplied also includes the different answers a user can give:
+
+```r
+# Return question description
+lapply(QOI$choices, function(x) x$description)
+```
+
+```
+$`1`
+[1] "Extremely useful"
+
+$`2`
+[1] "Very useful"
+
+$`3`
+[1] "Moderately useful"
+
+$`4`
+[1] "Slightly useful"
+
+$`5`
+[1] "Not useful at all"
+```
+
+This data can be used to turn the variable into a factor automatically.
+
+### Supported types
+
+Currently, the following data types are supported for automatic conversion:
+
+| Type            | Selector      | Abbreviation | Version |
+|-----------------|---------------|--------------|---------|
+| Multiple choice | Single answer | "MC", "SAVR" | 2.5     |
 
 ## Commands
 
