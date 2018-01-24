@@ -60,7 +60,7 @@ You can set some global options via the `registerOptions()` function:
 
 1. **verbose:** Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
 2. [useLabels](https://api.qualtrics.com/docs/create-response-export): Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
-3. **convertvariables:** Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert certain question types (e.g. multiple choice) to proper data type in R. Defaults to TRUE. (see below for more information)
+3. **convertvariables:** Logical. If TRUE, then the function will convert certain question types (e.g. multiple choice) to proper data type in R. Defaults to TRUE. (see below for more information)
 4. [useLocalTime](https://api.qualtrics.com/docs/dates-and-times): Logical. Use local timezone to determine response date values? Defaults to FALSE.
 5. **dateWarning:** Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
 

@@ -37,6 +37,8 @@
 #' @importFrom dplyr select
 #' @importFrom dplyr pull
 #' @importFrom readr parse_factor
+#' @importFrom sjlabelled get_label
+#' @importFrom sjlabelled set_label
 
 # Checks responses against qualtrics response codes and returns error message.
 #
