@@ -355,6 +355,19 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
     # Retry if first attempt fails
     httr::GET(paste0(check_url, "/file"), httr::add_headers(headers))
   })
+  # If content is a character, then load temp file (this is purely for testing)
+  if(is.character(f$content)) {
+    if(f$content == "files/file_getSurvey.rds") {
+      ct <- readRDS("files/file_getSurvey.rds")
+      f$content <- ct
+    }
+  } else if(f$request$url == "noleadtrialau1.au1.qualtrics.com/API/v3/responseexports/ES_r8ho97mie58avt6gbo20tghi56/file"){
+    if(f$request$headers["X-API-TOKEN"] == "1234") {
+      ct <- readRDS("files/file_getSurvey.rds")
+      f$content <- ct
+    }
+  }
+  #browser()
   # Load raw zip file
   ty <- qualtRicsResponseCodes(f, raw=TRUE)
   # To zip file
