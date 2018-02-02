@@ -358,7 +358,7 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
   # If content is test request, then load temp file (this is purely for testing)
   # httptest library didn't work the way it needed and somehow still called the API
   # leading to errors
-  if(f$request$url == "noleadtrialau1.au1.qualtrics.com/API/v3/responseexports/ES_r8ho97mie58avt6gbo20tghi56/file"){
+  if(f$request$url == "t.qualtrics.com/API/v3/responseexports/T_123/file"){
     if(f$request$headers["X-API-TOKEN"] == "1234") {
       ct <- readRDS("files/file_getSurvey.rds")
       f$content <- ct
