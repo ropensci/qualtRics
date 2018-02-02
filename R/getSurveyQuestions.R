@@ -20,6 +20,7 @@
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs} for documentation on the Qualtrics API.
 #' @author Jasper Ginn, Phoebe Wong
+#' @importFrom dplyr as_tibble
 #' @export
 #' @examples
 #' \dontrun{
