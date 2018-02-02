@@ -287,6 +287,7 @@ Contributions are welcome from anyone subject to the following rules:
 - Follow the style guide from Hadley Wickham's [R Packages](http://r-pkgs.had.co.nz)
 - All contributions must be consistent with the package license (GPL-3)
 - Submit contributions as a pull request. Clearly state what the changes are and try to keep the number of changes per pull request as low as possible.
+- If you make big changes, add your name to the 'Author' field.
 
 ### Related work
 
