@@ -279,6 +279,12 @@ Should you encounter any bugs or issues, please report them [here](https://githu
 
 If you have a request (like adding a new argument), please leave it [here](https://github.com/JasperHG90/qualtRics/issues)
 
+### Related work
+
+- [Jason Bryer](https://github.com/jbryer/qualtrics) wrote an R package to work with the previous version of the Qualtrics API
+- [QualtricsTools](https://github.com/emmamorgan-tufts/QualtricsTools/) creates automatic reports in shiny.
+- [qsurvey](https://github.com/jamesdunham/qsurvey) by James Dunham focuses on testing and review of surveys before fielding, and analysis of responses afterward.
+
 ### Changelog
 
 View the changelog [here](https://github.com/JasperHG90/qualtRics/blob/master/Changelog.md)
