@@ -4,8 +4,9 @@
 
 **[master branch]**
 
+- `getSurveys()` and `getSurveyQuestions()` now return a [tibble](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html)
 - Using package [httptest](https://cran.r-project.org/web/packages/httptest/index.html) for mock API requests so that API calls can be tested. 
-- convertstandardcolumns deprecated since readr::read_csv does this automagically. 
+- convertstandardcolumns deprecated since readr::read_csv does this automagically. It has been changed in config file to 'convertvariables'. User can now convert specific question types automatically. See [this page](https://github.com/JasperHG90/qualtRics#automatic-conversion-of-variables) for more information.
 - Added .onUnload and .onDetach conditions so that environment variables (root url and API key) are removed when package is unloaded. This prevents issues if user decides to load the package again.
 - Cleaned up code
 - Added 'metadata' function that allows the user to retrieve detailed metadata about survey.
