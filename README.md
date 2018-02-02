@@ -277,7 +277,16 @@ Should you encounter any bugs or issues, please report them [here](https://githu
 
 ### Requests
 
-If you have a request (like adding a new argument), please leave it [here](https://github.com/JasperHG90/qualtRics/issues)
+If you have a request (like adding a new argument), please leave it as an issue  [here](https://github.com/JasperHG90/qualtRics/issues)
+
+### Contributing
+
+Contributions are welcome from anyone subject to the following rules:
+
+- Abide by the [code of conduct](CONDUCT.md).
+- Follow the style guide from Hadley Wickham's [R Packages](http://r-pkgs.had.co.nz)
+- All contributions must be consistent with the package license (GPL-3)
+- Submit contributions as a pull request. Clearly state what the changes are and try to keep the number of changes per pull request as low as possible.
 
 ### Related work
 

@@ -12,3 +12,5 @@ README\.md$
 ^\.gitattributes$
 Changelog\.md$
 ^img
+^CONDUCT\.md$
+^news\.md$
