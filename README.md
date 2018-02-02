@@ -285,9 +285,9 @@ If you have a request (like adding a new argument), please leave it [here](https
 - [QualtricsTools](https://github.com/emmamorgan-tufts/QualtricsTools/) creates automatic reports in shiny.
 - [qsurvey](https://github.com/jamesdunham/qsurvey) by James Dunham focuses on testing and review of surveys before fielding, and analysis of responses afterward.
 
-### Changelog
+### News and changes
 
-View the changelog [here](https://github.com/JasperHG90/qualtRics/blob/master/Changelog.md)
+View news about qualtRics [here](https://github.com/JasperHG90/qualtRics/blob/master/news.md)
 
 ### Thanks!
 
