@@ -1,8 +1,3 @@
-qualtRics [development branch] (2018-02-02)
-=========================
-
-- \*
-
 qualtRics [master branch] (2018-02-02)
 =========================
 
