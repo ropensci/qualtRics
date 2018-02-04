@@ -40,6 +40,7 @@
 #' @importFrom readr parse_factor
 #' @importFrom sjlabelled get_label
 #' @importFrom sjlabelled set_label
+#' @noRd
 
 # Checks responses against qualtrics response codes and returns error message.
 #
