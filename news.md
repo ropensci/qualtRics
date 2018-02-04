@@ -1,4 +1,9 @@
-qualtRics [master branch] (2018-02-02)
+qualtRics [master branch] 
+=========================
+
+- Branch is even with v3.0
+
+qualtRics 3.0 (2018-02-03)
 =========================
 
 ### NEW FEATURES
