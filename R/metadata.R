@@ -49,8 +49,8 @@ metadata <- function(surveyID,
   allowed <- c("metadata","questions","responsecounts",
                "blocks","flow","embedded_data","comments")
   check <- union(allowed, names(get))
-  assertthat::assert_that(length(check) <= length(allowed),
-                          msg="One or more options you passed to 'get' are not valid. Please check your input and try again.")
+  assertthat::assert_that(length(check) <= length(allowed), # nolint
+                          msg="One or more options you passed to 'get' are not valid. Please check your input and try again.") # nolint
   # Change standard options if any
   standard_list <- list("metadata"=TRUE,
                         "questions"=TRUE,
@@ -97,8 +97,12 @@ metadata <- function(surveyID,
     "isActive" = resp_filt$isActive,
     "creationDate" = resp_filt$creationDate,
     "lastModifiedDate"=resp_filt$lastModifiedDate,
-    "expiration_startdate"=ifelse(is.null(resp_filt$expiration$startDate),NA,resp_filt$expiration$startDate),
-    "expiration_endDate"=ifelse(is.null(resp_filt$expiration$endDate),NA,resp_filt$expiration$endDate)
+    "expiration_startdate"=ifelse(is.null(resp_filt$expiration$startDate),
+                                  NA,
+                                  resp_filt$expiration$startDate),
+    "expiration_endDate"=ifelse(is.null(resp_filt$expiration$endDate),
+                                NA,
+                                resp_filt$expiration$endDate)
   )
   # Response counts
   responsecounts <- data.frame(
@@ -114,7 +118,7 @@ metadata <- function(surveyID,
     if(all(q_select %in% qnames)) {
       questions <- resp_filt$questions[which(qnames %in% q_select)]
     } else {
-      warning(paste0("One or more questions you queried are not present in your survey. Returning all questions instead."))
+      warning(paste0("One or more questions you queried are not present in your survey. Returning all questions instead.")) # nolint
       questions <- resp_filt$questions
     }
   } else {
@@ -129,7 +133,8 @@ metadata <- function(surveyID,
               "embedded_data"=resp_filt$embeddedData,
               "comments"=resp_filt$comments)
   # Make subset
-  met_ss <- met[names(standard_list[vapply(standard_list,function(x) x==TRUE, TRUE)])]
+  met_ss <- met[names(standard_list[vapply(standard_list,
+                                           function(x) x==TRUE, TRUE)])] # nolint
   # Return
   return(met_ss)
 }

@@ -63,24 +63,28 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
     )
     )
   } else if(res$status_code == 401) {
-    stop("Qualtrics API raised an authentication (401) error - you may not have the required authorization. Please check your API key and root url.")
+    stop("Qualtrics API raised an authentication (401) error - you may not have the required authorization. Please check your API key and root url.") # nolint
   } else if(res$status_code == 400) {
-    stop("Qualtrics API raised a bad request (400) error - Please report this on https://github.com/JasperHG90/qualtRics/issues")
+    stop("Qualtrics API raised a bad request (400) error - Please report this on https://github.com/JasperHG90/qualtRics/issues") # nolint
   } else if(res$status_code == 404) {
-    stop("Qualtrics API complains that the requested resource cannot be found (404 error). Please check if you are using the correct survey ID.")
+    stop("Qualtrics API complains that the requested resource cannot be found (404 error). Please check if you are using the correct survey ID.") # nolint
   } else if(res$status_code == 500) {
-    stop(paste0("Qualtrics API reports an internal server (500) error. Please contact Qualtrics Support (https://www.qualtrics.com/contact/) and provide the instanceId and errorCode below.", "\n",
+    stop(paste0("Qualtrics API reports an internal server (500) error. Please contact Qualtrics Support (https://www.qualtrics.com/contact/) and provide the instanceId and errorCode below.", "\n", # nolint
                    "\n",
-                   "instanceId:", " ", httr::content(res)$meta$error$instanceId, "\n",
-                   "errorCode: ", httr::content(res)$meta$error$errorCode))
+                   "instanceId:", " ",
+                httr::content(res)$meta$error$instanceId,
+                "\n",
+                   "errorCode: ",
+                httr::content(res)$meta$error$errorCode))
     return(list(
       "content" = httr::content(res),
       "OK"= FALSE
     ))
   } else if(res$status_code == 503) {
-    stop(paste0("Qualtrics API reports a temporary internal server (500) error. Please contact Qualtrics Support (https://www.qualtrics.com/contact/) with the instanceId and errorCode below or retry your query.", "\n",
+    stop(paste0("Qualtrics API reports a temporary internal server (500) error. Please contact Qualtrics Support (https://www.qualtrics.com/contact/) with the instanceId and errorCode below or retry your query.", "\n", # nolint
                    "\n",
-                   "instanceId:", " ", httr::content(res)$meta$error$instanceId, "\n",
+                   "instanceId:", " ", httr::content(res)$meta$error$instanceId,
+                "\n",
                    "errorCode: ", httr::content(res)$meta$error$errorCode))
     return(list(
       "content" = httr::content(res),
@@ -88,7 +92,7 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
     )
     )
   } else if(res$status_code == 413) {
-    stop("The request body was too large. This can also happen in cases where a multipart/form-data request is malformed.")
+    stop("The request body was too large. This can also happen in cases where a multipart/form-data request is malformed.") # nolint
   } else if(res$status_code == 429) {
     stop("You have reached the concurrent request limit.")
   }
@@ -153,29 +157,41 @@ checkParams <- function(...) {
 
   # Check if params are of the right type
   if("startDate" %in% names(args)) {
-    if(!is.null(args$startDate)) assert_startDate_string(args$startDate)
+    if(!is.null(args$startDate)) {
+      assert_startDate_string(args$startDate)
+    }
   }
   if("endDate" %in% names(args)) {
     if(!is.null(args$endDate)) assert_endDate_string(args$endDate)
   }
   if("lastResponseId" %in% names(args)) {
-    if(!is.null(args$lastResponseId)) assert_lastResponseId_string(args$lastResponseId)
+    if(!is.null(args$lastResponseId)) {
+      assert_lastResponseId_string(args$lastResponseId)
+    }
   }
   # Check if save_dir exists
   if("save_dir" %in% names(args)) {
-    if(!is.null(args$save_dir)) assert_saveDir_exists(args$save_dir)
+    if(!is.null(args$save_dir)) {
+      assert_saveDir_exists(args$save_dir)
+    }
   }
   # Check if seenUnansweredRecode is NULL or else a string
   if("seenUnansweredRecode" %in% names(args)) {
-    if(!is.null(args$seenUnansweredRecode)) assert_seenUnansweredRecode_string(args$seenUnansweredRecode)
+    if(!is.null(args$seenUnansweredRecode)) {
+      assert_seenUnansweredRecode_string(args$seenUnansweredRecode)
+    }
   }
   # Check if limit > 0
   if("limit" %in% names(args)) {
-    if(!is.null(args$limit)) assert_limit_abovezero(args$limit)
+    if(!is.null(args$limit)) {
+      assert_limit_abovezero(args$limit)
+    }
   }
   # Check if includedQuestionIds is a string
   if("includedQuestionIds" %in% names(args)) {
-    if(!is.null(args$includedQuestionIds)) assert_includedQuestionIds_string(args$includedQuestionIds)
+    if(!is.null(args$includedQuestionIds)) {
+      assert_includedQuestionIds_string(args$includedQuestionIds)
+    }
   }
 }
 
@@ -192,7 +208,8 @@ appendRootUrl <- function(root_url, type = c("responseexports", 'surveys')) {
   type <- match.arg(type)
   # Create root url
   root_url <- paste0(root_url,
-                     ifelse(substr(root_url, nchar(root_url), nchar(root_url)) == "/",
+                     ifelse(substr(root_url, nchar(root_url),
+                                   nchar(root_url)) == "/",
                             paste0("API/v3/", type,"/"),
                             paste0("/API/v3/", type,"/")))
   # Return
@@ -370,7 +387,9 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
   ty <- qualtRicsResponseCodes(f, raw=TRUE)
   # To zip file
   tf <- paste0(tempdir(),
-               ifelse(substr(tempdir(), nchar(tempdir()), nchar(tempdir())) == "/",
+               ifelse(substr(tempdir(),
+                             nchar(tempdir()),
+                             nchar(tempdir())) == "/",
                       "temp.zip",
                       "/temp.zip"))
   # Write to temporary file
@@ -379,7 +398,9 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
   u <- tryCatch({
     utils::unzip(tf, exdir = tempdir())
   }, error = function(e) {
-    stop(paste0("Error extracting ", "csv", " from zip file. Please re-run your query."))
+    stop(paste0("Error extracting ",
+                "csv",
+                " from zip file. Please re-run your query."))
   })
   # Remove zipfile
   p <- file.remove(tf)
@@ -455,9 +476,11 @@ inferDataTypes <- function(data,
 # Idea: add ORDER = TRUE/FALSE (if user wants factors to be ordered). Add # REVERSE = TRUE/FALSE if user wants the factor levels to be reversed
 wrapper_mc <- function(data, col_name, survey_meta) {
   # Get question data from metadata
-  meta <- survey_meta[vapply(survey_meta, function(x) x$questionName == col_name, TRUE)]
+  meta <- survey_meta[vapply(survey_meta,
+                             function(x) x$questionName == col_name, TRUE)]
   # Level names
-  ln <- vapply(meta[[1]]$choices, function(x) x$choiceText, "character", USE.NAMES = FALSE)
+  ln <- vapply(meta[[1]]$choices,
+               function(x) x$choiceText, "character", USE.NAMES = FALSE)
   # Convert
   data %>%
     mutate(!!col_name := readr::parse_factor(data %>% select(!!col_name) %>% pull(),

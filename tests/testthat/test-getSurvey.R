@@ -1,4 +1,4 @@
-context("Get a survey from qualtRics and pull it into R using the getSurvey() function")
+context("Get a survey from qualtRics and pull it into R using the getSurvey() function") # nolint
 
 # Test - use mock API from httptest package
 with_mock_api({

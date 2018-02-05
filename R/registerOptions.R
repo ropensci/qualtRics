@@ -69,14 +69,20 @@ registerOptions <- function(verbose=TRUE,
   # Store root_url/api_token. Else give NA as value
   root_url <- ifelse("root_url" %in% names(args), args$root_url, NA)
   api_token <- ifelse("api_token" %in% names(args), args$api_token, NA)
-  # If environment variables are already set and user just wants to change verbose argument
-  if(Sys.getenv("QUALTRICS_ROOT_URL") != "" & Sys.getenv("QUALTRICS_API_KEY") != "") {
+  # If environment variables are already set and user just wants to
+  # change verbose argument
+  if(Sys.getenv("QUALTRICS_ROOT_URL") != "" & Sys.getenv("QUALTRICS_API_KEY") != "") { # nolint
     # Check
-    assertthat::assert_that(assertthat::is.flag(verbose), msg=paste0("'verbose' must be either TRUE or FALSE."))
-    assertthat::assert_that(assertthat::is.flag(convertVariables), msg=paste0("'convertvariables' must be either TRUE or FALSE."))
-    assertthat::assert_that(assertthat::is.flag(useLabels), msg=paste0("'uselabels' must be either TRUE or FALSE."))
-    assertthat::assert_that(assertthat::is.flag(useLabels), msg=paste0("'uselabels' must be either TRUE or FALSE."))
-    assertthat::assert_that(assertthat::is.flag(dateWarning), msg=paste0("'dateWarning' must be either TRUE or FALSE."))
+    assertthat::assert_that(assertthat::is.flag(verbose),
+                            msg=paste0("'verbose' must be either TRUE or FALSE.")) # nolint
+    assertthat::assert_that(assertthat::is.flag(convertVariables),
+                            msg=paste0("'convertvariables' must be either TRUE or FALSE.")) # nolint
+    assertthat::assert_that(assertthat::is.flag(useLabels),
+                            msg=paste0("'uselabels' must be either TRUE or FALSE.")) # nolint
+    assertthat::assert_that(assertthat::is.flag(useLabels),
+                            msg=paste0("'uselabels' must be either TRUE or FALSE.")) # nolint
+    assertthat::assert_that(assertthat::is.flag(dateWarning),
+                            msg=paste0("'dateWarning' must be either TRUE or FALSE.")) # nolint
     # If user just wants to pass options, do:
     options(
       "QUALTRICS_VERBOSE" = verbose,
@@ -85,7 +91,8 @@ registerOptions <- function(verbose=TRUE,
       "QUALTRICS_USELOCALTIME" = useLocalTime
     )
     # Set warning
-    invisible(ifelse(dateWarning == FALSE, Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN"=TRUE),
+    invisible(ifelse(dateWarning == FALSE,
+                     Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN"=TRUE),
                      TRUE))
     # Set root url and api token if not NA
     if(!is.na(root_url)) Sys.setenv("QUALTRICS_ROOT_URL" = root_url)
@@ -93,57 +100,58 @@ registerOptions <- function(verbose=TRUE,
     # Quietly quit
     return(invisible(NULL))
   }
-  # If API token and root url are NA, then look for .qualtRics.yml in the current directory
+  # If API token and root url are NA, then look for .qualtRics.yml
+  #in the current directory
   if(is.na(api_token) & is.na(root_url)) {
     ex <- file.exists(".qualtRics.yml")
     # Throw error if file does not exist
-    assertthat::assert_that(ex == TRUE, msg = "No .qualtRics.yml configuration file found in working directory. Either set your api token and root url using the 'registerOptions' function or create a configuration file. Execute 'qualtRicsConfigFile()' to view an example of a configuration file.")
+    assertthat::assert_that(ex == TRUE, msg = "No .qualtRics.yml configuration file found in working directory. Either set your api token and root url using the 'registerOptions' function or create a configuration file. Execute 'qualtRicsConfigFile()' to view an example of a configuration file.") # nolint
     # Load file
     cred <- yaml::yaml.load_file(".qualtRics.yml")
     # Assert that names are "api_token" and "root_url"
-    assertthat::assert_that(all(c("api_token", "root_url") %in% names(cred)), msg="Either the 'api_token' or 'root_url' arguments are missing in your .qualtRics.yml configuration file. Execute 'qualtRicsConfigFile()' to view an example of the configuration file. Execute 'file.edit('.qualtRics.yml')' to edit your configuration file.")
+    assertthat::assert_that(all(c("api_token", "root_url") %in% names(cred)), msg="Either the 'api_token' or 'root_url' arguments are missing in your .qualtRics.yml configuration file. Execute 'qualtRicsConfigFile()' to view an example of the configuration file. Execute 'file.edit('.qualtRics.yml')' to edit your configuration file.") # nolint
     # If verbose, print message
-    if(verbose) message(paste0("Found a .qualtRics.yml configuration file in ", getwd(), ". Using these credentials."))
+    if(verbose) message(paste0("Found a .qualtRics.yml configuration file in ", getwd(), ". Using these credentials.")) # nolint
     # Set vars
     api_token <- cred$api_token
     root_url <- cred$root_url
     # Set optional vars
     if("verbose" %in% names(cred)) {
       verbose <- cred$verbose
-      assertthat::assert_that(assertthat::is.flag(verbose), msg=paste0("'verbose' must be either TRUE or FALSE but is ", as.character(verbose), " in your config file."))
+      assertthat::assert_that(assertthat::is.flag(verbose), msg=paste0("'verbose' must be either TRUE or FALSE but is ", as.character(verbose), " in your config file.")) # nolint
     }
     # If 'convertStandardColumns' is found in credentials then emit a warning
-    if('convertstandardcolumns' %in% names(cred) & !'convertvariables' %in% names(cred)) {
-      message("'convertstandardcolumns' has been deprecated and will be ignored. Please replace it by 'convertvariables' in your '.qualtRics.yml' file. Visit <URL TO INFORMATION> for more information.")
+    if('convertstandardcolumns' %in% names(cred) & !'convertvariables' %in% names(cred)) { # nolint
+      message("'convertstandardcolumns' has been deprecated and will be ignored. Please replace it by 'convertvariables' in your '.qualtRics.yml' file. Visit <URL TO INFORMATION> for more information.") # nolint
       convertVariables <- TRUE
-    } else if(all(c('convertstandardcolumns', 'convertvariables') %in% names(cred))) {
-        message("'convertstandardcolumns' has been deprecated and will be ignored. Please remove it from your '.qualtRics.yml' file. Visit <URL TO INFORMATION> for more information.")
+    } else if(all(c('convertstandardcolumns', 'convertvariables') %in% names(cred))) { # nolint
+        message("'convertstandardcolumns' has been deprecated and will be ignored. Please remove it from your '.qualtRics.yml' file. Visit <URL TO INFORMATION> for more information.") # nolint
       convertVariables <- cred$convertvariables
     } else {
       convertVariables <- cred$convertvariables
     }
     # Check
     assertthat::assert_that(assertthat::is.flag(convertVariables),
-                            msg=paste0("'convertvariables' must be either TRUE or FALSE but is ",
+                            msg=paste0("'convertvariables' must be either TRUE or FALSE but is ", # nolint
                                        as.character(convertVariables),
                                        " in your config file."))
     if("uselabels" %in% names(cred)) {
       useLabels <- cred$uselabels
-      assertthat::assert_that(assertthat::is.flag(useLabels), msg=paste0("'uselabels' must be either TRUE or FALSE but is ", as.character(useLabels), " in your config file."))
+      assertthat::assert_that(assertthat::is.flag(useLabels), msg=paste0("'uselabels' must be either TRUE or FALSE but is ", as.character(useLabels), " in your config file.")) # nolint
     }
     if("uselocaltime" %in% names(cred)) {
       useLocalTime <- cred$uselocaltime
-      assertthat::assert_that(assertthat::is.flag(useLocalTime), msg=paste0("'useLocalTime' must be either TRUE or FALSE but is ", as.character(useLocalTime), " in your config file."))
+      assertthat::assert_that(assertthat::is.flag(useLocalTime), msg=paste0("'useLocalTime' must be either TRUE or FALSE but is ", as.character(useLocalTime), " in your config file.")) # nolint
     }
     if("datewarning" %in% names(cred)) {
       dateWarning <- cred$datewarning
-      assertthat::assert_that(assertthat::is.flag(dateWarning), msg=paste0("'dateWarning' must be either TRUE or FALSE but is ", as.character(dateWarning), " in your config file."))
+      assertthat::assert_that(assertthat::is.flag(dateWarning), msg=paste0("'dateWarning' must be either TRUE or FALSE but is ", as.character(dateWarning), " in your config file.")) # nolint
     }
   }
   # Check arguments
   # If either is still NA AND environment is empty, throw error
-  assertthat::assert_that(!is.na(root_url) | Sys.getenv("QUALTRICS_ROOT_URL") != "", msg="'root_url' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.")
-  assertthat::assert_that(!is.na(api_token) | Sys.getenv("QUALTRICS_API_KEY") != "", msg="'api_token' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.")
+  assertthat::assert_that(!is.na(root_url) | Sys.getenv("QUALTRICS_ROOT_URL") != "", msg="'root_url' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.") # nolint
+  assertthat::assert_that(!is.na(api_token) | Sys.getenv("QUALTRICS_API_KEY") != "", msg="'api_token' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.") # nolint
   # Set environment variables
   if(!is.na(api_token)) Sys.setenv("QUALTRICS_API_KEY" = api_token)
   if(!is.na(root_url)) Sys.setenv("QUALTRICS_ROOT_URL" = root_url)
@@ -155,6 +163,7 @@ registerOptions <- function(verbose=TRUE,
     "QUALTRICS_USELOCALTIME" = useLocalTime
   )
   # Set warning
-  invisible(ifelse(dateWarning == FALSE, Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN"=TRUE),
+  invisible(ifelse(dateWarning == FALSE,
+                   Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN"=TRUE),
          TRUE))
 }

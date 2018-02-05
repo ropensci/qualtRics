@@ -54,7 +54,9 @@ getSurveyQuestions <- function(surveyID) {
   quest <- data.frame(qid = names(qi),
                       qnames = vapply(qi, function(x) x$questionName, ""),
                       question = vapply(qi,function(x) x$questionText, ""),
-                      force_resp = vapply(qi, function(x) x$validation$doesForceResponse, TRUE),
+                      force_resp = vapply(qi,
+                                          function(x) x$validation$doesForceResponse, # nolint
+                                          TRUE),
                       stringsAsFactors = FALSE)
 
   # Row names
