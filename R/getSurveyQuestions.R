@@ -58,7 +58,7 @@ getSurveyQuestions <- function(surveyID) {
                       stringsAsFactors = FALSE)
 
   # Row names
-  row.names(quest) <- seq_along(nrow(quest))
+  row.names(quest) <- seq_along(1:nrow(quest))
   # Return
   return(dplyr::as_tibble(quest))
 }
