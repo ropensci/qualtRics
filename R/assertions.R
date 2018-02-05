@@ -15,7 +15,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Test whether API key is stored in environment
-assert_apikey_stored <- function() {
+assert_apikey_stored <- function() { # nolint start
   # Key should be stored by "registerApiKey"
   assertthat::assert_that(Sys.getenv("QUALTRICS_API_KEY") != "",
                           msg = "You need to register your qualtrics API key and root url using the 'registerOptions()' function.")
@@ -87,4 +87,4 @@ assert_options_logical <- function(verbose, convertVariables,
                           msg="'useLocalTime' must be TRUE or FALSE.")
   assertthat::assert_that(assertthat::is.flag(useLabels),
                           msg="'useLabels' must be TRUE or FALSE.")
-}
+} # nolint end
