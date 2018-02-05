@@ -68,7 +68,8 @@ metadata <- function(surveyID,
   opts <- list(...)
   if("questions" %in% names(opts)) {
     # Check that is a vector
-    assertthat::assert_that(is.vector(opts$questions), msg="'questions' argument must be a vector")
+    assertthat::assert_that(is.vector(opts$questions),
+                            msg="'questions' argument must be a vector")
     q_select <- opts$questions
   } else {
     q_select <- NULL
@@ -107,9 +108,9 @@ metadata <- function(surveyID,
   )
   # Questions
   if(!is.null(q_select)) {
-    qnames <- sapply(resp_filt$questions, function(x) {
+    qnames <- vapply(resp_filt$questions, function(x) {
       x$questionName
-    })
+    }, "")
     if(all(q_select %in% qnames)) {
       questions <- resp_filt$questions[which(qnames %in% q_select)]
     } else {
