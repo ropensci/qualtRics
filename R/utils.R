@@ -461,6 +461,6 @@ wrapper_mc <- function(data, col_name, survey_meta) {
   # Convert
   data %>%
     mutate(!!col_name := readr::parse_factor(data %>% select(!!col_name) %>% pull(),
-                                             levels=ln[length(ln):1],
+                                             levels=ln,
                                                        ordered = TRUE))
 }
