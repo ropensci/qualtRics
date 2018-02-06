@@ -1,6 +1,6 @@
 Package: qualtRics
 Type: Package
-Title: Download Qualtrics Survey Data Directly into R
+Title: Download Qualtrics Survey Data
 Version: 3.0
 Author: Jasper Ginn
 Maintainer: Jasper Ginn <jasperginn@gmail.com>
