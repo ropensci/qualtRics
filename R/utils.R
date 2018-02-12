@@ -203,7 +203,7 @@ checkParams <- function(...) {
 #
 # @author: Jasper Ginn
 
-appendRootUrl <- function(root_url, type = c("responseexports", 'surveys')) {
+appendRootUrl <- function(root_url, type = c("responseexports", "surveys", "organizations")) {
   # match
   type <- match.arg(type)
   # Create root url
