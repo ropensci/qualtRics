@@ -1,36 +1,26 @@
-# qualtRics
+---
+title: "qualtRics"
+author: "Jasper Ginn"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{qualtRics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
-[![Build Status](https://travis-ci.org/JasperHG90/qualtRics.svg?branch=master)](https://travis-ci.org/JasperHG90/qualtRics) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/fv9bmqcmty1wwrgu?svg=true)](https://ci.appveyor.com/project/JasperHG90/qualtrics-g2a4u) [![CRAN STATUS](https://www.r-pkg.org/badges/version/qualtRics)](https://cran.r-project.org/web/packages/qualtRics/index.html) [![CRAN LICENSE](https://img.shields.io/cran/l/qualtRics.svg)](https://img.shields.io/cran/l/qualtRics.svg) [![DOWNLOADSPM](https://cranlogs.r-pkg.org/badges/qualtRics)](https://www.r-pkg.org/pkg/qualtRics) [![DOWNLOADSTOTAL](https://cranlogs.r-pkg.org/badges/grand-total/qualtRics)](https://cranlogs.r-pkg.org/badges/grand-total/qualtRics) [![CODECOV](https://codecov.io/gh/JasperHG90/qualtRics/branch/master/graphs/badge.svg)](https://codecov.io/gh/JasperHG90/qualtRics)
-[![DOI](https://zenodo.org/badge/70817337.svg)](https://zenodo.org/badge/latestdoi/70817337)
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
-This project contains an R package to download survey responses from  [Qualtrics](https://www.qualtrics.com/) using the API.  
+This project contains an R package to download surveys from  [Qualtrics](https://www.qualtrics.com/) using the API.  
 
 Note that your institution must support API access and that it must be enabled for your account. Whoever manages your Qualtrics account can help you with this. Please refer to the [Qualtrics documentation](https://api.qualtrics.com/docs/authentication) to find your API token.
 
 I am not affiliated with Qualtrics and they do not offer support for this package.
-
-## Installation
-
-To install this package, execute the following in R:
-
-```r
-install.packages("qualtRics")
-```
-
-Or, if you want to install the latest development version, run:
-
-```r
-install.packages("devtools")
-devtools::install_github("JasperHG90/qualtRics")
-```
-
-## Dependencies
-
-All dependencies will be installed when you install `qualtRics`.
-
-## Updates
-
-Periodically check this repository for updates and execute `devtools::install_github("JasperHG90/qualtRics")` to update.
 
 ## Usage
 
@@ -108,77 +98,17 @@ registerOptions(verbose=FALSE, useLabels=FALSE, root_url="myinstitution.qualtric
 
 Open an existing R project or start a new one. Then, open up an empty text file:
 
-![](https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/config_step1.png)
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics("https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/config_step1.png")
+```
 
 Execute `qualtRicsConfigFile(api_token="<YOUR-API-TOKEN-HERE>", root_url="<YOUR-ROOT-URL-HERE>")` and copy-paste the text between the dashes to the empty text file:
 
-![](https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/config_step2.png)
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics("https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/config_step2.png")
+```
 
 Save the file as `.qualtRics.yml` and execute `registerOptions()` or restart your R session and execute `library(qualtRics)` to load the configuration file.
-
-You can edit your configuration file by executing `file.edit(".qualtRics.yml")` in the R console.
-
-## Automatic conversion of variables
-
-From version 2.5, qualtRics supports the automatic conversion of specific variable types (see table below) since users already specify most information needed for such a conversion when they design their survey. 
-
-For example, using the `metadata()` function, you can pull in metadata about your survey questions:
-
-```r
-# Get metadata for a survey
-md <- metadata(id)
-# Filter for questions
-md.f <- md$questions
-# Pick specific question
-QOI <- md.f$QID172807686
-# View question type
-QOI$questionType
-```
-
-```
-$type
-[1] "MC"
-
-$selector
-[1] "SAVR"
-
-$subSelector
-[1] "TX"
-```
-
-We see that this is a multiple choice question ("MC") with a single answer ("SAVR"). The data supplied also includes the different answers a user can give:
-
-```r
-# Return question description
-lapply(QOI$choices, function(x) x$description)
-```
-
-```
-$`1`
-[1] "Extremely useful"
-
-$`2`
-[1] "Very useful"
-
-$`3`
-[1] "Moderately useful"
-
-$`4`
-[1] "Slightly useful"
-
-$`5`
-[1] "Not useful at all"
-```
-
-This data can be used to turn the variable into a factor automatically.
-
-### Supported types
-
-Currently, the following data types are supported for automatic conversion:
-
-| Type            | Selector      | Abbreviation | Version |
-|-----------------|---------------|--------------|---------|
-| Multiple choice | Single answer | "MC", "SAVR" | 2.5     |
 
 ## Commands
 
@@ -266,40 +196,8 @@ mysurvey <- readSurvey("/users/jasper/desktop/mysurvey.csv")
 
 To avoid special characters (mainly periods) in header names, `readSurvey` uses question labels as the header names. The question belonging to that label is then added using the [sjlabelled](https://CRAN.R-project.org/package=sjlabelled) package. Qualtrics gives names to these labels automatically, but you can easily change them.
 
-![](https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/qualtricsdf.png)
+```{r, echo=FALSE, out.width="80%"}
+knitr::include_graphics("https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/qualtricsdf.png")
+```
 
-## Other information
-
-For specific information about the Qualtrics API, you can refer to the [official documentation](https://api.qualtrics.com/docs/overview).
-
-### Issues
-
-Should you encounter any bugs or issues, please report them [here](https://github.com/JasperHG90/qualtRics/issues)
-
-### Requests
-
-If you have a request (like adding a new argument), please leave it as an issue  [here](https://github.com/JasperHG90/qualtRics/issues)
-
-### Contributing
-
-Contributions are welcome from anyone subject to the following rules:
-
-- Abide by the [code of conduct](CONDUCT.md).
-- Follow the style guide from Hadley Wickham's [R Packages](http://r-pkgs.had.co.nz)
-- All contributions must be consistent with the package license (GPL-3)
-- Submit contributions as a pull request. Clearly state what the changes are and try to keep the number of changes per pull request as low as possible.
-- If you make big changes, add your name to the 'Author' field.
-
-### Related work
-
-- [Jason Bryer](https://github.com/jbryer/qualtrics) wrote an R package to work with the previous version of the Qualtrics API
-- [QualtricsTools](https://github.com/emmamorgan-tufts/QualtricsTools/) creates automatic reports in shiny.
-- [qsurvey](https://github.com/jamesdunham/qsurvey) by James Dunham focuses on testing and review of surveys before fielding, and analysis of responses afterward.
-
-### News and changes
-
-View news about qualtRics [here](https://github.com/JasperHG90/qualtRics/blob/master/news.md)
-
-### Thanks!
-
-Thanks to everyone who lets me know about issues, bugs etc. I appreciate your help a lot. Special thanks to those who add code! h/t @phoebewong, @samuelkaminsky, @eknud, @strengejacke, Adrian Brugger and Stefan Borer. 
+You can edit your configuration file by executing `file.edit(".qualtRics.yml")` in the R console. 

@@ -11,3 +11,9 @@ README\.md$
 ^appveyor\.yml$
 ^\.gitattributes$
 Changelog\.md$
+^img
+^CONDUCT\.md$
+^news\.md$
+^paper\.md$
+^paper\.bib$
+^dev

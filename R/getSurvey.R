@@ -104,8 +104,8 @@ getSurvey <- function(surveyID,
   if(!force_request) {
     if(paste0(surveyID, ".rds") %in% list.files(tempdir())) {
       data <- readRDS(paste0(tempdir(), "/", surveyID, ".rds"))
-      if(verbose) message(paste0("Found an earlier download for survey with id ", surveyID,
-                                 ". Loading this file. Set 'force_request' to TRUE if you want to override this."))
+      if(verbose) message(paste0("Found an earlier download for survey with id ", surveyID, # nolint
+                                 ". Loading this file. Set 'force_request' to TRUE if you want to override this.")) # nolint
       return(data)
     }
   }
@@ -143,7 +143,8 @@ getSurvey <- function(surveyID,
   if(convertVariables) {
     data <- inferDataTypes(data, surveyID)
   }
-  # Save survey as RDS file in temp folder so that it can be easily retrieved this session.
+  # Save survey as RDS file in temp folder so that it can be easily
+  # retrieved this session.
   saveRDS(data, paste0(tempdir(), "/", surveyID, ".rds"))
   # Remove tmpfiles
   if(!is.null(save_dir)) {

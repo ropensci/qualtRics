@@ -53,12 +53,13 @@ readSurvey <- function(file_name,
                              skip = skipNr))
   # Need contingency when 0 rows
   assertthat::assert_that(nrow(rawdata) > 0,
-                          msg="The survey you are trying to import has no responses.")
+                          msg="The survey you are trying to import has no responses.") # nolint
   # Load headers
   header <- suppressMessages(readr::read_csv(file = file_name,
                             col_names = TRUE,
                             n_max = 1))
-  # make them data.frame's, else the factor conversion in `inferDataTypes` crashes
+  # make them data.frame's, else the factor conversion
+  # in `inferDataTypes` crashes
   #rawdata <- as.data.frame(rawdata)
   #header <- as.data.frame(header)
   # Add names
@@ -77,8 +78,8 @@ readSurvey <- function(file_name,
   # ----------------------------------------------------
   if(stripHTML) {
     # weird regex to strip HTML tags, leaving only content
-    # https://www.r-bloggers.com/htmltotext-extracting-text-from-html-via-xpath/
-    pattern <- "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>"
+    # https://www.r-bloggers.com/htmltotext-extracting-text-from-html-via-xpath/ # nolint
+    pattern <- "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>" # nolint
     secondrow <- gsub(pattern, "\\4", secondrow)
   }
   # Scale Question with subquestion:

@@ -38,7 +38,7 @@ qualtRicsConfigFile <- function(api_token = NULL, root_url=NULL, verbose=TRUE,
                                 useLocalTime=FALSE, dateWarning=TRUE) {
 
   msg <- paste0(
-    "Copy-paste the lines between the dashes into a new plain text file, replace the values for the api_token and root_url if they are not yet filled out. and save it in your working directory as '.qualtRics.yml'. Execute '?qualtRics::qualtRicsConfigFile' to view an explanation of the additional arguments. Visit https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file for more information.", "\n\n",
+    "Copy-paste the lines between the dashes into a new plain text file, replace the values for the api_token and root_url if they are not yet filled out. and save it in your working directory as '.qualtRics.yml'. Execute '?qualtRics::qualtRicsConfigFile' to view an explanation of the additional arguments. Visit https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file for more information.", "\n\n",# nolint
     "--------------","\n",
     'api_token: ', ifelse(is.null(api_token), '<YOUR-API-TOKEN-HERE>',
                                  paste0(api_token)), "\n",

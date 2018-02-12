@@ -18,6 +18,7 @@
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs} for documentation on the Qualtrics API.
 #' @author Jasper Ginn
+#' @importFrom dplyr bind_rows
 #' @export
 #' @examples
 #' \dontrun{
@@ -60,5 +61,6 @@ getSurveys <- function() {
     master <- append(master, resp$result$elements)
   }
   # Bind to one large data frame & return
-  return(do.call(rbind.data.frame, master))
+  d <- bind_rows(master)
+  return(d)
 }

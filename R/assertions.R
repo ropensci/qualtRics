@@ -15,7 +15,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Test whether API key is stored in environment
-assert_apikey_stored <- function() {
+assert_apikey_stored <- function() { # nolint start
   # Key should be stored by "registerApiKey"
   assertthat::assert_that(Sys.getenv("QUALTRICS_API_KEY") != "",
                           msg = "You need to register your qualtrics API key and root url using the 'registerOptions()' function.")
@@ -27,12 +27,15 @@ assert_rootUrl_stored <- function() {
                           msg = "You need to register your qualtrics API key and root url using the 'registerOptions()' function.")
   # Test if root url ends with '.qualtrics.com'
   assertthat::assert_that(endsWith(Sys.getenv("QUALTRICS_ROOT_URL"), '.qualtrics.com'),
-                          msg=paste0("The qualtrics root url must end with '.qualtrics.com'. Your root url looks like this: '", Sys.getenv("QUALTRICS_ROOT_URL"), "'. Please visit https://api.qualtrics.com/docs/root-url for instructions about the qualtrics root url."))
+                          msg=paste0("The qualtrics root url must end with '.qualtrics.com'. Your root url looks like this: '",
+                                     Sys.getenv("QUALTRICS_ROOT_URL"),
+                                     "'. Please visit https://api.qualtrics.com/docs/root-url for instructions about the qualtrics root url."))
 }
 
 # Check if save directory exists
 assert_saveDir_exists <- function(save_dir) {
-  assertthat::assert_that(ifelse((!file.info(save_dir)$isdir | is.na(file.info(save_dir)$isdir) == TRUE), FALSE, TRUE),
+  assertthat::assert_that(ifelse((!file.info(save_dir)$isdir | is.na(file.info(save_dir)$isdir) == TRUE),
+                                 FALSE, TRUE),
                           msg = paste0("The directory ", save_dir, " does not exist."))
 }
 
@@ -68,7 +71,9 @@ assert_limit_abovezero <- function(limit) {
 # Check if survey file exists
 assert_surveyFile_exists <- function(file_name) {
   assertthat::assert_that(file.exists(file_name),
-                          msg=paste0("File ", file_name, " does not exist. Please check if you passed the right file path."))
+                          msg=paste0("File ",
+                                     file_name,
+                                     " does not exist. Please check if you passed the right file path."))
 }
 
 # Check if these arguments are logical
@@ -82,4 +87,4 @@ assert_options_logical <- function(verbose, convertVariables,
                           msg="'useLocalTime' must be TRUE or FALSE.")
   assertthat::assert_that(assertthat::is.flag(useLabels),
                           msg="'useLabels' must be TRUE or FALSE.")
-}
+} # nolint end

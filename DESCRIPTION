@@ -1,7 +1,7 @@
 Package: qualtRics
 Type: Package
-Title: Download Qualtrics Survey Data Directly into R
-Version: 2.2
+Title: Download Qualtrics Survey Data
+Version: 3.0
 Author: Jasper Ginn
 Maintainer: Jasper Ginn <jasperginn@gmail.com>
 Description: Qualtrics <https://www.qualtrics.com/about/> 
@@ -19,12 +19,11 @@ Imports:
     jsonlite,
     assertthat,
     sjlabelled,
-    lubridate,
     yaml,
     dplyr,
     rlang
 URL:
-    https://github.com/JasperHG90/qualtRics
+    https://jasperhg90.github.io/qualtRics/
 BugReports:
     https://github.com/JasperHG90/qualtRics/issues
 License: GPL-3 | file LICENSE
@@ -34,5 +33,5 @@ RoxygenNote: 6.0.1
 Suggests: 
     knitr,
     rmarkdown,
-    testthat
+    httptest
 VignetteBuilder: knitr

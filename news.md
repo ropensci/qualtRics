@@ -1,18 +1,33 @@
-**[development branch]**
+qualtRics [master branch] 
+=========================
 
-- \*
+- Branch is even with v3.0
 
-**[master branch]**
+qualtRics 3.0 (2018-02-03)
+=========================
 
-- convertstandardcolumns deprecated since readr::read_csv does this automagically. 
-- Added .onUnload and .onDetach conditions so that environment variables (root url and API key) are removed when package is unloaded. This prevents issues if user decides to load the package again.
-- Cleaned up code
+### NEW FEATURES
+
 - Added 'metadata' function that allows the user to retrieve detailed metadata about survey.
-- Tinkering with option to convert specific question types to R counterparts
+- User can now convert specific question types automatically. See [this page](https://github.com/JasperHG90/qualtRics#automatic-conversion-of-variables) for more information.
+
+### MINOR IMPROVEMENTS
+
+- Using package [httptest](https://cran.r-project.org/web/packages/httptest/index.html) for mock API requests so that API calls can be tested. 
+- `getSurveys()` and `getSurveyQuestions()` now return a [tibble](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html)
+
+### BUG FIXES
+
+- Added .onDetach conditions so that environment variables (root url and API key) are removed when package is unloaded. This prevents issues if user decides to load the package again.
 - We found that surveys that use new lines in the questions break the readSurvey function.
 The problem is, that read.csv (and read.table as well as the readr library implementation) ignore the quote = "\"" option when a skip = 2 or skip = 3 parameter is set. As a result the read function slices off the questions row somewhere in the middle when first importing just the table body using skip.
 
-**[v2.2]**
+### DEPRECATED AND DEFUNCT
+
+- convertstandardcolumns deprecated since readr::read_csv does this automagically. It has been changed in config file to 'convertvariables'. 
+
+qualtRics 2.2 (2017-10-27)
+=========================
 
 - `readSurvey()` now takes an additional argument, fileEncoding, so that user can import surveys using a specific encoding. 'fileEncoding' can also be passed as optional argument in `getSurvey()`. Added new parameter that reads legacy data format.
 - Better argument checking.
@@ -20,7 +35,8 @@ The problem is, that read.csv (and read.table as well as the readr library imple
 - Fixes several bugs and stability issues
 - More informative error messages
 
-**[v2.0]**
+qualtRics 2.0 (2017-06-16)
+=========================
 
 - `registerOptions()` now takes more arguments. User can now set global options. See `qualtRicsConfigFile()` for more information. Same options are now passed through `...` in specific functions.
 - Added appveyor testing.
@@ -39,7 +55,8 @@ The problem is, that read.csv (and read.table as well as the readr library imple
   - **useLocalTime:** Boolean. Use local timezone to determine response date values. 
 - `getSurveys()` now retrieves > 100 results.
 
-**[v1.0]**
+qualtRics 1.0 (2016-10-13)
+=========================
 
 - Added a new function `readSurvey()`. This function is used in the `getSurvey()` function but will also work with surveys downloaded manually from Qualtrics. Standard columns (completed survey/startDate/endDate etc.) are now converted to their proper data types. HT Adrian Brugger & Stefan Borer.
 - User can only download surveys in CSV format, no longer in XML or JSON. 
@@ -50,20 +67,23 @@ The problem is, that read.csv (and read.table as well as the readr library imple
   * *EndDate*: Only download responses before this date.
 - Survey downloads should be faster now; `getSurvey()` no longer sleeps when checking download status. Also added progress bar.
 
-**[v0.03]**
+qualtRics 0.03 [beta] 
+=========================
 
 - User can choose to save results directly in a folder through 'save_dir' parameter in `getSurvey()`
 - Results can now be requested in .csv, .json or .xml format. The packages `jsonlite` and `XML` are added to 'Suggests' in DESCRIPTION.
 - `constructHeader()` is now deprecated and should no longer be used. Instead, users need to call `registerApiKey()`.
 - Added a new function `registerApiKey()` which saves the user's API key and header information in the `tempdir()` environment. 
 
-**[v0.02]**
+qualtRics 0.02 [beta] 
+=========================
 
 - Renamed 'base url' to 'root url' such that it corresponds to Qualtrics documentation.
 - The root url no longer requires API-specific endpoints. So e.g. 'https://leidenuniv.eu.qualtrics.com' now works for all functions. The API-specific endpoints are added in the functions itself.
 - Institution-specific root url is now required by `getSurvey()`
 
-**[v0.01]**
+qualtRics 0.01 [beta] 
+=========================
 
 - Added first three functions (`constructHeader`, `getSurvey`, `getSurveyIDs`)
 - base_url parameter is now uniform across functions. Parameter is called 'root url' to bring it in line with Qualtrics documentation.
