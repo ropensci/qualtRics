@@ -268,6 +268,8 @@ To avoid special characters (mainly periods) in header names, `readSurvey` uses 
 
 ![](https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/qualtricsdf.png)
 
+In order to avoid problems when importing the data, **do not use newlines** in question labels and descriptions.
+
 ## Other information
 
 For specific information about the Qualtrics API, you can refer to the [official documentation](https://api.qualtrics.com/docs/overview).
