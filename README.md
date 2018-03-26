@@ -116,15 +116,15 @@ registerOptions(verbose=FALSE, useLabels=FALSE, root_url="myinstitution.qualtric
 
 #### Setting up a config file
 
-Open an existing R project or start a new one. Then, open up an empty text file:
+1. Open an existing R project or start a new one. Then, open up an empty text file:
 
 ![](https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/config_step1.png)
 
-Execute `qualtRicsConfigFile(api_token="<YOUR-API-TOKEN-HERE>", root_url="<YOUR-ROOT-URL-HERE>")` and copy-paste the text between the dashes to the empty text file:
+2. Execute `qualtRicsConfigFile(api_token="<YOUR-API-TOKEN-HERE>", root_url="<YOUR-ROOT-URL-HERE>")` and copy-paste the text between the dashes to the empty text file:
 
 ![](https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/config_step2.png)
 
-Save the file as `.qualtRics.yml` and execute `registerOptions()` or restart your R session and execute `library(qualtRics)` to load the configuration file.
+3. Save the file as `.qualtRics.yml` and execute `registerOptions()` or restart your R session and execute `library(qualtRics)` to load the configuration file.
 
 You can edit your configuration file by executing `file.edit(".qualtRics.yml")` in the R console.
 

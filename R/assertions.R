@@ -18,18 +18,18 @@
 assert_apikey_stored <- function() { # nolint start
   # Key should be stored by "registerApiKey"
   assertthat::assert_that(Sys.getenv("QUALTRICS_API_KEY") != "",
-                          msg = "You need to register your qualtrics API key and root url using the 'registerOptions()' function.")
+                          msg = "You need to register your qualtrics API key and root url using the\n'registerOptions()' function.")
 }
 
 # Check if root_url is stored
 assert_rootUrl_stored <- function() {
   assertthat::assert_that(Sys.getenv("QUALTRICS_ROOT_URL") != "",
-                          msg = "You need to register your qualtrics API key and root url using the 'registerOptions()' function.")
+                          msg = "You need to register your qualtrics API key and root url using the\n'registerOptions()' function.")
   # Test if root url ends with '.qualtrics.com'
   assertthat::assert_that(endsWith(Sys.getenv("QUALTRICS_ROOT_URL"), '.qualtrics.com'),
                           msg=paste0("The qualtrics root url must end with '.qualtrics.com'. Your root url looks like this: '",
                                      Sys.getenv("QUALTRICS_ROOT_URL"),
-                                     "'. Please visit https://api.qualtrics.com/docs/root-url for instructions about the qualtrics root url."))
+                                     "'.\nPlease visit https://api.qualtrics.com/docs/root-url for instructions about the qualtrics root url."))
 }
 
 # Check if save directory exists

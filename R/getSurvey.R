@@ -105,7 +105,7 @@ getSurvey <- function(surveyID,
     if(paste0(surveyID, ".rds") %in% list.files(tempdir())) {
       data <- readRDS(paste0(tempdir(), "/", surveyID, ".rds"))
       if(verbose) message(paste0("Found an earlier download for survey with id ", surveyID, # nolint
-                                 ". Loading this file. Set 'force_request' to TRUE if you want to override this.")) # nolint
+                                 ". Loading this file.\nSet 'force_request' to TRUE if you want to override this.")) # nolint
       return(data)
     }
   }

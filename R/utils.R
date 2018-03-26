@@ -63,13 +63,13 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
     )
     )
   } else if(res$status_code == 401) {
-    stop("Qualtrics API raised an authentication (401) error - you may not have the required authorization. Please check your API key and root url.") # nolint
+    stop("Qualtrics API raised an authentication (401) error - you may not have the\nrequired authorization. Please check your API key and root url.") # nolint
   } else if(res$status_code == 400) {
-    stop("Qualtrics API raised a bad request (400) error - Please report this on https://github.com/JasperHG90/qualtRics/issues") # nolint
+    stop("Qualtrics API raised a bad request (400) error - Please report this on\nhttps://github.com/JasperHG90/qualtRics/issues") # nolint
   } else if(res$status_code == 404) {
-    stop("Qualtrics API complains that the requested resource cannot be found (404 error). Please check if you are using the correct survey ID.") # nolint
+    stop("Qualtrics API complains that the requested resource cannot be found (404 error).\nPlease check if you are using the correct survey ID.") # nolint
   } else if(res$status_code == 500) {
-    stop(paste0("Qualtrics API reports an internal server (500) error. Please contact Qualtrics Support (https://www.qualtrics.com/contact/) and provide the instanceId and errorCode below.", "\n", # nolint
+    stop(paste0("Qualtrics API reports an internal server (500) error. Please contact\nQualtrics Support (https://www.qualtrics.com/contact/) and provide the instanceId and errorCode below.", "\n", # nolint
                    "\n",
                    "instanceId:", " ",
                 httr::content(res)$meta$error$instanceId,
@@ -81,7 +81,7 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
       "OK"= FALSE
     ))
   } else if(res$status_code == 503) {
-    stop(paste0("Qualtrics API reports a temporary internal server (500) error. Please contact Qualtrics Support (https://www.qualtrics.com/contact/) with the instanceId and errorCode below or retry your query.", "\n", # nolint
+    stop(paste0("Qualtrics API reports a temporary internal server (500) error. Please\ncontact Qualtrics Support (https://www.qualtrics.com/contact/) with the instanceId and\nerrorCode below or retry your query.", "\n", # nolint
                    "\n",
                    "instanceId:", " ", httr::content(res)$meta$error$instanceId,
                 "\n",
@@ -92,7 +92,7 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
     )
     )
   } else if(res$status_code == 413) {
-    stop("The request body was too large. This can also happen in cases where a multipart/form-data request is malformed.") # nolint
+    stop("The request body was too large. This can also happen in cases where a\nmultipart/form-data request is malformed.") # nolint
   } else if(res$status_code == 429) {
     stop("You have reached the concurrent request limit.")
   }
@@ -465,7 +465,7 @@ inferDataTypes <- function(data,
 
   # Check if warning given
   if(Sys.getenv("QUALTRICS_WARNING_DATE_GIVEN") == "") {
-    warning("The 'StartDate', 'EndDate' and 'RecordedDate' variables were converted without passing a specific timezone. If you like to set these timestamps to your own timezone, please visit https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/ (under 'User Settings'). See https://api.qualtrics.com/docs/dates-and-times for more information about how the Qualtrics API handles dates and times.")
+    warning("The 'StartDate', 'EndDate' and 'RecordedDate' variables were converted without passing\na specific timezone. If you like to set these timestamps to your own timezone, please\nvisit https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/\n(under 'User Settings'). See https://api.qualtrics.com/docs/dates-and-times for more\ninformation about how the Qualtrics API handles dates and times.")
     Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN"=TRUE)
   }
   # Return data
