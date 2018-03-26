@@ -145,7 +145,6 @@ QOI <- md.f$QID172807686
 # View question type
 QOI$questionType
 ```
-&nbsp;
 
 ```
 $type
@@ -157,6 +156,7 @@ $selector
 $subSelector
 [1] "TX"
 ```
+&nbsp;
 
 We see that this is a multiple choice question ("MC") with a single answer ("SAVR"). The data supplied also includes the different answers a user can give:
 
@@ -165,7 +165,6 @@ We see that this is a multiple choice question ("MC") with a single answer ("SAV
 # Return question description
 lapply(QOI$choices, function(x) x$description)
 ```
-&nbsp;
 
 ```
 $`1`
@@ -183,6 +182,7 @@ $`4`
 $`5`
 [1] "Not useful at all"
 ```
+&nbsp;
 
 This data can be used to turn the variable into a factor automatically.
 
