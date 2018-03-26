@@ -1,9 +1,3 @@
----
-output:
-  html_document:
-    css: "<style> p {line-height: 2em;} </style>"
----
-
 # qualtRics
 
 [![Build Status](https://travis-ci.org/JasperHG90/qualtRics.svg?branch=master)](https://travis-ci.org/JasperHG90/qualtRics) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/fv9bmqcmty1wwrgu?svg=true)](https://ci.appveyor.com/project/JasperHG90/qualtrics-g2a4u) [![CRAN STATUS](https://www.r-pkg.org/badges/version/qualtRics)](https://cran.r-project.org/web/packages/qualtRics/index.html) [![CRAN LICENSE](https://img.shields.io/cran/l/qualtRics.svg)](https://img.shields.io/cran/l/qualtRics.svg) [![DOWNLOADSPM](https://cranlogs.r-pkg.org/badges/qualtRics)](https://www.r-pkg.org/pkg/qualtRics) [![DOWNLOADSTOTAL](https://cranlogs.r-pkg.org/badges/grand-total/qualtRics)](https://cranlogs.r-pkg.org/badges/grand-total/qualtRics) [![CODECOV](https://codecov.io/gh/JasperHG90/qualtRics/branch/master/graphs/badge.svg)](https://codecov.io/gh/JasperHG90/qualtRics)
@@ -59,9 +53,11 @@ Note that you can only export surveys that you own, or to which you have been gi
 
 There are two ways to register your Qualtrics credentials (your [API key](https://api.qualtrics.com/docs/finding-qualtrics-ids) and [institution-specific root url](https://api.qualtrics.com/docs/root-url)) and other options in R. As in earlier versions of the qualtRics package, you can register your credentials at the start of each R session:
 
+
 ```r
 registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
 ```
+
 
 You can set some global options via the `registerOptions()` function:
 
