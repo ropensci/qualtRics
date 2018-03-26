@@ -105,11 +105,11 @@ registerOptions <- function(verbose=TRUE,
   if(is.na(api_token) & is.na(root_url)) {
     ex <- file.exists(".qualtRics.yml")
     # Throw error if file does not exist
-    assertthat::assert_that(ex == TRUE, msg = "No .qualtRics.yml configuration file found in working directory. Either set your api token and root url using the 'registerOptions' function or create a configuration file. Execute 'qualtRicsConfigFile()' to view an example of a configuration file.") # nolint
+    assertthat::assert_that(ex == TRUE, msg = "No .qualtRics.yml configuration file found in working directory. Either set your \napi token and root url using the 'registerOptions' function or create a configuration file.\nExecute 'qualtRicsConfigFile()' to view an example of a configuration file.") # nolint
     # Load file
     cred <- yaml::yaml.load_file(".qualtRics.yml")
     # Assert that names are "api_token" and "root_url"
-    assertthat::assert_that(all(c("api_token", "root_url") %in% names(cred)), msg="Either the 'api_token' or 'root_url' arguments are missing in your .qualtRics.yml configuration file. Execute 'qualtRicsConfigFile()' to view an example of the configuration file. Execute 'file.edit('.qualtRics.yml')' to edit your configuration file.") # nolint
+    assertthat::assert_that(all(c("api_token", "root_url") %in% names(cred)), msg="Either the 'api_token' or 'root_url' arguments are missing in your .qualtRics.yml\nconfiguration file. Execute 'qualtRicsConfigFile()' to view an example of the configuration file.\nExecute 'file.edit('.qualtRics.yml')' to edit your configuration file.") # nolint
     # If verbose, print message
     if(verbose) message(paste0("Found a .qualtRics.yml configuration file in ", getwd(), ". Using these credentials.")) # nolint
     # Set vars
@@ -122,10 +122,10 @@ registerOptions <- function(verbose=TRUE,
     }
     # If 'convertStandardColumns' is found in credentials then emit a warning
     if('convertstandardcolumns' %in% names(cred) & !'convertvariables' %in% names(cred)) { # nolint
-      message("'convertstandardcolumns' has been deprecated and will be ignored. Please replace it by 'convertvariables' in your '.qualtRics.yml' file. Visit <URL TO INFORMATION> for more information.") # nolint
+      message("'convertstandardcolumns' has been deprecated and will be ignored. Please replace it\nwith 'convertvariables' in your '.qualtRics.yml' file. Visit <https://github.com/JasperHG90/qualtRics>\nfor more information.") # nolint
       convertVariables <- TRUE
     } else if(all(c('convertstandardcolumns', 'convertvariables') %in% names(cred))) { # nolint
-        message("'convertstandardcolumns' has been deprecated and will be ignored. Please remove it from your '.qualtRics.yml' file. Visit <URL TO INFORMATION> for more information.") # nolint
+        message("'convertstandardcolumns' has been deprecated and will be ignored. Please remove it\nfrom your '.qualtRics.yml' file. Visit <https://github.com/JasperHG90/qualtRics> for\nmore information.") # nolint
       convertVariables <- cred$convertvariables
     } else {
       convertVariables <- cred$convertvariables
@@ -150,8 +150,8 @@ registerOptions <- function(verbose=TRUE,
   }
   # Check arguments
   # If either is still NA AND environment is empty, throw error
-  assertthat::assert_that(!is.na(root_url) | Sys.getenv("QUALTRICS_ROOT_URL") != "", msg="'root_url' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.") # nolint
-  assertthat::assert_that(!is.na(api_token) | Sys.getenv("QUALTRICS_API_KEY") != "", msg="'api_token' parameter must either be specified in the .qualtRics.yml configuration file or passed to the 'registerOptions' function. To view an example of a configuration file, execute 'qualtRicsConfigFile()'.") # nolint
+  assertthat::assert_that(!is.na(root_url) | Sys.getenv("QUALTRICS_ROOT_URL") != "", msg="'root_url' parameter must either be specified in the .qualtRics.yml configuration file\nor passed to the 'registerOptions' function. To view an example of a configuration file, execute\n'qualtRicsConfigFile()'.") # nolint
+  assertthat::assert_that(!is.na(api_token) | Sys.getenv("QUALTRICS_API_KEY") != "", msg="'api_token' parameter must either be specified in the .qualtRics.yml configuration file\nor passed to the 'registerOptions' function. To view an example of a configuration file, execute\n'qualtRicsConfigFile()'.") # nolint
   # Set environment variables
   if(!is.na(api_token)) Sys.setenv("QUALTRICS_API_KEY" = api_token)
   if(!is.na(root_url)) Sys.setenv("QUALTRICS_ROOT_URL" = root_url)
