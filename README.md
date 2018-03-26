@@ -53,11 +53,11 @@ Note that you can only export surveys that you own, or to which you have been gi
 
 There are two ways to register your Qualtrics credentials (your [API key](https://api.qualtrics.com/docs/finding-qualtrics-ids) and [institution-specific root url](https://api.qualtrics.com/docs/root-url)) and other options in R. As in earlier versions of the qualtRics package, you can register your credentials at the start of each R session:
 
-
+&nbsp;
 ```r
 registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
 ```
-
+&nbsp;
 
 You can set some global options via the `registerOptions()` function:
 
