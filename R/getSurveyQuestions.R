@@ -25,14 +25,14 @@
 #' @examples
 #' \dontrun{
 #' # Register your Qualtrics credentials if you haven't already
-#' registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
+#' registerOptions(api_token="<YOUR-API-TOKEN>", base_url="<YOUR-ROOT-URL>")
 #' # Retrieve a list of surveys
 #' surveys <- getSurveys()
 #' # Retrieve questions for a survey
 #' questions <- getSurveyQuestions(surveyID = surveys$id[6])
 #' # Retrieve a single survey, filtering for questions I want.
 #' mysurvey <- getSurvey(surveyID = surveys$id[6],
-#'                       save_dir = tempdir(),
+#'                       saveDir = tempdir(),
 #'                       includedQuestionIds = c("QID1", "QID2", "QID3"),
 #'                       verbose=TRUE)
 #' }

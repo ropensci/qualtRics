@@ -25,7 +25,7 @@ getSurvey(surveyID, lastResponseId = NULL, startDate = NULL,
 
 \item{saveDir}{String. Directory where survey results will be stored. Defaults to a temporary directory which is cleaned when your R session is terminated. This argument is useful if you'd like to store survey results. The downloaded survey will be stored as an RDS file (see \link[base]{readRDS}).}
 
-\item{forceRequest}{Logical. getSurvey() saves each survey in a temporary directory so that it can quickly be retrieved later. If force_request is TRUE, getSurvey() always downloads the survey from the API instead of loading it from the temporary directory. Defaults to FALSE.}
+\item{forceRequest}{Logical. getSurvey() saves each survey in a temporary directory so that it can quickly be retrieved later. If forceRequest is TRUE, getSurvey() always downloads the survey from the API instead of loading it from the temporary directory. Defaults to FALSE.}
 
 \item{...}{optional arguments. You can pass all arguments listed in \code{\link{registerOptions}} (except a different root url / api key). You can also pass a argument 'fileEncoding' (see 'fileEncoding' argument in \code{\link{readSurvey}}) to import your survey using a specific encoding.}
 }
@@ -35,17 +35,17 @@ Export a qualtrics survey you own and import the survey directly into R.
 \examples{
 \dontrun{
 # Register your Qualtrics credentials if you haven't already
-registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
+registerOptions(api_token="<YOUR-API-TOKEN>", base_url="<YOUR-ROOT-URL>")
 # Retrieve a list of surveys
 surveys <- getSurveys()
 # Retrieve a single survey
 mysurvey <- getSurvey(surveyID = surveys$id[6],
-                      save_dir = tempdir(),
+                      saveDir = tempdir(),
                       verbose=TRUE)
 # You can use the same parameters as those found in the qualtrics API documentation
 # Found here: https://api.qualtrics.com/docs/csv
 mysurvey <- getSurvey(surveyID = surveys$id[6],
-                      save_dir = tempdir(),
+                      saveDir = tempdir(),
                       startDate = "2017-01-01",
                       endDate = "2017-01-31",
                       limit = 100,
@@ -59,7 +59,7 @@ mysurvey <- getSurvey(surveyID = surveys$id[6],
 questions <- getSurveyQuestions(surveyID = surveys$id[6])
 # Retrieve a single survey, filtering for questions I want.
 mysurvey <- getSurvey(surveyID = surveys$id[6],
-                      save_dir = tempdir(),
+                      saveDir = tempdir(),
                       includedQuestionIds = c("QID1", "QID2", "QID3"),
                       verbose=TRUE)
 }

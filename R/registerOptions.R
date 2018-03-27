@@ -38,19 +38,19 @@
 #' # Register your Qualtrics credentials if you haven't already
 #' # Note that you need to pass both the 'api_token' and 'root_url'
 #' # parameters if you call this function for the first time.
-#' registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
+#' registerOptions(api_token="<YOUR-API-TOKEN>", base_url="<YOUR-ROOT-URL>")
 #' # Register a different root url
-#' registerOptions(root_url="<YOUR-OTHER-ROOT-URL>")
+#' registerOptions(base_url="<YOUR-OTHER-ROOT-URL>")
 #' # Retrieve a list of surveys
 #' surveys <- getSurveys()
 #' # Retrieve a single survey
 #' mysurvey <- getSurvey(surveyID = surveys$id[6],
-#'                       save_dir = tempdir(),
+#'                       saveDir = tempdir(),
 #'                       verbose=TRUE)
 #' # You can use the same parameters as those found in the qualtrics API documentation
 #' # Found here: https://api.qualtrics.com/docs/csv
 #' mysurvey <- getSurvey(surveyID = surveys$id[6],
-#'                       save_dir = tempdir(),
+#'                       saveDir = tempdir(),
 #'                       startDate = "2017-01-01",
 #'                       endDate = "2017-01-31",
 #'                       limit = 100,

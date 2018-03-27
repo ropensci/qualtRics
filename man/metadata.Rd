@@ -21,7 +21,7 @@ Using this function, you can retrieve metadata about your survey. This informati
 # Register your Qualtrics credentials if you haven't already
 # Note that you need to pass both the 'api_token' and 'root_url'
 # parameters if you call this function for the first time.
-registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
+registerOptions(api_token="<YOUR-API-TOKEN>", base_url="<YOUR-ROOT-URL>")
 # Get an overview of surveys
 surveys <- getSurveys()
 # Get metadata for a survey
