@@ -17,3 +17,4 @@ Changelog\.md$
 ^paper\.md$
 ^paper\.bib$
 ^dev
+^todo\.md$
