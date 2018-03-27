@@ -35,13 +35,14 @@ Export a qualtrics survey you own and import the survey directly into R.
 \examples{
 \dontrun{
 # Register your Qualtrics credentials if you haven't already
-registerOptions(api_token="<YOUR-API-TOKEN>", base_url="<YOUR-ROOT-URL>")
+registerOptions(api_token = "<YOUR-API-TOKEN>",
+                base_url = "<YOUR-ROOT-URL>")
 # Retrieve a list of surveys
 surveys <- getSurveys()
 # Retrieve a single survey
 mysurvey <- getSurvey(surveyID = surveys$id[6],
                       saveDir = tempdir(),
-                      verbose=TRUE)
+                      verbose = TRUE)
 # You can use the same parameters as those found in the qualtrics API documentation
 # Found here: https://api.qualtrics.com/docs/csv
 mysurvey <- getSurvey(surveyID = surveys$id[6],
@@ -51,7 +52,7 @@ mysurvey <- getSurvey(surveyID = surveys$id[6],
                       limit = 100,
                       useLabels = TRUE,
                       seenUnansweredRecode = "UNANS",
-                      verbose=TRUE)
+                      verbose = TRUE)
 # You can also choose to only download an export with specific questions using
 # the \\code{\\link[getSurveyQuestions]{getSurveyQuestions}} function.
 
@@ -61,7 +62,7 @@ questions <- getSurveyQuestions(surveyID = surveys$id[6])
 mysurvey <- getSurvey(surveyID = surveys$id[6],
                       saveDir = tempdir(),
                       includedQuestionIds = c("QID1", "QID2", "QID3"),
-                      verbose=TRUE)
+                      verbose = TRUE)
 }
 }
 \seealso{
