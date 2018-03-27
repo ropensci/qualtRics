@@ -25,8 +25,8 @@
 #' @param seenUnansweredRecode String. Recode seen but unanswered questions with a string value. Defaults to NULL.
 #' @param limit Integer. Maximum number of responses exported. Defaults to NULL (all responses).
 #' @param includedQuestionIds Vector of strings (e.g. c('QID1', 'QID2', 'QID3'). Export only specified questions. Defaults to NULL.
-#' @param save_dir String. Directory where survey results will be stored. Defaults to a temporary directory which is cleaned when your R session is terminated. This argument is useful if you'd like to store survey results. The downloaded survey will be stored as an RDS file (see \link[base]{readRDS}).
-#' @param force_request Logical. getSurvey() saves each survey in a temporary directory so that it can quickly be retrieved later. If force_request is TRUE, getSurvey() always downloads the survey from the API instead of loading it from the temporary directory. Defaults to FALSE.
+#' @param saveDir String. Directory where survey results will be stored. Defaults to a temporary directory which is cleaned when your R session is terminated. This argument is useful if you'd like to store survey results. The downloaded survey will be stored as an RDS file (see \link[base]{readRDS}).
+#' @param forceRequest Logical. getSurvey() saves each survey in a temporary directory so that it can quickly be retrieved later. If force_request is TRUE, getSurvey() always downloads the survey from the API instead of loading it from the temporary directory. Defaults to FALSE.
 #' @param ... optional arguments. You can pass all arguments listed in \code{\link{registerOptions}} (except a different root url / api key). You can also pass a argument 'fileEncoding' (see 'fileEncoding' argument in \code{\link{readSurvey}}) to import your survey using a specific encoding.
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs/csv} for documentation on the Qualtrics API.
