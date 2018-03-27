@@ -30,15 +30,18 @@
 #' # Register your Qualtrics credentials if you haven't already
 #' # Note that you need to pass both the 'api_token' and 'root_url'
 #' # parameters if you call this function for the first time.
-#' registerOptions(api_token="<YOUR-API-TOKEN>", base_url="<YOUR-ROOT-URL>")
+#' registerOptions(api_token = "<YOUR-API-TOKEN>",
+#'                 base_url = "<YOUR-ROOT-URL>")
 #' # Get an overview of surveys
 #' surveys <- getSurveys()
 #' # Get metadata for a survey
 #' md <- metadata(surveyID = surveys$id[6])
 #' # Get metadata with specific elements
-#' md_specific <- metadata(surveyID= id, get=list(questions=FALSE, flow=TRUE))
+#' md_specific <- metadata(surveyID= id, get=list(questions = FALSE, flow = TRUE))
 #' # Get specific question metadata
-#' question_specific <- metadata(surveyID=id, get=list(questions=TRUE), questions=c("Q1","Q2"))
+#' question_specific <- metadata(surveyID=id,
+#'                               get=list(questions = TRUE),
+#'                                        questions = c("Q1", "Q2"))
 #' }
 #'
 
