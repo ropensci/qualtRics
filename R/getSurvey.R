@@ -71,14 +71,30 @@ getSurvey <- function(surveyID,
                       seenUnansweredRecode=NULL,
                       limit = NULL,
                       includedQuestionIds = NULL,
-                      save_dir=NULL,
-                      force_request=FALSE,
+                      saveDir=NULL,
+                      forceRequest=FALSE,
                       ...) {
 
   # OPTIONS AND CHECK PARAMETERS ----
 
-  # Options
   opts <- list(...)
+  # Get all arguments passed
+  calls <- names(vapply(match.call(), deparse, "character"))[-1]
+  # Check if deprecated params passed
+  if(any(c("save_dir", "force_request") %in% calls)) {
+    if("save_dir" %in% calls) {
+      warning("'save_dir' is deprecated and will be removed in qualtRics 4.0.\n Please use 'saveDir' instead.")
+      # Save to new param
+      saveDir <- opts$save_dir
+    }
+    if("force_request" %in% calls) {
+      warning("'force_request' is deprecated and will be removed in qualtRics 4.0.\n Please use 'forceRequest' instead.")
+      # Save to new param
+      forceRequest <- opts$force_request
+    }
+  }
+
+  # Options
   verbose <- ifelse("verbose" %in% names(opts), opts$verbose,
                     getOption("QUALTRICS_VERBOSE"))
   convertVariables <- ifelse("convertVariables" %in% names(opts),
@@ -100,16 +116,16 @@ getSurvey <- function(surveyID,
               startDate=startDate,
               endDate=endDate,
               includedQuestionIds=includedQuestionIds,
-              save_dir=save_dir,
+              saveDir=saveDir,
               seenUnansweredRecode=seenUnansweredRecode,
               limit=limit)
 
   # See if survey already in tempdir
-  if(!force_request) {
+  if(!forceRequest) {
     if(paste0(surveyID, ".rds") %in% list.files(tempdir())) {
       data <- readRDS(paste0(tempdir(), "/", surveyID, ".rds"))
       if(verbose) message(paste0("Found an earlier download for survey with id ", surveyID, # nolint
-                                 ". Loading this file.\nSet 'force_request' to TRUE if you want to override this.")) # nolint
+                                 ". Loading this file.\nSet 'forceRequest' to TRUE if you want to override this.")) # nolint
       return(data)
     }
   }
@@ -163,9 +179,9 @@ getSurvey <- function(surveyID,
   # RETURN ----
 
   # Remove tmpfiles
-  if(!is.null(save_dir)) {
+  if(!is.null(saveDir)) {
     # Save file to directory
-    saveRDS(data, file=paste0(save_dir, "/", surveyID, ".rds"))
+    saveRDS(data, file=paste0(saveDir, "/", surveyID, ".rds"))
     # Return
     return(data)
   } else {
