@@ -46,20 +46,20 @@ Currently, the package contains three core functions:
   
 It further contains four helper functions:
 
-  1. *registerOptions()* stores your API key and root url in environment variables.
+  1. *registerOptions()* stores your API key and base url in environment variables.
   2. *getSurveyQuestions()* retrieves a data frame containing questions and question IDs for a survey.
-  3. *qualtRicsConfigFile()* prints information on how to make a .qualtRics.yml configuration file that stores your qualtRics API key, root url and other options in your working directory.
+  3. *qualtRicsConfigFile()* prints information on how to make a .qualtRics.yml configuration file that stores your qualtRics API key, base url and other options in your working directory.
   4. *metadata()* retrieves metadata about your survey, such as questions, survey flow, number of responses etc.
 
 Note that you can only export surveys that you own, or to which you have been given administration rights.
 
 ## Registering your Qualtrics credentials
 
-There are two ways to register your Qualtrics credentials (your [API key](https://api.qualtrics.com/docs/finding-qualtrics-ids) and [institution-specific root url](https://api.qualtrics.com/docs/root-url)) and other options in R. As in earlier versions of the qualtRics package, you can register your credentials at the start of each R session:
+There are two ways to register your Qualtrics credentials (your [API key](https://api.qualtrics.com/docs/finding-qualtrics-ids) and [institution-specific base url](https://api.qualtrics.com/docs/root-url)) and other options in R. As in earlier versions of the qualtRics package, you can register your credentials at the start of each R session:
 
 &nbsp;
 ```r
-registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
+registerOptions(api_token="<YOUR-API-TOKEN>", base_url="<YOUR-ROOT-URL>")
 ```
 &nbsp;
 
@@ -71,7 +71,7 @@ You can set some global options via the `registerOptions()` function:
 4. [useLocalTime](https://api.qualtrics.com/docs/dates-and-times): Logical. Use local timezone to determine response date values? Defaults to FALSE.
 5. **dateWarning:** Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
 
-You can change some of these options without having to pass the `api_token` or `root_url` parameters every time as long as you have registered the api token and root url previously:
+You can change some of these options without having to pass the `api_token` or `base_url` parameters every time as long as you have registered the api token and base url previously:
 
 &nbsp;
 ```r
@@ -87,13 +87,13 @@ qualtRics supports the use of a configuration file to store your Qualtrics crede
 
 ```
 Copy-paste the lines between the dashes into a new plain text file, replace the values for the
-api_token and root_url if they are not yet filled out. and save it in your working directory 
+api_token and base_url if they are not yet filled out. and save it in your working directory 
 as '.qualtRics.yml'. Execute '?qualtRics::qualtRicsConfigFile' to view an explanation of the additional arguments. Visit https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file 
 for more information.
 
 --------------
 api_token: <YOUR-API-TOKEN-HERE>
-root_url: <YOUR-ROOT-URL-HERE>
+base_url: <YOUR-ROOT-URL-HERE>
 verbose: TRUE
 uselabels: TRUE
 convertvariables: TRUE
@@ -102,7 +102,7 @@ datewarning: TRUE
 --------------
 ```
 
-You can also call this function while passing `api_token` and `root_url` values to the function, in which case `<YOUR-API-TOKEN-HERE>` and `<YOUR-ROOT-URL-HERE>` will be replaced by your credentials. After saving the file, you can register your credentials by calling `registerOptions()` without passing any parameters.
+You can also call this function while passing `api_token` and `base_url` values to the function, in which case `<YOUR-API-TOKEN-HERE>` and `<YOUR-ROOT-URL-HERE>` will be replaced by your credentials. After saving the file, you can register your credentials by calling `registerOptions()` without passing any parameters.
 
 When you load the qualtRics package, it will automatically look for a `.qualtRics.yml` file in the working directory, in which case you don't need to call the `registerOptions()` function to register your qualtRics credentials at the beginning of your session.
 
@@ -110,7 +110,7 @@ You can override your configuration file settings by calling `registerOptions()`
 
 &nbsp;
 ```r
-registerOptions(verbose=FALSE, useLabels=FALSE, root_url="myinstitution.qualtrics.com")
+registerOptions(verbose=FALSE, useLabels=FALSE, base_url="myinstitution.qualtrics.com")
 ```
 &nbsp;
 
@@ -120,7 +120,7 @@ registerOptions(verbose=FALSE, useLabels=FALSE, root_url="myinstitution.qualtric
 
 ![](https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/config_step1.png)
 
-2. Execute `qualtRicsConfigFile(api_token="<YOUR-API-TOKEN-HERE>", root_url="<YOUR-ROOT-URL-HERE>")` and copy-paste the text between the dashes to the empty text file:
+2. Execute `qualtRicsConfigFile(api_token="<YOUR-API-TOKEN-HERE>", base_url="<YOUR-ROOT-URL-HERE>")` and copy-paste the text between the dashes to the empty text file:
 
 ![](https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/config_step2.png)
 
@@ -208,7 +208,7 @@ Register your Qualtrics credentials if required:
 
 &nbsp;
 ```r
-registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
+registerOptions(api_token="<YOUR-API-TOKEN>", base_url="<YOUR-ROOT-URL>")
 ```
 &nbsp;
 
