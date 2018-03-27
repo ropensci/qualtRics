@@ -4,14 +4,14 @@
 \alias{qualtRicsConfigFile}
 \title{Prints an example of a qualtRics configuration file to the console.}
 \usage{
-qualtRicsConfigFile(api_token = NULL, root_url = NULL, verbose = TRUE,
+qualtRicsConfigFile(api_token = NULL, base_url = NULL, verbose = TRUE,
   useLabels = TRUE, convertVariables = TRUE, useLocalTime = FALSE,
-  dateWarning = TRUE)
+  dateWarning = TRUE, root_url = NULL)
 }
 \arguments{
 \item{api_token}{String. API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})}
 
-\item{root_url}{String. Root url for your institution (see: \url{https://api.qualtrics.com/docs/root-url})}
+\item{base_url}{String. Base url for your institution (see: \url{https://api.qualtrics.com/docs/root-url})}
 
 \item{verbose}{Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.}
 
@@ -22,6 +22,8 @@ qualtRicsConfigFile(api_token = NULL, root_url = NULL, verbose = TRUE,
 \item{useLocalTime}{Logical. Use local timezone to determine response date values? Defaults to FALSE. See \url{https://api.qualtrics.com/docs/dates-and-times} for more information.}
 
 \item{dateWarning}{Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.}
+
+\item{root_url}{String. Deprecated. Use base url instead. This will be removed in future versions.}
 }
 \description{
 Prints an example of a qualtRics configuration file to the console.

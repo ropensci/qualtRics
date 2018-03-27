@@ -22,8 +22,10 @@ Using this function, you can retrieve metadata about your survey. This informati
 # Note that you need to pass both the 'api_token' and 'root_url'
 # parameters if you call this function for the first time.
 registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
+# Get an overview of surveys
+surveys <- getSurveys()
 # Get metadata for a survey
-md <- metadata(surveyID = id)
+md <- metadata(surveyID = surveys$id[6])
 # Get metadata with specific elements
 md_specific <- metadata(surveyID= id, get=list(questions=FALSE, flow=TRUE))
 # Get specific question metadata
