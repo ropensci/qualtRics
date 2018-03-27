@@ -55,7 +55,21 @@ Note that you can only export surveys that you own, or to which you have been gi
 
 ## Registering your Qualtrics credentials
 
-There are two ways to register your Qualtrics credentials (your [API key](https://api.qualtrics.com/docs/finding-qualtrics-ids) and [institution-specific base url](https://api.qualtrics.com/docs/root-url)) and other options in R. As in earlier versions of the qualtRics package, you can register your credentials at the start of each R session:
+There are two important credentials you need to authenticate with the Qualtrics API. These are your [API key](https://api.qualtrics.com/docs/finding-qualtrics-ids) and [institution-specific base url](https://api.qualtrics.com/docs/root-url). The base url you pass to the qualtRics package should either look like this:
+
+```
+yourdatacenterid.qualtrics.com
+```
+
+or like this:
+
+```
+yourorganizationid.yourdatacenterid.qualtrics.com
+```
+
+The [Qualtrics API documentation](https://api.qualtrics.com/docs/root-url) explains how you can find your base url.
+
+There are two ways to register your Qualtrics credentials and other options in R. As in earlier versions of the qualtRics package, you can register your credentials at the start of each R session:
 
 &nbsp;
 ```r
