@@ -69,6 +69,9 @@ registerOptions <- function(verbose=TRUE,
 
   # Take additional arguments
   args <- list(...)
+  # Store root_url/api_token. Else give NA as value
+  root_url <- ifelse("base_url" %in% names(args), args$base_url, NA)
+  api_token <- ifelse("api_token" %in% names(args), args$api_token, NA)
   # Show deprecated warning
   calls <- names(vapply(match.call(), deparse, "character"))[-1]
   # Check if deprecated params passed
@@ -77,10 +80,6 @@ registerOptions <- function(verbose=TRUE,
     # Save to new param
     root_url <- args$root_url
   }
-
-  # Store root_url/api_token. Else give NA as value
-  root_url <- ifelse("base_url" %in% names(args), args$base_url, NA)
-  api_token <- ifelse("api_token" %in% names(args), args$api_token, NA)
 
   # OPTION 1: USER ALREADY SET ENV VARIABLES AND WANTS TO CHANGE OPT. VARIABLES ----
 
