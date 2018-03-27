@@ -43,6 +43,9 @@
 metadata <- function(surveyID,
                      get = list(),
                      ...) {
+
+  # OPTIONS AND PREP ----
+
   # Check params
   cp <- checkParams()
   # Check if illegal options were passed by user
@@ -50,7 +53,8 @@ metadata <- function(surveyID,
                "blocks","flow","embedded_data","comments")
   check <- union(allowed, names(get))
   assertthat::assert_that(length(check) <= length(allowed), # nolint
-                          msg="One or more options you passed to 'get' are not valid. Please check your input and try again.") # nolint
+                          msg="One or more options you passed to 'get' are not valid. Please check your\ninput and try again.") # nolint
+
   # Change standard options if any
   standard_list <- list("metadata"=TRUE,
                         "questions"=TRUE,
@@ -59,11 +63,13 @@ metadata <- function(surveyID,
                         "flow"=FALSE,
                         "embedded_data"=FALSE,
                         "comments"=FALSE)
+  # Cycle over each argument and change
   if(length(get) > 0) {
     for(g in names(get)) {
       standard_list[[g]] <- get[[g]]
     }
   }
+
   # Other options
   opts <- list(...)
   if("questions" %in% names(opts)) {
@@ -75,7 +81,7 @@ metadata <- function(surveyID,
     q_select <- NULL
   }
 
-  ### Get metadata
+  # QUERY API ----
 
   # Function-specific API stuff
   root_url <- appendRootUrl(Sys.getenv("QUALTRICS_ROOT_URL"), "surveys")
@@ -86,11 +92,11 @@ metadata <- function(surveyID,
   # Filter
   resp_filt <- resp$result
 
-  ### Reshape
+  # RESHAPE DATA ----
 
   # Metadata
   metadata <- data.frame(
-    "id" = resp_filt$id,
+    "surveyID" = resp_filt$id,
     "name"= resp_filt$name,
     "ownerId" = resp_filt$ownerId,
     "organizationId"=resp_filt$organizationId,
@@ -110,7 +116,8 @@ metadata <- function(surveyID,
     "generated"=resp_filt$responseCounts$generated,
     "deleted"=resp_filt$responseCounts$deleted
   )
-  # Questions
+
+  # Metadata about questions
   if(!is.null(q_select)) {
     qnames <- vapply(resp_filt$questions, function(x) {
       x$questionName
@@ -118,12 +125,15 @@ metadata <- function(surveyID,
     if(all(q_select %in% qnames)) {
       questions <- resp_filt$questions[which(qnames %in% q_select)]
     } else {
-      warning(paste0("One or more questions you queried are not present in your survey. Returning all questions instead.")) # nolint
+      warning(paste0("One or more questions you queried are not present in your survey.\nReturning all questions instead.")) # nolint
       questions <- resp_filt$questions
     }
   } else {
     questions <- resp_filt$questions
   }
+
+  # WRAP UP AND RETURN ----
+
   # Construct metadata
   met <- list("metadata"=metadata,
               "questions"=questions,
@@ -135,6 +145,10 @@ metadata <- function(surveyID,
   # Make subset
   met_ss <- met[names(standard_list[vapply(standard_list,
                                            function(x) x==TRUE, TRUE)])] # nolint
-  # Return
+
+  # RETURN ----
+
   return(met_ss)
+
+
 }
