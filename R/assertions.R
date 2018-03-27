@@ -39,12 +39,12 @@ assert_rootUrl_stored <- function() {
 }
 
 # Check if save directory exists
-assert_saveDir_exists <- function(save_dir) {
+assert_saveDir_exists <- function(saveDir) {
 
-  assertthat::assert_that(ifelse((!file.info(save_dir)$isdir |
-                                    is.na(file.info(save_dir)$isdir) == TRUE),
+  assertthat::assert_that(ifelse((!file.info(saveDir)$isdir |
+                                    is.na(file.info(saveDir)$isdir) == TRUE),
                                  FALSE, TRUE),
-                          msg = paste0("The directory ", save_dir, " does not exist."))
+                          msg = paste0("The directory ", saveDir, " does not exist."))
 
 }
 
