@@ -137,14 +137,22 @@ registerOptions <- function(verbose=TRUE,
     cred <- yaml::yaml.load_file(".qualtRics.yml")
 
     # Assert that names are "api_token" and "root_url"
-    assertthat::assert_that(all(c("api_token", "root_url") %in% names(cred)), msg="Either the 'api_token' or 'root_url' arguments are missing in your .qualtRics.yml\nconfiguration file. Execute 'qualtRicsConfigFile()' to view an example of the configuration file.\nExecute 'file.edit('.qualtRics.yml')' to edit your configuration file.") # nolint
+    assertthat::assert_that((all(c("api_token", "root_url") %in% names(cred))) |
+                              (all(c("api_token", "base_url") %in% names(cred))), msg="Either the 'api_token' or 'base_url' arguments are missing in your .qualtRics.yml\nconfiguration file. Execute 'qualtRicsConfigFile()' to view an example of the configuration file.\nExecute 'file.edit('.qualtRics.yml')' to edit your configuration file.") # nolint
 
     # If verbose, print message
     if(verbose) message(paste0("Found a .qualtRics.yml configuration file in ", getwd(), ". Using these credentials.")) # nolint
 
     # Set vars
     api_token <- cred$api_token
-    root_url <- cred$root_url
+    # Check if deprecated params passed
+    if(any("root_url" %in% names(cred))) {
+      message("\nWarning: 'root_url' is deprecated and will be removed in qualtRics 4.0. Please use 'base_url' instead.")
+      # Save to new param
+      root_url <- cred$root_url
+    } else if("base_url" %in% names(cred)) {
+      root_url <- cred$base_url
+    }
 
     # Set optional vars
     if("verbose" %in% names(cred)) {
