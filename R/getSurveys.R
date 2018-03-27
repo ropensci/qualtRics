@@ -43,10 +43,16 @@
 #' }
 
 getSurveys <- function() {
+
+  # CHECK PARAMS AND PREP QUERY ----
+
   # Check params
   cp <- checkParams()
   # Function-specific API stuff
   root_url <- appendRootUrl(Sys.getenv("QUALTRICS_ROOT_URL"), "surveys")
+
+  # SEND REQUEST TO QUALTRICS ----
+
   # Send GET request to list all surveys
   resp <- qualtricsApiRequest("GET", root_url)
   # Put results in list
@@ -60,7 +66,12 @@ getSurveys <- function() {
     # Append results
     master <- append(master, resp$result$elements)
   }
+
+  # WRAP-UP AND RETURN ----
+
   # Bind to one large data frame & return
   d <- bind_rows(master)
   return(d)
+
+
 }

@@ -74,6 +74,9 @@ getSurvey <- function(surveyID,
                       save_dir=NULL,
                       force_request=FALSE,
                       ...) {
+
+  # OPTIONS AND CHECK PARAMETERS ----
+
   # Options
   opts <- list(...)
   verbose <- ifelse("verbose" %in% names(opts), opts$verbose,
@@ -100,6 +103,7 @@ getSurvey <- function(surveyID,
               save_dir=save_dir,
               seenUnansweredRecode=seenUnansweredRecode,
               limit=limit)
+
   # See if survey already in tempdir
   if(!force_request) {
     if(paste0(surveyID, ".rds") %in% list.files(tempdir())) {
@@ -109,6 +113,9 @@ getSurvey <- function(surveyID,
       return(data)
     }
   }
+
+  # CONSTRUCT API CALL ----
+
   # add endpoint to root url
   root_url <- appendRootUrl(Sys.getenv("QUALTRICS_ROOT_URL"), "responseexports")
   # Create raw JSON payload
@@ -121,6 +128,9 @@ getSurvey <- function(surveyID,
                                   limit = limit,
                                   useLocalTime = useLocalTime,
                                   includedQuestionIds = includedQuestionIds)
+
+  # SEND POST REQUEST TO API ----
+
   # POST request for download
   res <- qualtricsApiRequest("POST", url=root_url, body = raw_payload)
   # Get id
@@ -137,6 +147,9 @@ getSurvey <- function(surveyID,
   check_url <- paste0(root_url, ID)
   # Download, unzip and return file path
   survey.fpath <- downloadQualtricsExport(check_url, verbose = verbose)
+
+  # READ DATA AND SET VARIABLES ----
+
   # Read data
   data <- readSurvey(survey.fpath)
   # Add types
@@ -146,6 +159,9 @@ getSurvey <- function(surveyID,
   # Save survey as RDS file in temp folder so that it can be easily
   # retrieved this session.
   saveRDS(data, paste0(tempdir(), "/", surveyID, ".rds"))
+
+  # RETURN ----
+
   # Remove tmpfiles
   if(!is.null(save_dir)) {
     # Save file to directory
@@ -157,4 +173,5 @@ getSurvey <- function(surveyID,
     # Return
     return(data)
   }
+
 }

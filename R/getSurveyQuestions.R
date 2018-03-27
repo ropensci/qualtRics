@@ -38,6 +38,9 @@
 #' }
 
 getSurveyQuestions <- function(surveyID) {
+
+  # OPTIONS AND BUILD QUERY ----
+
   # Check params
   checkParams()
   # Function-specific API stuff
@@ -46,6 +49,9 @@ getSurveyQuestions <- function(surveyID) {
   root_url <- paste0(root_url,
                      "/",
                      surveyID)
+
+  # SEND REQUEST TO API ----
+
   # GET request to download metadata
   resp <- qualtricsApiRequest("GET", root_url)
   # Get question information and map
@@ -61,6 +67,10 @@ getSurveyQuestions <- function(surveyID) {
 
   # Row names
   row.names(quest) <- seq_len(nrow(quest))
+
+  # RETURN DATA ----
+
   # Return
   return(dplyr::as_tibble(quest))
+
 }
