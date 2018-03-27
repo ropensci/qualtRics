@@ -48,7 +48,7 @@ for more information.", "\n\n",# nolint
     "--------------","\n",
     'api_token: ', ifelse(is.null(api_token), '<YOUR-API-TOKEN-HERE>',
                                  paste0(api_token)), "\n",
-    'root_url: ', ifelse(is.null(root_url), '<YOUR-ROOT-URL-HERE>',
+    'base_url: ', ifelse(is.null(root_url), '<YOUR-ROOT-URL-HERE>',
                                 paste0(root_url)), "\n",
     'verbose: ', verbose, "\n",
     'uselabels: ', useLabels, "\n",

@@ -79,7 +79,7 @@ registerOptions <- function(verbose=TRUE,
   }
 
   # Store root_url/api_token. Else give NA as value
-  root_url <- ifelse("root_url" %in% names(args), args$base_url, NA)
+  root_url <- ifelse("base_url" %in% names(args), args$base_url, NA)
   api_token <- ifelse("api_token" %in% names(args), args$api_token, NA)
 
   # OPTION 1: USER ALREADY SET ENV VARIABLES AND WANTS TO CHANGE OPT. VARIABLES ----
