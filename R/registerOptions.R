@@ -73,7 +73,7 @@ registerOptions <- function(verbose=TRUE,
   calls <- names(vapply(match.call(), deparse, "character"))[-1]
   # Check if deprecated params passed
   if(any("root_url" %in% calls)) {
-    warning("'root_url' is deprecated and will be removed in qualtRics 4.0.\n Please use 'base_url' instead.")
+    warning("'root_url' is deprecated and will be removed in qualtRics 4.0. Please use 'base_url' instead.")
     # Save to new param
     root_url <- args$root_url
   }
