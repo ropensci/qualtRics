@@ -4,7 +4,7 @@ test_that("RegisterApiKey returns TRUE", {
   expect_error(assert_apikey_stored(),
                "You need to register your qualtrics API key")
   # Store dummy key
-  qualtRics::registerOptions(api_token="1234", root_url="abcd")
+  qualtRics::registerOptions(api_token="1234", base_url="abcd")
   # Now expect this to be true
   expect_true(assert_apikey_stored())
 })

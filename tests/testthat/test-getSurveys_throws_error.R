@@ -4,5 +4,5 @@ test_that("getSurveys() throws an error", {
                              root_url="https://yourdatacenterid.qualtrics.com")
   # This should fail in 'do.call'
   expect_error(qualtRics::getSurveys(),
-               "you may not have the required authorization")
+               "you may not have the\nrequired authorization")
 })

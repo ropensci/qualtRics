@@ -4,5 +4,5 @@ test_that("getSurvey() throws error", {
                              root_url="https://yourdatacenterid.qualtrics.com")
   # Query fake ID with generic root url
   expect_error(qualtRics::getSurvey("1234"),
-               "you may not have the required authorization")
+               "you may not have the\nrequired authorization")
 })
