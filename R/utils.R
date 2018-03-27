@@ -169,10 +169,10 @@ checkParams <- function(...) {
       assert_lastResponseId_string(args$lastResponseId)
     }
   }
-  # Check if save_dir exists
-  if("save_dir" %in% names(args)) {
-    if(!is.null(args$save_dir)) {
-      assert_saveDir_exists(args$save_dir)
+  # Check if saveDir exists
+  if("saveDir" %in% names(args)) {
+    if(!is.null(args$saveDir)) {
+      assert_saveDir_exists(args$saveDir)
     }
   }
   # Check if seenUnansweredRecode is NULL or else a string
