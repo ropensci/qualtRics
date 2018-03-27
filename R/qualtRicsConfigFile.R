@@ -17,12 +17,13 @@
 #' Prints an example of a qualtRics configuration file to the console.
 #'
 #' @param api_token String. API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})
-#' @param root_url String. Root url for your institution (see: \url{https://api.qualtrics.com/docs/root-url})
+#' @param base_url String. Base url for your institution (see: \url{https://api.qualtrics.com/docs/root-url})
 #' @param verbose Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
 #' @param useLabels Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
 #' @param convertVariables Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert certain question types (e.g. multiple choice) to proper data type in R. Defaults to TRUE.
 #' @param useLocalTime Logical. Use local timezone to determine response date values? Defaults to FALSE. See \url{https://api.qualtrics.com/docs/dates-and-times} for more information.
 #' @param dateWarning Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
+#' @param root_url String. Deprecated. Use base url instead. This will be removed in future versions.
 #' @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API. See \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file.
 #' @author Jasper Ginn
 #' @export
@@ -33,9 +34,24 @@
 #' }
 #'
 
-qualtRicsConfigFile <- function(api_token = NULL, root_url=NULL, verbose=TRUE,
-                                useLabels=TRUE, convertVariables=TRUE,
-                                useLocalTime=FALSE, dateWarning=TRUE) {
+qualtRicsConfigFile <- function(api_token = NULL,
+                                base_url=NULL,
+                                verbose=TRUE,
+                                useLabels=TRUE,
+                                convertVariables=TRUE,
+                                useLocalTime=FALSE,
+                                dateWarning=TRUE,
+                                root_url = NULL) {
+
+  # Check for deprecated arguments
+  calls <- names(vapply(match.call(), deparse, "character"))[-1]
+  # Check if deprecated params passed
+  if(any("root_url" %in% calls)) {
+    warning("'root_url' is deprecated and will be removed in qualtRics 4.0.\n Please use 'base_url' instead.")
+    base_url <- root_url
+  }
+  # Temporary
+  root_url <- base_url
 
   # Paste together a message to cat to console
   msg <- paste0(
