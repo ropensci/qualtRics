@@ -43,10 +43,16 @@
 readSurvey <- function(file_name,
                        stripHTML = TRUE,
                        legacyFormat = FALSE) {
+
+  # START UP: CHECK ARGUMENTS PASSED BY USER ----
+
   # check if file exists
   assert_surveyFile_exists(file_name)
   # skip 2 rows if legacyFormat, else 3 when loading the data
   skipNr <- ifelse(legacyFormat, 2, 3)
+
+  # READ DATA ----
+
   # import data including variable names (row 1) and variable labels (row 2)
   rawdata <- suppressMessages(readr::read_csv(file = file_name,
                              col_names = FALSE,
@@ -58,6 +64,9 @@ readSurvey <- function(file_name,
   header <- suppressMessages(readr::read_csv(file = file_name,
                             col_names = TRUE,
                             n_max = 1))
+
+  # MANIPULATE DATA ----
+
   # make them data.frame's, else the factor conversion
   # in `inferDataTypes` crashes
   #rawdata <- as.data.frame(rawdata)
@@ -73,25 +82,30 @@ readSurvey <- function(file_name,
   # extract second row, remove it from df
   secondrow <- unlist(header)
   row.names(rawdata) <- NULL
-  # ----------------------------------------------------
-  # clean variable labels (row 2)
-  # ----------------------------------------------------
+
+  # Clean variable labels
   if(stripHTML) {
     # weird regex to strip HTML tags, leaving only content
     # https://www.r-bloggers.com/htmltotext-extracting-text-from-html-via-xpath/ # nolint
     pattern <- "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>" # nolint
     secondrow <- gsub(pattern, "\\4", secondrow)
   }
+
   # Scale Question with subquestion:
   # If it matches one of ".?!" followed by "-", take subsequent part
   subquestions <- stringr::str_match(secondrow, ".*[:punct:]\\s*-(.*)")[,2]
+
   # Else if subquestion returns NA, use whole string
   subquestions[is.na(subquestions)] <- unlist(secondrow[is.na(subquestions)])
+
   # Remaining NAs default to 'empty string'
   subquestions[is.na(subquestions)] <- ""
-  # -------------------
-  # add variable labels
-  # -------------------
+
+  # Add labels to data
   rawdata <- sjlabelled::set_label(rawdata, unlist(subquestions))
+
+  # RETURN ----
+
   return(rawdata)
+
 }

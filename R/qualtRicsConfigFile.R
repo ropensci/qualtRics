@@ -37,6 +37,7 @@ qualtRicsConfigFile <- function(api_token = NULL, root_url=NULL, verbose=TRUE,
                                 useLabels=TRUE, convertVariables=TRUE,
                                 useLocalTime=FALSE, dateWarning=TRUE) {
 
+  # Paste together a message to cat to console
   msg <- paste0(
     "Copy-paste the lines between the dashes into a new plain text file, replace the
 values for the api_token and root_url if they are not yet filled out. and save it in
@@ -56,6 +57,8 @@ for more information.", "\n\n",# nolint
     'datewarning: ', dateWarning, "\n",
     "--------------"
   )
+
+  # Cat to console
   cat(msg)
 
 }

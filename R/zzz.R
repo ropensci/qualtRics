@@ -23,10 +23,12 @@
 
 
 .onLoad <- function(libname = find.package("qualtRics"), pkgname="qualtRics") {
+
   if(file.exists(".qualtRics.yml")) {
     # load 'registeroptions()'
     suppressWarnings(registerOptions())
   }
+
   # Set internal qualtRics settings
   options(
     "QUALTRICS_INTERNAL_SETTINGS" = list("question_types_supported" =
@@ -35,11 +37,14 @@
                                                 "subSelector"=c("TX"))
                                          )
   )
+
 }
 
 # On unload
 .onUnload <- function(libname = find.package("qualtRics"), pkgname="qualtRics") {
+
   # If user unloads/detaches package make sure that these values are erased
   Sys.setenv("QUALTRICS_ROOT_URL" = "")
   Sys.setenv("QUALTRICS_API_KEY" = "")
+
 }

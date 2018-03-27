@@ -64,15 +64,22 @@ registerOptions <- function(verbose=TRUE,
                             useLocalTime=FALSE,
                             dateWarning=TRUE,
                             ...) {
+
+  # START UP: CHECK ARGUMENTS PASSED BY USER ----
+
   # Take additional arguments
   args <- list(...)
   # Store root_url/api_token. Else give NA as value
   root_url <- ifelse("root_url" %in% names(args), args$root_url, NA)
   api_token <- ifelse("api_token" %in% names(args), args$api_token, NA)
+
+  # OPTION 1: USER ALREADY SET ENV VARIABLES AND WANTS TO CHANGE OPT. VARIABLES ----
+
   # If environment variables are already set and user just wants to
   # change verbose argument
   if(Sys.getenv("QUALTRICS_ROOT_URL") != "" & Sys.getenv("QUALTRICS_API_KEY") != "") { # nolint
-    # Check
+
+    # Check options
     assertthat::assert_that(assertthat::is.flag(verbose),
                             msg=paste0("'verbose' must be either TRUE or FALSE.")) # nolint
     assertthat::assert_that(assertthat::is.flag(convertVariables),
@@ -83,6 +90,7 @@ registerOptions <- function(verbose=TRUE,
                             msg=paste0("'uselabels' must be either TRUE or FALSE.")) # nolint
     assertthat::assert_that(assertthat::is.flag(dateWarning),
                             msg=paste0("'dateWarning' must be either TRUE or FALSE.")) # nolint
+
     # If user just wants to pass options, do:
     options(
       "QUALTRICS_VERBOSE" = verbose,
@@ -90,31 +98,45 @@ registerOptions <- function(verbose=TRUE,
       "QUALTRICS_CONVERTVARIABLES" = convertVariables,
       "QUALTRICS_USELOCALTIME" = useLocalTime
     )
+
     # Set warning
     invisible(ifelse(dateWarning == FALSE,
                      Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN"=TRUE),
                      TRUE))
+
     # Set root url and api token if not NA
     if(!is.na(root_url)) Sys.setenv("QUALTRICS_ROOT_URL" = root_url)
     if(!is.na(api_token)) Sys.setenv("QUALTRICS_API_KEY" = api_token)
+
     # Quietly quit
     return(invisible(NULL))
+
   }
+
+  # OPTION 2: IF API TOKEN AND ROOT URL NOT PASSED, LOOK FOR CONFIG FILE ----
+
   # If API token and root url are NA, then look for .qualtRics.yml
   #in the current directory
   if(is.na(api_token) & is.na(root_url)) {
+
+    # Check if config file exists
     ex <- file.exists(".qualtRics.yml")
     # Throw error if file does not exist
     assertthat::assert_that(ex == TRUE, msg = "No .qualtRics.yml configuration file found in working directory. Either set your \napi token and root url using the 'registerOptions' function or create a configuration file.\nExecute 'qualtRicsConfigFile()' to view an example of a configuration file.") # nolint
+
     # Load file
     cred <- yaml::yaml.load_file(".qualtRics.yml")
+
     # Assert that names are "api_token" and "root_url"
     assertthat::assert_that(all(c("api_token", "root_url") %in% names(cred)), msg="Either the 'api_token' or 'root_url' arguments are missing in your .qualtRics.yml\nconfiguration file. Execute 'qualtRicsConfigFile()' to view an example of the configuration file.\nExecute 'file.edit('.qualtRics.yml')' to edit your configuration file.") # nolint
+
     # If verbose, print message
     if(verbose) message(paste0("Found a .qualtRics.yml configuration file in ", getwd(), ". Using these credentials.")) # nolint
+
     # Set vars
     api_token <- cred$api_token
     root_url <- cred$root_url
+
     # Set optional vars
     if("verbose" %in% names(cred)) {
       verbose <- cred$verbose
@@ -130,7 +152,8 @@ registerOptions <- function(verbose=TRUE,
     } else {
       convertVariables <- cred$convertvariables
     }
-    # Check
+
+    # Check if variables are correct types
     assertthat::assert_that(assertthat::is.flag(convertVariables),
                             msg=paste0("'convertvariables' must be either TRUE or FALSE but is ", # nolint
                                        as.character(convertVariables),
@@ -147,11 +170,18 @@ registerOptions <- function(verbose=TRUE,
       dateWarning <- cred$datewarning
       assertthat::assert_that(assertthat::is.flag(dateWarning), msg=paste0("'dateWarning' must be either TRUE or FALSE but is ", as.character(dateWarning), " in your config file.")) # nolint
     }
+
   }
+
+  # IF OPTION 1 & 2 FAIL, THROW ERRORS ----
+
   # Check arguments
   # If either is still NA AND environment is empty, throw error
   assertthat::assert_that(!is.na(root_url) | Sys.getenv("QUALTRICS_ROOT_URL") != "", msg="'root_url' parameter must either be specified in the .qualtRics.yml configuration file\nor passed to the 'registerOptions' function. To view an example of a configuration file, execute\n'qualtRicsConfigFile()'.") # nolint
   assertthat::assert_that(!is.na(api_token) | Sys.getenv("QUALTRICS_API_KEY") != "", msg="'api_token' parameter must either be specified in the .qualtRics.yml configuration file\nor passed to the 'registerOptions' function. To view an example of a configuration file, execute\n'qualtRicsConfigFile()'.") # nolint
+
+  # REGISTER VALUES AND WRAP-UP ----
+
   # Set environment variables
   if(!is.na(api_token)) Sys.setenv("QUALTRICS_API_KEY" = api_token)
   if(!is.na(root_url)) Sys.setenv("QUALTRICS_ROOT_URL" = root_url)
@@ -166,4 +196,6 @@ registerOptions <- function(verbose=TRUE,
   invisible(ifelse(dateWarning == FALSE,
                    Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN"=TRUE),
          TRUE))
+
+
 }
