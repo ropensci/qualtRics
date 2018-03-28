@@ -57,15 +57,19 @@ Note that you can only export surveys that you own, or to which you have been gi
 
 There are two important credentials you need to authenticate with the Qualtrics API. These are your [API key](https://api.qualtrics.com/docs/finding-qualtrics-ids) and [institution-specific base url](https://api.qualtrics.com/docs/root-url). The base url you pass to the qualtRics package should either look like this:
 
+&nbsp;
 ```
 yourdatacenterid.qualtrics.com
 ```
+&nbsp;
 
 or like this:
 
+&nbsp;
 ```
 yourorganizationid.yourdatacenterid.qualtrics.com
 ```
+&nbsp;
 
 The [Qualtrics API documentation](https://api.qualtrics.com/docs/root-url) explains how you can find your base url.
 
