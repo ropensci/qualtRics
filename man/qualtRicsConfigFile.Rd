@@ -2,7 +2,7 @@
 % Please edit documentation in R/qualtRicsConfigFile.R
 \name{qualtRicsConfigFile}
 \alias{qualtRicsConfigFile}
-\title{Prints an example of a qualtRics configuration file to the console.}
+\title{Prints an Example of a QualtRics Configuration File to the Console.}
 \usage{
 qualtRicsConfigFile(api_token = NULL, base_url = NULL, verbose = TRUE,
   useLabels = TRUE, convertVariables = TRUE, useLocalTime = FALSE,
@@ -26,7 +26,7 @@ qualtRicsConfigFile(api_token = NULL, base_url = NULL, verbose = TRUE,
 \item{root_url}{String. Deprecated. Use base url instead. This will be removed in future versions.}
 }
 \description{
-Prints an example of a qualtRics configuration file to the console.
+Prints an Example of a QualtRics Configuration File to the Console.
 }
 \examples{
 \dontrun{

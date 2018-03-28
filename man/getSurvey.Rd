@@ -2,7 +2,7 @@
 % Please edit documentation in R/getSurvey.R
 \name{getSurvey}
 \alias{getSurvey}
-\title{Export a survey and download into R}
+\title{Export a Survey and Download it Into R}
 \usage{
 getSurvey(surveyID, lastResponseId = NULL, startDate = NULL,
   endDate = NULL, seenUnansweredRecode = NULL, limit = NULL,
@@ -27,7 +27,7 @@ getSurvey(surveyID, lastResponseId = NULL, startDate = NULL,
 
 \item{forceRequest}{Logical. getSurvey() saves each survey in a temporary directory so that it can quickly be retrieved later. If forceRequest is TRUE, getSurvey() always downloads the survey from the API instead of loading it from the temporary directory. Defaults to FALSE.}
 
-\item{...}{optional arguments. You can pass all arguments listed in \code{\link{registerOptions}} (except a different root url / api key). You can also pass a argument 'fileEncoding' (see 'fileEncoding' argument in \code{\link{readSurvey}}) to import your survey using a specific encoding.}
+\item{...}{optional arguments. You can pass all arguments listed in \code{\link{registerOptions}} (except a different base url / api key). You can also pass a argument 'fileEncoding' (see 'fileEncoding' argument in \code{\link{readSurvey}}) to import your survey using a specific encoding.}
 }
 \description{
 Export a qualtrics survey you own and import the survey directly into R.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/metadata.R
 \name{metadata}
 \alias{metadata}
-\title{Download metadata about a survey}
+\title{Download Metadata for a Survey}
 \usage{
 metadata(surveyID, get = list(), ...)
 }

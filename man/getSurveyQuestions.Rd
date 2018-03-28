@@ -2,7 +2,7 @@
 % Please edit documentation in R/getSurveyQuestions.R
 \name{getSurveyQuestions}
 \alias{getSurveyQuestions}
-\title{Retrieve a data frame containing question IDs and labels}
+\title{Retrieve a Data Frame Containing Question IDs and Labels}
 \usage{
 getSurveyQuestions(surveyID)
 }
@@ -10,7 +10,7 @@ getSurveyQuestions(surveyID)
 \item{surveyID}{String. Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.}
 }
 \description{
-Retrieve a data frame containing question IDs and labels
+Retrieve a Data Frame Containing Question IDs and Labels
 }
 \examples{
 \dontrun{

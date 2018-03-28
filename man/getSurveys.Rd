@@ -2,12 +2,12 @@
 % Please edit documentation in R/getSurveys.R
 \name{getSurveys}
 \alias{getSurveys}
-\title{Retrieve a data frame of all active surveys on Qualtrics}
+\title{Retrieve a Data Frame of All Active Surveys on Qualtrics}
 \usage{
 getSurveys()
 }
 \description{
-Retrieve a data frame of all active surveys on Qualtrics
+Retrieve a Data Frame of All Active Surveys on Qualtrics
 }
 \examples{
 \dontrun{
