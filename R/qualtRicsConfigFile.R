@@ -14,7 +14,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Prints an example of a qualtRics configuration file to the console.
+#' Prints an Example of a QualtRics Configuration File to the Console.
 #'
 #' @param api_token String. API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})
 #' @param base_url String. Base url for your institution (see: \url{https://api.qualtrics.com/docs/root-url})
