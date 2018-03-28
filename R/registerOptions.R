@@ -14,17 +14,17 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#' Register qualtrics API key, root url and other options
+#' Register Qualtrics API Key, Base Url and Other Options
 #'
-#' This function registers the user's qualtrics API key, root url and other options for the remainder of the R session. This function only needs to be called once (at the beginning of each R session). You may also use a configuration file. See \code{\link{qualtRicsConfigFile}} or \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file}
-#' . Note that you must pass both an api token and a root url if you call this function for the first time in a session and you're not using a config file. Thereafter, you can pass these options individually.
+#' This function registers the user's qualtrics API key, base url and other options for the remainder of the R session. This function only needs to be called once (at the beginning of each R session). You may also use a configuration file. See \code{\link{qualtRicsConfigFile}} or \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file}
+#' . Note that you must pass both an api token and a base url if you call this function for the first time in a session and you're not using a config file. Thereafter, you can pass these options individually.
 #'
 #' @param verbose Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
 #' @param useLabels Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
 #' @param convertVariables Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert certain question types (e.g. multiple choice) to proper data type in R. Defaults to TRUE.
 #' @param useLocalTime Logical. Use local timezone to determine response date values? Defaults to FALSE. See \url{https://api.qualtrics.com/docs/dates-and-times} for more information.
 #' @param dateWarning Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
-#' @param ... Either one or both of 'api_token' and 'root_url' to register the Qualtrics api key and institution-specific root url manually. (see example). See also \code{\link{qualtRicsConfigFile}} for an explanation of the root_url and api_token parameters.
+#' @param ... Either one or both of 'api_token' and 'base_url' to register the Qualtrics api key and institution-specific root url manually. (see example). See also \code{\link{qualtRicsConfigFile}} for an explanation of the root_url and api_token parameters.
 #'
 #' @seealso See \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file. See: \url{https://api.qualtrics.com/docs/authentication} to find your Qualtrics API key and \url{https://api.qualtrics.com/docs/root-url} for more information about the institution-specific root url.
 #'
@@ -36,7 +36,7 @@
 #' @examples
 #' \dontrun{
 #' # Register your Qualtrics credentials if you haven't already
-#' # Note that you need to pass both the 'api_token' and 'root_url'
+#' # Note that you need to pass both the 'api_token' and 'base_url'
 #' # parameters if you call this function for the first time.
 #' registerOptions(api_token = "<YOUR-API-TOKEN>",
 #'                 base_url = "<YOUR-ROOT-URL>")
@@ -70,7 +70,7 @@ registerOptions <- function(verbose=TRUE,
 
   # Take additional arguments
   args <- list(...)
-  # Store root_url/api_token. Else give NA as value
+  # Store base_url/api_token. Else give NA as value
   root_url <- ifelse("base_url" %in% names(args), args$base_url, NA)
   api_token <- ifelse("api_token" %in% names(args), args$api_token, NA)
   # Show deprecated warning
