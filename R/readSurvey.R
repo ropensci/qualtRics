@@ -39,12 +39,12 @@
 #' \dontrun{
 #' # Generic use of readSurvey()
 #' my_data_frame <- readSurvey("<YOUR-PATH-TO-CSV-FILE>")
-#' # Example using legacy data format
-#' file <- system.file("extdata", "sample.csv", package = "qualtRics")
-#' sample_legacy_df <- readSurvey(file)
 #' # Example using current data format
-#' file <- system.file("extdata", "sample_legacy.csv", package = "qualtRics")
+#' file <- system.file("extdata", "sample.csv", package = "qualtRics")
 #' sample_df <- readSurvey(file)
+#' # Example using legacy data format
+#' file <- system.file("extdata", "sample_legacy.csv", package = "qualtRics")
+#' sample_legacy_df <- readSurvey(file)
 #' }
 
 readSurvey <- function(file_name,
