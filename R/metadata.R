@@ -42,6 +42,11 @@
 #' question_specific <- metadata(surveyID=id,
 #'                               get=list(questions = TRUE),
 #'                                        questions = c("Q1", "Q2"))
+#'
+#' # Example of a metadata file
+#' file <- system.file("extdata", "metadata.rds", package = "qualtRics")
+#' # Load
+#' metadata_ex <- readRDS(file=file)
 #' }
 #'
 
