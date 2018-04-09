@@ -23,9 +23,9 @@ Imports:
     dplyr,
     rlang
 URL:
-    https://jasperhg90.github.io/qualtRics/
+    https://ropensci.github.io/qualtRics/
 BugReports:
-    https://github.com/JasperHG90/qualtRics/issues
+    https://github.com/ropensci/qualtRics/issues
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
