@@ -1,6 +1,6 @@
 # qualtRics
 
-[![Build Status](https://travis-ci.org/JasperHG90/qualtRics.svg?branch=master)](https://travis-ci.org/JasperHG90/qualtRics) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/fv9bmqcmty1wwrgu?svg=true)](https://ci.appveyor.com/project/JasperHG90/qualtrics-g2a4u) [![CRAN STATUS](https://www.r-pkg.org/badges/version/qualtRics)](https://cran.r-project.org/web/packages/qualtRics/index.html) [![CRAN LICENSE](https://img.shields.io/cran/l/qualtRics.svg)](https://img.shields.io/cran/l/qualtRics.svg) [![DOWNLOADSPM](https://cranlogs.r-pkg.org/badges/qualtRics)](https://www.r-pkg.org/pkg/qualtRics) [![DOWNLOADSTOTAL](https://cranlogs.r-pkg.org/badges/grand-total/qualtRics)](https://cranlogs.r-pkg.org/badges/grand-total/qualtRics) [![CODECOV](https://codecov.io/gh/JasperHG90/qualtRics/branch/master/graphs/badge.svg)](https://codecov.io/gh/JasperHG90/qualtRics)
+[![Build Status](https://travis-ci.org/ropensci/qualtRics.svg?branch=master)](https://travis-ci.org/ropensci/qualtRics) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/fv9bmqcmty1wwrgu?svg=true)](https://ci.appveyor.com/project/ropensci/qualtrics-g2a4u) [![CRAN STATUS](https://www.r-pkg.org/badges/version/qualtRics)](https://cran.r-project.org/web/packages/qualtRics/index.html) [![CRAN LICENSE](https://img.shields.io/cran/l/qualtRics.svg)](https://img.shields.io/cran/l/qualtRics.svg) [![DOWNLOADSPM](https://cranlogs.r-pkg.org/badges/qualtRics)](https://www.r-pkg.org/pkg/qualtRics) [![DOWNLOADSTOTAL](https://cranlogs.r-pkg.org/badges/grand-total/qualtRics)](https://cranlogs.r-pkg.org/badges/grand-total/qualtRics) [![CODECOV](https://codecov.io/gh/ropensci/qualtRics/branch/master/graphs/badge.svg)](https://codecov.io/gh/ropensci/qualtRics)
 [![rOpenSci](https://badges.ropensci.org/192_status.svg)](https://github.com/ropensci/onboarding/issues/192)
 [![DOI](https://zenodo.org/badge/70817337.svg)](https://zenodo.org/badge/latestdoi/70817337)
 
@@ -25,7 +25,7 @@ Or, if you want to install the latest development version, run:
 &nbsp;
 ```r
 install.packages("devtools")
-devtools::install_github("JasperHG90/qualtRics")
+devtools::install_github("ropensci/qualtRics")
 ```
 &nbsp;
 
@@ -35,7 +35,7 @@ All dependencies will be installed when you install `qualtRics`.
 
 ## Updates
 
-Periodically check this repository for updates and execute `devtools::install_github("JasperHG90/qualtRics")` to update.
+Periodically check this repository for updates and execute `devtools::install_github("ropensci/qualtRics")` to update.
 
 ## Usage
 
@@ -103,7 +103,7 @@ qualtRics supports the use of a configuration file to store your Qualtrics crede
 ```
 Copy-paste the lines between the dashes into a new plain text file, replace the values for the
 api_token and base_url if they are not yet filled out. and save it in your working directory 
-as '.qualtRics.yml'. Execute '?qualtRics::qualtRicsConfigFile' to view an explanation of the additional arguments. Visit https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file 
+as '.qualtRics.yml'. Execute '?qualtRics::qualtRicsConfigFile' to view an explanation of the additional arguments. Visit https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file 
 for more information.
 
 --------------
@@ -133,11 +133,11 @@ registerOptions(verbose=FALSE, useLabels=FALSE, base_url="myinstitution.qualtric
 
 1. Open an existing R project or start a new one. Then, open up an empty text file:
 
-![](https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/config_step1.png)
+![](https://raw.githubusercontent.com/ropensci/qualtRics/master/img/config_step1.png)
 
 2. Execute `qualtRicsConfigFile(api_token="<YOUR-API-TOKEN-HERE>", base_url="<YOUR-ROOT-URL-HERE>")` and copy-paste the text between the dashes to the empty text file:
 
-![](https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/config_step2.png)
+![](https://raw.githubusercontent.com/ropensci/qualtRics/master/img/config_step2.png)
 
 3. Save the file as `.qualtRics.yml` and execute `registerOptions()` or restart your R session and execute `library(qualtRics)` to load the configuration file.
 
@@ -315,7 +315,7 @@ mysurvey <- readSurvey("/users/jasper/desktop/mysurvey.csv")
 
 To avoid special characters (mainly periods) in header names, `readSurvey` uses question labels as the header names. The question belonging to that label is then added using the [sjlabelled](https://CRAN.R-project.org/package=sjlabelled) package. Qualtrics gives names to these labels automatically, but you can easily change them.
 
-![](https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/qualtricsdf.png)
+![](https://raw.githubusercontent.com/ropensci/qualtRics/master/img/qualtricsdf.png)
 
 In order to avoid problems when importing the data, **do not use newlines** in question labels and descriptions.
 
@@ -325,11 +325,11 @@ For specific information about the Qualtrics API, you can refer to the [official
 
 ### Issues
 
-Should you encounter any bugs or issues, please report them [here](https://github.com/JasperHG90/qualtRics/issues)
+Should you encounter any bugs or issues, please report them [here](https://github.com/ropensci/qualtRics/issues)
 
 ### Requests
 
-If you have a request (like adding a new argument), please leave it as an issue  [here](https://github.com/JasperHG90/qualtRics/issues)
+If you have a request (like adding a new argument), please leave it as an issue  [here](https://github.com/ropensci/qualtRics/issues)
 
 ### Contributing
 
@@ -349,7 +349,7 @@ Contributions are welcome from anyone subject to the following rules:
 
 ### News and changes
 
-View news about qualtRics [here](https://github.com/JasperHG90/qualtRics/blob/master/news.md)
+View news about qualtRics [here](https://github.com/ropensci/qualtRics/blob/master/news.md)
 
 ### Thanks!
 
