@@ -1,6 +1,7 @@
 # qualtRics
 
 [![Build Status](https://travis-ci.org/JasperHG90/qualtRics.svg?branch=master)](https://travis-ci.org/JasperHG90/qualtRics) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/fv9bmqcmty1wwrgu?svg=true)](https://ci.appveyor.com/project/JasperHG90/qualtrics-g2a4u) [![CRAN STATUS](https://www.r-pkg.org/badges/version/qualtRics)](https://cran.r-project.org/web/packages/qualtRics/index.html) [![CRAN LICENSE](https://img.shields.io/cran/l/qualtRics.svg)](https://img.shields.io/cran/l/qualtRics.svg) [![DOWNLOADSPM](https://cranlogs.r-pkg.org/badges/qualtRics)](https://www.r-pkg.org/pkg/qualtRics) [![DOWNLOADSTOTAL](https://cranlogs.r-pkg.org/badges/grand-total/qualtRics)](https://cranlogs.r-pkg.org/badges/grand-total/qualtRics) [![CODECOV](https://codecov.io/gh/JasperHG90/qualtRics/branch/master/graphs/badge.svg)](https://codecov.io/gh/JasperHG90/qualtRics)
+[![rOpenSci](https://badges.ropensci.org/192_status.svg)](https://github.com/ropensci/onboarding/issues/192)
 [![DOI](https://zenodo.org/badge/70817337.svg)](https://zenodo.org/badge/latestdoi/70817337)
 
 Qualtrics allows users to create and disseminate online surveys. It is used by researchers and other analysts to field responses for the purposes of (academic) research. While users can manually download survey responses from Qualtrics, importing this data into R is cumbersome. The R package qualtRics focuses on the retrieval of survey data using the Qualtrics API and aims to reduce the pre-processing steps needed to prepare this data for analysis. Currently, the package is the only package on CRAN that offers such functionality, and is included in the official Qualtrics API documentation. 
@@ -353,3 +354,5 @@ View news about qualtRics [here](https://github.com/JasperHG90/qualtRics/blob/ma
 ### Thanks!
 
 Thanks to everyone who lets me know about issues, bugs etc. I appreciate your help a lot. Special thanks to those who add code! h/t @phoebewong, @samuelkaminsky, @eknud, @strengejacke, Adrian Brugger and Stefan Borer. 
+
+[![ropensci_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
