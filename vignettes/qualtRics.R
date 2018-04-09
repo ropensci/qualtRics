@@ -5,11 +5,11 @@ knitr::opts_chunk$set(
 )
 
 ## ---- echo=FALSE, out.width="80%"----------------------------------------
-knitr::include_graphics("https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/config_step1.png")
+knitr::include_graphics("https://raw.githubusercontent.com/ropensci/qualtRics/master/img/config_step1.png")
 
 ## ---- echo=FALSE, out.width="80%"----------------------------------------
-knitr::include_graphics("https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/config_step2.png")
+knitr::include_graphics("https://raw.githubusercontent.com/ropensci/qualtRics/master/img/config_step2.png")
 
 ## ---- echo=FALSE, out.width="80%"----------------------------------------
-knitr::include_graphics("https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/qualtricsdf.png")
+knitr::include_graphics("https://raw.githubusercontent.com/ropensci/qualtRics/master/img/qualtricsdf.png")
 

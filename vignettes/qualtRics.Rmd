@@ -70,7 +70,7 @@ qualtRics supports the use of a configuration file to store your Qualtrics crede
 ```
 Copy-paste the lines between the dashes into a new plain text file, replace the values for the
 api_token and root_url if they are not yet filled out. and save it in your working directory 
-as '.qualtRics.yml'. Execute '?qualtRics::qualtRicsConfigFile' to view an explanation of the additional arguments. Visit https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file 
+as '.qualtRics.yml'. Execute '?qualtRics::qualtRicsConfigFile' to view an explanation of the additional arguments. Visit https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file 
 for more information.
 
 --------------
@@ -99,13 +99,13 @@ registerOptions(verbose=FALSE, useLabels=FALSE, root_url="myinstitution.qualtric
 Open an existing R project or start a new one. Then, open up an empty text file:
 
 ```{r, echo=FALSE, out.width="80%"}
-knitr::include_graphics("https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/config_step1.png")
+knitr::include_graphics("https://raw.githubusercontent.com/ropensci/qualtRics/master/img/config_step1.png")
 ```
 
 Execute `qualtRicsConfigFile(api_token="<YOUR-API-TOKEN-HERE>", root_url="<YOUR-ROOT-URL-HERE>")` and copy-paste the text between the dashes to the empty text file:
 
 ```{r, echo=FALSE, out.width="80%"}
-knitr::include_graphics("https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/config_step2.png")
+knitr::include_graphics("https://raw.githubusercontent.com/ropensci/qualtRics/master/img/config_step2.png")
 ```
 
 Save the file as `.qualtRics.yml` and execute `registerOptions()` or restart your R session and execute `library(qualtRics)` to load the configuration file.
@@ -197,7 +197,7 @@ mysurvey <- readSurvey("/users/jasper/desktop/mysurvey.csv")
 To avoid special characters (mainly periods) in header names, `readSurvey` uses question labels as the header names. The question belonging to that label is then added using the [sjlabelled](https://CRAN.R-project.org/package=sjlabelled) package. Qualtrics gives names to these labels automatically, but you can easily change them.
 
 ```{r, echo=FALSE, out.width="80%"}
-knitr::include_graphics("https://raw.githubusercontent.com/JasperHG90/qualtRics/master/img/qualtricsdf.png")
+knitr::include_graphics("https://raw.githubusercontent.com/ropensci/qualtRics/master/img/qualtricsdf.png")
 ```
 
 You can edit your configuration file by executing `file.edit(".qualtRics.yml")` in the R console. 
