@@ -65,7 +65,7 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
   } else if(res$status_code == 401) {
     stop("Qualtrics API raised an authentication (401) error - you may not have the\nrequired authorization. Please check your API key and root url.") # nolint
   } else if(res$status_code == 400) {
-    stop("Qualtrics API raised a bad request (400) error - Please report this on\nhttps://github.com/JasperHG90/qualtRics/issues") # nolint
+    stop("Qualtrics API raised a bad request (400) error - Please report this on\nhttps://github.com/ropensci/qualtRics/issues") # nolint
   } else if(res$status_code == 404) {
     stop("Qualtrics API complains that the requested resource cannot be found (404 error).\nPlease check if you are using the correct survey ID.") # nolint
   } else if(res$status_code == 500) {

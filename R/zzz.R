@@ -19,7 +19,7 @@
 # needs to have #qualtRics API key and root url stored in a configuration
 # file in working directory. For an example of a configuration file,
 # execute "qualtRicsCo#nfigFile()". See:
-# https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file # nolint
+# https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file # nolint
 
 
 .onLoad <- function(libname = find.package("qualtRics"), pkgname="qualtRics") {

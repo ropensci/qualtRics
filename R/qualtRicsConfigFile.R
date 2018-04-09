@@ -24,7 +24,7 @@
 #' @param useLocalTime Logical. Use local timezone to determine response date values? Defaults to FALSE. See \url{https://api.qualtrics.com/docs/dates-and-times} for more information.
 #' @param dateWarning Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
 #' @param root_url String. Deprecated. Use base url instead. This will be removed in future versions.
-#' @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API. See \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file.
+#' @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API. See \url{https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file.
 #' @author Jasper Ginn
 #' @export
 #' @examples
@@ -59,7 +59,7 @@ qualtRicsConfigFile <- function(api_token = NULL,
 values for the api_token and root_url if they are not yet filled out. and save it in
 your working directory as '.qualtRics.yml'. Execute '?qualtRics::qualtRicsConfigFile'
 to view an explanation of the additional arguments. Visit
-https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file
+https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file
 for more information.", "\n\n",# nolint
     "--------------","\n",
     'api_token: ', ifelse(is.null(api_token), '<YOUR-API-TOKEN-HERE>',

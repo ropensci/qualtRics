@@ -16,7 +16,7 @@
 
 #' Register Qualtrics API Key, Base Url and Other Options
 #'
-#' This function registers the user's qualtrics API key, base url and other options for the remainder of the R session. This function only needs to be called once (at the beginning of each R session). You may also use a configuration file. See \code{\link{qualtRicsConfigFile}} or \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file}
+#' This function registers the user's qualtrics API key, base url and other options for the remainder of the R session. This function only needs to be called once (at the beginning of each R session). You may also use a configuration file. See \code{\link{qualtRicsConfigFile}} or \url{https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file}
 #' . Note that you must pass both an api token and a base url if you call this function for the first time in a session and you're not using a config file. Thereafter, you can pass these options individually.
 #'
 #' @param verbose Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
@@ -26,7 +26,7 @@
 #' @param dateWarning Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
 #' @param ... Either one or both of 'api_token' and 'base_url' to register the Qualtrics api key and institution-specific root url manually. (see example). See also \code{\link{qualtRicsConfigFile}} for an explanation of the root_url and api_token parameters.
 #'
-#' @seealso See \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file. See: \url{https://api.qualtrics.com/docs/authentication} to find your Qualtrics API key and \url{https://api.qualtrics.com/docs/root-url} for more information about the institution-specific root url.
+#' @seealso See \url{https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file. See: \url{https://api.qualtrics.com/docs/authentication} to find your Qualtrics API key and \url{https://api.qualtrics.com/docs/root-url} for more information about the institution-specific root url.
 #'
 #' @author Jasper Ginn
 #' @importFrom yaml yaml.load_file
@@ -161,10 +161,10 @@ registerOptions <- function(verbose=TRUE,
     }
     # If 'convertStandardColumns' is found in credentials then emit a warning
     if('convertstandardcolumns' %in% names(cred) & !'convertvariables' %in% names(cred)) { # nolint
-      message("'convertstandardcolumns' has been deprecated and will be ignored. Please replace it\nwith 'convertvariables' in your '.qualtRics.yml' file. Visit <https://github.com/JasperHG90/qualtRics>\nfor more information.") # nolint
+      message("'convertstandardcolumns' has been deprecated and will be ignored. Please replace it\nwith 'convertvariables' in your '.qualtRics.yml' file. Visit <https://github.com/ropensci/qualtRics>\nfor more information.") # nolint
       convertVariables <- TRUE
     } else if(all(c('convertstandardcolumns', 'convertvariables') %in% names(cred))) { # nolint
-        message("'convertstandardcolumns' has been deprecated and will be ignored. Please remove it\nfrom your '.qualtRics.yml' file. Visit <https://github.com/JasperHG90/qualtRics> for\nmore information.") # nolint
+        message("'convertstandardcolumns' has been deprecated and will be ignored. Please remove it\nfrom your '.qualtRics.yml' file. Visit <https://github.com/ropensci/qualtRics> for\nmore information.") # nolint
       convertVariables <- cred$convertvariables
     } else {
       convertVariables <- cred$convertvariables
