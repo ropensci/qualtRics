@@ -257,7 +257,7 @@ You can add a from/to date to only retrieve responses between those dates:
 
 &nbsp;
 ```r
-surv <- getSurvey(survs$id[4],
+surv <- getSurvey(surveys$id[4],
                   startDate = "2016-09-18",
                   endDate = "2016-10-01",
                   useLabels = FALSE) # You can set this option 
@@ -272,7 +272,7 @@ You may also reference a response ID. `getSurvey` will then download all respons
 
 &nbsp;
 ```r
-surv <- getSurvey(survs$id[4],
+surv <- getSurvey(surveys$id[4],
                   lastResponseId = "R_3mmovCIeMllvsER",
                   useLabels = FALSE,
                   verbose = TRUE)
