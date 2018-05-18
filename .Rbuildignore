@@ -11,10 +11,11 @@ README\.md$
 ^appveyor\.yml$
 ^\.gitattributes$
 Changelog\.md$
-^img
+^img$
 ^CONDUCT\.md$
 ^news\.md$
 ^paper\.md$
 ^paper\.bib$
-^dev
+^dev$
 ^todo\.md$
+^revamp\.md$
