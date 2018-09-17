@@ -14,7 +14,7 @@ Note that your institution must support API access and that it must be enabled f
 
 I am not affiliated with Qualtrics and they do not offer support for this package.
 
-** I currently do not have time to add new features / release upgrades to the package. The package will be back up on CRAN soon **
+**I currently do not have time to add new features / release upgrades to the package. The package will be back up on CRAN soon**
 
 ## Installation
 
