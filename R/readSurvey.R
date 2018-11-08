@@ -66,8 +66,9 @@ readSurvey <- function(file_name,
                              skip = skipNr,
                              na = c("")))
   # Need contingency when 0 rows
-  assertthat::assert_that(nrow(rawdata) > 0,
-                          msg="The survey you are trying to import has no responses.") # nolint
+  if(nrow(rawdata) == 0) 
+    return("The survey you are trying to import has no responses.")
+  
   # Load headers
   header <- suppressMessages(readr::read_csv(file = file_name,
                             col_names = TRUE,
