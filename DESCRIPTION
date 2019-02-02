@@ -34,5 +34,6 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown,
+    testthat,
     httptest
 VignetteBuilder: knitr

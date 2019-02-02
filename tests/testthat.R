@@ -1,3 +1,4 @@
+library(testthat)
 library(httptest)
 library(qualtRics)
 
