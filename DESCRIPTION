@@ -1,17 +1,26 @@
 Package: qualtRics
 Type: Package
-Title: Download Qualtrics Survey Data
-Version: 3.0
-Author: Jasper Ginn
-Maintainer: Jasper Ginn <jasperginn@gmail.com>
+Title: Download Qualtrics survey data
+Version: 3.0.0.900
+Authors@R: c(person("Jasper", "Ginn", role = c("aut"),
+             email = "jasperginn@gmail.com"),
+             person("Julia", "Silge", role = c("aut", "cre"), 
+             email = "julia.silge@gmail.com", 
+             comment = c(ORCID = "0000-0002-3671-836X")))
 Description: Qualtrics <https://www.qualtrics.com/about/> 
-    allows users to collect online data through surveys.
-    This package contains convenience functions to pull
-    survey results straight into R using the Qualtrics
+    is an online survey and data collection software 
+    platform. This package provides functions to access
+    survey results directly into R using the Qualtrics
     API. See <https://api.qualtrics.com/> for more 
     information about the Qualtrics API. This package is 
     community-maintained and is not officially supported 
     by Qualtrics.
+URL: https://ropensci.github.io/qualtRics/
+BugReports: https://github.com/ropensci/qualtRics/issues
+License: GPL-3 | file LICENSE
+Encoding: UTF-8
+LazyData: TRUE
+RoxygenNote: 6.1.1
 Imports:
     httr,
     stringr,
@@ -22,14 +31,6 @@ Imports:
     yaml,
     dplyr,
     rlang
-URL:
-    https://ropensci.github.io/qualtRics/
-BugReports:
-    https://github.com/ropensci/qualtRics/issues
-License: GPL-3 | file LICENSE
-Encoding: UTF-8
-LazyData: true
-RoxygenNote: 6.0.1
 Suggests: 
     knitr,
     rmarkdown,

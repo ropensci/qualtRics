@@ -1,7 +1,6 @@
-qualtRics [master branch] 
-=========================
+# qualtRics 3.0.1 [WIP]
 
-- Branch is even with v3.0
+- New maintainer: Julia Silge
 
 qualtRics 3.0 (2018-02-03)
 =========================
