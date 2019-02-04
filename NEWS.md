@@ -1,6 +1,7 @@
 # qualtRics 3.0.1 [WIP]
 
 - New maintainer: Julia Silge
+- Simpler approach for storing API credentials as environment variables with `qualtrics_api_credentials()`
 
 qualtRics 3.0 (2018-02-03)
 =========================

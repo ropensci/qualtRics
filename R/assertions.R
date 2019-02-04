@@ -14,37 +14,37 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Test whether API key is stored in environment
-assert_apikey_stored <- function() { # nolint start
+# Check if QUALTRICS_API_KEY is stored
+assert_api_key <- function() { # nolint start
 
-  # Key should be stored by "registerApiKey"
+  # Check if API key is set in environment
   assertthat::assert_that(Sys.getenv("QUALTRICS_API_KEY") != "",
-                          msg = "You need to register your qualtrics API key and root url using the\n'registerOptions()' function.")
+                          msg = "You need to register your Qualtrics API key and base URL using the\n'qualtrics_api_credentials()' function.")
 
 }
 
-# Check if root_url is stored
-assert_rootUrl_stored <- function() {
+# Check if QUALTRICS_BASE_URL is stored
+assert_base_url <- function() {
 
-  # Chck if root url is set in environment
-  assertthat::assert_that(Sys.getenv("QUALTRICS_ROOT_URL") != "",
-                          msg = "You need to register your qualtrics API key and root url using the\n'registerOptions()' function.")
+  # Check if base URL is set in environment
+  assertthat::assert_that(Sys.getenv("QUALTRICS_BASE_URL") != "",
+                          msg = "You need to register your Qualtrics API key and base URL using the\n'qualtrics_api_credentials()' function.")
 
-  # Test if root url ends with '.qualtrics.com'
-  assertthat::assert_that(endsWith(Sys.getenv("QUALTRICS_ROOT_URL"), '.qualtrics.com'),
-                          msg=paste0("The qualtrics root url must end with '.qualtrics.com'. Your root url looks like this: '",
-                                     Sys.getenv("QUALTRICS_ROOT_URL"),
-                                     "'.\nPlease visit https://api.qualtrics.com/docs/root-url for instructions about the qualtrics root url."))
+  # Test if root URL ends with '.qualtrics.com'
+  assertthat::assert_that(endsWith(Sys.getenv("QUALTRICS_BASE_URL"), '.qualtrics.com'),
+                          msg=paste0("The Qualtrics base URL must end with '.qualtrics.com'. Your base URL looks like this: '",
+                                     Sys.getenv("QUALTRICS_BASE_URL"),
+                                     "'.\nPlease visit https://api.qualtrics.com/docs/root-url for instructions about the Qualtrics base URL."))
 
 }
 
 # Check if save directory exists
-assert_saveDir_exists <- function(saveDir) {
+assert_saveDir_exists <- function(save_dir) {
 
-  assertthat::assert_that(ifelse((!file.info(saveDir)$isdir |
-                                    is.na(file.info(saveDir)$isdir) == TRUE),
+  assertthat::assert_that(ifelse((!file.info(save_dir)$isdir |
+                                    is.na(file.info(save_dir)$isdir) == TRUE),
                                  FALSE, TRUE),
-                          msg = paste0("The directory ", saveDir, " does not exist."))
+                          msg = paste0("The directory ", save_dir, " does not exist."))
 
 }
 
@@ -87,7 +87,8 @@ assert_includedQuestionIds_string <- function(includedQuestionIds) {
 # Check if limit > 0
 assert_limit_abovezero <- function(limit) {
 
-  assertthat::assert_that(limit > 0, msg="Limit parameter should be at least 1.")
+  assertthat::assert_that(limit > 0,
+                          msg = "Limit parameter should be at least 1.")
 
 }
 
@@ -95,9 +96,9 @@ assert_limit_abovezero <- function(limit) {
 assert_surveyFile_exists <- function(file_name) {
 
   assertthat::assert_that(file.exists(file_name),
-                          msg=paste0("File ",
-                                     file_name,
-                                     " does not exist. Please check if you passed the right file path."))
+                          msg = paste0("File ",
+                                       file_name,
+                                       " does not exist. Please check if you passed the right file path."))
 
 }
 

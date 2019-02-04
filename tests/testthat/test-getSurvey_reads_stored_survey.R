@@ -11,6 +11,6 @@ test_that("getSurvey() reads a stored survey in temporary directory if exists", 
   # Query with all options
   expect_message(qualtRics::getSurvey("surveyID"),
                  "Found an earlier download for survey with id surveyID. Loading this file.
-Set 'forceRequest' to TRUE if you want to override this") # nolint
+Set 'force_request' to TRUE if you want to override this") # nolint
 
 })

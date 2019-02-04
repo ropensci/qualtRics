@@ -23,7 +23,7 @@
 #' @param convertVariables Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert certain question types (e.g. multiple choice) to proper data type in R. Defaults to TRUE.
 #' @param useLocalTime Logical. Use local timezone to determine response date values? Defaults to FALSE. See \url{https://api.qualtrics.com/docs/dates-and-times} for more information.
 #' @param dateWarning Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
-#' @param root_url String. Deprecated. Use base url instead. This will be removed in future versions.
+#' @param root_url String. Deprecated. Use `base_url` instead. This will be removed in future versions.
 #' @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API. See \url{https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file.
 #' @author Jasper Ginn
 #' @export
@@ -35,12 +35,12 @@
 #'
 
 qualtRicsConfigFile <- function(api_token = NULL,
-                                base_url=NULL,
-                                verbose=TRUE,
-                                useLabels=TRUE,
-                                convertVariables=TRUE,
-                                useLocalTime=FALSE,
-                                dateWarning=TRUE,
+                                base_url = NULL,
+                                verbose = TRUE,
+                                useLabels = TRUE,
+                                convertVariables = TRUE,
+                                useLocalTime = FALSE,
+                                dateWarning = TRUE,
                                 root_url = NULL) {
 
   # Check for deprecated arguments

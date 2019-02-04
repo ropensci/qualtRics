@@ -4,8 +4,9 @@
 \alias{registerOptions}
 \title{Register Qualtrics API Key, Base Url and Other Options}
 \usage{
-registerOptions(verbose = TRUE, useLabels = TRUE, convertVariables = TRUE,
-  useLocalTime = FALSE, dateWarning = TRUE, ...)
+registerOptions(verbose = TRUE, useLabels = TRUE,
+  convertVariables = TRUE, useLocalTime = FALSE, dateWarning = TRUE,
+  ...)
 }
 \arguments{
 \item{verbose}{Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.}
@@ -21,7 +22,7 @@ registerOptions(verbose = TRUE, useLabels = TRUE, convertVariables = TRUE,
 \item{...}{Either one or both of 'api_token' and 'base_url' to register the Qualtrics api key and institution-specific root url manually. (see example). See also \code{\link{qualtRicsConfigFile}} for an explanation of the root_url and api_token parameters.}
 }
 \description{
-This function registers the user's qualtrics API key, base url and other options for the remainder of the R session. This function only needs to be called once (at the beginning of each R session). You may also use a configuration file. See \code{\link{qualtRicsConfigFile}} or \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file}
+This function registers the user's qualtrics API key, base url and other options for the remainder of the R session. This function only needs to be called once (at the beginning of each R session). You may also use a configuration file. See \code{\link{qualtRicsConfigFile}} or \url{https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file}
 . Note that you must pass both an api token and a base url if you call this function for the first time in a session and you're not using a config file. Thereafter, you can pass these options individually.
 }
 \examples{
@@ -37,12 +38,12 @@ registerOptions(base_url = "<YOUR-OTHER-ROOT-URL>")
 surveys <- getSurveys()
 # Retrieve a single survey
 mysurvey <- getSurvey(surveyID = surveys$id[6],
-                      saveDir = tempdir(),
+                      save_dir = tempdir(),
                       verbose = TRUE)
 # You can use the same parameters as those found in the qualtrics API documentation
 # Found here: https://api.qualtrics.com/docs/csv
 mysurvey <- getSurvey(surveyID = surveys$id[6],
-                      saveDir = tempdir(),
+                      save_dir = tempdir(),
                       startDate = "2017-01-01",
                       endDate = "2017-01-31",
                       limit = 100,
@@ -51,7 +52,7 @@ mysurvey <- getSurvey(surveyID = surveys$id[6],
 
 }
 \seealso{
-See \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file. See: \url{https://api.qualtrics.com/docs/authentication} to find your Qualtrics API key and \url{https://api.qualtrics.com/docs/root-url} for more information about the institution-specific root url.
+See \url{https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file. See: \url{https://api.qualtrics.com/docs/authentication} to find your Qualtrics API key and \url{https://api.qualtrics.com/docs/root-url} for more information about the institution-specific root url.
 }
 \author{
 Jasper Ginn

@@ -46,12 +46,12 @@
 #' surveys <- getSurveys()
 #' # Retrieve a single survey
 #' mysurvey <- getSurvey(surveyID = surveys$id[6],
-#'                       saveDir = tempdir(),
+#'                       save_dir = tempdir(),
 #'                       verbose = TRUE)
 #' # You can use the same parameters as those found in the qualtrics API documentation
 #' # Found here: https://api.qualtrics.com/docs/csv
 #' mysurvey <- getSurvey(surveyID = surveys$id[6],
-#'                       saveDir = tempdir(),
+#'                       save_dir = tempdir(),
 #'                       startDate = "2017-01-01",
 #'                       endDate = "2017-01-31",
 #'                       limit = 100,

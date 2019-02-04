@@ -4,7 +4,14 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
 
 # qualtRics
 
@@ -36,8 +43,7 @@ The authors of this package are not affiliated with Qualtrics, and Qualtrics doe
 
 This package can be installed with the [remotes](https://cran.r-project.org/package=remotes) package (or alternatively, devtools):
 
-
-```r
+```{r eval=FALSE}
 install.packages("remotes")
 remotes::install_github("ropensci/qualtRics")
 ```
@@ -66,8 +72,7 @@ There are two important credentials you need to authenticate with the Qualtrics 
 
 You can store your API credentials `QUALTRICS_API_KEY` and `QUALTRICS_BASE_URL` in your `.Renviron` file for repeated use across sessions. The qualtRics package has a function to help with this.
 
-
-```r
+```{r, eval=FALSE}
 library(qualtRics)
 
 qualtrics_api_credentials(api_key="<YOUR-QUALTRICS_API_KEY>", 
@@ -81,15 +86,13 @@ After you use this function, reload your environment (`readRenviron("~/.Renviron
 
 Once your Qualtrics API credentials are stored, you can see what surveys are available to you.
 
-
-```r
+```{r, eval=FALSE}
 surveys <- getSurveys() 
 ```
 
 You can then download the data from any of these individual surveys directly into R.
 
-
-```r
+```{r, eval=FALSE}
 mysurvey <- getSurvey(surveyID = surveys$id[6], 
                       verbose = TRUE)
 ```

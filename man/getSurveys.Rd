@@ -2,30 +2,31 @@
 % Please edit documentation in R/getSurveys.R
 \name{getSurveys}
 \alias{getSurveys}
-\title{Retrieve a Data Frame of All Active Surveys on Qualtrics}
+\title{Retrieve a data frame of all active surveys on Qualtrics}
 \usage{
 getSurveys()
 }
 \description{
-Retrieve a Data Frame of All Active Surveys on Qualtrics
+Retrieve a data frame of all active surveys on Qualtrics
 }
 \examples{
 \dontrun{
 # Register your Qualtrics credentials if you haven't already
-registerOptions(api_token = "<YOUR-API-TOKEN>",
-                base_url = "<YOUR-ROOT-URL>")
+qualtrics_api_credentials(api_key = "<YOUR-API-KEY>",
+                          base_url = "<YOUR-BASE-URL>")
+
 # Retrieve a list of surveys
 surveys <- getSurveys()
+
 # Retrieve a single survey
-mysurvey <- getSurvey(surveyID = surveys$id[6],
-                      saveDir = tempdir(),
-                      verbose = TRUE)
-# You can use the same parameters as those found in the qualtrics API documentation
+mysurvey <- getSurvey(surveyID = surveys$id[6])
+
+# You can use the same parameters as those found in the Qualtrics API documentation
 # Found here: https://api.qualtrics.com/docs/csv
 mysurvey <- getSurvey(surveyID = surveys$id[6],
-                      saveDir = tempdir(),
-                      startDate = "2017-01-01",
-                      endDate = "2017-01-31",
+                      save_dir = tempdir(),
+                      startDate = "2018-01-01",
+                      endDate = "2018-01-31",
                       limit = 100,
                       useLabels = TRUE,
                       seenUnansweredRecode = "UNANS",
@@ -34,7 +35,4 @@ mysurvey <- getSurvey(surveyID = surveys$id[6],
 }
 \seealso{
 See \url{https://api.qualtrics.com/docs} for documentation on the Qualtrics API.
-}
-\author{
-Jasper Ginn
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/readSurvey.R
 \name{readSurvey}
 \alias{readSurvey}
-\title{Read a CSV File Exported From Qualtrics.}
+\title{Read a CSV file exported from Qualtrics}
 \usage{
 readSurvey(file_name, stripHTML = TRUE, legacyFormat = FALSE)
 }

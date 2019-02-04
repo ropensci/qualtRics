@@ -14,7 +14,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#    Download qualtrics data into R
+#    Download Qualtrics data into R
 #    Copyright (C) 2016 Jasper Ginn
 
 #    This program is free software: you can redistribute it and/or modify
@@ -32,24 +32,13 @@
 
 # utils.R contains helper functions for the qualtRics package. These functions should not be called directly by the user and should not be exported.
 
-#' @importFrom dplyr '%>%'
-#' @importFrom dplyr mutate
-#' @importFrom rlang ':='
-#' @importFrom dplyr select
-#' @importFrom dplyr pull
-#' @importFrom readr parse_factor
-#' @importFrom sjlabelled get_label
-#' @importFrom sjlabelled set_label
-#' @noRd
 
-# Checks responses against qualtrics response codes and returns error message.
-#
-# @param res response from httr::GET
-# @param raw if TRUE, add 'raw' flag to httr::content() function.
-#
-# @author Jasper Ginn
+#' Checks responses against Qualtrics response codes and returns error message.
+#'
+#' @param res Response from httr::GET
+#' @param raw If TRUE, add 'raw' flag to httr::content() function.
 
-qualtRicsResponseCodes <- function(res, raw=FALSE) {
+qualtRicsResponseCodes <- function(res, raw = FALSE) {
   # Check status code and raise error/warning
   if(res$status_code == 200) {
     if(raw) {
@@ -70,11 +59,11 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
     stop("Qualtrics API complains that the requested resource cannot be found (404 error).\nPlease check if you are using the correct survey ID.") # nolint
   } else if(res$status_code == 500) {
     stop(paste0("Qualtrics API reports an internal server (500) error. Please contact\nQualtrics Support (https://www.qualtrics.com/contact/) and provide the instanceId and errorCode below.", "\n", # nolint
-                   "\n",
-                   "instanceId:", " ",
+                "\n",
+                "instanceId:", " ",
                 httr::content(res)$meta$error$instanceId,
                 "\n",
-                   "errorCode: ",
+                "errorCode: ",
                 httr::content(res)$meta$error$errorCode))
     return(list(
       "content" = httr::content(res),
@@ -82,10 +71,10 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
     ))
   } else if(res$status_code == 503) {
     stop(paste0("Qualtrics API reports a temporary internal server (500) error. Please\ncontact Qualtrics Support (https://www.qualtrics.com/contact/) with the instanceId and\nerrorCode below or retry your query.", "\n", # nolint
-                   "\n",
-                   "instanceId:", " ", httr::content(res)$meta$error$instanceId,
                 "\n",
-                   "errorCode: ", httr::content(res)$meta$error$errorCode))
+                "instanceId:", " ", httr::content(res)$meta$error$instanceId,
+                "\n",
+                "errorCode: ", httr::content(res)$meta$error$errorCode))
     return(list(
       "content" = httr::content(res),
       "OK"= FALSE
@@ -98,17 +87,16 @@ qualtRicsResponseCodes <- function(res, raw=FALSE) {
   }
 }
 
-# Construct a header to send to qualtrics API
-#
-# @param API.TOKEN API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})
-#
-# @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API.
-# @author Jasper Ginn
+#' Construct a header to send to Qualtrics API
+#'
+#' @param API_TOKEN API token. Available in your Qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})
+#'
+#' @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API.
 
-constructHeader <- function(API.TOKEN) {
+constructHeader <- function(API_TOKEN) {
   # Construct and return
   headers <- c(
-    'X-API-TOKEN' = API.TOKEN,
+    'X-API-TOKEN' = API_TOKEN,
     'Content-Type' = "application/json",
     'Accept' = '*/*',
     'accept-encoding' = 'gzip, deflate'
@@ -116,11 +104,10 @@ constructHeader <- function(API.TOKEN) {
   return(headers)
 }
 
-# Check if httr GET result contains a warning
-#
-# @param resp object returned by 'qualtRicsResponseCodes()'
-#
-# @author Jasper Ginn
+#' Check if httr GET result contains a warning
+#'
+#' @param resp object returned by \code{\link{qualtRicsResponseCodes}}
+
 
 checkForWarnings <- function(resp) {
   # Raise warning if resp contains notice
@@ -132,19 +119,14 @@ checkForWarnings <- function(resp) {
   NULL
 }
 
-# Check if parameters passed to functions are correct
-#
-# @param ... options passed to checkParams
-#
-# @author: Jasper Ginn
+#' Check if parameters passed to functions are correct
+#'
+#' @param ... options passed to checkParams
 
 checkParams <- function(...) {
   args <- list(...)
-  ### root_url
-  assert_rootUrl_stored()
-  ### API Token
-  assert_apikey_stored()
-  ### Options
+
+  ## options
   if(all(c("verbose", "convertVariables",
            "useLocalTime", "useLabels") %in% names(args))) {
     assert_options_logical(
@@ -169,10 +151,10 @@ checkParams <- function(...) {
       assert_lastResponseId_string(args$lastResponseId)
     }
   }
-  # Check if saveDir exists
-  if("saveDir" %in% names(args)) {
-    if(!is.null(args$saveDir)) {
-      assert_saveDir_exists(args$saveDir)
+  # Check if save_dir exists
+  if("save_dir" %in% names(args)) {
+    if(!is.null(args$save_dir)) {
+      assert_saveDir_exists(args$save_dir)
     }
   }
   # Check if seenUnansweredRecode is NULL or else a string
@@ -195,43 +177,51 @@ checkParams <- function(...) {
   }
 }
 
-# Append proper end points to create root url
-#
-# @param root_url Base url for your institution (see \url{https://api.qualtrics.com/docs/csv}. You need to supply this url. Your query will NOT work without it.).
-#
-# @return root url + appended end point
-#
-# @author: Jasper Ginn
+#' Append proper end points to create root URL
+#'
+#' @param base_url Base URL for your institution (see
+#' \url{https://api.qualtrics.com/docs/root-url}
+#' @param type Either `"responseexports"` or `"surveys"`
+#'
+#' @return Root URL, plus appended end point
 
-appendRootUrl <- function(root_url, type = c("responseexports", 'surveys')) {
+append_root_url <- function(base_url, type = c("responseexports", "surveys")) {
   # match
   type <- match.arg(type)
-  # Create root url
-  root_url <- paste0(root_url,
-                     ifelse(substr(root_url, nchar(root_url),
-                                   nchar(root_url)) == "/",
+  # create root url
+  root_url <- paste0(base_url,
+                     ifelse(substr(base_url, nchar(base_url),
+                                   nchar(base_url)) == "/",
                             paste0("API/v3/", type,"/"),
                             paste0("/API/v3/", type,"/")))
-  # Return
   return(root_url)
 }
 
-# Create raw JSON payload to post response exports request
-#
-# @param: see getSurveys() and registerOptions() functions
-#
-# @return: returns json file with options to send to API
-#
-# @author: Jasper Ginn
+#' Create raw JSON payload to post response exports request
+#'
+#' @param surveyID Survey ID
+#' @param useLabels Flag
+#' @param lastResponseId Flag
+#' @param startDate Flag
+#' @param endDate Flag
+#' @param limit Flag
+#' @param useLocalTime Flag
+#' @param seenUnansweredRecode Flag
+#' @param includedQuestionIds Flag
+#'
+#' @seealso Functions \code{\link{getSurveys}} and \code{\link{registerOptions}}
+#' have more details on these parameters
+#'
+#' @return JSON file with options to send to API
 
 createRawPayload <- function(surveyID,
-                             useLabels=TRUE,
-                             lastResponseId=NULL,
-                             startDate=NULL,
-                             endDate=NULL,
-                             limit=NULL,
-                             useLocalTime=FALSE,
-                             seenUnansweredRecode=NULL,
+                             useLabels = TRUE,
+                             lastResponseId = NULL,
+                             startDate = NULL,
+                             endDate = NULL,
+                             limit = NULL,
+                             useLocalTime = FALSE,
+                             seenUnansweredRecode = NULL,
                              includedQuestionIds = NULL) {
 
   paste0(
@@ -241,37 +231,37 @@ createRawPayload <- function(surveyID,
       is.null(lastResponseId),
       "",
       paste0(
-             ', "lastResponseId": ',
-             '"',
-             lastResponseId,
-             '"')
+        ', "lastResponseId": ',
+        '"',
+        lastResponseId,
+        '"')
     ) ,
     ifelse(
       is.null(startDate),
       "",
       paste0(
-             ', "startDate": ',
-             '"',
-             paste0(startDate,"T00:00:00Z"),
-             '"')
+        ', "startDate": ',
+        '"',
+        paste0(startDate,"T00:00:00Z"),
+        '"')
     ) ,
     ifelse(
       is.null(endDate),
       "",
       paste0(
-             ', "endDate": ',
-             '"',
-             paste0(endDate,"T00:00:00Z"),
-             '"')
+        ', "endDate": ',
+        '"',
+        paste0(endDate,"T00:00:00Z"),
+        '"')
     ) ,
     ifelse(
       is.null(seenUnansweredRecode),
       "",
       paste0(
-             ', "seenUnansweredRecode": ',
-             '"',
-             seenUnansweredRecode,
-             '"')
+        ', "seenUnansweredRecode": ',
+        '"',
+        seenUnansweredRecode,
+        '"')
     ),
     ifelse(
       !useLocalTime,
@@ -279,14 +269,14 @@ createRawPayload <- function(surveyID,
       paste0(
         ', "useLocalTime": ',
         tolower(useLocalTime)
-        )
+      )
     ),
     ifelse(
       is.null(includedQuestionIds),
       "",
       paste0(
-             ', "includedQuestionIds": ',
-             '[', paste0('"',includedQuestionIds, '"', collapse=", "), ']'
+        ', "includedQuestionIds": ',
+        '[', paste0('"',includedQuestionIds, '"', collapse=", "), ']'
       )
     ),
     ifelse(
@@ -303,26 +293,23 @@ createRawPayload <- function(surveyID,
   )
 }
 
-# Send httr requests to qualtrics API
-#
-# @param verb type of request to be sent (@seealso ?httr::VERB)
-# @param url qualtrics endpoint url created by appendRootUrl() function
-# @param body options created by createRawPayload() function
-#
-# @author: Jasper Ginn
+#' Send httr requests to Qualtrics API
+#'
+#' @param verb Type of request to be sent (@seealso \code{\link[httr]{VERB}})
+#' @param url Qualtrics endpoint URL created by \code{\link{append_root_url}} function
+#' @param body Options created by \code{\link{createRawPayload}} function
 
-qualtricsApiRequest <- function(verb = c("GET", "POST"), url = url,
+qualtricsApiRequest <- function(verb = c("GET", "POST"),
+                                url = url,
                                 body = NULL) {
   # Match arg
   verb <- match.arg(verb)
   # Construct header
   headers <- constructHeader(Sys.getenv("QUALTRICS_API_KEY"))
-  # Send request to qualtrics API
+  # Send request to Qualtrics API
   res <- httr::VERB(verb,
                     url = url,
-                    httr::add_headers(
-                              headers
-                            ),
+                    httr::add_headers(headers),
                     body = body)
   # Check if response type is OK
   cnt <- qualtRicsResponseCodes(res)
@@ -335,12 +322,11 @@ qualtricsApiRequest <- function(verb = c("GET", "POST"), url = url,
   }
 }
 
-# Download response export
-#
-# @param check_url url provided by qualtrics API that shows the download percentage completneness
-# @param verbose see getSurvey()
-#
-# @author Jasper Ginn
+#' Download response export
+#'
+#' @param check_url URL provided by Qualtrics API that shows the download percentage completneness
+#' @param verbose See \code{\link{getSurvey}}
+
 
 downloadQualtricsExport <- function(check_url, verbose = FALSE) {
   # Construct header
@@ -408,10 +394,11 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
   return(u)
 }
 
-# Set proper data types on survey data.
-#
-# @param data imported qualtrics survey
-# @author Jasper Ginn
+#' Set proper data types on survey data.
+#'
+#' @param data Imported Qualtrics survey
+#' @param surveyID ID of survey
+#' @param verbose Flag
 
 inferDataTypes <- function(data,
                            surveyID,
@@ -457,8 +444,7 @@ inferDataTypes <- function(data,
   # For each, convert
   #browser()
   for(m in mc) {
-    data <- data %>%
-      wrapper_mc(m, interest)
+    data <- wrapper_mc(data, m, interest)
   }
   # Return labels
   data <- sjlabelled::set_label(data, lab)
@@ -472,9 +458,16 @@ inferDataTypes <- function(data,
   return(data)
 }
 
-# Convert multiple choice questions to ordered factors
-# Idea: add ORDER = TRUE/FALSE (if user wants factors to be ordered). Add # REVERSE = TRUE/FALSE if user wants the factor levels to be reversed
+#' Convert multiple choice questions to ordered factors
+#'
+#' @param data Imported Qualtrics survey
+#' @param col_name Column name
+#' @param survey_meta Survey metadata
+#'
+#' @importFrom rlang ':='
+
 wrapper_mc <- function(data, col_name, survey_meta) {
+  # Idea: add ORDER = TRUE/FALSE (if user wants factors to be ordered). Add # REVERSE = TRUE/FALSE if user wants the factor levels to be reversed
   # Get question data from metadata
   meta <- survey_meta[vapply(survey_meta,
                              function(x) x$questionName == col_name, TRUE)]
@@ -482,8 +475,12 @@ wrapper_mc <- function(data, col_name, survey_meta) {
   ln <- vapply(meta[[1]]$choices,
                function(x) x$choiceText, "character", USE.NAMES = FALSE)
   # Convert
-  data %>%
-    mutate(!!col_name := readr::parse_factor(data %>% select(!!col_name) %>% pull(),
-                                             levels=ln,
-                                                       ordered = TRUE))
+  dplyr::mutate(data,
+                !!col_name := readr::parse_factor(
+                  dplyr::pull(dplyr::select(data,
+                                            !!col_name)),
+                  levels=ln,
+                  ordered = TRUE
+                ))
+
 }

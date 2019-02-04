@@ -57,22 +57,24 @@ metadata <- function(surveyID,
   # OPTIONS AND PREP ----
 
   # Check params
-  cp <- checkParams()
+  assert_base_url()
+  assert_api_key()
+
   # Check if illegal options were passed by user
-  allowed <- c("metadata","questions","responsecounts",
-               "blocks","flow","embedded_data","comments")
+  allowed <- c("metadata", "questions", "responsecounts",
+               "blocks", "flow", "embedded_data", "comments")
   check <- union(allowed, names(get))
   assertthat::assert_that(length(check) <= length(allowed), # nolint
                           msg="One or more options you passed to 'get' are not valid. Please check your\ninput and try again.") # nolint
 
   # Change standard options if any
-  standard_list <- list("metadata"=TRUE,
-                        "questions"=TRUE,
-                        "responsecounts"=TRUE,
-                        "blocks"=FALSE,
-                        "flow"=FALSE,
-                        "embedded_data"=FALSE,
-                        "comments"=FALSE)
+  standard_list <- list("metadata" = TRUE,
+                        "questions" = TRUE,
+                        "responsecounts" = TRUE,
+                        "blocks" = FALSE,
+                        "flow" = FALSE,
+                        "embedded_data" = FALSE,
+                        "comments" = FALSE)
   # Cycle over each argument and change
   if(length(get) > 0) {
     for(g in names(get)) {
@@ -94,7 +96,7 @@ metadata <- function(surveyID,
   # QUERY API ----
 
   # Function-specific API stuff
-  root_url <- appendRootUrl(Sys.getenv("QUALTRICS_ROOT_URL"), "surveys")
+  root_url <- append_root_url(Sys.getenv("QUALTRICS_BASE_URL"), "surveys")
   # Append survey ID
   root_url <- paste0(root_url, surveyID)
   # Send GET request to list all surveys
@@ -109,22 +111,22 @@ metadata <- function(surveyID,
     "surveyID" = resp_filt$id,
     "name"= resp_filt$name,
     "ownerId" = resp_filt$ownerId,
-    "organizationId"=resp_filt$organizationId,
+    "organizationId" = resp_filt$organizationId,
     "isActive" = resp_filt$isActive,
     "creationDate" = resp_filt$creationDate,
-    "lastModifiedDate"=resp_filt$lastModifiedDate,
-    "expiration_startdate"=ifelse(is.null(resp_filt$expiration$startDate),
+    "lastModifiedDate" = resp_filt$lastModifiedDate,
+    "expiration_startdate" = ifelse(is.null(resp_filt$expiration$startDate),
+                                    NA,
+                                    resp_filt$expiration$startDate),
+    "expiration_endDate" = ifelse(is.null(resp_filt$expiration$endDate),
                                   NA,
-                                  resp_filt$expiration$startDate),
-    "expiration_endDate"=ifelse(is.null(resp_filt$expiration$endDate),
-                                NA,
-                                resp_filt$expiration$endDate)
+                                  resp_filt$expiration$endDate)
   )
   # Response counts
   responsecounts <- data.frame(
-    "auditable"=resp_filt$responseCounts$auditable,
-    "generated"=resp_filt$responseCounts$generated,
-    "deleted"=resp_filt$responseCounts$deleted
+    "auditable" = resp_filt$responseCounts$auditable,
+    "generated" = resp_filt$responseCounts$generated,
+    "deleted" = resp_filt$responseCounts$deleted
   )
 
   # Metadata about questions
@@ -145,13 +147,13 @@ metadata <- function(surveyID,
   # WRAP UP AND RETURN ----
 
   # Construct metadata
-  met <- list("metadata"=metadata,
-              "questions"=questions,
-              "responsecounts"=responsecounts,
-              "blocks"=resp_filt$blocks,
-              "flow"=resp_filt$flow,
-              "embedded_data"=resp_filt$embeddedData,
-              "comments"=resp_filt$comments)
+  met <- list("metadata" = metadata,
+              "questions" = questions,
+              "responsecounts" = responsecounts,
+              "blocks" = resp_filt$blocks,
+              "flow" = resp_filt$flow,
+              "embedded_data" = resp_filt$embeddedData,
+              "comments" = resp_filt$comments)
   # Make subset
   met_ss <- met[names(standard_list[vapply(standard_list,
                                            function(x) x==TRUE, TRUE)])] # nolint

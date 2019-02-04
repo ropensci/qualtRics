@@ -4,9 +4,9 @@
 \alias{qualtRicsConfigFile}
 \title{Prints an Example of a QualtRics Configuration File to the Console.}
 \usage{
-qualtRicsConfigFile(api_token = NULL, base_url = NULL, verbose = TRUE,
-  useLabels = TRUE, convertVariables = TRUE, useLocalTime = FALSE,
-  dateWarning = TRUE, root_url = NULL)
+qualtRicsConfigFile(api_token = NULL, base_url = NULL,
+  verbose = TRUE, useLabels = TRUE, convertVariables = TRUE,
+  useLocalTime = FALSE, dateWarning = TRUE, root_url = NULL)
 }
 \arguments{
 \item{api_token}{String. API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})}
@@ -23,7 +23,7 @@ qualtRicsConfigFile(api_token = NULL, base_url = NULL, verbose = TRUE,
 
 \item{dateWarning}{Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.}
 
-\item{root_url}{String. Deprecated. Use base url instead. This will be removed in future versions.}
+\item{root_url}{String. Deprecated. Use `base_url` instead. This will be removed in future versions.}
 }
 \description{
 Prints an Example of a QualtRics Configuration File to the Console.
@@ -36,7 +36,7 @@ qualtRicsConfigFile()
 
 }
 \seealso{
-See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API. See \url{https://github.com/JasperHG90/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file.
+See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API. See \url{https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file.
 }
 \author{
 Jasper Ginn

@@ -4,7 +4,7 @@ context("Get a list of surveys that the user has access to on Qualtrics")
 with_mock_api({
   test_that("getSurveys() returns a data frame with columns 'id', 'name', 'ownerId', 'lastModified', 'isActive' columns", { # nolint
     testthat::skip_on_cran()
-    registerOptions(root_url="t.qualtrics.com", api_token="1234")
+    qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
     # Get survey
     surveys <- getSurveys()
     # TESTS
@@ -13,4 +13,12 @@ with_mock_api({
     expect_equal(nrow(surveys), 1)
     expect_type(surveys, "list")
   })
+})
+
+test_that("getSurveys() throws an error", {
+  # Store dummy key
+  qualtrics_api_credentials(api_key = "1234", base_url = "yourdatacenterid.qualtrics.com")
+  # This should fail in 'do.call'
+  expect_error(getSurveys(),
+               "you may not have the\nrequired authorization")
 })

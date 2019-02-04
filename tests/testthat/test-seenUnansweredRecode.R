@@ -1,8 +1,8 @@
 test_that("seenUnansweredRecode is a string", {
-  # Store dummy key
-  qualtRics::registerOptions(api_token="1234",
-                             base_url="https://yourdatacenterid.qualtrics.com")
+  qualtrics_api_credentials(api_key = "1234",
+                            base_url = "yourdatacenterid.qualtrics.com")
   # Call getsurvey
-  expect_error(qualtRics::getSurvey("1234", seenUnansweredRecode = 123),
+  expect_error(getSurvey("1234",
+                         seenUnansweredRecode = 123),
                "seenUnansweredRecode is not a string")
 })
