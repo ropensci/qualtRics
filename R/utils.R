@@ -38,7 +38,7 @@
 #' @param res Response from httr::GET
 #' @param raw If TRUE, add 'raw' flag to httr::content() function.
 
-qualtRicsResponseCodes <- function(res, raw = FALSE) {
+qualtrics_response_codes <- function(res, raw = FALSE) {
   # Check status code and raise error/warning
   if(res$status_code == 200) {
     if(raw) {
@@ -106,7 +106,7 @@ constructHeader <- function(API_TOKEN) {
 
 #' Check if httr GET result contains a warning
 #'
-#' @param resp object returned by \code{\link{qualtRicsResponseCodes}}
+#' @param resp object returned by \code{\link{qualtrics_response_codes}}
 
 
 checkForWarnings <- function(resp) {
@@ -312,7 +312,7 @@ qualtricsApiRequest <- function(verb = c("GET", "POST"),
                     httr::add_headers(headers),
                     body = body)
   # Check if response type is OK
-  cnt <- qualtRicsResponseCodes(res)
+  cnt <- qualtrics_response_codes(res)
   # Check if OK
   if(cnt$OK) {
     # If notice occurs, raise warning
@@ -370,7 +370,7 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
   }
   #browser()
   # Load raw zip file
-  ty <- qualtRicsResponseCodes(f, raw=TRUE)
+  ty <- qualtrics_response_codes(f, raw=TRUE)
   # To zip file
   tf <- paste0(tempdir(),
                ifelse(substr(tempdir(),

@@ -7,7 +7,7 @@
 checkForWarnings(resp)
 }
 \arguments{
-\item{resp}{object returned by \code{\link{qualtRicsResponseCodes}}}
+\item{resp}{object returned by \code{\link{qualtrics_response_codes}}}
 }
 \description{
 Check if httr GET result contains a warning
