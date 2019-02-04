@@ -17,7 +17,7 @@ Description: Qualtrics <https://www.qualtrics.com/about/>
     by Qualtrics.
 URL: https://ropensci.github.io/qualtRics/
 BugReports: https://github.com/ropensci/qualtRics/issues
-License: GPL-3 | file LICENSE
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
 RoxygenNote: 6.1.1
