@@ -67,8 +67,8 @@ You can store your API credentials `QUALTRICS_API_KEY` and `QUALTRICS_BASE_URL` 
 ```r
 library(qualtRics)
 
-qualtrics_api_credentials(api_key="<YOUR-QUALTRICS_API_KEY>", 
-                          base_url="<YOUR-QUALTRICS_BASE_URL>",
+qualtrics_api_credentials(api_key = "<YOUR-QUALTRICS_API_KEY>", 
+                          base_url = "<YOUR-QUALTRICS_BASE_URL>",
                           install = TRUE)
 ```
 
@@ -83,7 +83,7 @@ Once your Qualtrics API credentials are stored, you can see what surveys are ava
 surveys <- getSurveys() 
 ```
 
-You can then download the data from any of these individual surveys directly into R.
+You can then download the data from any of these individual surveys (for example, perhaps the sixth one) directly into R.
 
 
 ```r
