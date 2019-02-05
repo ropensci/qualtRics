@@ -86,17 +86,17 @@ getSurvey <- function(surveyID,
   assert_base_url()
   assert_api_key()
 
-  checkParams(verbose = verbose,
-              convertVariables = convertVariables,
-              useLocalTime = useLocalTime,
-              useLabels = useLabels,
-              lastResponseId = lastResponseId,
-              startDate = startDate,
-              endDate = endDate,
-              includedQuestionIds = includedQuestionIds,
-              save_dir = save_dir,
-              seenUnansweredRecode = seenUnansweredRecode,
-              limit = limit)
+  check_params(verbose = verbose,
+               convertVariables = convertVariables,
+               useLocalTime = useLocalTime,
+               useLabels = useLabels,
+               lastResponseId = lastResponseId,
+               startDate = startDate,
+               endDate = endDate,
+               includedQuestionIds = includedQuestionIds,
+               save_dir = save_dir,
+               seenUnansweredRecode = seenUnansweredRecode,
+               limit = limit)
 
   # See if survey already in tempdir
   if(!force_request) {

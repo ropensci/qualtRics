@@ -1,35 +1,3 @@
-#   Download qualtrics data into R
-#    Copyright (C) 2018 Jasper Ginn
-
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-#    Download Qualtrics data into R
-#    Copyright (C) 2016 Jasper Ginn
-
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 # utils.R contains helper functions for the qualtRics package. These functions should not be called directly by the user and should not be exported.
 
 
@@ -93,7 +61,7 @@ qualtrics_response_codes <- function(res, raw = FALSE) {
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API.
 
-constructHeader <- function(API_TOKEN) {
+construct_header <- function(API_TOKEN) {
   # Construct and return
   headers <- c(
     'X-API-TOKEN' = API_TOKEN,
@@ -109,7 +77,7 @@ constructHeader <- function(API_TOKEN) {
 #' @param resp object returned by \code{\link{qualtrics_response_codes}}
 
 
-checkForWarnings <- function(resp) {
+check_for_warnings <- function(resp) {
   # Raise warning if resp contains notice
   if(!is.null(resp$content$meta)) {
     if(!is.null(resp$content$meta$notice)) {
@@ -121,9 +89,9 @@ checkForWarnings <- function(resp) {
 
 #' Check if parameters passed to functions are correct
 #'
-#' @param ... options passed to checkParams
+#' @param ... options passed to function
 
-checkParams <- function(...) {
+check_params <- function(...) {
   args <- list(...)
 
   ## options
@@ -305,7 +273,7 @@ qualtricsApiRequest <- function(verb = c("GET", "POST"),
   # Match arg
   verb <- match.arg(verb)
   # Construct header
-  headers <- constructHeader(Sys.getenv("QUALTRICS_API_KEY"))
+  headers <- construct_header(Sys.getenv("QUALTRICS_API_KEY"))
   # Send request to Qualtrics API
   res <- httr::VERB(verb,
                     url = url,
@@ -316,7 +284,7 @@ qualtricsApiRequest <- function(verb = c("GET", "POST"),
   # Check if OK
   if(cnt$OK) {
     # If notice occurs, raise warning
-    w <- checkForWarnings(cnt)
+    w <- check_for_warnings(cnt)
     # return content
     return(cnt$content)
   }
@@ -330,7 +298,7 @@ qualtricsApiRequest <- function(verb = c("GET", "POST"),
 
 downloadQualtricsExport <- function(check_url, verbose = FALSE) {
   # Construct header
-  headers <- constructHeader(Sys.getenv("QUALTRICS_API_KEY"))
+  headers <- construct_header(Sys.getenv("QUALTRICS_API_KEY"))
   # Create a progress bar and monitor when export is ready
   if(verbose) {
     pbar <- utils::txtProgressBar(min=0,

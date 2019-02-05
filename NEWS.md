@@ -2,7 +2,9 @@
 
 - New maintainer: Julia Silge
 - Simpler approach for storing API credentials as environment variables with `qualtrics_api_credentials()`
+- Simplify README (keep all existing detailed workflow documentation in vignette)
 - Relicense from GPL-3 to MIT. See [consent from authors here](https://github.com/ropensci/qualtRics/issues/95).
+
 
 qualtRics 3.0 (2018-02-03)
 =========================
