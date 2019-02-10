@@ -100,7 +100,7 @@ metadata <- function(surveyID,
   # Append survey ID
   root_url <- paste0(root_url, surveyID)
   # Send GET request to list all surveys
-  resp <- qualtricsApiRequest("GET", root_url)
+  resp <- qualtrics_api_request("GET", root_url)
   # Filter
   resp_filt <- resp$result
 

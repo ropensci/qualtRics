@@ -113,20 +113,20 @@ getSurvey <- function(surveyID,
   # add endpoint to root url
   root_url <- append_root_url(Sys.getenv("QUALTRICS_BASE_URL"), "responseexports")
   # Create raw JSON payload
-  raw_payload <- createRawPayload(surveyID = surveyID,
-                                  useLabels = useLabels,
-                                  lastResponseId = lastResponseId,
-                                  startDate = startDate,
-                                  endDate = endDate,
-                                  seenUnansweredRecode = seenUnansweredRecode,
-                                  limit = limit,
-                                  useLocalTime = useLocalTime,
-                                  includedQuestionIds = includedQuestionIds)
+  raw_payload <- create_raw_payload(surveyID = surveyID,
+                                    useLabels = useLabels,
+                                    lastResponseId = lastResponseId,
+                                    startDate = startDate,
+                                    endDate = endDate,
+                                    seenUnansweredRecode = seenUnansweredRecode,
+                                    limit = limit,
+                                    useLocalTime = useLocalTime,
+                                    includedQuestionIds = includedQuestionIds)
 
   # SEND POST REQUEST TO API ----
 
   # POST request for download
-  res <- qualtricsApiRequest("POST", url = root_url, body = raw_payload)
+  res <- qualtrics_api_request("POST", url = root_url, body = raw_payload)
   # Get id
   if(is.null(res$result$id)) {
     if(is.null(res$content[[1]]$id)) {
@@ -140,7 +140,7 @@ getSurvey <- function(surveyID,
   # This is the url to use when checking the ID
   check_url <- paste0(root_url, ID)
   # Download, unzip and return file path
-  survey.fpath <- downloadQualtricsExport(check_url, verbose = verbose)
+  survey.fpath <- download_qualtrics_export(check_url, verbose = verbose)
 
   # READ DATA AND SET VARIABLES ----
 
@@ -148,7 +148,7 @@ getSurvey <- function(surveyID,
   data <- readSurvey(survey.fpath)
   # Add types
   if(convertVariables) {
-    data <- inferDataTypes(data, surveyID)
+    data <- infer_data_types(data, surveyID)
   }
   # Save survey as RDS file in temp folder so that it can be easily
   # retrieved this session.

@@ -56,7 +56,7 @@ getSurveyQuestions <- function(surveyID) {
   # SEND REQUEST TO API ----
 
   # GET request to download metadata
-  resp <- qualtricsApiRequest("GET", root_url)
+  resp <- qualtrics_api_request("GET", root_url)
   # Get question information and map
   qi <- resp$result$questions
   # Add questions, question labels, question names and force response info

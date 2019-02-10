@@ -60,7 +60,7 @@ readSurvey <- function(file_name,
   # MANIPULATE DATA ----
 
   # make them data.frame's, else the factor conversion
-  # in `inferDataTypes` crashes
+  # in `infer_data_types` crashes
   #rawdata <- as.data.frame(rawdata)
   #header <- as.data.frame(header)
   # Add names

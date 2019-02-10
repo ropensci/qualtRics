@@ -182,15 +182,15 @@ append_root_url <- function(base_url, type = c("responseexports", "surveys")) {
 #'
 #' @return JSON file with options to send to API
 
-createRawPayload <- function(surveyID,
-                             useLabels = TRUE,
-                             lastResponseId = NULL,
-                             startDate = NULL,
-                             endDate = NULL,
-                             limit = NULL,
-                             useLocalTime = FALSE,
-                             seenUnansweredRecode = NULL,
-                             includedQuestionIds = NULL) {
+create_raw_payload <- function(surveyID,
+                               useLabels = TRUE,
+                               lastResponseId = NULL,
+                               startDate = NULL,
+                               endDate = NULL,
+                               limit = NULL,
+                               useLocalTime = FALSE,
+                               seenUnansweredRecode = NULL,
+                               includedQuestionIds = NULL) {
 
   paste0(
     '{"format": ', '"', 'csv', '"' ,
@@ -265,11 +265,11 @@ createRawPayload <- function(surveyID,
 #'
 #' @param verb Type of request to be sent (@seealso \code{\link[httr]{VERB}})
 #' @param url Qualtrics endpoint URL created by \code{\link{append_root_url}} function
-#' @param body Options created by \code{\link{createRawPayload}} function
+#' @param body Options created by \code{\link{create_raw_payload}} function
 
-qualtricsApiRequest <- function(verb = c("GET", "POST"),
-                                url = url,
-                                body = NULL) {
+qualtrics_api_request <- function(verb = c("GET", "POST"),
+                                  url = url,
+                                  body = NULL) {
   # Match arg
   verb <- match.arg(verb)
   # Construct header
@@ -296,7 +296,7 @@ qualtricsApiRequest <- function(verb = c("GET", "POST"),
 #' @param verbose See \code{\link{getSurvey}}
 
 
-downloadQualtricsExport <- function(check_url, verbose = FALSE) {
+download_qualtrics_export <- function(check_url, verbose = FALSE) {
   # Construct header
   headers <- construct_header(Sys.getenv("QUALTRICS_API_KEY"))
   # Create a progress bar and monitor when export is ready
@@ -309,7 +309,7 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
   progress <- 0
   while(progress < 100) {
     # Get percentage complete
-    CU <- qualtricsApiRequest("GET", url = check_url)
+    CU <- qualtrics_api_request("GET", url = check_url)
     progress <- CU$result$percentComplete
     # Set progress
     if(verbose) {
@@ -368,9 +368,9 @@ downloadQualtricsExport <- function(check_url, verbose = FALSE) {
 #' @param surveyID ID of survey
 #' @param verbose Flag
 
-inferDataTypes <- function(data,
-                           surveyID,
-                           verbose = FALSE) {
+infer_data_types <- function(data,
+                             surveyID,
+                             verbose = FALSE) {
 
   # Download survey metadata
   md <- metadata(surveyID, get=list("questions"=TRUE,
