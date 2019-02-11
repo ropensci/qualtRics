@@ -4,11 +4,11 @@ Title: Download Qualtrics survey data
 Version: 3.0.0.900
 Authors@R: c(person("Jasper", "Ginn", role = c("aut"),
              email = "jasperginn@gmail.com"),
+             person("Samuel", "Kaminsky", role = c("ctb"),
+             email = "samuel.e.kaminsky@gmail.com"),
              person("Julia", "Silge", role = c("aut", "cre"), 
              email = "julia.silge@gmail.com", 
-             comment = c(ORCID = "0000-0002-3671-836X")),
-             person("Samuel", "Kaminsky", role = c("ctb"),
-             email = "samuel.e.kaminsky@gmail.com"))
+             comment = c(ORCID = "0000-0002-3671-836X")))
 Description: Qualtrics <https://www.qualtrics.com/about/> 
     is an online survey and data collection software 
     platform. This package provides functions to access
