@@ -6,16 +6,18 @@ Authors@R: c(person("Jasper", "Ginn", role = c("aut"),
              email = "jasperginn@gmail.com"),
              person("Samuel", "Kaminsky", role = c("ctb"),
              email = "samuel.e.kaminsky@gmail.com"),
-             person("Julia", "Silge", role = c("aut", "cre"), 
-             email = "julia.silge@gmail.com", 
-             comment = c(ORCID = "0000-0002-3671-836X")))
-Description: Qualtrics <https://www.qualtrics.com/about/> 
-    is an online survey and data collection software 
+             person("Julia", "Silge", role = c("aut", "cre"),
+             email = "julia.silge@gmail.com",
+             comment = c(ORCID = "0000-0002-3671-836X")),
+             person("Phoebe", "Wong", role = c("ctb"),
+             email = "phoebe.wong@berkeley.edu"))
+Description: Qualtrics <https://www.qualtrics.com/about/>
+    is an online survey and data collection software
     platform. This package provides functions to access
     survey results directly into R using the Qualtrics
-    API. See <https://api.qualtrics.com/> for more 
-    information about the Qualtrics API. This package is 
-    community-maintained and is not officially supported 
+    API. See <https://api.qualtrics.com/> for more
+    information about the Qualtrics API. This package is
+    community-maintained and is not officially supported
     by Qualtrics.
 URL: https://ropensci.github.io/qualtRics/
 BugReports: https://github.com/ropensci/qualtRics/issues
@@ -33,7 +35,7 @@ Imports:
     yaml,
     dplyr,
     rlang
-Suggests: 
+Suggests:
     knitr,
     rmarkdown,
     testthat,
