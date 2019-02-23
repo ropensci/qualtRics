@@ -20,3 +20,8 @@ test_that("can store and access credentials", {
   expect_true(assert_base_url())
 })
 
+test_that("qualtRicsConfigFile() gives a warning", {
+  expect_warning(qualtRics::qualtRicsConfigFile(), "deprecated") # nolint
+})
+
+

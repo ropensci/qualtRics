@@ -1,23 +1,13 @@
-#   Download qualtrics data into R
-#    Copyright (C) 2018 Jasper Ginn
-
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 #' Register Qualtrics API Key, Base Url and Other Options
 #'
-#' This function registers the user's qualtrics API key, base url and other options for the remainder of the R session. This function only needs to be called once (at the beginning of each R session). You may also use a configuration file. See \code{\link{qualtRicsConfigFile}} or \url{https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file}
-#' . Note that you must pass both an api token and a base url if you call this function for the first time in a session and you're not using a config file. Thereafter, you can pass these options individually.
+#' This function is soft deprecated; use \code{\link[qualtRics]{qualtrics_api_credentials}}
+#' instead. This function registers the user's qualtrics API key, base url and
+#' other options for the remainder of the R session. This function only needs to
+#' be called once (at the beginning of each R session). You may also use a
+#' configuration file. See \code{\link{qualtRicsConfigFile}}. Note that you must
+#' pass both an api token and a base url if you call this function for the first
+#' time in a session and you're not using a config file. Thereafter, you can
+#' pass these options individually.
 #'
 #' @param verbose Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
 #' @param useLabels Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
@@ -28,7 +18,6 @@
 #'
 #' @seealso See \url{https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file. See: \url{https://api.qualtrics.com/docs/authentication} to find your Qualtrics API key and \url{https://api.qualtrics.com/docs/root-url} for more information about the institution-specific root url.
 #'
-#' @author Jasper Ginn
 #' @importFrom yaml yaml.load_file
 #' @importFrom assertthat assert_that
 #' @importFrom assertthat is.flag
@@ -67,6 +56,8 @@ registerOptions <- function(verbose=TRUE,
                             ...) {
 
   # START UP: CHECK ARGUMENTS PASSED BY USER ----
+
+  .Deprecated("qualtrics_api_credentials()")
 
   # Take additional arguments
   args <- list(...)
@@ -164,7 +155,7 @@ registerOptions <- function(verbose=TRUE,
       message("'convertstandardcolumns' has been deprecated and will be ignored. Please replace it\nwith 'convertvariables' in your '.qualtRics.yml' file. Visit <https://github.com/ropensci/qualtRics>\nfor more information.") # nolint
       convertVariables <- TRUE
     } else if(all(c('convertstandardcolumns', 'convertvariables') %in% names(cred))) { # nolint
-        message("'convertstandardcolumns' has been deprecated and will be ignored. Please remove it\nfrom your '.qualtRics.yml' file. Visit <https://github.com/ropensci/qualtRics> for\nmore information.") # nolint
+      message("'convertstandardcolumns' has been deprecated and will be ignored. Please remove it\nfrom your '.qualtRics.yml' file. Visit <https://github.com/ropensci/qualtRics> for\nmore information.") # nolint
       convertVariables <- cred$convertvariables
     } else {
       convertVariables <- cred$convertvariables
@@ -212,7 +203,75 @@ registerOptions <- function(verbose=TRUE,
   # Set warning
   invisible(ifelse(dateWarning == FALSE,
                    Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN"=TRUE),
-         TRUE))
+                   TRUE))
 
+
+}
+
+#' Prints an Example of a QualtRics Configuration File to the Console.
+#'
+#' This function is soft deprecated; use \code{\link[qualtRics]{qualtrics_api_credentials}} instead.
+#'
+#' @param api_token String. API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})
+#' @param base_url String. Base url for your institution (see: \url{https://api.qualtrics.com/docs/root-url})
+#' @param verbose Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
+#' @param useLabels Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
+#' @param convertVariables Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert certain question types (e.g. multiple choice) to proper data type in R. Defaults to TRUE.
+#' @param useLocalTime Logical. Use local timezone to determine response date values? Defaults to FALSE. See \url{https://api.qualtrics.com/docs/dates-and-times} for more information.
+#' @param dateWarning Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
+#' @param root_url String. Deprecated. Use `base_url` instead. This will be removed in future versions.
+#' @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API. See \url{https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file.
+#' @export
+#' @examples
+#' \dontrun{
+#' # Execute this line to get instructions on how to make a .qualtrics.yml config file.
+#' qualtRicsConfigFile()
+#' }
+#'
+
+qualtRicsConfigFile <- function(api_token = NULL,
+                                base_url = NULL,
+                                verbose = TRUE,
+                                useLabels = TRUE,
+                                convertVariables = TRUE,
+                                useLocalTime = FALSE,
+                                dateWarning = TRUE,
+                                root_url = NULL) {
+
+  .Deprecated("qualtrics_api_credentials()")
+
+  # Check for deprecated arguments
+  calls <- names(vapply(match.call(), deparse, "character"))[-1]
+  # Check if deprecated params passed
+  if(any("root_url" %in% calls)) {
+    warning("'root_url' is deprecated and will be removed in qualtRics 4.0.\n Please use 'base_url' instead.")
+    base_url <- root_url
+  }
+  # Temporary
+  root_url <- base_url
+
+  # Paste together a message to cat to console
+  msg <- paste0(
+    "Copy-paste the lines between the dashes into a new plain text file, replace the
+values for the api_token and root_url if they are not yet filled out. and save it in
+your working directory as '.qualtRics.yml'. Execute '?qualtRics::qualtRicsConfigFile'
+to view an explanation of the additional arguments. Visit
+https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file
+for more information.", "\n\n",# nolint
+    "--------------","\n",
+    'api_token: ', ifelse(is.null(api_token), '<YOUR-API-TOKEN-HERE>',
+                          paste0(api_token)), "\n",
+    'base_url: ', ifelse(is.null(root_url), '<YOUR-ROOT-URL-HERE>',
+                         paste0(root_url)), "\n",
+    'verbose: ', verbose, "\n",
+    'uselabels: ', useLabels, "\n",
+    'convertvariables: ', convertVariables, "\n",
+    'uselocaltime: ', useLocalTime, "\n",
+    'datewarning: ', dateWarning, "\n",
+    "--------------"
+  )
+
+  # Cat to console
+  cat(msg)
 
 }

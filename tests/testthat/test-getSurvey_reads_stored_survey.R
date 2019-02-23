@@ -1,7 +1,7 @@
 test_that("getSurvey() reads a stored survey in temporary directory if exists", { # nolint
   # Register dummy key
-  qualtRics::registerOptions(api_token="1234",
-                             base_url="https://yourdatacenterid.qualtrics.com")
+  qualtrics_api_credentials(api_key = "1234",
+                            base_url="https://yourdatacenterid.qualtrics.com")
   # Store RDS file
   data <- "SUCCESS"
   curr.wd <- getwd()

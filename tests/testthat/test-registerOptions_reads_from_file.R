@@ -1,3 +1,5 @@
+context("YAML handling")
+
 test_that("registerOptions() can read from file", {
   # Store .qualtRics.yml in temporary directory
   io <- yaml::as.yaml(list(
@@ -18,6 +20,6 @@ test_that("registerOptions() can read from file", {
   on.exit(setwd(curr.wd))
   # Write yml file
   write(io, ".qualtRics.yml")
-  expect_message(qualtRics::registerOptions(),
-                 "Found a .qualtRics.yml configuration file")
+  expect_warning(qualtRics::registerOptions(),
+                 "deprecated", fixed = FALSE)
 })
