@@ -1,43 +1,38 @@
-#   Download qualtrics data into R
-#    Copyright (C) 2018 Jasper Ginn
-
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-#' Download Metadata for a Survey
+#' Download metadata for a survey
 #'
-#' Using this function, you can retrieve metadata about your survey. This information includes question metadata (type, options, choices etc), number of responses, general metadata, survey flow etc.
+#' Using this function, you can retrieve metadata about your survey. This
+#' information includes question metadata (type, options, choices, etc), number
+#' of responses, general metadata, survey flow, etc.
 #'
-#' @param surveyID String. Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.
-#' @param get list containing TRUE/FALSE values of one of the following: metadata, questions,responsecounts, blocks, flow, embedded_data or comments. A TRUE value will return that specific element. If you leave this empty, the function will return the metadata, questions and responsecounts elements. See examples below for more information
-#' @param ... additional options. User may pass an argument called 'questions', which should be a vector containing the names of questions for which you want to return metadata.
+#' @param surveyID A string. Unique ID for the survey you want to download.
+#' Returned as 'id' by the \link[qualtRics]{getSurveys} function.
+#' @param get A list containing `TRUE`/`FALSE` values of one of the following:
+#' `metadata`, `questions`, `responsecounts`, `blocks`, `flow`, `embedded_data`,
+#' or `comments`. A `TRUE` value will return that specific element. If you leave
+#' this empty, the function will return the `metadata`, `questions`, and
+#' `responsecounts` elements. See examples below for more information.
+#' @param ... Additional options. User may pass an argument called `questions`,
+#' which should be a vector containing the names of questions for which you
+#' want to return metadata.
 #'
-#' @author Jasper Ginn
 #' @importFrom assertthat assert_that
 #' @export
 #' @examples
 #' \dontrun{
 #' # Register your Qualtrics credentials if you haven't already
-#' # Note that you need to pass both the 'api_token' and 'root_url'
-#' # parameters if you call this function for the first time.
-#' registerOptions(api_token = "<YOUR-API-TOKEN>",
-#'                 base_url = "<YOUR-ROOT-URL>")
+#' qualtrics_api_credentials(api_key = "<YOUR-API-KEY>",
+#'                           base_url = "<YOUR-BASE-URL>")
+#'
 #' # Get an overview of surveys
 #' surveys <- getSurveys()
+#'
 #' # Get metadata for a survey
 #' md <- metadata(surveyID = surveys$id[6])
+#'
 #' # Get metadata with specific elements
-#' md_specific <- metadata(surveyID= id, get=list(questions = FALSE, flow = TRUE))
+#' md_specific <- metadata(surveyID = id,
+#'                         get=list(questions = FALSE, flow = TRUE))
+#'
 #' # Get specific question metadata
 #' question_specific <- metadata(surveyID=id,
 #'                               get=list(questions = TRUE),
@@ -45,6 +40,7 @@
 #'
 #' # Example of a metadata file
 #' file <- system.file("extdata", "metadata.rds", package = "qualtRics")
+#'
 #' # Load
 #' metadata_ex <- readRDS(file=file)
 #' }
