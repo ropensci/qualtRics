@@ -7,6 +7,8 @@
 - Simplify README (keep all existing detailed workflow documentation in vignette)
 - Relicense from GPL-3 to MIT. See [consent from authors here](https://github.com/ropensci/qualtRics/issues/95).
 - Improvements to documentation throughout
+- Renaming (with deprecation of old versions) of key functions for clarity, plus improvements
+  - `all_surveys()` (from old version of `getSurveys()`)
 
 
 qualtRics 3.0 (2018-02-03)

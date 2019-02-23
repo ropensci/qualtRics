@@ -1,4 +1,4 @@
-context("Get a list of surveys that the user has access to on Qualtrics")
+context("Get a list of all surveys that the user has access to on Qualtrics")
 
 # Test - use mock API from httptest package
 with_mock_api({
@@ -6,7 +6,7 @@ with_mock_api({
     testthat::skip_on_cran()
     qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
     # Get survey
-    surveys <- getSurveys()
+    surveys <- all_surveys()
     # TESTS
     expect_that(names(surveys),
                 is_identical_to(c("id","name","ownerId","lastModified","isActive"))) # nolint
@@ -19,6 +19,6 @@ test_that("getSurveys() throws an error", {
   # Store dummy key
   qualtrics_api_credentials(api_key = "1234", base_url = "yourdatacenterid.qualtrics.com")
   # This should fail in 'do.call'
-  expect_error(getSurveys(),
+  expect_error(all_surveys(),
                "you may not have the\nrequired authorization")
 })

@@ -36,6 +36,3 @@ file <- system.file("extdata", "sample_legacy.csv", package = "qualtRics")
 sample_legacy_df <- readSurvey(file)
 }
 }
-\author{
-Adrian Brugger, Stefan Borer & Jasper Ginn
-}

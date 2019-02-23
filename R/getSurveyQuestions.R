@@ -1,34 +1,19 @@
-#   Download qualtrics data into R
-#    Copyright (C) 2018 Jasper Ginn
-
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 #' Retrieve a Data Frame Containing Question IDs and Labels
 #'
 #' @param surveyID String. Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs} for documentation on the Qualtrics API.
-#' @author Jasper Ginn, Phoebe Wong
 #' @importFrom dplyr as_tibble
 #' @export
 #' @examples
 #' \dontrun{
 #' # Register your Qualtrics credentials if you haven't already
-#' registerOptions(api_token = "<YOUR-API-TOKEN>",
-#'                 base_url = "<YOUR-ROOT-URL>")
+#' qualtrics_api_credentials(api_key = "<YOUR-API-KEY>",
+#'                           base_url = "<YOUR-BASE-URL>")
+#'
 #' # Retrieve a list of surveys
-#' surveys <- getSurveys()
+#' surveys <- all_surveys()
+#'
 #' # Retrieve questions for a survey
 #' questions <- getSurveyQuestions(surveyID = surveys$id[6])
 #' # Retrieve a single survey, filtering for questions I want.

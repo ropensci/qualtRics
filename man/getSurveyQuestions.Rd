@@ -15,10 +15,12 @@ Retrieve a Data Frame Containing Question IDs and Labels
 \examples{
 \dontrun{
 # Register your Qualtrics credentials if you haven't already
-registerOptions(api_token = "<YOUR-API-TOKEN>",
-                base_url = "<YOUR-ROOT-URL>")
+qualtrics_api_credentials(api_key = "<YOUR-API-KEY>",
+                          base_url = "<YOUR-BASE-URL>")
+
 # Retrieve a list of surveys
-surveys <- getSurveys()
+surveys <- all_surveys()
+
 # Retrieve questions for a survey
 questions <- getSurveyQuestions(surveyID = surveys$id[6])
 # Retrieve a single survey, filtering for questions I want.
@@ -30,7 +32,4 @@ mysurvey <- getSurvey(surveyID = surveys$id[6],
 }
 \seealso{
 See \url{https://api.qualtrics.com/docs} for documentation on the Qualtrics API.
-}
-\author{
-Jasper Ginn, Phoebe Wong
 }

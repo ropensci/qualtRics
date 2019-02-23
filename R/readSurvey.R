@@ -10,7 +10,6 @@
 #' @param stripHTML Logical. If TRUE, then remove html tags. Defaults to TRUE
 #' @param legacyFormat Logical. If TRUE, then import "legacy" format csv files (as of 2017). Defaults to FALSE
 #'
-#' @author Adrian Brugger, Stefan Borer & Jasper Ginn
 #' @importFrom utils read.csv
 #' @importFrom sjlabelled set_label
 #' @importFrom jsonlite fromJSON

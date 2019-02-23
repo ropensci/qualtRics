@@ -1,6 +1,17 @@
 #' Retrieve a data frame of all active surveys on Qualtrics
 #'
-#' @seealso See \url{https://api.qualtrics.com/docs} for documentation on the Qualtrics API.
+#' This function is soft deprecated; use \code{\link[qualtRics]{all_surveys}}
+#' instead.
+#' @export
+getSurveys <- function() {
+  .Deprecated("all_surveys")
+  all_surveys()
+}
+
+#' Retrieve a data frame of all active surveys on Qualtrics
+#'
+#' @seealso See \url{https://api.qualtrics.com/docs} for documentation on the
+#' Qualtrics API.
 #' @importFrom dplyr bind_rows
 #' @export
 #' @examples
@@ -9,8 +20,8 @@
 #' qualtrics_api_credentials(api_key = "<YOUR-API-KEY>",
 #'                           base_url = "<YOUR-BASE-URL>")
 #'
-#' # Retrieve a list of surveys
-#' surveys <- getSurveys()
+#' # Retrieve a list of all surveys
+#' surveys <- all_surveys()
 #'
 #' # Retrieve a single survey
 #' mysurvey <- getSurvey(surveyID = surveys$id[6])
@@ -27,7 +38,7 @@
 #'                       verbose = TRUE)
 #' }
 
-getSurveys <- function() {
+all_surveys <- function() {
 
   # CHECK PARAMS AND PREP QUERY ----
 
@@ -59,6 +70,5 @@ getSurveys <- function() {
   # Bind to one large data frame & return
   d <- bind_rows(master)
   return(d)
-
 
 }

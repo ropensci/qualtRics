@@ -26,7 +26,7 @@
 #'                           base_url = "<YOUR-BASE-URL>")
 #'
 #' # Retrieve a list of surveys
-#' surveys <- getSurveys()
+#' surveys <- all_surveys()
 #'
 #' # Retrieve a single survey
 #' mysurvey <- getSurvey(surveyID = surveys$id[6])
