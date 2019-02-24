@@ -52,7 +52,7 @@ Currently, the package contains three core functions:
 It also contains helper functions:
 
 1. `qualtrics_api_credentials()` stores your API key and base url in environment variables.
-2. `getSurveyQuestions()` retrieves a data frame containing questions and question IDs for a survey.
+2. `survey_questions()` retrieves a data frame containing questions and question IDs for a survey.
 3. `metadata()` retrieves metadata about your survey, such as questions, survey flow, number of responses etc.
 
 Note that you can only export surveys that you own, or to which you have been given administration rights.

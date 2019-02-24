@@ -57,7 +57,7 @@ registerOptions <- function(verbose=TRUE,
 
   # START UP: CHECK ARGUMENTS PASSED BY USER ----
 
-  .Deprecated("qualtrics_api_credentials()")
+  warning("Soon, `registerOptions` will be deprecated. Try using `qualtrics_api_credentials()` instead.")
 
   # Take additional arguments
   args <- list(...)
@@ -238,7 +238,7 @@ qualtRicsConfigFile <- function(api_token = NULL,
                                 dateWarning = TRUE,
                                 root_url = NULL) {
 
-  .Deprecated("qualtrics_api_credentials()")
+  warning("Soon, `qualtRicsConfigFile` will be deprecated. Try using `qualtrics_api_credentials()` instead.")
 
   # Check for deprecated arguments
   calls <- names(vapply(match.call(), deparse, "character"))[-1]

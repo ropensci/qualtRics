@@ -1,8 +1,24 @@
-#' Retrieve a Data Frame Containing Question IDs and Labels
+#' Retrieve a data frame containing question IDs and labels
 #'
-#' @param surveyID String. Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.
+#' This function is soft deprecated; use \code{\link[qualtRics]{survey_questions}}
+#' instead.
+#' @param surveyID A string. Unique ID for the survey you want to download.
+#' Returned as `id` by the \link[qualtRics]{getSurveys} function.
 #'
-#' @seealso See \url{https://api.qualtrics.com/docs} for documentation on the Qualtrics API.
+#' @export
+getSurveyQuestions <- function(surveyID) {
+  warning("Soon, `getSurveyQuestions` will be deprecated. Try using `survey_questions()` instead.")
+  survey_questions(surveyID)
+}
+
+
+#' Retrieve a data frame containing question IDs and labels
+#'
+#' @param surveyID A string. Unique ID for the survey you want to download.
+#' Returned as `id` by the \link[qualtRics]{getSurveys} function.
+#'
+#' @seealso See \url{https://api.qualtrics.com/docs} for documentation on the
+#' Qualtrics API.
 #' @importFrom dplyr as_tibble
 #' @export
 #' @examples
@@ -15,15 +31,16 @@
 #' surveys <- all_surveys()
 #'
 #' # Retrieve questions for a survey
-#' questions <- getSurveyQuestions(surveyID = surveys$id[6])
-#' # Retrieve a single survey, filtering for questions I want.
+#' questions <- survey_questions(surveyID = surveys$id[6])
+#'
+#' # Retrieve a single survey, filtering for specific questions
 #' mysurvey <- getSurvey(surveyID = surveys$id[6],
 #'                       saveDir = tempdir(),
 #'                       includedQuestionIds = c("QID1", "QID2", "QID3"),
 #'                       verbose = TRUE)
 #' }
 
-getSurveyQuestions <- function(surveyID) {
+survey_questions <- function(surveyID) {
 
   # OPTIONS AND BUILD QUERY ----
 

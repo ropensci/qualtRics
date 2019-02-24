@@ -4,7 +4,7 @@
 #' instead.
 #' @export
 getSurveys <- function() {
-  .Deprecated("all_surveys")
+  warning("Soon, `getSurveys` will be deprecated. Try using `all_surveys()` instead.")
   all_surveys()
 }
 
