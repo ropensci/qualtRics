@@ -29,7 +29,7 @@
 #' file <- system.file("extdata", "sample_legacy.csv", package = "qualtRics")
 #' sample_legacy_df <- readSurvey(file)
 #' }
-
+#' 
 readSurvey <- function(file_name,
                        stripHTML = TRUE,
                        legacyFormat = FALSE) {
@@ -44,38 +44,43 @@ readSurvey <- function(file_name,
   # READ DATA ----
 
   # import data including variable names (row 1) and variable labels (row 2)
-  rawdata <- suppressMessages(readr::read_csv(file = file_name,
-                             col_names = FALSE,
-                             skip = skipNr,
-                             na = c("")))
+  rawdata <- suppressMessages(readr::read_csv(
+    file = file_name,
+    col_names = FALSE,
+    skip = skipNr,
+    na = c("")
+  ))
   # Need contingency when 0 rows
   assertthat::assert_that(nrow(rawdata) > 0,
-                          msg="The survey you are trying to import has no responses.") # nolint
+    msg = "The survey you are trying to import has no responses."
+  ) # nolint
   # Load headers
-  header <- suppressMessages(readr::read_csv(file = file_name,
-                            col_names = TRUE,
-                            n_max = 1))
+  header <- suppressMessages(readr::read_csv(
+    file = file_name,
+    col_names = TRUE,
+    n_max = 1
+  ))
 
   # MANIPULATE DATA ----
 
   # make them data.frame's, else the factor conversion
   # in `infer_data_types` crashes
-  #rawdata <- as.data.frame(rawdata)
-  #header <- as.data.frame(header)
+  # rawdata <- as.data.frame(rawdata)
+  # header <- as.data.frame(header)
   # Add names
   names(rawdata) <- names(header)
 
   # If Qualtrics adds an empty column at the end, remove it
-  if(grepl(",$", readLines(file_name, n = 1))) {
-    header <- header[, 1:(ncol(header)-1)]
-    rawdata <- rawdata[, 1:(ncol(rawdata)-1)]
+  if (grepl(",$", readLines(file_name, n = 1))) {
+    header <- header[, 1:(ncol(header) - 1)]
+    rawdata <- rawdata[, 1:(ncol(rawdata) - 1)]
   }
   # extract second row, remove it from df
   secondrow <- unlist(header)
   row.names(rawdata) <- NULL
 
   # Clean variable labels
-  if(stripHTML) {
+  if (stripHTML) {
     # weird regex to strip HTML tags, leaving only content
     # https://www.r-bloggers.com/htmltotext-extracting-text-from-html-via-xpath/ # nolint
     pattern <- "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>" # nolint
@@ -84,7 +89,7 @@ readSurvey <- function(file_name,
 
   # Scale Question with subquestion:
   # If it matches one of ".?!" followed by "-", take subsequent part
-  subquestions <- stringr::str_match(secondrow, ".*[:punct:]\\s*-(.*)")[,2]
+  subquestions <- stringr::str_match(secondrow, ".*[:punct:]\\s*-(.*)")[, 2]
 
   # Else if subquestion returns NA, use whole string
   subquestions[is.na(subquestions)] <- unlist(secondrow[is.na(subquestions)])
@@ -98,5 +103,4 @@ readSurvey <- function(file_name,
   # RETURN ----
 
   return(rawdata)
-
 }

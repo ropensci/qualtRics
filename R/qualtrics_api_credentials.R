@@ -18,49 +18,52 @@
 #' @param overwrite If TRUE, will overwrite existing Qualtrics
 #' credentials that you already have in your \code{.Renviron} file.
 #' @examples
-#'
+#' 
 #' \dontrun{
-#' qualtrics_api_credentials(api_key="<YOUR-QUALTRICS_API_KEY>",
-#'                           base_url="<YOUR-QUALTRICS_BASE_URL>",
-#'                           install = TRUE)
+#' qualtrics_api_credentials(
+#'   api_key = "<YOUR-QUALTRICS_API_KEY>",
+#'   base_url = "<YOUR-QUALTRICS_BASE_URL>",
+#'   install = TRUE
+#' )
 #' # Reload your environment so you can use the credentials without restarting R
 #' readRenviron("~/.Renviron")
 #' # You can check it with:
 #' Sys.getenv("QUALTRICS_API_KEY")
-#'
+#' 
 #' # If you need to overwrite existing credentials:
-#' qualtrics_api_credentials(api_key="<YOUR-QUALTRICS_API_KEY>",
-#'                           base_url="<YOUR-QUALTRICS_BASE_URL>",
-#'                           overwrite = TRUE,
-#'                           install = TRUE)
+#' qualtrics_api_credentials(
+#'   api_key = "<YOUR-QUALTRICS_API_KEY>",
+#'   base_url = "<YOUR-QUALTRICS_BASE_URL>",
+#'   overwrite = TRUE,
+#'   install = TRUE
+#' )
 #' # Reload your environment to use the credentials
 #' }
 #' @export
 
 qualtrics_api_credentials <- function(api_key, base_url,
-                                      overwrite = FALSE, install = FALSE){
-
+                                      overwrite = FALSE, install = FALSE) {
   if (install) {
     home <- Sys.getenv("HOME")
     renv <- file.path(home, ".Renviron")
-    if(file.exists(renv)){
+    if (file.exists(renv)) {
       # Backup original .Renviron before doing anything else here.
       file.copy(renv, file.path(home, ".Renviron_backup"))
     }
-    if(!file.exists(renv)){
+    if (!file.exists(renv)) {
       file.create(renv)
     }
-    else{
-      if(isTRUE(overwrite)){
+    else {
+      if (isTRUE(overwrite)) {
         message("Your original .Renviron will be backed up and stored in your R HOME directory if needed.")
         oldenv <- readLines(renv)
         newenv <- oldenv[-grep("QUALTRICS_API_KEY|QUALTRICS_BASE_URL", oldenv)]
         writeLines(newenv, renv)
       }
-      else{
+      else {
         tv <- readLines(renv)
-        if(any(grepl("QUALTRICS_API_KEY|QUALTRICS_BASE_URL", tv))){
-          stop("Qualtrics credentials already exist. You can overwrite them with the argument overwrite=TRUE", call.=FALSE)
+        if (any(grepl("QUALTRICS_API_KEY|QUALTRICS_BASE_URL", tv))) {
+          stop("Qualtrics credentials already exist. You can overwrite them with the argument overwrite=TRUE", call. = FALSE)
         }
       }
     }
@@ -73,8 +76,9 @@ qualtrics_api_credentials <- function(api_key, base_url,
     message('Your Qualtrics key and base URL have been stored in your .Renviron.  \nTo use now, restart R or run `readRenviron("~/.Renviron")`')
   } else {
     message("To install your credentials for use in future sessions, run this function with `install = TRUE`.")
-    Sys.setenv(QUALTRICS_API_KEY = api_key,
-               QUALTRICS_BASE_URL = base_url)
+    Sys.setenv(
+      QUALTRICS_API_KEY = api_key,
+      QUALTRICS_BASE_URL = base_url
+    )
   }
-
 }

@@ -19,8 +19,8 @@ assert_api_key <- function() { # nolint start
 
   # Check if API key is set in environment
   assertthat::assert_that(Sys.getenv("QUALTRICS_API_KEY") != "",
-                          msg = "You need to register your Qualtrics API key and base URL using the\n'qualtrics_api_credentials()' function.")
-
+    msg = "You need to register your Qualtrics API key and base URL using the\n'qualtrics_api_credentials()' function."
+  )
 }
 
 # Check if QUALTRICS_BASE_URL is stored
@@ -28,94 +28,90 @@ assert_base_url <- function() {
 
   # Check if base URL is set in environment
   assertthat::assert_that(Sys.getenv("QUALTRICS_BASE_URL") != "",
-                          msg = "You need to register your Qualtrics API key and base URL using the\n'qualtrics_api_credentials()' function.")
+    msg = "You need to register your Qualtrics API key and base URL using the\n'qualtrics_api_credentials()' function."
+  )
 
   # Test if root URL ends with '.qualtrics.com'
-  assertthat::assert_that(endsWith(Sys.getenv("QUALTRICS_BASE_URL"), '.qualtrics.com'),
-                          msg=paste0("The Qualtrics base URL must end with '.qualtrics.com'. Your base URL looks like this: '",
-                                     Sys.getenv("QUALTRICS_BASE_URL"),
-                                     "'.\nPlease visit https://api.qualtrics.com/docs/root-url for instructions about the Qualtrics base URL."))
-
+  assertthat::assert_that(endsWith(Sys.getenv("QUALTRICS_BASE_URL"), ".qualtrics.com"),
+    msg = paste0(
+      "The Qualtrics base URL must end with '.qualtrics.com'. Your base URL looks like this: '",
+      Sys.getenv("QUALTRICS_BASE_URL"),
+      "'.\nPlease visit https://api.qualtrics.com/docs/root-url for instructions about the Qualtrics base URL."
+    )
+  )
 }
 
 # Check if save directory exists
 assert_saveDir_exists <- function(save_dir) {
-
   assertthat::assert_that(ifelse((!file.info(save_dir)$isdir |
-                                    is.na(file.info(save_dir)$isdir) == TRUE),
-                                 FALSE, TRUE),
-                          msg = paste0("The directory ", save_dir, " does not exist."))
-
+    is.na(file.info(save_dir)$isdir) == TRUE),
+  FALSE, TRUE
+  ),
+  msg = paste0("The directory ", save_dir, " does not exist.")
+  )
 }
 
 # Check if seenUnansweredRecode is a string
 assert_seenUnansweredRecode_string <- function(seenUnansweredRecode) {
-
   assertthat::assert_that(assertthat::is.string(seenUnansweredRecode))
-
 }
 
 # Check if lastResponseId is a string
 assert_lastResponseId_string <- function(lastResponseId) {
-
   assertthat::assert_that(assertthat::is.string(lastResponseId))
-
 }
 
 # Check if startDate is string
 assert_startDate_string <- function(startDate) {
-
   assertthat::assert_that(assertthat::is.string(startDate))
-
 }
 
 # Check if endDate is string
 assert_endDate_string <- function(endDate) {
-
   assertthat::assert_that(assertthat::is.string(endDate))
-
 }
 
 # Check if includedQuestionIds are string(s)
 assert_includedQuestionIds_string <- function(includedQuestionIds) {
-
   assertthat::assert_that(mode(includedQuestionIds) == "character",
-                          msg="'includedQuestionIds' must be a character vector.")
-
+    msg = "'includedQuestionIds' must be a character vector."
+  )
 }
 
 # Check if limit > 0
 assert_limit_abovezero <- function(limit) {
-
   assertthat::assert_that(limit > 0,
-                          msg = "Limit parameter should be at least 1.")
-
+    msg = "Limit parameter should be at least 1."
+  )
 }
 
 # Check if survey file exists
 assert_surveyFile_exists <- function(file_name) {
-
   assertthat::assert_that(file.exists(file_name),
-                          msg = paste0("File ",
-                                       file_name,
-                                       " does not exist. Please check if you passed the right file path."))
-
+    msg = paste0(
+      "File ",
+      file_name,
+      " does not exist. Please check if you passed the right file path."
+    )
+  )
 }
 
 # Check if these arguments are logical
 assert_options_logical <- function(verbose, convertVariables,
                                    useLocalTime, useLabels) {
-
   assertthat::assert_that(assertthat::is.flag(verbose),
-                          msg="'verbose' must be TRUE or FALSE.")
+    msg = "'verbose' must be TRUE or FALSE."
+  )
 
   assertthat::assert_that(assertthat::is.flag(convertVariables),
-                          msg="'convertVariables' must be TRUE or FALSE.")
+    msg = "'convertVariables' must be TRUE or FALSE."
+  )
 
   assertthat::assert_that(assertthat::is.flag(useLocalTime),
-                          msg="'useLocalTime' must be TRUE or FALSE.")
+    msg = "'useLocalTime' must be TRUE or FALSE."
+  )
 
   assertthat::assert_that(assertthat::is.flag(useLabels),
-                          msg="'useLabels' must be TRUE or FALSE.")
-
+    msg = "'useLabels' must be TRUE or FALSE."
+  )
 } # nolint end

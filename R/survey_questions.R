@@ -24,22 +24,26 @@ getSurveyQuestions <- function(surveyID) {
 #' @examples
 #' \dontrun{
 #' # Register your Qualtrics credentials if you haven't already
-#' qualtrics_api_credentials(api_key = "<YOUR-API-KEY>",
-#'                           base_url = "<YOUR-BASE-URL>")
-#'
+#' qualtrics_api_credentials(
+#'   api_key = "<YOUR-API-KEY>",
+#'   base_url = "<YOUR-BASE-URL>"
+#' )
+#' 
 #' # Retrieve a list of surveys
 #' surveys <- all_surveys()
-#'
+#' 
 #' # Retrieve questions for a survey
 #' questions <- survey_questions(surveyID = surveys$id[6])
-#'
+#' 
 #' # Retrieve a single survey, filtering for specific questions
-#' mysurvey <- getSurvey(surveyID = surveys$id[6],
-#'                       saveDir = tempdir(),
-#'                       includedQuestionIds = c("QID1", "QID2", "QID3"),
-#'                       verbose = TRUE)
+#' mysurvey <- getSurvey(
+#'   surveyID = surveys$id[6],
+#'   saveDir = tempdir(),
+#'   includedQuestionIds = c("QID1", "QID2", "QID3"),
+#'   verbose = TRUE
+#' )
 #' }
-
+#' 
 survey_questions <- function(surveyID) {
 
   # OPTIONS AND BUILD QUERY ----
@@ -51,9 +55,11 @@ survey_questions <- function(surveyID) {
   # Function-specific API stuff
   root_url <- append_root_url(Sys.getenv("QUALTRICS_BASE_URL"), "surveys")
   # Add survey id
-  root_url <- paste0(root_url,
-                     "/",
-                     surveyID)
+  root_url <- paste0(
+    root_url,
+    "/",
+    surveyID
+  )
 
   # SEND REQUEST TO API ----
 
@@ -62,13 +68,17 @@ survey_questions <- function(surveyID) {
   # Get question information and map
   qi <- resp$result$questions
   # Add questions, question labels, question names and force response info
-  quest <- data.frame(qid = names(qi),
-                      qnames = vapply(qi, function(x) x$questionName, ""),
-                      question = vapply(qi,function(x) x$questionText, ""),
-                      force_resp = vapply(qi,
-                                          function(x) x$validation$doesForceResponse, # nolint
-                                          TRUE),
-                      stringsAsFactors = FALSE)
+  quest <- data.frame(
+    qid = names(qi),
+    qnames = vapply(qi, function(x) x$questionName, ""),
+    question = vapply(qi, function(x) x$questionText, ""),
+    force_resp = vapply(
+      qi,
+      function(x) x$validation$doesForceResponse, # nolint
+      TRUE
+    ),
+    stringsAsFactors = FALSE
+  )
 
   # Row names
   row.names(quest) <- seq_len(nrow(quest))
@@ -77,5 +87,4 @@ survey_questions <- function(surveyID) {
 
   # Return
   return(dplyr::as_tibble(quest))
-
 }
