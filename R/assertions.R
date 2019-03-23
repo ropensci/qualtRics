@@ -1,19 +1,3 @@
-#   Download qualtrics data into R
-#    Copyright (C) 2018 Jasper Ginn
-
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 # Check if QUALTRICS_API_KEY is stored
 assert_api_key <- function() { # nolint start
 
@@ -51,30 +35,30 @@ assert_saveDir_exists <- function(save_dir) {
   )
 }
 
-# Check if seenUnansweredRecode is a string
-assert_seenUnansweredRecode_string <- function(seenUnansweredRecode) {
-  assertthat::assert_that(assertthat::is.string(seenUnansweredRecode))
+# Check if unanswer_recode is a string
+assert_seenUnansweredRecode_string <- function(unanswer_recode) {
+  assertthat::assert_that(assertthat::is.string(unanswer_recode))
 }
 
-# Check if lastResponseId is a string
-assert_lastResponseId_string <- function(lastResponseId) {
-  assertthat::assert_that(assertthat::is.string(lastResponseId))
+# Check if last_response is a string
+assert_lastResponseId_string <- function(last_response) {
+  assertthat::assert_that(assertthat::is.string(last_response))
 }
 
-# Check if startDate is string
-assert_startDate_string <- function(startDate) {
-  assertthat::assert_that(assertthat::is.string(startDate))
+# Check if start_date is string
+assert_startDate_string <- function(start_date) {
+  assertthat::assert_that(assertthat::is.string(start_date))
 }
 
-# Check if endDate is string
-assert_endDate_string <- function(endDate) {
-  assertthat::assert_that(assertthat::is.string(endDate))
+# Check if end_date is string
+assert_endDate_string <- function(end_date) {
+  assertthat::assert_that(assertthat::is.string(end_date))
 }
 
-# Check if includedQuestionIds are string(s)
-assert_includedQuestionIds_string <- function(includedQuestionIds) {
-  assertthat::assert_that(mode(includedQuestionIds) == "character",
-    msg = "'includedQuestionIds' must be a character vector."
+# Check if include_questions are string(s)
+assert_includedQuestionIds_string <- function(include_questions) {
+  assertthat::assert_that(mode(include_questions) == "character",
+    msg = "'include_questions' must be a character vector."
   )
 }
 
@@ -97,21 +81,21 @@ assert_surveyFile_exists <- function(file_name) {
 }
 
 # Check if these arguments are logical
-assert_options_logical <- function(verbose, convertVariables,
-                                   useLocalTime, useLabels) {
+assert_options_logical <- function(verbose, convert,
+                                   local_time, label) {
   assertthat::assert_that(assertthat::is.flag(verbose),
     msg = "'verbose' must be TRUE or FALSE."
   )
 
-  assertthat::assert_that(assertthat::is.flag(convertVariables),
-    msg = "'convertVariables' must be TRUE or FALSE."
+  assertthat::assert_that(assertthat::is.flag(convert),
+    msg = "'convert' must be TRUE or FALSE."
   )
 
-  assertthat::assert_that(assertthat::is.flag(useLocalTime),
-    msg = "'useLocalTime' must be TRUE or FALSE."
+  assertthat::assert_that(assertthat::is.flag(local_time),
+    msg = "'local_time' must be TRUE or FALSE."
   )
 
-  assertthat::assert_that(assertthat::is.flag(useLabels),
-    msg = "'useLabels' must be TRUE or FALSE."
+  assertthat::assert_that(assertthat::is.flag(label),
+    msg = "'label' must be TRUE or FALSE."
   )
 } # nolint end

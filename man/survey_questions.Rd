@@ -28,10 +28,10 @@ surveys <- all_surveys()
 questions <- survey_questions(surveyID = surveys$id[6])
 
 # Retrieve a single survey, filtering for specific questions
-mysurvey <- getSurvey(
+mysurvey <- fetch_survey(
   surveyID = surveys$id[6],
-  saveDir = tempdir(),
-  includedQuestionIds = c("QID1", "QID2", "QID3"),
+  save_dir = tempdir(),
+  include_questions = c("QID1", "QID2", "QID3"),
   verbose = TRUE
 )
 }

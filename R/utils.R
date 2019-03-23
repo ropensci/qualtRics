@@ -102,29 +102,29 @@ check_params <- function(...) {
 
   ## options
   if (all(c(
-    "verbose", "convertVariables",
-    "useLocalTime", "useLabels"
+    "verbose", "convert",
+    "local_time", "label"
   ) %in% names(args))) {
     assert_options_logical(
       args$verbose,
-      args$convertVariables,
-      args$useLocalTime,
-      args$useLabels
+      args$convert,
+      args$local_time,
+      args$label
     )
   }
 
   # Check if params are of the right type
-  if ("startDate" %in% names(args)) {
-    if (!is.null(args$startDate)) {
-      assert_startDate_string(args$startDate)
+  if ("start_date" %in% names(args)) {
+    if (!is.null(args$start_date)) {
+      assert_startDate_string(args$start_date)
     }
   }
-  if ("endDate" %in% names(args)) {
-    if (!is.null(args$endDate)) assert_endDate_string(args$endDate)
+  if ("end_date" %in% names(args)) {
+    if (!is.null(args$end_date)) assert_endDate_string(args$end_date)
   }
-  if ("lastResponseId" %in% names(args)) {
-    if (!is.null(args$lastResponseId)) {
-      assert_lastResponseId_string(args$lastResponseId)
+  if ("last_response" %in% names(args)) {
+    if (!is.null(args$last_response)) {
+      assert_lastResponseId_string(args$last_response)
     }
   }
   # Check if save_dir exists
@@ -134,9 +134,9 @@ check_params <- function(...) {
     }
   }
   # Check if seenUnansweredRecode is NULL or else a string
-  if ("seenUnansweredRecode" %in% names(args)) {
-    if (!is.null(args$seenUnansweredRecode)) {
-      assert_seenUnansweredRecode_string(args$seenUnansweredRecode)
+  if ("unanswer_recode" %in% names(args)) {
+    if (!is.null(args$unanswer_recode)) {
+      assert_seenUnansweredRecode_string(args$unanswer_recode)
     }
   }
   # Check if limit > 0
@@ -146,9 +146,9 @@ check_params <- function(...) {
     }
   }
   # Check if includedQuestionIds is a string
-  if ("includedQuestionIds" %in% names(args)) {
-    if (!is.null(args$includedQuestionIds)) {
-      assert_includedQuestionIds_string(args$includedQuestionIds)
+  if ("include_questions" %in% names(args)) {
+    if (!is.null(args$include_questions)) {
+      assert_includedQuestionIds_string(args$include_questions)
     }
   }
 }
@@ -181,86 +181,86 @@ append_root_url <- function(base_url, type = c("responseexports", "surveys")) {
 #' Create raw JSON payload to post response exports request
 #'
 #' @param surveyID Survey ID
-#' @param useLabels Flag
-#' @param lastResponseId Flag
-#' @param startDate Flag
-#' @param endDate Flag
+#' @param label Flag
+#' @param last_response Flag
+#' @param start_date Flag
+#' @param end_date Flag
 #' @param limit Flag
-#' @param useLocalTime Flag
-#' @param seenUnansweredRecode Flag
-#' @param includedQuestionIds Flag
+#' @param local_time Flag
+#' @param unanswer_recode Flag
+#' @param include_questions Flag
 #'
-#' @seealso Functions \code{\link{getSurveys}} and \code{\link{registerOptions}}
+#' @seealso Functions \code{\link{all_surveys}} and \code{\link{registerOptions}}
 #' have more details on these parameters
 #'
 #' @return JSON file with options to send to API
 
 create_raw_payload <- function(surveyID,
-                               useLabels = TRUE,
-                               lastResponseId = NULL,
-                               startDate = NULL,
-                               endDate = NULL,
+                               label = TRUE,
+                               last_response = NULL,
+                               start_date = NULL,
+                               end_date = NULL,
                                limit = NULL,
-                               useLocalTime = FALSE,
-                               seenUnansweredRecode = NULL,
-                               includedQuestionIds = NULL) {
+                               local_time = FALSE,
+                               unanswer_recode = NULL,
+                               include_questions = NULL) {
   paste0(
     '{"format": ', '"', "csv", '"',
     ', "surveyId": ', '"', surveyID, '"',
     ifelse(
-      is.null(lastResponseId),
+      is.null(last_response),
       "",
       paste0(
         ', "lastResponseId": ',
         '"',
-        lastResponseId,
+        last_response,
         '"'
       )
     ),
     ifelse(
-      is.null(startDate),
+      is.null(start_date),
       "",
       paste0(
         ', "startDate": ',
         '"',
-        paste0(startDate, "T00:00:00Z"),
+        paste0(start_date, "T00:00:00Z"),
         '"'
       )
     ),
     ifelse(
-      is.null(endDate),
+      is.null(end_date),
       "",
       paste0(
         ', "endDate": ',
         '"',
-        paste0(endDate, "T00:00:00Z"),
+        paste0(end_date, "T00:00:00Z"),
         '"'
       )
     ),
     ifelse(
-      is.null(seenUnansweredRecode),
+      is.null(unanswer_recode),
       "",
       paste0(
         ', "seenUnansweredRecode": ',
         '"',
-        seenUnansweredRecode,
+        unanswer_recode,
         '"'
       )
     ),
     ifelse(
-      !useLocalTime,
+      !local_time,
       "",
       paste0(
         ', "useLocalTime": ',
-        tolower(useLocalTime)
+        tolower(local_time)
       )
     ),
     ifelse(
-      is.null(includedQuestionIds),
+      is.null(include_questions),
       "",
       paste0(
         ', "includedQuestionIds": ',
-        "[", paste0('"', includedQuestionIds, '"', collapse = ", "), "]"
+        "[", paste0('"', include_questions, '"', collapse = ", "), "]"
       )
     ),
     ifelse(
@@ -272,7 +272,7 @@ create_raw_payload <- function(surveyID,
       )
     ),
     ", ",
-    '"useLabels": ', tolower(useLabels),
+    '"useLabels": ', tolower(label),
     "}"
   )
 }
@@ -310,7 +310,7 @@ qualtrics_api_request <- function(verb = c("GET", "POST"),
 #' Download response export
 #'
 #' @param check_url URL provided by Qualtrics API that shows the download percentage completneness
-#' @param verbose See \code{\link{getSurvey}}
+#' @param verbose See \code{\link{fetch_survey}}
 
 
 download_qualtrics_export <- function(check_url, verbose = FALSE) {
@@ -351,7 +351,7 @@ download_qualtrics_export <- function(check_url, verbose = FALSE) {
   # leading to errors
   if (f$request$url == "t.qualtrics.com/API/v3/responseexports/T_123/file") {
     if (f$request$headers["X-API-TOKEN"] == "1234") {
-      ct <- readRDS("files/file_getSurvey.rds")
+      ct <- readRDS("files/file_fetch_survey.rds")
       f$content <- ct
     }
   }

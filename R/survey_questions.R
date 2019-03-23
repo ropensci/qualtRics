@@ -28,22 +28,22 @@ getSurveyQuestions <- function(surveyID) {
 #'   api_key = "<YOUR-API-KEY>",
 #'   base_url = "<YOUR-BASE-URL>"
 #' )
-#' 
+#'
 #' # Retrieve a list of surveys
 #' surveys <- all_surveys()
-#' 
+#'
 #' # Retrieve questions for a survey
 #' questions <- survey_questions(surveyID = surveys$id[6])
-#' 
+#'
 #' # Retrieve a single survey, filtering for specific questions
-#' mysurvey <- getSurvey(
+#' mysurvey <- fetch_survey(
 #'   surveyID = surveys$id[6],
-#'   saveDir = tempdir(),
-#'   includedQuestionIds = c("QID1", "QID2", "QID3"),
+#'   save_dir = tempdir(),
+#'   include_questions = c("QID1", "QID2", "QID3"),
 #'   verbose = TRUE
 #' )
 #' }
-#' 
+#'
 survey_questions <- function(surveyID) {
 
   # OPTIONS AND BUILD QUERY ----

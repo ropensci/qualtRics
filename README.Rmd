@@ -52,7 +52,7 @@ Look for this package back on CRAN soon!
 Currently, the package contains three core functions:
 
 1. `all_surveys()` fetches a list of all surveys that you own or have access to from Qualtrics.
-2. `getSurvey()` downloads a survey from Qualtrics and loads it into R.
+2. `fetch_survey()` downloads a survey from Qualtrics and loads it into R.
 3. `readSurvey()` allows you to read CSV files you download manually from Qualtrics.
 
 It also contains helper functions:
@@ -90,8 +90,8 @@ surveys <- all_surveys()
 You can then download the data from any of these individual surveys (for example, perhaps the sixth one) directly into R.
 
 ```{r, eval=FALSE}
-mysurvey <- getSurvey(surveyID = surveys$id[6], 
-                      verbose = TRUE)
+mysurvey <- fetch_survey(surveyID = surveys$id[6], 
+                         verbose = TRUE)
 ```
 
 

@@ -21,27 +21,27 @@ getSurveys <- function() {
 #'   api_key = "<YOUR-API-KEY>",
 #'   base_url = "<YOUR-BASE-URL>"
 #' )
-#' 
+#'
 #' # Retrieve a list of all surveys
 #' surveys <- all_surveys()
-#' 
+#'
 #' # Retrieve a single survey
-#' mysurvey <- getSurvey(surveyID = surveys$id[6])
-#' 
+#' mysurvey <- fetch_survey(surveyID = surveys$id[6])
+#'
 #' # You can use the same parameters as those found in the Qualtrics API documentation
 #' # Found here: https://api.qualtrics.com/docs/csv
-#' mysurvey <- getSurvey(
+#' mysurvey <- fetch_survey(
 #'   surveyID = surveys$id[6],
 #'   save_dir = tempdir(),
-#'   startDate = "2018-01-01",
-#'   endDate = "2018-01-31",
+#'   start_date = "2018-01-01",
+#'   end_date = "2018-01-31",
 #'   limit = 100,
-#'   useLabels = TRUE,
-#'   seenUnansweredRecode = "UNANS",
+#'   label = TRUE,
+#'   unanswer_recode = "UNANS",
 #'   verbose = TRUE
 #' )
 #' }
-#' 
+#'
 all_surveys <- function() {
 
   # CHECK PARAMS AND PREP QUERY ----
