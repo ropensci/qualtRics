@@ -21,6 +21,8 @@ qualtrics_response_codes <- function(res, raw = FALSE) {
     )
   } else if(res$status_code == 401) {
     stop("Qualtrics API raised an authentication (401) error - you may not have the\nrequired authorization. Please check your API key and root url.") # nolint
+  } else if(res$status_code == 403) {
+    stop("Qualtrics API raised an forbidden (403) error - you may have a valid API\nkey that lacks permissions to query the API. Please check your settings and/or talk to your administrators.") # nolint
   } else if(res$status_code == 400) {
     stop("Qualtrics API raised a bad request (400) error - Please report this on\nhttps://github.com/ropensci/qualtRics/issues") # nolint
   } else if(res$status_code == 404) {
