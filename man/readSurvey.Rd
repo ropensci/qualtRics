@@ -35,4 +35,5 @@ sample_df <- readSurvey(file)
 file <- system.file("extdata", "sample_legacy.csv", package = "qualtRics")
 sample_legacy_df <- readSurvey(file)
 }
+
 }

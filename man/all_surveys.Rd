@@ -12,8 +12,10 @@ Retrieve a data frame of all active surveys on Qualtrics
 \examples{
 \dontrun{
 # Register your Qualtrics credentials if you haven't already
-qualtrics_api_credentials(api_key = "<YOUR-API-KEY>",
-                          base_url = "<YOUR-BASE-URL>")
+qualtrics_api_credentials(
+  api_key = "<YOUR-API-KEY>",
+  base_url = "<YOUR-BASE-URL>"
+)
 
 # Retrieve a list of all surveys
 surveys <- all_surveys()
@@ -23,15 +25,18 @@ mysurvey <- getSurvey(surveyID = surveys$id[6])
 
 # You can use the same parameters as those found in the Qualtrics API documentation
 # Found here: https://api.qualtrics.com/docs/csv
-mysurvey <- getSurvey(surveyID = surveys$id[6],
-                      save_dir = tempdir(),
-                      startDate = "2018-01-01",
-                      endDate = "2018-01-31",
-                      limit = 100,
-                      useLabels = TRUE,
-                      seenUnansweredRecode = "UNANS",
-                      verbose = TRUE)
+mysurvey <- getSurvey(
+  surveyID = surveys$id[6],
+  save_dir = tempdir(),
+  startDate = "2018-01-01",
+  endDate = "2018-01-31",
+  limit = 100,
+  useLabels = TRUE,
+  seenUnansweredRecode = "UNANS",
+  verbose = TRUE
+)
 }
+
 }
 \seealso{
 See \url{https://api.qualtrics.com/docs} for documentation on the
