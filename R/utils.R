@@ -54,6 +54,8 @@ qualtrics_response_codes <- function(res, raw = FALSE) {
     stop("The request body was too large. This can also happen in cases where a\nmultipart/form-data request is malformed.") # nolint
   } else if(res$status_code == 429) {
     stop("You have reached the concurrent request limit.")
+  } else {
+    stop(paste0("Qualtrics API reports a ", res$status_code, " status code."))
   }
 }
 
