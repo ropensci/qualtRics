@@ -36,16 +36,16 @@ readSurvey <- function(...) {
 #' \dontrun{
 #' # Generic use of read_survey()
 #' df <- read_survey("<YOUR-PATH-TO-CSV-FILE>")
-#'
+#' 
 #' # Example using current data format
 #' file <- system.file("extdata", "sample.csv", package = "qualtRics")
 #' df <- read_survey(file)
-#'
+#' 
 #' # Example using legacy data format
 #' file <- system.file("extdata", "sample_legacy.csv", package = "qualtRics")
 #' df <- read_survey(file, legacy = TRUE)
 #' }
-#'
+#' 
 read_survey <- function(file_name,
                         strip_html = TRUE,
                         legacy = FALSE) {
@@ -68,7 +68,7 @@ read_survey <- function(file_name,
   ))
   # Need contingency when 0 rows
   assertthat::assert_that(nrow(rawdata) > 0,
-                          msg = "The survey you are trying to import has no responses."
+    msg = "The survey you are trying to import has no responses."
   ) # nolint
   # Load headers
   header <- suppressMessages(readr::read_csv(

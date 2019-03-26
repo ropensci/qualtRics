@@ -65,13 +65,13 @@ getSurvey <- function(...) {
 #'   api_key = "<YOUR-API-KEY>",
 #'   base_url = "<YOUR-BASE-URL>"
 #' )
-#'
+#' 
 #' # Retrieve a list of surveys
 #' surveys <- all_surveys()
-#'
+#' 
 #' # Retrieve a single survey
 #' mysurvey <- fetch_survey(surveyID = surveys$id[6])
-#'
+#' 
 #' mysurvey <- fetch_survey(
 #'   surveyID = surveys$id[6],
 #'   save_dir = tempdir(),
@@ -83,7 +83,7 @@ getSurvey <- function(...) {
 #'   verbose = TRUE
 #' )
 #' }
-#'
+#' 
 fetch_survey <- function(surveyID,
                          last_response = NULL,
                          start_date = NULL,

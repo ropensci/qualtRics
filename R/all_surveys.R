@@ -21,13 +21,13 @@ getSurveys <- function() {
 #'   api_key = "<YOUR-API-KEY>",
 #'   base_url = "<YOUR-BASE-URL>"
 #' )
-#'
+#' 
 #' # Retrieve a list of all surveys
 #' surveys <- all_surveys()
-#'
+#' 
 #' # Retrieve a single survey
 #' mysurvey <- fetch_survey(surveyID = surveys$id[6])
-#'
+#' 
 #' # You can use the same parameters as those found in the Qualtrics API documentation
 #' # Found here: https://api.qualtrics.com/docs/csv
 #' mysurvey <- fetch_survey(
@@ -41,7 +41,7 @@ getSurveys <- function() {
 #'   verbose = TRUE
 #' )
 #' }
-#'
+#' 
 all_surveys <- function() {
 
   # CHECK PARAMS AND PREP QUERY ----

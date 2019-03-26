@@ -58,7 +58,7 @@ Set 'force_request' to TRUE if you want to override this"
 test_that("Save directory exists for fetch_survey()", {
   expect_error(
     qualtRics::fetch_survey("1234",
-                            save_dir = "/users/jasper/desktop/idonotexist"
+      save_dir = "/users/jasper/desktop/idonotexist"
     ),
     "does not exist."
   )
@@ -79,7 +79,7 @@ test_that("unanswer_recode is a string", {
   # Call fetch_survey
   expect_error(
     fetch_survey("1234",
-                 unanswer_recode = 123
+      unanswer_recode = 123
     ),
     "unanswer_recode is not a string"
   )

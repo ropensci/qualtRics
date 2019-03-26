@@ -28,13 +28,13 @@ getSurveyQuestions <- function(surveyID) {
 #'   api_key = "<YOUR-API-KEY>",
 #'   base_url = "<YOUR-BASE-URL>"
 #' )
-#'
+#' 
 #' # Retrieve a list of surveys
 #' surveys <- all_surveys()
-#'
+#' 
 #' # Retrieve questions for a survey
 #' questions <- survey_questions(surveyID = surveys$id[6])
-#'
+#' 
 #' # Retrieve a single survey, filtering for specific questions
 #' mysurvey <- fetch_survey(
 #'   surveyID = surveys$id[6],
@@ -43,7 +43,7 @@ getSurveyQuestions <- function(surveyID) {
 #'   verbose = TRUE
 #' )
 #' }
-#'
+#' 
 survey_questions <- function(surveyID) {
 
   # OPTIONS AND BUILD QUERY ----
