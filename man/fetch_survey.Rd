@@ -62,7 +62,7 @@ values? Defaults to \code{FALSE}. See
 \item{...}{optional arguments. You can pass all arguments listed in
 \code{\link{registerOptions}} (except a different base url / api key).
 You can also pass a argument 'fileEncoding' (see 'fileEncoding' argument in
-\code{\link{readSurvey}}) to import your survey using a specific encoding.}
+\code{\link[qualtRics]{read_survey}}) to import your survey using a specific encoding.}
 }
 \description{
 Download a Qualtrics survey you own via API and import the survey directly into R.

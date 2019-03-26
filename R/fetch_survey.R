@@ -54,7 +54,7 @@ getSurvey <- function(...) {
 #' @param ... optional arguments. You can pass all arguments listed in
 #' \code{\link{registerOptions}} (except a different base url / api key).
 #' You can also pass a argument 'fileEncoding' (see 'fileEncoding' argument in
-#' \code{\link{readSurvey}}) to import your survey using a specific encoding.
+#' \code{\link[qualtRics]{read_survey}}) to import your survey using a specific encoding.
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs/csv} for documentation on the Qualtrics API.
 #' @export
@@ -201,7 +201,7 @@ fetch_survey <- function(surveyID,
   # READ DATA AND SET VARIABLES ----
 
   # Read data
-  data <- readSurvey(survey.fpath)
+  data <- read_survey(survey.fpath)
   # Add types
   if (convert) {
     data <- infer_data_types(data, surveyID)

@@ -47,7 +47,7 @@ Currently, the package contains three core functions:
 
 1. `all_surveys()` fetches a list of all surveys that you own or have access to from Qualtrics.
 2. `fetch_survey()` downloads a survey from Qualtrics and loads it into R.
-3. `readSurvey()` allows you to read CSV files you download manually from Qualtrics.
+3. `read_survey()` allows you to read CSV files you download manually from Qualtrics.
 
 It also contains helper functions:
 

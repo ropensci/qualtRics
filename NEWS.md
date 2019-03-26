@@ -11,6 +11,7 @@
   - `all_surveys()` (from old version of `getSurveys()`)
   - `survey_questions()` (from old version of `getSurveyQuestions()`)
   - `fetch_survey()` (from old version of `getSurvey()`)
+  - `read_survey()` (from old version of `readSurvey()`)
 
 
 qualtRics 3.0 (2018-02-03)
