@@ -1,3 +1,5 @@
+^docs$
+^_pkgdown\.yml$
 ^LICENSE\.md$
 ^README\.Rmd$
 ^.*\.Rproj$
@@ -21,3 +23,4 @@ Changelog\.md$
 ^dev$
 ^todo\.md$
 ^revamp\.md$
+^pkgdown$

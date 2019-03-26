@@ -136,3 +136,4 @@ To avoid special characters (mainly periods) in header names, `readSurvey()` use
 ```{r, echo=FALSE, out.width="80%"}
 knitr::include_graphics("qualtricsdf.png")
 ```
+
