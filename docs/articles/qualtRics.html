@@ -97,7 +97,7 @@
 <li>
 <code><a href="../reference/fetch_survey.html">fetch_survey()</a></code> downloads a survey from Qualtrics and loads it into R.</li>
 <li>
-<code><a href="../reference/readSurvey.html">readSurvey()</a></code> allows you to read CSV files you download manually from Qualtrics.</li>
+<code><a href="../reference/read_survey.html">read_survey()</a></code> allows you to read CSV files you download manually from Qualtrics.</li>
 </ol>
 <p>It also contains helper functions:</p>
 <ol style="list-style-type: decimal">
@@ -160,9 +160,9 @@
 <a class="sourceLine" id="cb7-3" data-line-number="3">                         <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>Note that surveys that are stored in this way will be saved as an <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/readRDS.html">RDS</a> file rather than e.g. a CSV. Reading an RDS file can be done like so:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">mysurvey &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="dt">file =</span> <span class="st">"/users/Julia/Desktop/mysurvey.rds"</span>)</a></code></pre></div>
-<p>You can read a survey that you downloaded manually from Qualtrics’ website via a browser using <code><a href="../reference/readSurvey.html">readSurvey()</a></code>:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">mysurvey &lt;-<span class="st"> </span><span class="kw"><a href="../reference/readSurvey.html">readSurvey</a></span>(<span class="st">"/users/Julia/Desktop/mysurvey.csv"</span>)</a></code></pre></div>
-<p>To avoid special characters (mainly periods) in header names, <code><a href="../reference/readSurvey.html">readSurvey()</a></code> uses question labels as the header names. The question belonging to that label is then added using the <a href="https://CRAN.R-project.org/package=sjlabelled">sjlabelled</a> package. Qualtrics gives names to these labels automatically, but you can easily change them.</p>
+<p>You can read a survey that you downloaded manually from Qualtrics’ website via a browser using <code><a href="../reference/read_survey.html">read_survey()</a></code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">mysurvey &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_survey.html">read_survey</a></span>(<span class="st">"/users/Julia/Desktop/mysurvey.csv"</span>)</a></code></pre></div>
+<p>To avoid special characters (mainly periods) in header names, <code><a href="../reference/read_survey.html">read_survey()</a></code> uses question labels as the header names. The question belonging to that label is then added using the <a href="https://CRAN.R-project.org/package=sjlabelled">sjlabelled</a> package. Qualtrics gives names to these labels automatically, but you can easily change them.</p>
 <p><img src="../../../../../Google%20Drive/data_science/ROpenSci/qualtRics/vignettes/qualtricsdf.png" width="80%"></p>
 </div>
   </div>
