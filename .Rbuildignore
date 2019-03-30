@@ -25,3 +25,4 @@ Changelog\.md$
 ^revamp\.md$
 ^pkgdown$
 ^cran-comments\.md$
+^CRAN-RELEASE$
