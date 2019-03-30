@@ -95,5 +95,5 @@ mysurvey <- fetch_survey(
 
 }
 \seealso{
-See \url{https://api.qualtrics.com/docs/csv} for documentation on the Qualtrics API.
+See \url{https://api.qualtrics.com/docs/response-exports} for documentation on the Qualtrics API.
 }

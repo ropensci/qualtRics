@@ -56,7 +56,7 @@ getSurvey <- function(...) {
 #' You can also pass a argument 'fileEncoding' (see 'fileEncoding' argument in
 #' \code{\link[qualtRics]{read_survey}}) to import your survey using a specific encoding.
 #'
-#' @seealso See \url{https://api.qualtrics.com/docs/csv} for documentation on the Qualtrics API.
+#' @seealso See \url{https://api.qualtrics.com/docs/response-exports} for documentation on the Qualtrics API.
 #' @export
 #' @examples
 #' \dontrun{
@@ -65,13 +65,13 @@ getSurvey <- function(...) {
 #'   api_key = "<YOUR-API-KEY>",
 #'   base_url = "<YOUR-BASE-URL>"
 #' )
-#' 
+#'
 #' # Retrieve a list of surveys
 #' surveys <- all_surveys()
-#' 
+#'
 #' # Retrieve a single survey
 #' mysurvey <- fetch_survey(surveyID = surveys$id[6])
-#' 
+#'
 #' mysurvey <- fetch_survey(
 #'   surveyID = surveys$id[6],
 #'   save_dir = tempdir(),
@@ -83,7 +83,7 @@ getSurvey <- function(...) {
 #'   verbose = TRUE
 #' )
 #' }
-#' 
+#'
 fetch_survey <- function(surveyID,
                          last_response = NULL,
                          start_date = NULL,

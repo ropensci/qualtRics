@@ -1,4 +1,4 @@
-# qualtRics 3.0.1 [WIP]
+# qualtRics 3.1.0
 
 - New maintainer: Julia Silge
 - Add all previous contributors to DESCRIPTION as `ctb`
