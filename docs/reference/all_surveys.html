@@ -141,8 +141,6 @@ Qualtrics API.</p></div>
 <span class='co'># Retrieve a single survey</span>
 <span class='no'>mysurvey</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='fetch_survey.html'>fetch_survey</a></span>(<span class='kw'>surveyID</span> <span class='kw'>=</span> <span class='no'>surveys</span>$<span class='no'>id</span>[<span class='fl'>6</span>])
 
-<span class='co'># You can use the same parameters as those found in the Qualtrics API documentation</span>
-<span class='co'># Found here: https://api.qualtrics.com/docs/csv</span>
 <span class='no'>mysurvey</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='fetch_survey.html'>fetch_survey</a></span>(
   <span class='kw'>surveyID</span> <span class='kw'>=</span> <span class='no'>surveys</span>$<span class='no'>id</span>[<span class='fl'>6</span>],
   <span class='kw'>save_dir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/tempfile'>tempdir</a></span>(),

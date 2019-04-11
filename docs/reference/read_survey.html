@@ -155,15 +155,14 @@ printed on the console but are visibile in the RStudio viewer.</p>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='co'># Generic use of read_survey()</span>
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>read_survey</span>(<span class='st'>"&lt;YOUR-PATH-TO-CSV-FILE&gt;"</span>)
-
-<span class='co'># Example using current data format</span>
+<span class='co'># }</span><div class='input'><span class='co'># Example using current data format</span>
 <span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"sample.csv"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"qualtRics"</span>)
 <span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>read_survey</span>(<span class='no'>file</span>)
 
 <span class='co'># Example using legacy data format</span>
 <span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"sample_legacy.csv"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"qualtRics"</span>)
-<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>read_survey</span>(<span class='no'>file</span>, <span class='kw'>legacy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='co'># }</span><div class='input'>
+<span class='no'>df</span> <span class='kw'>&lt;-</span> <span class='fu'>read_survey</span>(<span class='no'>file</span>, <span class='kw'>legacy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Missing column names filled in: 'X16' [16]</span></div><div class='input'>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
