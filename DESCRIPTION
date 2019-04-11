@@ -1,6 +1,6 @@
 Package: qualtRics
 Type: Package
-Title: Download Qualtrics Survey Data
+Title: Download 'Qualtrics' Survey Data
 Version: 3.1.0
 Authors@R: c(person("Jasper", "Ginn", role = c("aut"),
              email = "jasperginn@gmail.com"),
@@ -13,14 +13,12 @@ Authors@R: c(person("Jasper", "Ginn", role = c("aut"),
              comment = c(ORCID = "0000-0002-3671-836X")),
              person("Phoebe", "Wong", role = c("ctb"),
              email = "phoebe.wong@berkeley.edu"))
-Description: Qualtrics <https://www.qualtrics.com/about/>
-    is an online survey and data collection software
-    platform. This package provides functions to access
-    survey results directly into R using the Qualtrics
-    API. See <https://api.qualtrics.com/> for more
-    information about the Qualtrics API. This package is
-    community-maintained and is not officially supported
-    by Qualtrics.
+Description: Provides functions to access survey results directly into R using 
+    the 'Qualtrics' API. 'Qualtrics' <https://www.qualtrics.com/about/> is an 
+    online survey and data collection software platform. See 
+    <https://api.qualtrics.com/> for more information about the Qualtrics API. 
+    This package is community-maintained and is not officially supported by 
+    'Qualtrics'.
 URL: https://ropensci.github.io/qualtRics/, https://github.com/ropensci/qualtRics
 BugReports: https://github.com/ropensci/qualtRics/issues
 License: MIT + file LICENSE

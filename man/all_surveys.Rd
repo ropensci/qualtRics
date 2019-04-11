@@ -23,8 +23,6 @@ surveys <- all_surveys()
 # Retrieve a single survey
 mysurvey <- fetch_survey(surveyID = surveys$id[6])
 
-# You can use the same parameters as those found in the Qualtrics API documentation
-# Found here: https://api.qualtrics.com/docs/csv
 mysurvey <- fetch_survey(
   surveyID = surveys$id[6],
   save_dir = tempdir(),
