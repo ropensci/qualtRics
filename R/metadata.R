@@ -1,55 +1,56 @@
-#   Download qualtrics data into R
-#    Copyright (C) 2018 Jasper Ginn
-
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-#' Download Metadata for a Survey
+#' Download metadata for a survey
 #'
-#' Using this function, you can retrieve metadata about your survey. This information includes question metadata (type, options, choices etc), number of responses, general metadata, survey flow etc.
+#' Using this function, you can retrieve metadata about your survey. This
+#' information includes question metadata (type, options, choices, etc), number
+#' of responses, general metadata, survey flow, etc.
 #'
-#' @param surveyID String. Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.
-#' @param get list containing TRUE/FALSE values of one of the following: metadata, questions,responsecounts, blocks, flow, embedded_data or comments. A TRUE value will return that specific element. If you leave this empty, the function will return the metadata, questions and responsecounts elements. See examples below for more information
-#' @param ... additional options. User may pass an argument called 'questions', which should be a vector containing the names of questions for which you want to return metadata.
+#' @param surveyID A string. Unique ID for the survey you want to download.
+#' Returned as 'id' by the \link[qualtRics]{getSurveys} function.
+#' @param get A list containing `TRUE`/`FALSE` values of one of the following:
+#' `metadata`, `questions`, `responsecounts`, `blocks`, `flow`, `embedded_data`,
+#' or `comments`. A `TRUE` value will return that specific element. If you leave
+#' this empty, the function will return the `metadata`, `questions`, and
+#' `responsecounts` elements. See examples below for more information.
+#' @param ... Additional options. User may pass an argument called `questions`,
+#' which should be a vector containing the names of questions for which you
+#' want to return metadata.
 #'
-#' @author Jasper Ginn
 #' @importFrom assertthat assert_that
 #' @export
 #' @examples
 #' \dontrun{
 #' # Register your Qualtrics credentials if you haven't already
-#' # Note that you need to pass both the 'api_token' and 'root_url'
-#' # parameters if you call this function for the first time.
-#' registerOptions(api_token = "<YOUR-API-TOKEN>",
-#'                 base_url = "<YOUR-ROOT-URL>")
+#' qualtrics_api_credentials(
+#'   api_key = "<YOUR-API-KEY>",
+#'   base_url = "<YOUR-BASE-URL>"
+#' )
+#' 
 #' # Get an overview of surveys
 #' surveys <- getSurveys()
+#' 
 #' # Get metadata for a survey
 #' md <- metadata(surveyID = surveys$id[6])
+#' 
 #' # Get metadata with specific elements
-#' md_specific <- metadata(surveyID= id, get=list(questions = FALSE, flow = TRUE))
+#' md_specific <- metadata(
+#'   surveyID = id,
+#'   get = list(questions = FALSE, flow = TRUE)
+#' )
+#' 
 #' # Get specific question metadata
-#' question_specific <- metadata(surveyID=id,
-#'                               get=list(questions = TRUE),
-#'                                        questions = c("Q1", "Q2"))
-#'
+#' question_specific <- metadata(
+#'   surveyID = id,
+#'   get = list(questions = TRUE),
+#'   questions = c("Q1", "Q2")
+#' )
+#' 
 #' # Example of a metadata file
 #' file <- system.file("extdata", "metadata.rds", package = "qualtRics")
+#' 
 #' # Load
-#' metadata_ex <- readRDS(file=file)
+#' metadata_ex <- readRDS(file = file)
 #' }
-#'
-
+#' 
 metadata <- function(surveyID,
                      get = list(),
                      ...) {
@@ -61,33 +62,39 @@ metadata <- function(surveyID,
   assert_api_key()
 
   # Check if illegal options were passed by user
-  allowed <- c("metadata", "questions", "responsecounts",
-               "blocks", "flow", "embedded_data", "comments")
+  allowed <- c(
+    "metadata", "questions", "responsecounts",
+    "blocks", "flow", "embedded_data", "comments"
+  )
   check <- union(allowed, names(get))
   assertthat::assert_that(length(check) <= length(allowed), # nolint
-                          msg="One or more options you passed to 'get' are not valid. Please check your\ninput and try again.") # nolint
+    msg = "One or more options you passed to 'get' are not valid. Please check your\ninput and try again."
+  ) # nolint
 
   # Change standard options if any
-  standard_list <- list("metadata" = TRUE,
-                        "questions" = TRUE,
-                        "responsecounts" = TRUE,
-                        "blocks" = FALSE,
-                        "flow" = FALSE,
-                        "embedded_data" = FALSE,
-                        "comments" = FALSE)
+  standard_list <- list(
+    "metadata" = TRUE,
+    "questions" = TRUE,
+    "responsecounts" = TRUE,
+    "blocks" = FALSE,
+    "flow" = FALSE,
+    "embedded_data" = FALSE,
+    "comments" = FALSE
+  )
   # Cycle over each argument and change
-  if(length(get) > 0) {
-    for(g in names(get)) {
+  if (length(get) > 0) {
+    for (g in names(get)) {
       standard_list[[g]] <- get[[g]]
     }
   }
 
   # Other options
   opts <- list(...)
-  if("questions" %in% names(opts)) {
+  if ("questions" %in% names(opts)) {
     # Check that is a vector
     assertthat::assert_that(is.vector(opts$questions),
-                            msg="'questions' argument must be a vector")
+      msg = "'questions' argument must be a vector"
+    )
     q_select <- opts$questions
   } else {
     q_select <- NULL
@@ -109,18 +116,20 @@ metadata <- function(surveyID,
   # Metadata
   metadata <- data.frame(
     "surveyID" = resp_filt$id,
-    "name"= resp_filt$name,
+    "name" = resp_filt$name,
     "ownerId" = resp_filt$ownerId,
     "organizationId" = resp_filt$organizationId,
     "isActive" = resp_filt$isActive,
     "creationDate" = resp_filt$creationDate,
     "lastModifiedDate" = resp_filt$lastModifiedDate,
     "expiration_startdate" = ifelse(is.null(resp_filt$expiration$startDate),
-                                    NA,
-                                    resp_filt$expiration$startDate),
+      NA,
+      resp_filt$expiration$startDate
+    ),
     "expiration_endDate" = ifelse(is.null(resp_filt$expiration$endDate),
-                                  NA,
-                                  resp_filt$expiration$endDate)
+      NA,
+      resp_filt$expiration$endDate
+    )
   )
   # Response counts
   responsecounts <- data.frame(
@@ -130,11 +139,11 @@ metadata <- function(surveyID,
   )
 
   # Metadata about questions
-  if(!is.null(q_select)) {
+  if (!is.null(q_select)) {
     qnames <- vapply(resp_filt$questions, function(x) {
       x$questionName
     }, "")
-    if(all(q_select %in% qnames)) {
+    if (all(q_select %in% qnames)) {
       questions <- resp_filt$questions[which(qnames %in% q_select)]
     } else {
       warning(paste0("One or more questions you queried are not present in your survey.\nReturning all questions instead.")) # nolint
@@ -147,20 +156,22 @@ metadata <- function(surveyID,
   # WRAP UP AND RETURN ----
 
   # Construct metadata
-  met <- list("metadata" = metadata,
-              "questions" = questions,
-              "responsecounts" = responsecounts,
-              "blocks" = resp_filt$blocks,
-              "flow" = resp_filt$flow,
-              "embedded_data" = resp_filt$embeddedData,
-              "comments" = resp_filt$comments)
+  met <- list(
+    "metadata" = metadata,
+    "questions" = questions,
+    "responsecounts" = responsecounts,
+    "blocks" = resp_filt$blocks,
+    "flow" = resp_filt$flow,
+    "embedded_data" = resp_filt$embeddedData,
+    "comments" = resp_filt$comments
+  )
   # Make subset
-  met_ss <- met[names(standard_list[vapply(standard_list,
-                                           function(x) x==TRUE, TRUE)])] # nolint
+  met_ss <- met[names(standard_list[vapply(
+    standard_list,
+    function(x) x == TRUE, TRUE
+  )])] # nolint
 
   # RETURN ----
 
   return(met_ss)
-
-
 }

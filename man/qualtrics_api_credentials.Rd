@@ -34,19 +34,23 @@ recovery purposes.
 \examples{
 
 \dontrun{
-qualtrics_api_credentials(api_key="<YOUR-QUALTRICS_API_KEY>",
-                          base_url="<YOUR-QUALTRICS_BASE_URL>",
-                          install = TRUE)
+qualtrics_api_credentials(
+  api_key = "<YOUR-QUALTRICS_API_KEY>",
+  base_url = "<YOUR-QUALTRICS_BASE_URL>",
+  install = TRUE
+)
 # Reload your environment so you can use the credentials without restarting R
 readRenviron("~/.Renviron")
 # You can check it with:
 Sys.getenv("QUALTRICS_API_KEY")
 
 # If you need to overwrite existing credentials:
-qualtrics_api_credentials(api_key="<YOUR-QUALTRICS_API_KEY>",
-                          base_url="<YOUR-QUALTRICS_BASE_URL>",
-                          overwrite = TRUE,
-                          install = TRUE)
+qualtrics_api_credentials(
+  api_key = "<YOUR-QUALTRICS_API_KEY>",
+  base_url = "<YOUR-QUALTRICS_BASE_URL>",
+  overwrite = TRUE,
+  install = TRUE
+)
 # Reload your environment to use the credentials
 }
 }

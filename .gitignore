@@ -6,7 +6,5 @@
 .qualtRics.yml
 .qualtRicstmp.yml
 inst/doc
-/documentation/*
 /man/qualtRicsResponseCodes.Rd
 /dev/*
-todo.md

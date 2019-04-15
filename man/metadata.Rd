@@ -2,45 +2,61 @@
 % Please edit documentation in R/metadata.R
 \name{metadata}
 \alias{metadata}
-\title{Download Metadata for a Survey}
+\title{Download metadata for a survey}
 \usage{
 metadata(surveyID, get = list(), ...)
 }
 \arguments{
-\item{surveyID}{String. Unique ID for the survey you want to download. Returned as 'id' by the \link[qualtRics]{getSurveys} function.}
+\item{surveyID}{A string. Unique ID for the survey you want to download.
+Returned as 'id' by the \link[qualtRics]{getSurveys} function.}
 
-\item{get}{list containing TRUE/FALSE values of one of the following: metadata, questions,responsecounts, blocks, flow, embedded_data or comments. A TRUE value will return that specific element. If you leave this empty, the function will return the metadata, questions and responsecounts elements. See examples below for more information}
+\item{get}{A list containing `TRUE`/`FALSE` values of one of the following:
+`metadata`, `questions`, `responsecounts`, `blocks`, `flow`, `embedded_data`,
+or `comments`. A `TRUE` value will return that specific element. If you leave
+this empty, the function will return the `metadata`, `questions`, and
+`responsecounts` elements. See examples below for more information.}
 
-\item{...}{additional options. User may pass an argument called 'questions', which should be a vector containing the names of questions for which you want to return metadata.}
+\item{...}{Additional options. User may pass an argument called `questions`,
+which should be a vector containing the names of questions for which you
+want to return metadata.}
 }
 \description{
-Using this function, you can retrieve metadata about your survey. This information includes question metadata (type, options, choices etc), number of responses, general metadata, survey flow etc.
+Using this function, you can retrieve metadata about your survey. This
+information includes question metadata (type, options, choices, etc), number
+of responses, general metadata, survey flow, etc.
 }
 \examples{
 \dontrun{
 # Register your Qualtrics credentials if you haven't already
-# Note that you need to pass both the 'api_token' and 'root_url'
-# parameters if you call this function for the first time.
-registerOptions(api_token = "<YOUR-API-TOKEN>",
-                base_url = "<YOUR-ROOT-URL>")
+qualtrics_api_credentials(
+  api_key = "<YOUR-API-KEY>",
+  base_url = "<YOUR-BASE-URL>"
+)
+
 # Get an overview of surveys
 surveys <- getSurveys()
+
 # Get metadata for a survey
 md <- metadata(surveyID = surveys$id[6])
+
 # Get metadata with specific elements
-md_specific <- metadata(surveyID= id, get=list(questions = FALSE, flow = TRUE))
+md_specific <- metadata(
+  surveyID = id,
+  get = list(questions = FALSE, flow = TRUE)
+)
+
 # Get specific question metadata
-question_specific <- metadata(surveyID=id,
-                              get=list(questions = TRUE),
-                                       questions = c("Q1", "Q2"))
+question_specific <- metadata(
+  surveyID = id,
+  get = list(questions = TRUE),
+  questions = c("Q1", "Q2")
+)
 
 # Example of a metadata file
 file <- system.file("extdata", "metadata.rds", package = "qualtRics")
+
 # Load
-metadata_ex <- readRDS(file=file)
+metadata_ex <- readRDS(file = file)
 }
 
-}
-\author{
-Jasper Ginn
 }

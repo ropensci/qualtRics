@@ -19,10 +19,8 @@
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/qualtRics?color=orange)](https://CRAN.R-project.org/package=qualtRics)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 
-**This package is transitioning maintainers, with the goal of getting it back on CRAN ASAP.**
 
-
-[Qualtrics](https://www.qualtrics.com/) is an online survey and data collection software platform. Qualtrics is used across many domains in both academia and industry for online surveys and research. While users can manually download survey responses from Qualtrics through a browser, importing this data into R is then cumbersome. The qualtRics R package implements the retrieval of survey data using the Qualtrics API and aims to reduce the pre-processing steps needed in analyzing such surveys. Currently, this package is the ~~only package on CRAN~~ that offers such functionality, and is included in the official Qualtrics API documentation. 
+[Qualtrics](https://www.qualtrics.com/) is an online survey and data collection software platform. Qualtrics is used across many domains in both academia and industry for online surveys and research. While users can manually download survey responses from Qualtrics through a browser, importing this data into R is then cumbersome. The qualtRics R package implements the retrieval of survey data using the Qualtrics API and aims to reduce the pre-processing steps needed in analyzing such surveys. Currently, this package is the only package on CRAN that offers such functionality, and is included in the official Qualtrics API documentation. 
 
 Note that your institution must support API access and that it must be enabled for your account. Whoever manages your Qualtrics account can help you with this. Please refer to the [Qualtrics documentation](https://api.qualtrics.com/docs/authentication) to find your API token.
 
@@ -31,7 +29,15 @@ The authors of this package are not affiliated with Qualtrics, and Qualtrics doe
 
 ## Installation
 
-This package can be installed with the [remotes](https://cran.r-project.org/package=remotes) package (or alternatively, [devtools](https://cran.r-project.org/package=devtools)):
+This package can be installed from CRAN:
+
+
+```r
+install.packages("qualtRics")
+```
+
+
+Alternatively, you can install the development version with the [remotes](https://cran.r-project.org/package=remotes) package (or alternatively, [devtools](https://cran.r-project.org/package=devtools)):
 
 
 ```r
@@ -45,14 +51,14 @@ Look for this package back on CRAN soon!
 
 Currently, the package contains three core functions:
 
-1. `getSurveys()` fetches a list of all surveys that you own or have access to from Qualtrics.
-2. `getSurvey()` downloads a survey from Qualtrics and loads it into R.
-3. `readSurvey()` allows you to read CSV files you download manually from Qualtrics.
+1. `all_surveys()` fetches a list of all surveys that you own or have access to from Qualtrics.
+2. `fetch_survey()` downloads a survey from Qualtrics and loads it into R.
+3. `read_survey()` allows you to read CSV files you download manually from Qualtrics.
 
 It also contains helper functions:
 
 1. `qualtrics_api_credentials()` stores your API key and base url in environment variables.
-2. `getSurveyQuestions()` retrieves a data frame containing questions and question IDs for a survey.
+2. `survey_questions()` retrieves a data frame containing questions and question IDs for a survey.
 3. `metadata()` retrieves metadata about your survey, such as questions, survey flow, number of responses etc.
 
 Note that you can only export surveys that you own, or to which you have been given administration rights.
@@ -80,15 +86,15 @@ Once your Qualtrics API credentials are stored, you can see what surveys are ava
 
 
 ```r
-surveys <- getSurveys() 
+surveys <- all_surveys() 
 ```
 
 You can then download the data from any of these individual surveys (for example, perhaps the sixth one) directly into R.
 
 
 ```r
-mysurvey <- getSurvey(surveyID = surveys$id[6], 
-                      verbose = TRUE)
+mysurvey <- fetch_survey(surveyID = surveys$id[6], 
+                         verbose = TRUE)
 ```
 
 
