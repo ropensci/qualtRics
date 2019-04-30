@@ -8,6 +8,7 @@
 **Authors:** [Julia Silge](https://juliasilge.com/), [Jasper Ginn](http://www.jasperginn.io)<br/>
 **License:** [MIT](https://opensource.org/licenses/MIT)
 
+<!-- badges: start -->
 [![Build Status](https://travis-ci.org/ropensci/qualtRics.svg?branch=master)](https://travis-ci.org/ropensci/qualtRics)
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/fv9bmqcmty1wwrgu?svg=true)](https://ci.appveyor.com/project/JasperHG90/qualtrics-g2a4u)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/qualtRics)](https://cran.r-project.org/package=qualtRics)
@@ -18,7 +19,7 @@
 [![Downloads](https://cranlogs.r-pkg.org/badges/qualtRics)](https://CRAN.R-project.org/package=qualtRics)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/qualtRics?color=orange)](https://CRAN.R-project.org/package=qualtRics)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-
+<!-- badges: end -->
 
 [Qualtrics](https://www.qualtrics.com/) is an online survey and data collection software platform. Qualtrics is used across many domains in both academia and industry for online surveys and research. While users can manually download survey responses from Qualtrics through a browser, importing this data into R is then cumbersome. The qualtRics R package implements the retrieval of survey data using the Qualtrics API and aims to reduce the pre-processing steps needed in analyzing such surveys. Currently, this package is the only package on CRAN that offers such functionality, and is included in the official Qualtrics API documentation. 
 
@@ -45,7 +46,6 @@ install.packages("remotes")
 remotes::install_github("ropensci/qualtRics")
 ```
 
-Look for this package back on CRAN soon!
 
 ## Access your Qualtrics data
 
