@@ -24,33 +24,33 @@
 #'   api_key = "<YOUR-API-KEY>",
 #'   base_url = "<YOUR-BASE-URL>"
 #' )
-#' 
-#' # Get an overview of surveys
-#' surveys <- getSurveys()
-#' 
+#'
+#' # Retrieve a list of surveys
+#' surveys <- all_surveys()
+#'
 #' # Get metadata for a survey
 #' md <- metadata(surveyID = surveys$id[6])
-#' 
+#'
 #' # Get metadata with specific elements
 #' md_specific <- metadata(
 #'   surveyID = id,
 #'   get = list(questions = FALSE, flow = TRUE)
 #' )
-#' 
+#'
 #' # Get specific question metadata
 #' question_specific <- metadata(
 #'   surveyID = id,
 #'   get = list(questions = TRUE),
 #'   questions = c("Q1", "Q2")
 #' )
-#' 
+#'
 #' # Example of a metadata file
 #' file <- system.file("extdata", "metadata.rds", package = "qualtRics")
-#' 
+#'
 #' # Load
 #' metadata_ex <- readRDS(file = file)
 #' }
-#' 
+#'
 metadata <- function(surveyID,
                      get = list(),
                      ...) {

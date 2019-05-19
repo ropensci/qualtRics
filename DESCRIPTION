@@ -34,7 +34,9 @@ Imports:
     sjlabelled,
     yaml,
     dplyr,
-    rlang
+    rlang,
+    purrr,
+    tibble
 Suggests:
     knitr,
     rmarkdown,

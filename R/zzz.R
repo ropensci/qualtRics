@@ -11,18 +11,6 @@
     # load 'registeroptions()'
     suppressWarnings(registerOptions())
   }
-
-  # Set internal qualtRics settings
-  options(
-    "QUALTRICS_INTERNAL_SETTINGS" = list(
-      "question_types_supported" =
-        list(
-          "type" = c("MC"),
-          "selector" = c("SAVR"),
-          "subSelector" = c("TX")
-        )
-    )
-  )
 }
 
 # On unload

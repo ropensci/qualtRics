@@ -33,8 +33,8 @@ qualtrics_api_credentials(
   base_url = "<YOUR-BASE-URL>"
 )
 
-# Get an overview of surveys
-surveys <- getSurveys()
+# Retrieve a list of surveys
+surveys <- all_surveys()
 
 # Get metadata for a survey
 md <- metadata(surveyID = surveys$id[6])

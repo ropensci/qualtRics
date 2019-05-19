@@ -202,6 +202,7 @@ fetch_survey <- function(surveyID,
 
   # Read data
   data <- read_survey(survey.fpath)
+
   # Add types
   if (convert) {
     data <- infer_data_types(data, surveyID)

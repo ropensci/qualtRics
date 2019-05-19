@@ -292,9 +292,9 @@ qualtrics_api_request <- function(verb = c("GET", "POST"),
   headers <- construct_header(Sys.getenv("QUALTRICS_API_KEY"))
   # Send request to Qualtrics API
   res <- httr::VERB(verb,
-    url = url,
-    httr::add_headers(headers),
-    body = body
+                    url = url,
+                    httr::add_headers(headers),
+                    body = body
   )
   # Check if response type is OK
   cnt <- qualtrics_response_codes(res)
@@ -355,7 +355,6 @@ download_qualtrics_export <- function(check_url, verbose = FALSE) {
       f$content <- ct
     }
   }
-  # browser()
   # Load raw zip file
   ty <- qualtrics_response_codes(f, raw = TRUE)
   # To zip file
@@ -393,57 +392,45 @@ download_qualtrics_export <- function(check_url, verbose = FALSE) {
 #' @param data Imported Qualtrics survey
 #' @param surveyID ID of survey
 #' @param verbose Flag
+#'
+#' @importFrom purrr map
+#' @importFrom purrr map_chr
 
 infer_data_types <- function(data,
                              surveyID,
                              verbose = FALSE) {
 
   # Download survey metadata
-  md <- metadata(surveyID, get = list(
-    "questions" = TRUE,
-    "metadata" = FALSE,
-    "responsecounts" = FALSE
-  ))[[1]]
-  # Check which questions are of type allowed
-  interest <- lapply(md, function(x) {
-    # Check if question type supported
-    type_supp <- ifelse(!is.null(x$questionType$type),
-      x$questionType$type %in%
-        getOption("QUALTRICS_INTERNAL_SETTINGS")$question_types_supported$type,
-      FALSE
-    ) # This one is the most important so ifelse
-    selector_supp <- ifelse(!is.null(x$questionType$selector),
-      x$questionType$selector %in%
-        getOption("QUALTRICS_INTERNAL_SETTINGS")$question_types_supported$selector,
-      FALSE
-    )
-    if (!is.null(x$questionType$subSelector)) {
-      subselector_supp <- x$questionType$subSelector %in%
-        getOption("QUALTRICS_INTERNAL_SETTINGS")$question_types_supported$subSelector
-    } else {
-      subselector_supp <- NA
-    }
-    # Evaluate
-    supported <- ifelse(all(selector_supp, type_supp), TRUE, FALSE)
-    # Check if question in survey
-    question_is_in_survey <- x$questionName %in% names(data)
-    # If both true, return element
-    if (supported & question_is_in_survey) {
-      return(x)
-    }
-  })
-  # Remove NULL values
-  interest <- interest[!vapply(interest, is.null, FALSE)]
-  # Get value names
-  mc <- vapply(interest, function(x) x$questionName, "character", USE.NAMES = FALSE)
-  # Unfortunately, something goes wrong with the labels so we need to do this
+  md <- tibble::enframe(metadata(surveyID,
+                                 get = list(
+                                   "questions" = TRUE,
+                                   "metadata" = FALSE,
+                                   "responsecounts" = FALSE
+                                 ))[[1]])
+
+  # Check which questions are of allowed types
+  md_parsed <- dplyr::mutate(md,
+                             question_type = map(value, "questionType"),
+                             question_name = map_chr(value, "questionName"),
+                             type_supp = map_chr(question_type, "type"),
+                             selector_supp = map_chr(question_type, "selector"),
+                             type_supp = type_supp %in% c("MC"),
+                             selector_supp = selector_supp %in% c("SAVR"),
+                             name_in_survey = question_name %in% names(data),
+                             supported = type_supp & selector_supp & name_in_survey)
+
+  mc <- dplyr::pull(dplyr::filter(md_parsed, supported), name)
+
+  # Conversion process (next) removes labels, so get them first to keep
   lab <- sjlabelled::get_label(data)
-  # For each, convert
-  # browser()
+
+  # For each question we have appropriate metadata for, convert type
   for (m in mc) {
-    data <- wrapper_mc(data, m, interest)
+    question_meta <- dplyr::pull(dplyr::filter(md, name == m), value)[[1]]
+    data <- wrapper_mc(data, question_meta)
   }
-  # Return labels
+
+  # Put labels back on
   data <- sjlabelled::set_label(data, lab)
 
   # Check if warning given
@@ -458,33 +445,31 @@ infer_data_types <- function(data,
 #' Convert multiple choice questions to ordered factors
 #'
 #' @param data Imported Qualtrics survey
-#' @param col_name Column name
-#' @param survey_meta Survey metadata
+#' @param question_meta Question metadata
 #'
 #' @importFrom rlang ':='
 
-wrapper_mc <- function(data, col_name, survey_meta) {
-  # Idea: add ORDER = TRUE/FALSE (if user wants factors to be ordered). Add # REVERSE = TRUE/FALSE if user wants the factor levels to be reversed
-  # Get question data from metadata
-  meta <- survey_meta[vapply(
-    survey_meta,
-    function(x) x$questionName == col_name, TRUE
-  )]
+wrapper_mc <- function(data, question_meta) {
+  # TODO: add ORDER = TRUE/FALSE if user wants factors to be ordered
+  # TODO: add REVERSE = TRUE/FALSE if user wants the factor levels to be reversed
+
+  # Get question details from metadata
+  col_name <- rlang::sym(question_meta$questionName)
+  meta <- tibble::enframe(question_meta$choices)
+
   # Level names
-  ln <- vapply(meta[[1]]$choices,
-    function(x) x$choiceText, "character",
-    USE.NAMES = FALSE
-  )
+  ln <- dplyr::pull(dplyr::mutate(meta,
+                                  meta_levels = purrr::map_chr(value,
+                                                               "choiceText")),
+                    meta_levels)
+
   # Convert
   dplyr::mutate(
     data,
-    !!col_name := readr::parse_factor(
-      dplyr::pull(dplyr::select(
-        data,
-        !!col_name
-      )),
-      levels = ln,
-      ordered = TRUE
+    !!col_name := as.character(!!col_name),
+    !!col_name := readr::parse_factor(!!col_name,
+                                      levels = ln,
+                                      ordered = TRUE
     )
   )
 }
