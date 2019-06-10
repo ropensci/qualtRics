@@ -8,7 +8,7 @@ survey_questions(surveyID)
 }
 \arguments{
 \item{surveyID}{A string. Unique ID for the survey you want to download.
-Returned as `id` by the \link[qualtRics]{getSurveys} function.}
+Returned as `id` by the \link[qualtRics]{all_surveys} function.}
 }
 \description{
 Retrieve a data frame containing question IDs and labels

@@ -15,7 +15,7 @@ getSurveyQuestions <- function(surveyID) {
 #' Retrieve a data frame containing question IDs and labels
 #'
 #' @param surveyID A string. Unique ID for the survey you want to download.
-#' Returned as `id` by the \link[qualtRics]{getSurveys} function.
+#' Returned as `id` by the \link[qualtRics]{all_surveys} function.
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs} for documentation on the
 #' Qualtrics API.
@@ -28,13 +28,13 @@ getSurveyQuestions <- function(surveyID) {
 #'   api_key = "<YOUR-API-KEY>",
 #'   base_url = "<YOUR-BASE-URL>"
 #' )
-#' 
+#'
 #' # Retrieve a list of surveys
 #' surveys <- all_surveys()
-#' 
+#'
 #' # Retrieve questions for a survey
 #' questions <- survey_questions(surveyID = surveys$id[6])
-#' 
+#'
 #' # Retrieve a single survey, filtering for specific questions
 #' mysurvey <- fetch_survey(
 #'   surveyID = surveys$id[6],
@@ -43,7 +43,7 @@ getSurveyQuestions <- function(surveyID) {
 #'   verbose = TRUE
 #' )
 #' }
-#' 
+#'
 survey_questions <- function(surveyID) {
 
   # OPTIONS AND BUILD QUERY ----
