@@ -38,6 +38,7 @@ assert_saveDir_exists <- function(save_dir) {
 # Check if unanswer_recode is a string
 assert_seenUnansweredRecode_string <- function(unanswer_recode) {
   assertthat::assert_that(assertthat::is.string(unanswer_recode))
+  assertthat::assert_that(unanswer_recode != "")
 }
 
 # Check if last_response is a string
