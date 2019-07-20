@@ -2,6 +2,7 @@
 
 - Fix bug in `infer_data_types()` to avoid errors with factors/numeric values
 - Improvements to documentation, error checking
+- Allow user to access column mapping for questions and IDs (#115)
 
 # qualtRics 3.1.0
 
