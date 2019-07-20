@@ -52,7 +52,7 @@
 #'   seenUnansweredRecode = "UNANS"
 #' )
 #' }
-#' 
+#'
 registerOptions <- function(verbose = TRUE,
                             useLabels = TRUE,
                             convertVariables = TRUE,
@@ -62,7 +62,7 @@ registerOptions <- function(verbose = TRUE,
 
   # START UP: CHECK ARGUMENTS PASSED BY USER ----
 
-  warning("Soon, `registerOptions` will be deprecated. Try using `qualtrics_api_credentials()` instead.")
+  .Deprecated("`registerOptions` is deprecated. Use `qualtrics_api_credentials()` instead.")
 
   # Take additional arguments
   args <- list(...)
@@ -238,7 +238,7 @@ registerOptions <- function(verbose = TRUE,
 #' # Execute this line to get instructions on how to make a .qualtrics.yml config file.
 #' qualtRicsConfigFile()
 #' }
-#' 
+#'
 qualtRicsConfigFile <- function(api_token = NULL,
                                 base_url = NULL,
                                 verbose = TRUE,

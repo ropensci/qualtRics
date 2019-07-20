@@ -99,37 +99,6 @@ fetch_survey <- function(surveyID,
                          local_time = FALSE,
                          ...) {
 
-  # OPTIONS AND CHECK PARAMETERS ----
-
-  opts <- list(...)
-  # Get all arguments passed
-  calls <- names(vapply(match.call(), deparse, "character"))[-1]
-
-  # Options
-
-  parse_opts <- function(flag, option_flag) {
-    ifelse(!is.null(getOption(option_flag)),
-      getOption(option_flag),
-      flag
-    )
-  }
-
-  verbose <- parse_opts(verbose, "QUALTRICS_VERBOSE")
-  convert <- parse_opts(
-    convert,
-    "QUALTRICS_CONVERTVARIABLES"
-  )
-  local_time <- parse_opts(
-    local_time,
-    "QUALTRICS_USELOCALTIME"
-  )
-  label <- parse_opts(
-    label,
-    "QUALTRICS_USELABELS"
-  )
-
-  # Check params
-
   ## Are the API credentials stored?
   assert_base_url()
   assert_api_key()

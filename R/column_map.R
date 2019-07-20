@@ -1,17 +1,4 @@
-#' Retrieve a data frame containing question IDs and labels
-#'
-#' This function is soft deprecated; use \code{\link[qualtRics]{survey_questions}}
-#' instead.
-#' @param ... All arguments for \code{survey_questions}
-#'
-#' @export
-getSurveyQuestions <- function(...) {
-  warning("Soon, `getSurveyQuestions` will be deprecated. Try using `survey_questions()` instead.")
-  survey_questions(...)
-}
-
-
-#' Retrieve a data frame containing question IDs and labels
+#' Retrieve a data frame containing survey column mapping
 #'
 #' @param surveyID A string. Unique ID for the survey you want to download.
 #' Returned as `id` by the \link[qualtRics]{all_surveys} function.
@@ -30,8 +17,8 @@ getSurveyQuestions <- function(...) {
 #' # Retrieve a list of surveys
 #' surveys <- all_surveys()
 #'
-#' # Retrieve questions for a survey
-#' questions <- survey_questions(surveyID = surveys$id[6])
+#' # Retrieve column mapping for a survey
+#' mapping <- column_map(surveyID = surveys$id[6])
 #'
 #' # Retrieve a single survey, filtering for specific questions
 #' mysurvey <- fetch_survey(
@@ -42,7 +29,9 @@ getSurveyQuestions <- function(...) {
 #' )
 #' }
 #'
-survey_questions <- function(surveyID) {
+column_map <- function(surveyID) {
+
+  # OPTIONS AND BUILD QUERY ----
 
   # Check params
   assert_base_url()
@@ -50,7 +39,6 @@ survey_questions <- function(surveyID) {
 
   # Function-specific API stuff
   root_url <- append_root_url(Sys.getenv("QUALTRICS_BASE_URL"), "surveys")
-
   # Add survey id
   root_url <- paste0(
     root_url,
@@ -63,15 +51,17 @@ survey_questions <- function(surveyID) {
   # GET request to download metadata
   resp <- qualtrics_api_request("GET", root_url)
 
-  # Get question information
-  qi <- resp$result$questions
+  # Get question information and map
+  c_map <- resp$result$exportColumnMap
 
-  # Questions, question labels, question names, and force response info
-  quest <- tibble::tibble(
-    qid = names(qi),
-    qname = purrr::map_chr(qi, "questionName"),
-    question = purrr::map_chr(qi, "questionText"),
-    force_resp = purrr::map_lgl(qi, ~ .$validation$doesForceResponse))
+  # Column mapping
+  mapping <- tibble::tibble(
+    qname = names(c_map),
+    qid = purrr::map_chr(c_map, "question"),
+    choice = purrr::map_chr(c_map, "choice", .null = NA_character_),
+    textEntry = purrr::map_chr(c_map, "textEntry", .null = NA_character_)
+  )
 
-  return(quest)
+  return(mapping)
+
 }

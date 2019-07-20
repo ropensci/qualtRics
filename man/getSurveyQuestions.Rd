@@ -4,11 +4,10 @@
 \alias{getSurveyQuestions}
 \title{Retrieve a data frame containing question IDs and labels}
 \usage{
-getSurveyQuestions(surveyID)
+getSurveyQuestions(...)
 }
 \arguments{
-\item{surveyID}{A string. Unique ID for the survey you want to download.
-Returned as `id` by the \link[qualtRics]{getSurveys} function.}
+\item{...}{All arguments for \code{survey_questions}}
 }
 \description{
 This function is soft deprecated; use \code{\link[qualtRics]{survey_questions}}
