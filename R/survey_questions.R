@@ -16,10 +16,11 @@ getSurveyQuestions <- function(surveyID) {
 #'
 #' @param surveyID A string. Unique ID for the survey you want to download.
 #' Returned as `id` by the \link[qualtRics]{all_surveys} function.
+#' @param column_map Logical. \code{TRUE} to export the current (active) Q to
+#' QID mapping. Defaults to \code{FALSE} to export survey questions.
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs} for documentation on the
 #' Qualtrics API.
-#' @importFrom dplyr as_tibble
 #' @export
 #' @examples
 #' \dontrun{
@@ -35,6 +36,10 @@ getSurveyQuestions <- function(surveyID) {
 #' # Retrieve questions for a survey
 #' questions <- survey_questions(surveyID = surveys$id[6])
 #'
+#' # Retrieve column mapping for a survey
+#' questions <- survey_questions(surveyID = surveys$id[6], column_map = TRUE)
+#'
+#'
 #' # Retrieve a single survey, filtering for specific questions
 #' mysurvey <- fetch_survey(
 #'   surveyID = surveys$id[6],
@@ -44,7 +49,7 @@ getSurveyQuestions <- function(surveyID) {
 #' )
 #' }
 #'
-survey_questions <- function(surveyID) {
+survey_questions <- function(surveyID, column_map = FALSE) {
 
   # OPTIONS AND BUILD QUERY ----
 
@@ -67,24 +72,29 @@ survey_questions <- function(surveyID) {
   resp <- qualtrics_api_request("GET", root_url)
   # Get question information and map
   qi <- resp$result$questions
+  c_map <- resp$result$exportColumnMap
   # Add questions, question labels, question names and force response info
-  quest <- data.frame(
+  quest <- tibble::tibble(
     qid = names(qi),
-    qnames = vapply(qi, function(x) x$questionName, ""),
-    question = vapply(qi, function(x) x$questionText, ""),
-    force_resp = vapply(
-      qi,
-      function(x) x$validation$doesForceResponse, # nolint
-      TRUE
-    ),
-    stringsAsFactors = FALSE
-  )
+    qnames = purrr::map_chr(qi, "questionName"),
+    question = purrr::map_chr(qi, "questionText"),
+    force_resp = purrr::map_lgl(qi, ~ .$validation$doesForceResponse))
 
-  # Row names
-  row.names(quest) <- seq_len(nrow(quest))
+  mapping <- tibble::tibble(
+    qid = names(c_map),
+    question = purrr::map_chr(c_map, "question"),
+    choice = purrr::map_chr(c_map, "choice", .null = NA_character_),
+    textEntry = purrr::map_chr(c_map, "textEntry", .null = NA_character_)
+  )
 
   # RETURN DATA ----
 
   # Return
-  return(dplyr::as_tibble(quest))
+
+  if (column_map) {
+    return(mapping)
+  } else {
+    return(quest)
+  }
+
 }

@@ -4,11 +4,14 @@
 \alias{survey_questions}
 \title{Retrieve a data frame containing question IDs and labels}
 \usage{
-survey_questions(surveyID)
+survey_questions(surveyID, column_map = FALSE)
 }
 \arguments{
 \item{surveyID}{A string. Unique ID for the survey you want to download.
 Returned as `id` by the \link[qualtRics]{all_surveys} function.}
+
+\item{column_map}{Logical. \code{TRUE} to export the current (active) Q to
+QID mapping. Defaults to \code{FALSE} to export survey questions.}
 }
 \description{
 Retrieve a data frame containing question IDs and labels
@@ -26,6 +29,10 @@ surveys <- all_surveys()
 
 # Retrieve questions for a survey
 questions <- survey_questions(surveyID = surveys$id[6])
+
+# Retrieve column mapping for a survey
+questions <- survey_questions(surveyID = surveys$id[6], column_map = TRUE)
+
 
 # Retrieve a single survey, filtering for specific questions
 mysurvey <- fetch_survey(
