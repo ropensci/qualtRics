@@ -4,15 +4,20 @@
 \alias{read_survey}
 \title{Read a CSV file exported from Qualtrics}
 \usage{
-read_survey(file_name, strip_html = TRUE, legacy = FALSE)
+read_survey(file_name, strip_html = TRUE, import_id = FALSE,
+  legacy = FALSE)
 }
 \arguments{
 \item{file_name}{String. A CSV data file.}
 
-\item{strip_html}{Logical. If TRUE, then remove HTML tags. Defaults to TRUE.}
+\item{strip_html}{Logical. If \code{TRUE}, then remove HTML tags. Defaults
+to \code{TRUE}.}
 
-\item{legacy}{Logical. If TRUE, then import "legacy" format CSV files
-(as of 2017). Defaults to FALSE.}
+\item{import_id}{Logical. If \code{TRUE}, use Qualtrics import IDs instead of
+question IDs as column names. Defaults to \code{FALSE}.}
+
+\item{legacy}{Logical. If \code{TRUE}, then import "legacy" format CSV files
+(as of 2017). Defaults to \code{FALSE}.}
 }
 \value{
 A data frame. Variable labels are stored as attributes. They are not

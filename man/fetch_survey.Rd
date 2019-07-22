@@ -7,8 +7,8 @@
 fetch_survey(surveyID, last_response = NULL, start_date = NULL,
   end_date = NULL, unanswer_recode = NULL, limit = NULL,
   include_questions = NULL, save_dir = NULL, force_request = FALSE,
-  verbose = TRUE, label = TRUE, convert = TRUE, local_time = FALSE,
-  ...)
+  verbose = TRUE, label = TRUE, convert = TRUE, import_id = FALSE,
+  local_time = FALSE, ...)
 }
 \arguments{
 \item{surveyID}{String. Unique ID for the survey you want to download.
@@ -54,6 +54,9 @@ or \code{FALSE} to export survey responses as values.}
 \item{convert}{Logical. If \code{TRUE}, then the
 \code{\link[qualtRics]{fetch_survey}} function will convert certain question
 types (e.g. multiple choice) to proper data type in R. Defaults to \code{TRUE}.}
+
+\item{import_id}{Logical. If \code{TRUE}, use Qualtrics import IDs instead of
+question IDs as column names. Defaults to \code{FALSE}.}
 
 \item{local_time}{Logical. Use local timezone to determine response date
 values? Defaults to \code{FALSE}. See

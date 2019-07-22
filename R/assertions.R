@@ -3,7 +3,7 @@ assert_api_key <- function() { # nolint start
 
   # Check if API key is set in environment
   assertthat::assert_that(Sys.getenv("QUALTRICS_API_KEY") != "",
-    msg = "You need to register your Qualtrics API key and base URL using the\n'qualtrics_api_credentials()' function."
+                          msg = "You need to register your Qualtrics API key and base URL using the\n'qualtrics_api_credentials()' function."
   )
 }
 
@@ -12,24 +12,24 @@ assert_base_url <- function() {
 
   # Check if base URL is set in environment
   assertthat::assert_that(Sys.getenv("QUALTRICS_BASE_URL") != "",
-    msg = "You need to register your Qualtrics API key and base URL using the\n'qualtrics_api_credentials()' function."
+                          msg = "You need to register your Qualtrics API key and base URL using the\n'qualtrics_api_credentials()' function."
   )
 
   # Test if root URL ends with '.qualtrics.com'
   assertthat::assert_that(endsWith(Sys.getenv("QUALTRICS_BASE_URL"), ".qualtrics.com"),
-    msg = paste0(
-      "The Qualtrics base URL must end with '.qualtrics.com'. Your base URL looks like this: '",
-      Sys.getenv("QUALTRICS_BASE_URL"),
-      "'.\nPlease visit https://api.qualtrics.com/docs/root-url for instructions about the Qualtrics base URL."
-    )
+                          msg = paste0(
+                            "The Qualtrics base URL must end with '.qualtrics.com'. Your base URL looks like this: '",
+                            Sys.getenv("QUALTRICS_BASE_URL"),
+                            "'.\nPlease visit https://api.qualtrics.com/docs/root-url for instructions about the Qualtrics base URL."
+                          )
   )
 }
 
 # Check if save directory exists
 assert_saveDir_exists <- function(save_dir) {
   assertthat::assert_that(ifelse((!file.info(save_dir)$isdir |
-    is.na(file.info(save_dir)$isdir) == TRUE),
-  FALSE, TRUE
+                                    is.na(file.info(save_dir)$isdir) == TRUE),
+                                 FALSE, TRUE
   ),
   msg = paste0("The directory ", save_dir, " does not exist.")
   )
@@ -59,44 +59,51 @@ assert_endDate_string <- function(end_date) {
 # Check if include_questions are string(s)
 assert_includedQuestionIds_string <- function(include_questions) {
   assertthat::assert_that(mode(include_questions) == "character",
-    msg = "'include_questions' must be a character vector."
+                          msg = "'include_questions' must be a character vector."
   )
 }
 
 # Check if limit > 0
 assert_limit_abovezero <- function(limit) {
   assertthat::assert_that(limit > 0,
-    msg = "Limit parameter should be at least 1."
+                          msg = "Limit parameter should be at least 1."
   )
 }
 
 # Check if survey file exists
 assert_surveyFile_exists <- function(file_name) {
   assertthat::assert_that(file.exists(file_name),
-    msg = paste0(
-      "File ",
-      file_name,
-      " does not exist. Please check if you passed the right file path."
-    )
+                          msg = paste0(
+                            "File ",
+                            file_name,
+                            " does not exist. Please check if you passed the right file path."
+                          )
   )
 }
 
 # Check if these arguments are logical
-assert_options_logical <- function(verbose, convert,
-                                   local_time, label) {
+assert_options_logical <- function(verbose,
+                                   convert,
+                                   import_id,
+                                   local_time,
+                                   label) {
   assertthat::assert_that(assertthat::is.flag(verbose),
-    msg = "'verbose' must be TRUE or FALSE."
+                          msg = "'verbose' must be TRUE or FALSE."
   )
 
   assertthat::assert_that(assertthat::is.flag(convert),
-    msg = "'convert' must be TRUE or FALSE."
+                          msg = "'convert' must be TRUE or FALSE."
+  )
+
+  assertthat::assert_that(assertthat::is.flag(import_id),
+                          msg = "'import_id' must be TRUE or FALSE."
   )
 
   assertthat::assert_that(assertthat::is.flag(local_time),
-    msg = "'local_time' must be TRUE or FALSE."
+                          msg = "'local_time' must be TRUE or FALSE."
   )
 
   assertthat::assert_that(assertthat::is.flag(label),
-    msg = "'label' must be TRUE or FALSE."
+                          msg = "'label' must be TRUE or FALSE."
   )
 } # nolint end

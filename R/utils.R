@@ -102,12 +102,16 @@ check_params <- function(...) {
 
   ## options
   if (all(c(
-    "verbose", "convert",
-    "local_time", "label"
+    "verbose",
+    "convert",
+    "import_id",
+    "local_time",
+    "label"
   ) %in% names(args))) {
     assert_options_logical(
       args$verbose,
       args$convert,
+      args$import_id,
       args$local_time,
       args$label
     )
