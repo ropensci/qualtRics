@@ -19,7 +19,7 @@ Description: Provides functions to access survey results directly into R using
     <https://api.qualtrics.com/> for more information about the 'Qualtrics' API. 
     This package is community-maintained and is not officially supported by 
     'Qualtrics'.
-URL: https://ropensci.github.io/qualtRics/, https://github.com/ropensci/qualtRics
+URL: https://docs.ropensci.org/qualtRics/, https://github.com/ropensci/qualtRics
 BugReports: https://github.com/ropensci/qualtRics/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
