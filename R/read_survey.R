@@ -72,8 +72,10 @@ read_survey <- function(file_name,
   rawdata <- suppressMessages(readr::read_csv(
     file = file_name,
     col_names = FALSE,
+    col_types = readr::cols(.default = readr::col_character()),
     skip = skipNr,
-    na = c("")
+    na = c(""),
+    guess_max = Inf
   ))
   # Need contingency when 0 rows
   assertthat::assert_that(nrow(rawdata) > 0,
@@ -83,6 +85,7 @@ read_survey <- function(file_name,
   header <- suppressWarnings(suppressMessages(readr::read_csv(
     file = file_name,
     col_names = TRUE,
+    col_types = readr::cols(.default = readr::col_character()),
     n_max = 1
   )))
 
@@ -99,6 +102,7 @@ read_survey <- function(file_name,
     new_ids <- suppressMessages(readr::read_csv(
       file = file_name,
       col_names = FALSE,
+      col_types = readr::cols(.default = readr::col_character()),
       skip = skipNr - 1,
       n_max = 1
     ))
@@ -133,6 +137,8 @@ read_survey <- function(file_name,
 
   # Remaining NAs default to 'empty string'
   subquestions[is.na(subquestions)] <- ""
+
+  rawdata <- readr::type_convert(rawdata)
 
   # Add labels to data
   rawdata <- sjlabelled::set_label(rawdata, unlist(subquestions))
