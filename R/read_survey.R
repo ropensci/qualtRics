@@ -74,8 +74,7 @@ read_survey <- function(file_name,
     col_names = FALSE,
     col_types = readr::cols(.default = readr::col_character()),
     skip = skipNr,
-    na = c(""),
-    guess_max = Inf
+    na = c("")
   ))
   # Need contingency when 0 rows
   assertthat::assert_that(nrow(rawdata) > 0,
