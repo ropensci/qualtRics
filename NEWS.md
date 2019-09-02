@@ -4,6 +4,7 @@
 - Improvements to documentation, error checking
 - Allow user to access column mapping for questions and IDs (#115)
 - Deprecate `registerOptions()` to avoid unexpected behavior with options
+- Make data import more robust with more condition and error checking, as well as better defaults
 
 # qualtRics 3.1.0
 
