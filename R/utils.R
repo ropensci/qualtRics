@@ -117,6 +117,11 @@ check_params <- function(...) {
     )
   }
 
+  if (args$convert) {
+    assertthat::assert_that(args$label,
+                            msg = "To convert to factors, we need the Qualtrics labels.\nUse `label = TRUE` or `convert = FALSE`.")
+  }
+
   # Check if params are of the right type
   if ("start_date" %in% names(args)) {
     if (!is.null(args$start_date)) {

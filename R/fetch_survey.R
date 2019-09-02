@@ -177,7 +177,7 @@ fetch_survey <- function(surveyID,
   data <- read_survey(survey.fpath, import_id = import_id)
 
   # Add types
-  if (convert) {
+  if (convert & label) {
     data <- infer_data_types(data, surveyID)
   }
   # Save survey as RDS file in temp folder so that it can be easily

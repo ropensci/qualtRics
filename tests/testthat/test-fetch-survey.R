@@ -71,6 +71,13 @@ test_that("Limit cannot be less than one", {
   )
 })
 
+test_that("Handle convert and label conditions", {
+  expect_error(
+    qualtRics::fetch_survey("1234", label = FALSE),
+    "To convert to factors, we need the Qualtrics labels."
+  )
+})
+
 test_that("unanswer_recode is a string", {
   qualtrics_api_credentials(
     api_key = "1234",
