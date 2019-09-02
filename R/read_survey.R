@@ -27,7 +27,6 @@ readSurvey <- function(...) {
 #' @param legacy Logical. If \code{TRUE}, then import "legacy" format CSV files
 #' (as of 2017). Defaults to \code{FALSE}.
 #'
-#' @importFrom utils read.csv
 #' @importFrom sjlabelled set_label
 #' @importFrom jsonlite fromJSON
 #' @importFrom stringr str_match
