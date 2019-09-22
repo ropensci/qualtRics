@@ -1,4 +1,4 @@
-# qualtRics 3.1.1 [WIP]
+# qualtRics 3.1.1
 
 - Fix bug in `infer_data_types()` to avoid errors with factors/numeric values
 - Improvements to documentation, error checking
