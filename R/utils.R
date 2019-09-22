@@ -318,7 +318,7 @@ qualtrics_api_request <- function(verb = c("GET", "POST"),
 
 #' Download response export
 #'
-#' @param check_url URL provided by Qualtrics API that shows the download percentage completneness
+#' @param check_url URL provided by Qualtrics API that shows the download percentage completeness
 #' @param verbose See \code{\link{fetch_survey}}
 
 
