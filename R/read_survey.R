@@ -75,10 +75,6 @@ read_survey <- function(file_name,
     skip = skipNr,
     na = c("")
   ))
-  # Need contingency when 0 rows
-  assertthat::assert_that(nrow(rawdata) > 0,
-                          msg = "The survey you are trying to import has no responses."
-  ) # nolint
   # Load headers
   header <- suppressWarnings(suppressMessages(readr::read_csv(
     file = file_name,
@@ -86,6 +82,17 @@ read_survey <- function(file_name,
     col_types = readr::cols(.default = readr::col_character()),
     n_max = 1
   )))
+
+  # Message for no data in survey
+  if (nrow(rawdata) < 1) {
+    message("The survey you are importing has no responses.")
+    tbl <- tibble::as_tibble(matrix(nrow = 0,
+                                    ncol = length(names(header))),
+                             .name_repair = "minimal")
+    colnames(tbl) <- names(header)
+    tbl <- dplyr::mutate_all(tbl, as.character)
+    return(tbl)
+  }
 
   # MANIPULATE DATA ----
 

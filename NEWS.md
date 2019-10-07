@@ -1,3 +1,7 @@
+# qualtRics 3.1.2 [WIP]
+
+- For empty surveys, return zero row dataframe (#127)
+
 # qualtRics 3.1.1
 
 - Fix bug in `infer_data_types()` to avoid errors with factors/numeric values
