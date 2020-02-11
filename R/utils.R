@@ -106,14 +106,16 @@ check_params <- function(...) {
     "convert",
     "import_id",
     "local_time",
-    "label"
+    "label",
+    "include_displayorder"
   ) %in% names(args))) {
     assert_options_logical(
       args$verbose,
       args$convert,
       args$import_id,
       args$local_time,
-      args$label
+      args$label,
+      args$include_displayorder
     )
   }
 
@@ -142,10 +144,16 @@ check_params <- function(...) {
       assert_saveDir_exists(args$save_dir)
     }
   }
-  # Check if seenUnansweredRecode is NULL or else a string
+  # Check if seenUnansweredRecode is NULL or else integerlike
   if ("unanswer_recode" %in% names(args)) {
     if (!is.null(args$unanswer_recode)) {
-      assert_seenUnansweredRecode_string(args$unanswer_recode)
+      assert_seenUnansweredRecode_integer(args$unanswer_recode)
+    }
+  }
+  # Check if multiselectSeenUnansweredRecode is NULL or else a string
+  if ("unanswer_recode" %in% names(args)) {
+    if (!is.null(args$unanswer_recode_multi)) {
+      assert_seenUnansweredRecode_integer(args$unanswer_recode_multi)
     }
   }
   # Check if limit > 0
@@ -160,19 +168,22 @@ check_params <- function(...) {
       assert_includedQuestionIds_string(args$include_questions)
     }
   }
+  # Check if newline_string is a string
+  if ("newline_string" %in% names(args)) {
+    if (!is.null(args$newline_string)) {
+      assert_newline_string_string(args$newline_string)
+    }
+  }
 }
 
-#' Append proper end points to create root URL
+#' Append to listed server to create root URL
 #'
 #' @param base_url Base URL for your institution (see
 #' \url{https://api.qualtrics.com/docs/root-url}
-#' @param type Either `"responseexports"` or `"surveys"`
 #'
-#' @return Root URL, plus appended end point
+#' @return Root URL
 
-append_root_url <- function(base_url, type = c("responseexports", "surveys")) {
-  # match
-  type <- match.arg(type)
+create_root_url <- function(base_url) {
   # create root url
   root_url <- paste0(
     base_url,
@@ -180,12 +191,44 @@ append_root_url <- function(base_url, type = c("responseexports", "surveys")) {
       base_url, nchar(base_url),
       nchar(base_url)
     ) == "/",
-    paste0("API/v3/", type, "/"),
-    paste0("/API/v3/", type, "/")
+    paste0("API/v3/"),
+    paste0("/API/v3/")
     )
   )
   return(root_url)
 }
+
+
+create_surveys_url <- function(base_url) {
+  # create surveys url
+  surveys_url <-
+    paste0(
+      create_root_url(base_url),
+      "surveys/"
+    )
+  return(surveys_url)
+}
+
+create_survey_url <- function(base_url, surveyID) {
+  # create url
+  survey_url <-
+    paste0(
+      create_surveys_url(base_url),
+      surveyID, "/"
+    )
+  return(survey_url)
+}
+
+create_fetch_url <- function(base_url, surveyID) {
+  # create url
+  fetch_url <-
+    paste0(
+      create_survey_url(base_url, surveyID),
+  "export-responses/"
+  )
+return(fetch_url)
+}
+
 
 #' Create raw JSON payload to post response exports request
 #'
@@ -204,28 +247,19 @@ append_root_url <- function(base_url, type = c("responseexports", "surveys")) {
 #'
 #' @return JSON file with options to send to API
 
-create_raw_payload <- function(surveyID,
+create_raw_payload <- function(
                                label = TRUE,
-                               last_response = NULL,
                                start_date = NULL,
                                end_date = NULL,
                                limit = NULL,
                                local_time = FALSE,
                                unanswer_recode = NULL,
+                               unanswer_recode_multi = NULL,
+                               include_displayorder = TRUE,
+                               newline_string = NULL,
                                include_questions = NULL) {
   paste0(
     '{"format": ', '"', "csv", '"',
-    ', "surveyId": ', '"', surveyID, '"',
-    ifelse(
-      is.null(last_response),
-      "",
-      paste0(
-        ', "lastResponseId": ',
-        '"',
-        last_response,
-        '"'
-      )
-    ),
     ifelse(
       is.null(start_date),
       "",
@@ -251,8 +285,24 @@ create_raw_payload <- function(surveyID,
       "",
       paste0(
         ', "seenUnansweredRecode": ',
+        unanswer_recode
+      )
+      ),
+    ifelse(
+      is.null(unanswer_recode_multi),
+      "",
+      paste0(
+        ', "multiselectSeenUnansweredRecode": ',
+        unanswer_recode_multi
+      )
+    ),
+    ifelse(
+      is.null(newline_string),
+      "",
+      paste0(
+        ', "newlineReplacement": ',
         '"',
-        unanswer_recode,
+        newline_string,
         '"'
       )
     ),
@@ -282,6 +332,8 @@ create_raw_payload <- function(surveyID,
     ),
     ", ",
     '"useLabels": ', tolower(label),
+    ", ",
+    '"includeDisplayOrder": ', tolower(include_displayorder),
     "}"
   )
 }
@@ -289,7 +341,7 @@ create_raw_payload <- function(surveyID,
 #' Send httr requests to Qualtrics API
 #'
 #' @param verb Type of request to be sent (@seealso \code{\link[httr]{VERB}})
-#' @param url Qualtrics endpoint URL created by \code{\link{append_root_url}} function
+#' @param url Qualtrics endpoint URL created by \code{\link{create_root_url}} functions
 #' @param body Options created by \code{\link{create_raw_payload}} function
 
 qualtrics_api_request <- function(verb = c("GET", "POST"),
@@ -322,9 +374,13 @@ qualtrics_api_request <- function(verb = c("GET", "POST"),
 #' @param verbose See \code{\link{fetch_survey}}
 
 
-download_qualtrics_export <- function(check_url, verbose = FALSE) {
+download_qualtrics_export <- function(fetch_url, requestID, verbose = FALSE) {
   # Construct header
   headers <- construct_header(Sys.getenv("QUALTRICS_API_KEY"))
+
+  # This is the url to use when checking the ID
+  check_url <- paste0(fetch_url, requestID)
+
   # Create a progress bar and monitor when export is ready
   if (verbose) {
     pbar <- utils::txtProgressBar(
@@ -348,12 +404,17 @@ download_qualtrics_export <- function(check_url, verbose = FALSE) {
   if (verbose) {
     close(pbar)
   }
+
+  # Construct a url for obtaining the file:
+  file_url <- paste0(fetch_url, CU$result$fileId, "/file")
+
+
   # Download file
   f <- tryCatch({
-    httr::GET(paste0(check_url, "/file"), httr::add_headers(headers))
+    httr::GET(file_url, httr::add_headers(headers))
   }, error = function(e) {
     # Retry if first attempt fails
-    httr::GET(paste0(check_url, "/file"), httr::add_headers(headers))
+    httr::GET(file_url, httr::add_headers(headers))
   })
   # If content is test request, then load temp file (this is purely for testing)
   # httptest library didn't work the way it needed and somehow still called the API
