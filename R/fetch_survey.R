@@ -91,8 +91,11 @@ fetch_survey <- function(surveyID,
                          start_date = NULL,
                          end_date = NULL,
                          unanswer_recode = NULL,
+                         unanswer_recode_multi = unanswer_recode,
+                         include_displayorder = TRUE,
                          limit = NULL,
                          include_questions = NULL,
+                         newline_string = NULL,
                          save_dir = NULL,
                          force_request = FALSE,
                          verbose = TRUE,
@@ -118,6 +121,9 @@ fetch_survey <- function(surveyID,
     include_questions = include_questions,
     save_dir = save_dir,
     unanswer_recode = unanswer_recode,
+    unanswer_recode_multi = unanswer_recode_multi,
+    include_displayorder = include_displayorder,
+    newline_string = newline_string,
     limit = limit
   )
 
@@ -137,16 +143,18 @@ fetch_survey <- function(surveyID,
 
   # CONSTRUCT API CALL ----
 
-  # add endpoint to root url
-  root_url <- append_root_url(Sys.getenv("QUALTRICS_BASE_URL"), "responseexports")
+  # fetch URL:
+  fetch_url <- create_fetch_url(Sys.getenv("QUALTRICS_BASE_URL"), surveyID)
+
   # Create raw JSON payload
   raw_payload <- create_raw_payload(
-    surveyID = surveyID,
     label = label,
-    last_response = last_response,
     start_date = start_date,
     end_date = end_date,
     unanswer_recode = unanswer_recode,
+    unanswer_recode_multi = unanswer_recode_multi,
+    include_displayorder = include_displayorder,
+    newline_string = newline_string,
     limit = limit,
     local_time = local_time,
     include_questions = include_questions
@@ -155,21 +163,16 @@ fetch_survey <- function(surveyID,
   # SEND POST REQUEST TO API ----
 
   # POST request for download
-  res <- qualtrics_api_request("POST", url = root_url, body = raw_payload)
+  res <- qualtrics_api_request("POST", url = fetch_url, body = raw_payload)
   # Get id
-  if (is.null(res$result$id)) {
-    if (is.null(res$content[[1]]$id)) {
+  if (is.null(res$result$progressId)) {
       stop("Something went wrong. Please re-run your query.")
     } else {
-      ID <- res$content[[1]]$id
-    }
-  } else {
-    ID <- res$result$id
+    requestID <- res$result$progressId
   } # NOTE This is not fail safe because ID can still be NULL
-  # This is the url to use when checking the ID
-  check_url <- paste0(root_url, ID)
+
   # Download, unzip and return file path
-  survey.fpath <- download_qualtrics_export(check_url, verbose = verbose)
+  survey.fpath <- download_qualtrics_export(fetch_url, requestID, verbose = verbose)
 
   # READ DATA AND SET VARIABLES ----
 
