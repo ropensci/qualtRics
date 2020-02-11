@@ -7,9 +7,9 @@
 download_qualtrics_export(check_url, verbose = FALSE)
 }
 \arguments{
-\item{check_url}{URL provided by Qualtrics API that shows the download percentage completneness}
+\item{check_url}{URL provided by Qualtrics API that shows the download percentage completeness}
 
-\item{verbose}{See \code{\link{getSurvey}}}
+\item{verbose}{See \code{\link{fetch_survey}}}
 }
 \description{
 Download response export

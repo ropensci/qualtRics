@@ -1,4 +1,16 @@
-# qualtRics 3.0.1 [WIP]
+# qualtRics 3.1.2 [WIP]
+
+- For empty surveys, return zero row dataframe (#127)
+
+# qualtRics 3.1.1
+
+- Fix bug in `infer_data_types()` to avoid errors with factors/numeric values
+- Improvements to documentation, error checking
+- Allow user to access column mapping for questions and IDs (#115)
+- Deprecate `registerOptions()` to avoid unexpected behavior with options
+- Make data import more robust with more condition and error checking, as well as better defaults
+
+# qualtRics 3.1.0
 
 - New maintainer: Julia Silge
 - Add all previous contributors to DESCRIPTION as `ctb`
@@ -7,9 +19,11 @@
 - Simplify README (keep all existing detailed workflow documentation in vignette)
 - Relicense from GPL-3 to MIT. See [consent from authors here](https://github.com/ropensci/qualtRics/issues/95).
 - Improvements to documentation throughout
-- Renaming (with warnings on old versions) of key functions for clarity, plus improvements:
+- Renaming (with warnings on old versions) of key functions for clarity and reduction in confusion, plus improvements:
   - `all_surveys()` (from old version of `getSurveys()`)
   - `survey_questions()` (from old version of `getSurveyQuestions()`)
+  - `fetch_survey()` (from old version of `getSurvey()`)
+  - `read_survey()` (from old version of `readSurvey()`)
 
 
 qualtRics 3.0 (2018-02-03)

@@ -1,7 +1,7 @@
 Package: qualtRics
 Type: Package
-Title: Download Qualtrics survey data
-Version: 3.0.0.900
+Title: Download 'Qualtrics' Survey Data
+Version: 3.1.1.900
 Authors@R: c(person("Jasper", "Ginn", role = c("aut"),
              email = "jasperginn@gmail.com"),
              person("Samuel", "Kaminsky", role = c("ctb"),
@@ -13,15 +13,13 @@ Authors@R: c(person("Jasper", "Ginn", role = c("aut"),
              comment = c(ORCID = "0000-0002-3671-836X")),
              person("Phoebe", "Wong", role = c("ctb"),
              email = "phoebe.wong@berkeley.edu"))
-Description: Qualtrics <https://www.qualtrics.com/about/>
-    is an online survey and data collection software
-    platform. This package provides functions to access
-    survey results directly into R using the Qualtrics
-    API. See <https://api.qualtrics.com/> for more
-    information about the Qualtrics API. This package is
-    community-maintained and is not officially supported
-    by Qualtrics.
-URL: https://ropensci.github.io/qualtRics/
+Description: Provides functions to access survey results directly into R using 
+    the 'Qualtrics' API. 'Qualtrics' <https://www.qualtrics.com/about/> is an 
+    online survey and data collection software platform. See 
+    <https://api.qualtrics.com/> for more information about the 'Qualtrics' API. 
+    This package is community-maintained and is not officially supported by 
+    'Qualtrics'.
+URL: https://docs.ropensci.org/qualtRics/, https://github.com/ropensci/qualtRics
 BugReports: https://github.com/ropensci/qualtRics/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
@@ -36,7 +34,9 @@ Imports:
     sjlabelled,
     yaml,
     dplyr,
-    rlang
+    rlang,
+    purrr,
+    tibble
 Suggests:
     knitr,
     rmarkdown,

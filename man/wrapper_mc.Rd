@@ -4,14 +4,12 @@
 \alias{wrapper_mc}
 \title{Convert multiple choice questions to ordered factors}
 \usage{
-wrapper_mc(data, col_name, survey_meta)
+wrapper_mc(data, question_meta)
 }
 \arguments{
 \item{data}{Imported Qualtrics survey}
 
-\item{col_name}{Column name}
-
-\item{survey_meta}{Survey metadata}
+\item{question_meta}{Question metadata}
 }
 \description{
 Convert multiple choice questions to ordered factors

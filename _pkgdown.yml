@@ -1,0 +1,7 @@
+url: https://ropensci.github.io/qualtRics
+
+template:
+  package: rotemplate
+
+toc:
+  depth: 3

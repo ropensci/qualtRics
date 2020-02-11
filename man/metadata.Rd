@@ -28,29 +28,35 @@ of responses, general metadata, survey flow, etc.
 \examples{
 \dontrun{
 # Register your Qualtrics credentials if you haven't already
-qualtrics_api_credentials(api_key = "<YOUR-API-KEY>",
-                          base_url = "<YOUR-BASE-URL>")
+qualtrics_api_credentials(
+  api_key = "<YOUR-API-KEY>",
+  base_url = "<YOUR-BASE-URL>"
+)
 
-# Get an overview of surveys
-surveys <- getSurveys()
+# Retrieve a list of surveys
+surveys <- all_surveys()
 
 # Get metadata for a survey
 md <- metadata(surveyID = surveys$id[6])
 
 # Get metadata with specific elements
-md_specific <- metadata(surveyID = id,
-                        get=list(questions = FALSE, flow = TRUE))
+md_specific <- metadata(
+  surveyID = id,
+  get = list(questions = FALSE, flow = TRUE)
+)
 
 # Get specific question metadata
-question_specific <- metadata(surveyID=id,
-                              get=list(questions = TRUE),
-                                       questions = c("Q1", "Q2"))
+question_specific <- metadata(
+  surveyID = id,
+  get = list(questions = TRUE),
+  questions = c("Q1", "Q2")
+)
 
 # Example of a metadata file
 file <- system.file("extdata", "metadata.rds", package = "qualtRics")
 
 # Load
-metadata_ex <- readRDS(file=file)
+metadata_ex <- readRDS(file = file)
 }
 
 }

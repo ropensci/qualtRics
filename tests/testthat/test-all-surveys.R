@@ -8,8 +8,10 @@ with_mock_api({
     # Get survey
     surveys <- all_surveys()
     # TESTS
-    expect_that(names(surveys),
-                is_identical_to(c("id","name","ownerId","lastModified","isActive"))) # nolint
+    expect_that(
+      names(surveys),
+      is_identical_to(c("id", "name", "ownerId", "lastModified", "isActive"))
+    ) # nolint
     expect_equal(nrow(surveys), 1)
     expect_type(surveys, "list")
   })
@@ -19,6 +21,8 @@ test_that("all_surveys() throws an error", {
   # Store dummy key
   qualtrics_api_credentials(api_key = "1234", base_url = "yourdatacenterid.qualtrics.com")
   # This should fail in 'do.call'
-  expect_error(all_surveys(),
-               "you may not have the\nrequired authorization")
+  expect_error(
+    all_surveys(),
+    "you may not have the\nrequired authorization"
+  )
 })

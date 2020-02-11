@@ -1,203 +1,139 @@
 ---
-title: "qualtRics"
-author: "Jasper Ginn"
+title: "Introduction to qualtRics"
+author: "Julia Silge and Jasper Ginn"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{qualtRics}
+  %\VignetteIndexEntry{Introduction to qualtRics}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+collapse = TRUE,
+comment = "#>"
 )
 ```
 
-This project contains an R package to download surveys from  [Qualtrics](https://www.qualtrics.com/) using the API.  
+[Qualtrics](https://www.qualtrics.com/) is an online survey and data collection software platform. Qualtrics is used across many domains in both academia and industry for online surveys and research. While users can manually download survey responses from Qualtrics through a browser, importing this data into R is then cumbersome. The qualtRics R package implements the retrieval of survey data using the Qualtrics API and aims to reduce the pre-processing steps needed in analyzing such surveys. 
 
 Note that your institution must support API access and that it must be enabled for your account. Whoever manages your Qualtrics account can help you with this. Please refer to the [Qualtrics documentation](https://api.qualtrics.com/docs/authentication) to find your API token.
 
-I am not affiliated with Qualtrics and they do not offer support for this package.
+The authors and contributors for this R package are not affiliated with Qualtrics and Qualtrics does not offer support for this R package.
 
 ## Usage
 
 Currently, the package contains three core functions:
 
-  1. *getSurveys()* fetches a list of all surveys that you own or have access to from Qualtrics.
-  2. *getSurvey()* downloads a survey from Qualtrics and loads it into R.
-  3. *readSurvey()* allows you to read CSV files you download manually from Qualtrics.
-  
-It further contains four helper functions:
+1. `all_surveys()` fetches a list of all surveys that you own or have access to from Qualtrics.
+2. `fetch_survey()` downloads a survey from Qualtrics and loads it into R.
+3. `read_survey()` allows you to read CSV files you download manually from Qualtrics.
 
-  1. *registerOptions()* stores your API key and root url in environment variables.
-  2. *getSurveyQuestions()* retrieves a data frame containing questions and question IDs for a survey.
-  3. *qualtRicsConfigFile()* prints information on how to make a .qualtRics.yml configuration file that stores your qualtRics API key, root url and other options in your working directory.
-  4. *metadata()* retrieves metadata about your survey, such as questions, survey flow, number of responses etc.
+It also contains helper functions:
+
+1. `qualtrics_api_credentials()` stores your API key and base url in environment variables.
+2. `survey_questions()` retrieves a data frame containing questions and question IDs for a survey.
+3. `metadata()` retrieves metadata about your survey, such as questions, survey flow, number of responses etc.
 
 Note that you can only export surveys that you own, or to which you have been given administration rights.
 
 ## Registering your Qualtrics credentials
 
-There are two ways to register your Qualtrics credentials (your [API key](https://api.qualtrics.com/docs/finding-qualtrics-ids) and [institution-specific root url](https://api.qualtrics.com/docs/root-url)) and other options in R. As in earlier versions of the qualtRics package, you can register your credentials at the start of each R session:
+There are two important credentials you need to authenticate with the Qualtrics API. These are your [API key](https://api.qualtrics.com/docs/finding-qualtrics-ids) and [institution-specific base URL](https://api.qualtrics.com/docs/root-url). The base URL you pass to the qualtRics package should either look like `yourdatacenterid.qualtrics.com` or like `yourorganizationid.yourdatacenterid.qualtrics.com`. The [Qualtrics API documentation](https://api.qualtrics.com/docs/root-url) explains how you can find your base URL.
 
-```r
-registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
-```
+You can store your API credentials `QUALTRICS_API_KEY` and `QUALTRICS_BASE_URL` in your `.Renviron` file for repeated use across sessions. The qualtRics package has a function to help with this.
 
-You can set some global options via the `registerOptions()` function:
-
-1. **verbose:** Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
-2. [useLabels](https://api.qualtrics.com/docs/create-response-export): Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
-3. **convertvariables:** Logical. If TRUE, then the function will convert certain question types (e.g. multiple choice) to proper data type in R. Defaults to TRUE. (see [below](#automatic-conversion-of-variables) for more information)
-4. [useLocalTime](https://api.qualtrics.com/docs/dates-and-times): Logical. Use local timezone to determine response date values? Defaults to FALSE.
-5. **dateWarning:** Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
-
-You can change some of these options without having to pass the `api_token` or `root_url` parameters every time as long as you have registered the api token and root url previously:
-
-```r
-registerOptions(verbose=FALSE, useLocalTime=TRUE)
-```
-
-The second method involves placing a configuration file called `.qualtRics.yml` in your working directory. 
-
-### Using a configuration file
-
-qualtRics supports the use of a configuration file to store your Qualtrics credentials. Executing `qualtRicsConfigFile()` returns information that explains how you can do this:
-
-```
-Copy-paste the lines between the dashes into a new plain text file, replace the values for the
-api_token and root_url if they are not yet filled out. and save it in your working directory 
-as '.qualtRics.yml'. Execute '?qualtRics::qualtRicsConfigFile' to view an explanation of the additional arguments. Visit https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file 
-for more information.
-
---------------
-api_token: <YOUR-API-TOKEN-HERE>
-root_url: <YOUR-ROOT-URL-HERE>
-verbose: TRUE
-uselabels: TRUE
-convertvariables: TRUE
-uselocaltime: FALSE
-datewarning: TRUE
---------------
-```
-
-You can also call this function while passing `api_token` and `root_url` values to the function, in which case `<YOUR-API-TOKEN-HERE>` and `<YOUR-ROOT-URL-HERE>` will be replaced by your credentials. After saving the file, you can register your credentials by calling `registerOptions()` without passing any parameters.
-
-When you load the qualtRics package, it will automatically look for a `.qualtRics.yml` file in the working directory, in which case you don't need to call the `registerOptions()` function to register your qualtRics credentials at the beginning of your session.
-
-You can override your configuration file settings by calling `registerOptions()` with the changes you want to make:
-
-```r
-registerOptions(verbose=FALSE, useLabels=FALSE, root_url="myinstitution.qualtrics.com")
-```
-
-#### Setting up a config file
-
-Open an existing R project or start a new one. Then, open up an empty text file:
-
-```{r, echo=FALSE, out.width="80%"}
-knitr::include_graphics("https://raw.githubusercontent.com/ropensci/qualtRics/master/img/config_step1.png")
-```
-
-Execute `qualtRicsConfigFile(api_token="<YOUR-API-TOKEN-HERE>", root_url="<YOUR-ROOT-URL-HERE>")` and copy-paste the text between the dashes to the empty text file:
-
-```{r, echo=FALSE, out.width="80%"}
-knitr::include_graphics("https://raw.githubusercontent.com/ropensci/qualtRics/master/img/config_step2.png")
-```
-
-Save the file as `.qualtRics.yml` and execute `registerOptions()` or restart your R session and execute `library(qualtRics)` to load the configuration file.
-
-## Commands
-
-Load the package:
-
-```r
+```{r, eval=FALSE}
 library(qualtRics)
+
+qualtrics_api_credentials(api_key = "<YOUR-QUALTRICS_API_KEY>", 
+                          base_url = "<YOUR-QUALTRICS_BASE_URL>",
+                          install = TRUE)
 ```
 
-Register your Qualtrics credentials if required:
+After you use this function, reload your environment (`readRenviron("~/.Renviron")`) so you can use the credentials without restarting R.
 
-```r
-registerOptions(api_token="<YOUR-API-TOKEN>", root_url="<YOUR-ROOT-URL>")
+## A simple Qualtrics workflow
+
+Once your Qualtrics API credentials are stored, you can see what surveys are available to you.
+
+```{r, eval=FALSE}
+surveys <- all_surveys() 
 ```
 
-Get a data frame of surveys:
+You can then download the data from any of these individual surveys (for example, perhaps the sixth one) directly into R.
 
-```r
-surveys <- getSurveys() 
+```{r, eval=FALSE}
+mysurvey <- fetch_survey(surveyID = surveys$id[6], 
+                         verbose = TRUE)
 ```
 
-Export a survey and load it into R:
+## More detailed control
 
-```r
-mysurvey <- getSurvey(surveyID = surveys$id[6], 
-                      verbose = TRUE) # You can set this option globally
-                                      # or pass it to the function.
+You can add date parameters to only retrieve responses between certain dates:
+
+```{r, eval=FALSE}
+mysurvey <- fetch_survey(surveys$id[4],
+                         start_date = "2018-10-01",
+                         end_date = "2018-10-31",
+                         label = FALSE)
 ```
 
-You can add a from/to date to only retrieve responses between those dates:
-
-```r
-surv <- getSurvey(survs$id[4],
-                  startDate = "2016-09-18",
-                  endDate = "2016-10-01",
-                  useLabels = FALSE) # You can set this option 
-                                     # globally or pass it to this
-                                     # function.
-```
 
 Note that your date and time settings may not correspond to your own timezone. You can find out how to do this [here](https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/#user-settings). See [this page](https://api.qualtrics.com/docs/dates-and-times) for more information about how Qualtrics handles dates and times. **Keep in mind that this is important if you plan on using times / dates as cut-off points to filter data**.
 
-You may also reference a response ID. `getSurvey` will then download all responses that were submitted after that response:
+You may also reference a response ID; `fetch_survey()` will then download all responses that were submitted after that response:
 
-```r
-surv <- getSurvey(survs$id[4],
-                  lastResponseId = "R_3mmovCIeMllvsER",
-                  useLabels = FALSE,
-                  verbose = TRUE)
+```{r eval=FALSE}
+mysurvey <- fetch_survey(surveys$id[4],
+                         last_response = "R_3mmovCIeMllvsER",
+                         label = FALSE,
+                         verbose = TRUE)
 ```
+
 
 You can filter a survey for specific questions:
 
-```r
-# Retrieve questions for a survey
-questions <- getSurveyQuestions(surveyID = surveys$id[6])
-# Retrieve a single survey, filtering for questions I want.
-mysurvey <- getSurvey(surveyID = surveys$id[6],
-                      save_dir = tempdir(),
-                      includedQuestionIds = c("QID1", "QID2", "QID3"),
-                      verbose=TRUE)
+
+```{r eval=FALSE}
+# what are the questions in a certain survey?
+questions <- survey_questions(surveyID = surveys$id[6])
+
+# download that survey, filtering for only certain questions
+mysurvey <- fetch_survey(surveyID = surveys$id[6],
+                         save_dir = tempdir(),
+                         include_questions = c("QID1", "QID2", "QID3"),
+                         verbose = TRUE)
 ```
 
-Note that dates are converted without a specific timezone in mind. You can specify your own timezone using [these instructions](https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/).
+
 
 You can store the results in a specific location if you like:
 
-```r
-mysurvey <- getSurvey(surveyID = surveys$id[6], 
-                      save_dir = "/users/jasper/desktop/", 
-                      verbose = TRUE)
+```{r, eval=FALSE}
+mysurvey <- fetch_survey(surveyID = surveys$id[6], 
+                         save_dir = "/users/Julia/Desktop/", 
+                         verbose = TRUE)
 ```
 
-Note that surveys that are stored in this way will be saved as an [RDS](https://stat.ethz.ch/R-manual/R-devel/library/base/html/readRDS.html) file rather than e.g. a CSV. Reading an RDS file is as straightforward as this:
+Note that surveys that are stored in this way will be saved as an [RDS](https://stat.ethz.ch/R-manual/R-devel/library/base/html/readRDS.html) file rather than e.g. a CSV. Reading an RDS file can be done like so:
 
-```r
-mysurvey <- readRDS(file = "/users/jasper/desktop/mysurvey.rds")
+```{r, eval=FALSE}
+mysurvey <- readRDS(file = "/users/Julia/Desktop/mysurvey.rds")
 ```
 
-You can read a survey that you downloaded manually using `readSurvey`:
 
-```r
-mysurvey <- readSurvey("/users/jasper/desktop/mysurvey.csv")
+You can read a survey that you downloaded manually from Qualtrics' website via a browser using `read_survey()`:
+
+```{r, eval=FALSE}
+mysurvey <- read_survey("/users/Julia/Desktop/mysurvey.csv")
 ```
 
-To avoid special characters (mainly periods) in header names, `readSurvey` uses question labels as the header names. The question belonging to that label is then added using the [sjlabelled](https://CRAN.R-project.org/package=sjlabelled) package. Qualtrics gives names to these labels automatically, but you can easily change them.
+
+To avoid special characters (mainly periods) in header names, `read_survey()` uses question labels as the header names. The question belonging to that label is then added using the [sjlabelled](https://CRAN.R-project.org/package=sjlabelled) package. Qualtrics gives names to these labels automatically, but you can easily change them.
 
 ```{r, echo=FALSE, out.width="80%"}
-knitr::include_graphics("https://raw.githubusercontent.com/ropensci/qualtRics/master/img/qualtricsdf.png")
+knitr::include_graphics("qualtricsdf.png")
 ```
 
-You can edit your configuration file by executing `file.edit(".qualtRics.yml")` in the R console. 
