@@ -69,6 +69,11 @@ assert_newline_string_string <- function(newline_string) {
   assertthat::assert_that(assertthat::is.string(newline_string))
 }
 
+# Check if time_zone is string
+assert_time_zone_string <- function(time_zone) {
+  assertthat::assert_that(assertthat::is.string(time_zone))
+}
+
 # Check if include_questions are string(s)
 assert_includedQuestionIds_string <- function(include_questions) {
   assertthat::assert_that(mode(include_questions) == "character",
@@ -98,7 +103,6 @@ assert_surveyFile_exists <- function(file_name) {
 assert_options_logical <- function(verbose,
                                    convert,
                                    import_id,
-                                   local_time,
                                    label,
                                    include_displayorder) {
   assertthat::assert_that(assertthat::is.flag(verbose),
@@ -111,10 +115,6 @@ assert_options_logical <- function(verbose,
 
   assertthat::assert_that(assertthat::is.flag(import_id),
                           msg = "'import_id' must be TRUE or FALSE."
-  )
-
-  assertthat::assert_that(assertthat::is.flag(local_time),
-                          msg = "'local_time' must be TRUE or FALSE."
   )
 
   assertthat::assert_that(assertthat::is.flag(label),

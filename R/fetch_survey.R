@@ -102,7 +102,7 @@ fetch_survey <- function(surveyID,
                          label = TRUE,
                          convert = TRUE,
                          import_id = FALSE,
-                         local_time = FALSE,
+                         time_zone = NULL,
                          ...) {
 
   ## Are the API credentials stored?
@@ -113,7 +113,7 @@ fetch_survey <- function(surveyID,
     verbose = verbose,
     convert = convert,
     import_id = import_id,
-    local_time = local_time,
+    time_zone = time_zone,
     label = label,
     last_response = last_response,
     start_date = start_date,
@@ -156,7 +156,7 @@ fetch_survey <- function(surveyID,
     include_displayorder = include_displayorder,
     newline_string = newline_string,
     limit = limit,
-    local_time = local_time,
+    time_zone = time_zone,
     include_questions = include_questions
   )
 

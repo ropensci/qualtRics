@@ -105,7 +105,6 @@ check_params <- function(...) {
     "verbose",
     "convert",
     "import_id",
-    "local_time",
     "label",
     "include_displayorder"
   ) %in% names(args))) {
@@ -113,7 +112,6 @@ check_params <- function(...) {
       args$verbose,
       args$convert,
       args$import_id,
-      args$local_time,
       args$label,
       args$include_displayorder
     )
@@ -252,7 +250,7 @@ create_raw_payload <- function(
                                start_date = NULL,
                                end_date = NULL,
                                limit = NULL,
-                               local_time = FALSE,
+                               time_zone = NULL,
                                unanswer_recode = NULL,
                                unanswer_recode_multi = NULL,
                                include_displayorder = TRUE,
@@ -297,6 +295,16 @@ create_raw_payload <- function(
       )
     ),
     ifelse(
+      is.null(time_zone),
+      "",
+      paste0(
+        ', "timeZone": ',
+        '"',
+        time_zone,
+        '"'
+      )
+    ),
+    ifelse(
       is.null(newline_string),
       "",
       paste0(
@@ -304,14 +312,6 @@ create_raw_payload <- function(
         '"',
         newline_string,
         '"'
-      )
-    ),
-    ifelse(
-      !local_time,
-      "",
-      paste0(
-        ', "useLocalTime": ',
-        tolower(local_time)
       )
     ),
     ifelse(
