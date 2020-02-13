@@ -4,9 +4,14 @@
 \alias{registerOptions}
 \title{Register Qualtrics API Key, Base Url and Other Options}
 \usage{
-registerOptions(verbose = TRUE, useLabels = TRUE,
-  convertVariables = TRUE, useLocalTime = FALSE, dateWarning = TRUE,
-  ...)
+registerOptions(
+  verbose = TRUE,
+  useLabels = TRUE,
+  convertVariables = TRUE,
+  useLocalTime = FALSE,
+  dateWarning = TRUE,
+  ...
+)
 }
 \arguments{
 \item{verbose}{Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.}

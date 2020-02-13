@@ -4,8 +4,7 @@
 \alias{read_survey}
 \title{Read a CSV file exported from Qualtrics}
 \usage{
-read_survey(file_name, strip_html = TRUE, import_id = FALSE,
-  legacy = FALSE)
+read_survey(file_name, strip_html = TRUE, import_id = FALSE, legacy = FALSE)
 }
 \arguments{
 \item{file_name}{String. A CSV data file.}

@@ -4,17 +4,21 @@
 \alias{create_raw_payload}
 \title{Create raw JSON payload to post response exports request}
 \usage{
-create_raw_payload(surveyID, label = TRUE, last_response = NULL,
-  start_date = NULL, end_date = NULL, limit = NULL,
-  local_time = FALSE, unanswer_recode = NULL,
-  include_questions = NULL)
+create_raw_payload(
+  label = TRUE,
+  start_date = NULL,
+  end_date = NULL,
+  limit = NULL,
+  time_zone = NULL,
+  unanswer_recode = NULL,
+  unanswer_recode_multi = NULL,
+  include_displayorder = TRUE,
+  newline_string = NULL,
+  include_questions = NULL
+)
 }
 \arguments{
-\item{surveyID}{Survey ID}
-
 \item{label}{Flag}
-
-\item{last_response}{Flag}
 
 \item{start_date}{Flag}
 
@@ -22,11 +26,15 @@ create_raw_payload(surveyID, label = TRUE, last_response = NULL,
 
 \item{limit}{Flag}
 
-\item{local_time}{Flag}
-
 \item{unanswer_recode}{Flag}
 
 \item{include_questions}{Flag}
+
+\item{surveyID}{Survey ID}
+
+\item{last_response}{Flag}
+
+\item{local_time}{Flag}
 }
 \value{
 JSON file with options to send to API

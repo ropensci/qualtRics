@@ -4,13 +4,12 @@
 \alias{qualtrics_api_request}
 \title{Send httr requests to Qualtrics API}
 \usage{
-qualtrics_api_request(verb = c("GET", "POST"), url = url,
-  body = NULL)
+qualtrics_api_request(verb = c("GET", "POST"), url = url, body = NULL)
 }
 \arguments{
 \item{verb}{Type of request to be sent (@seealso \code{\link[httr]{VERB}})}
 
-\item{url}{Qualtrics endpoint URL created by \code{\link{append_root_url}} function}
+\item{url}{Qualtrics endpoint URL created by \code{\link{create_root_url}} functions}
 
 \item{body}{Options created by \code{\link{create_raw_payload}} function}
 }
