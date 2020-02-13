@@ -131,11 +131,12 @@ check_params <- function(...) {
   if ("end_date" %in% names(args)) {
     if (!is.null(args$end_date)) assert_endDate_string(args$end_date)
   }
-  if ("last_response" %in% names(args)) {
-    if (!is.null(args$last_response)) {
-      assert_lastResponseId_string(args$last_response)
-    }
-  }
+  # No longer used:
+  # if ("last_response" %in% names(args)) {
+  #   if (!is.null(args$last_response)) {
+  #     assert_lastResponseId_string(args$last_response)
+  #   }
+  # }
   # Check if save_dir exists
   if ("save_dir" %in% names(args)) {
     if (!is.null(args$save_dir)) {
@@ -148,10 +149,10 @@ check_params <- function(...) {
       assert_seenUnansweredRecode_integer(args$unanswer_recode)
     }
   }
-  # Check if multiselectSeenUnansweredRecode is NULL or else a string
-  if ("unanswer_recode" %in% names(args)) {
+  # Check if multiselectSeenUnansweredRecode is NULL or else integerlike
+  if ("unanswer_recode_multi" %in% names(args)) {
     if (!is.null(args$unanswer_recode_multi)) {
-      assert_seenUnansweredRecode_integer(args$unanswer_recode_multi)
+      assert_multiselectSeenUnansweredRecode_integer(args$unanswer_recode_multi)
     }
   }
   # Check if limit > 0
@@ -169,7 +170,7 @@ check_params <- function(...) {
   # Check if newline_string is a string
   if ("newline_string" %in% names(args)) {
     if (!is.null(args$newline_string)) {
-      assert_newline_string_string(args$newline_string)
+      assert_newlineReplacement_string(args$newline_string)
     }
   }
 }

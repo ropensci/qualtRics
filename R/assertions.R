@@ -37,6 +37,7 @@ assert_saveDir_exists <- function(save_dir) {
 
 # Check if unanswer_recode is a integer-like scalar:
 # (Uses the unexported code for is.integerish() from the dev version of assertthat)
+# TODO: appropriate to replace w/assertthat:::is.integerish(unanswer_recode)?
 assert_seenUnansweredRecode_integer <- function(unanswer_recode) {
   assertthat::assert_that({
     length(unanswer_recode) == 1 &&
@@ -46,7 +47,21 @@ assert_seenUnansweredRecode_integer <- function(unanswer_recode) {
          )
       )
     },
-    msg = "unanswer_recode must be an integer-like scalar")
+    msg = "unanswer_recode must be an integer-like scalar (numeric w/nothing after decimal)")
+}
+
+# Check if unanswer_recode_multi is a integer-like scalar:
+# (Uses the unexported code for is.integerish() from the dev version of assertthat)
+assert_multiselectSeenUnansweredRecode_integer <- function(unanswer_recode_multi) {
+  assertthat::assert_that({
+    length(unanswer_recode_multi) == 1 &&
+      (is.integer(unanswer_recode_multi) ||
+         (is.numeric(unanswer_recode_multi) &&
+            all(unanswer_recode == trunc(unanswer_recode_multi)) && !is.na(unanswer_recode_multi)
+         )
+      )
+    },
+    msg = "unanswer_recode_multi must be an integer-like scalar (numeric w/nothing after decimal)")
 }
 
 # Check if last_response is a string
@@ -65,12 +80,12 @@ assert_endDate_string <- function(end_date) {
 }
 
 # Check if newline_string is string
-assert_newline_string_string <- function(newline_string) {
+assert_newlineReplacement_string <- function(newline_string) {
   assertthat::assert_that(assertthat::is.string(newline_string))
 }
 
 # Check if time_zone is string
-assert_time_zone_string <- function(time_zone) {
+assert_timeZone_string <- function(time_zone) {
   assertthat::assert_that(assertthat::is.string(time_zone))
 }
 
