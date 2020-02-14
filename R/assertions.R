@@ -57,7 +57,7 @@ assert_multiselectSeenUnansweredRecode_integer <- function(unanswer_recode_multi
     length(unanswer_recode_multi) == 1 &&
       (is.integer(unanswer_recode_multi) ||
          (is.numeric(unanswer_recode_multi) &&
-            all(unanswer_recode == trunc(unanswer_recode_multi)) && !is.na(unanswer_recode_multi)
+            all(unanswer_recode_multi == trunc(unanswer_recode_multi)) && !is.na(unanswer_recode_multi)
          )
       )
     },
