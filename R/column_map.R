@@ -38,10 +38,10 @@ column_map <- function(surveyID) {
   assert_api_key()
 
   # Function-specific API stuff
-  root_url <- append_root_url(Sys.getenv("QUALTRICS_BASE_URL"), "surveys")
+  surveys_url <- create_surveys_url(Sys.getenv("QUALTRICS_BASE_URL"))
   # Add survey id
-  root_url <- paste0(
-    root_url,
+  surveys_url <- paste0(
+    surveys_url,
     "/",
     surveyID
   )
@@ -49,7 +49,7 @@ column_map <- function(surveyID) {
   # SEND REQUEST TO API ----
 
   # GET request to download metadata
-  resp <- qualtrics_api_request("GET", root_url)
+  resp <- qualtrics_api_request("GET", surveys_url)
 
   # Get question information and map
   c_map <- resp$result$exportColumnMap
