@@ -4,8 +4,12 @@
 \alias{qualtrics_api_credentials}
 \title{Install Qualtrics credentials in your \code{.Renviron} file for repeated use}
 \usage{
-qualtrics_api_credentials(api_key, base_url, overwrite = FALSE,
-  install = FALSE)
+qualtrics_api_credentials(
+  api_key,
+  base_url,
+  overwrite = FALSE,
+  install = FALSE
+)
 }
 \arguments{
 \item{api_key}{The API key provided to you from Qualtrics formatted in quotes.

@@ -4,9 +4,16 @@
 \alias{qualtRicsConfigFile}
 \title{Prints an Example of a QualtRics Configuration File to the Console.}
 \usage{
-qualtRicsConfigFile(api_token = NULL, base_url = NULL,
-  verbose = TRUE, useLabels = TRUE, convertVariables = TRUE,
-  useLocalTime = FALSE, dateWarning = TRUE, root_url = NULL)
+qualtRicsConfigFile(
+  api_token = NULL,
+  base_url = NULL,
+  verbose = TRUE,
+  useLabels = TRUE,
+  convertVariables = TRUE,
+  useLocalTime = FALSE,
+  dateWarning = TRUE,
+  root_url = NULL
+)
 }
 \arguments{
 \item{api_token}{String. API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})}
@@ -26,7 +33,7 @@ qualtRicsConfigFile(api_token = NULL, base_url = NULL,
 \item{root_url}{String. Deprecated. Use `base_url` instead. This will be removed in future versions.}
 }
 \description{
-This function is soft deprecated; use \code{\link[qualtRics]{qualtrics_api_credentials}} instead.
+This function is deprecated; use \code{\link[qualtRics]{qualtrics_api_credentials}} instead.
 }
 \examples{
 \dontrun{

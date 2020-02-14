@@ -103,11 +103,11 @@ metadata <- function(surveyID,
   # QUERY API ----
 
   # Function-specific API stuff
-  root_url <- append_root_url(Sys.getenv("QUALTRICS_BASE_URL"), "surveys")
-  # Append survey ID
-  root_url <- paste0(root_url, surveyID)
-  # Send GET request to list all surveys
-  resp <- qualtrics_api_request("GET", root_url)
+  survey_url <- create_survey_url(Sys.getenv("QUALTRICS_BASE_URL"), surveyID)
+
+  # Send GET request to specific survey
+  resp <- qualtrics_api_request("GET", survey_url)
+
   # Filter
   resp_filt <- resp$result
 

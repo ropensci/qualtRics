@@ -1,23 +1,8 @@
 context("Download a survey from qualtRics and pull it into R using the fetch_survey() function") # nolint
 
-# Test - use mock API from httptest package
-with_mock_api({
-  test_that("fetch_survey() returns a survey", {
-    testthat::skip_on_cran()
-    Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN" = TRUE)
-    qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
-    # Get survey
-    surveys <- fetch_survey("SV_5u9zu8zHnHaGml7")
-    # TESTS
-  })
-})
-
 test_that("fetch_survey() throws error", {
-  # Store dummy key
-  qualtRics::registerOptions(
-    api_token = "1234",
-    root_url = "https://yourdatacenterid.qualtrics.com"
-  )
+  qualtrics_api_credentials(api_key = "1234",
+                            base_url = "https://yourdatacenterid.qualtrics.com")
   # Query fake ID with generic root url
   expect_error(
     qualtRics::fetch_survey("1234"),
@@ -73,21 +58,19 @@ test_that("Limit cannot be less than one", {
 
 test_that("Handle convert and label conditions", {
   expect_error(
-    qualtRics::fetch_survey("1234", label = FALSE),
+    fetch_survey("1234", label = FALSE),
     "To convert to factors, we need the Qualtrics labels."
   )
 })
 
-test_that("unanswer_recode is a string", {
+test_that("unanswer_recode is integer-ish", {
   qualtrics_api_credentials(
     api_key = "1234",
     base_url = "yourdatacenterid.qualtrics.com"
   )
   # Call fetch_survey
   expect_error(
-    fetch_survey("1234",
-      unanswer_recode = 123
-    ),
-    "unanswer_recode is not a string"
+    fetch_survey("1234", unanswer_recode = "hello"),
+    "unanswer_recode must be an integer-like scalar"
   )
 })

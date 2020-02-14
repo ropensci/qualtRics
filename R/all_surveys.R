@@ -49,12 +49,12 @@ all_surveys <- function() {
   assert_api_key()
 
   # Function-specific API stuff
-  root_url <- append_root_url(Sys.getenv("QUALTRICS_BASE_URL"), "surveys")
+  surveys_url <- create_surveys_url(Sys.getenv("QUALTRICS_BASE_URL"))
 
   # SEND REQUEST TO QUALTRICS ----
 
   # Send GET request to list all surveys
-  resp <- qualtrics_api_request("GET", root_url)
+  resp <- qualtrics_api_request("GET", surveys_url)
   # Put results in list
   master <- list()
   # Append results

@@ -35,10 +35,33 @@ assert_saveDir_exists <- function(save_dir) {
   )
 }
 
-# Check if unanswer_recode is a string
-assert_seenUnansweredRecode_string <- function(unanswer_recode) {
-  assertthat::assert_that(assertthat::is.string(unanswer_recode))
-  assertthat::assert_that(unanswer_recode != "")
+# Check if unanswer_recode is a integer-like scalar:
+# (Uses the unexported code for is.integerish() from the dev version of assertthat)
+# TODO: appropriate to replace w/assertthat:::is.integerish(unanswer_recode)?
+assert_seenUnansweredRecode_integer <- function(unanswer_recode) {
+  assertthat::assert_that({
+    length(unanswer_recode) == 1 &&
+      (is.integer(unanswer_recode) ||
+         (is.numeric(unanswer_recode) &&
+            all(unanswer_recode == trunc(unanswer_recode)) && !is.na(unanswer_recode)
+         )
+      )
+    },
+    msg = "unanswer_recode must be an integer-like scalar (numeric w/nothing after decimal)")
+}
+
+# Check if unanswer_recode_multi is a integer-like scalar:
+# (Uses the unexported code for is.integerish() from the dev version of assertthat)
+assert_multiselectSeenUnansweredRecode_integer <- function(unanswer_recode_multi) {
+  assertthat::assert_that({
+    length(unanswer_recode_multi) == 1 &&
+      (is.integer(unanswer_recode_multi) ||
+         (is.numeric(unanswer_recode_multi) &&
+            all(unanswer_recode_multi == trunc(unanswer_recode_multi)) && !is.na(unanswer_recode_multi)
+         )
+      )
+    },
+    msg = "unanswer_recode_multi must be an integer-like scalar (numeric w/nothing after decimal)")
 }
 
 # Check if last_response is a string
@@ -54,6 +77,16 @@ assert_startDate_string <- function(start_date) {
 # Check if end_date is string
 assert_endDate_string <- function(end_date) {
   assertthat::assert_that(assertthat::is.string(end_date))
+}
+
+# Check if newline_string is string
+assert_newlineReplacement_string <- function(newline_string) {
+  assertthat::assert_that(assertthat::is.string(newline_string))
+}
+
+# Check if time_zone is string
+assert_timeZone_string <- function(time_zone) {
+  assertthat::assert_that(assertthat::is.string(time_zone))
 }
 
 # Check if include_questions are string(s)
@@ -85,8 +118,8 @@ assert_surveyFile_exists <- function(file_name) {
 assert_options_logical <- function(verbose,
                                    convert,
                                    import_id,
-                                   local_time,
-                                   label) {
+                                   label,
+                                   include_displayorder) {
   assertthat::assert_that(assertthat::is.flag(verbose),
                           msg = "'verbose' must be TRUE or FALSE."
   )
@@ -99,11 +132,10 @@ assert_options_logical <- function(verbose,
                           msg = "'import_id' must be TRUE or FALSE."
   )
 
-  assertthat::assert_that(assertthat::is.flag(local_time),
-                          msg = "'local_time' must be TRUE or FALSE."
-  )
-
   assertthat::assert_that(assertthat::is.flag(label),
                           msg = "'label' must be TRUE or FALSE."
+  )
+  assertthat::assert_that(assertthat::is.flag(include_displayorder),
+                          msg = "'include_displayorder' must be TRUE or FALSE."
   )
 } # nolint end
