@@ -73,21 +73,19 @@ test_that("Limit cannot be less than one", {
 
 test_that("Handle convert and label conditions", {
   expect_error(
-    qualtRics::fetch_survey("1234", label = FALSE),
+    fetch_survey("1234", label = FALSE),
     "To convert to factors, we need the Qualtrics labels."
   )
 })
 
-test_that("unanswer_recode is a string", {
+test_that("unanswer_recode is integer-ish", {
   qualtrics_api_credentials(
     api_key = "1234",
     base_url = "yourdatacenterid.qualtrics.com"
   )
   # Call fetch_survey
   expect_error(
-    fetch_survey("1234",
-      unanswer_recode = 123
-    ),
-    "unanswer_recode is not a string"
+    fetch_survey("1234", unanswer_recode = "hello"),
+    "unanswer_recode must be an integer-like scalar"
   )
 })
