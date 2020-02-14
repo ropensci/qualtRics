@@ -1,18 +1,5 @@
 #' Retrieve a data frame containing question IDs and labels
 #'
-#' This function is soft deprecated; use \code{\link[qualtRics]{survey_questions}}
-#' instead.
-#' @param ... All arguments for \code{survey_questions}
-#'
-#' @export
-getSurveyQuestions <- function(...) {
-  warning("Soon, `getSurveyQuestions` will be deprecated. Try using `survey_questions()` instead.")
-  survey_questions(...)
-}
-
-
-#' Retrieve a data frame containing question IDs and labels
-#'
 #' @param surveyID A string. Unique ID for the survey you want to download.
 #' Returned as `id` by the \link[qualtRics]{all_surveys} function.
 #'
@@ -49,19 +36,15 @@ survey_questions <- function(surveyID) {
   assert_api_key()
 
   # Function-specific API stuff
-  root_url <- append_root_url(Sys.getenv("QUALTRICS_BASE_URL"), "surveys")
+  surveys_url <- create_surveys_url(Sys.getenv("QUALTRICS_BASE_URL"))
 
   # Add survey id
-  root_url <- paste0(
-    root_url,
-    "/",
-    surveyID
-  )
+  surveys_url <- paste0(surveys_url, surveyID)
 
   # SEND REQUEST TO API ----
 
   # GET request to download metadata
-  resp <- qualtrics_api_request("GET", root_url)
+  resp <- qualtrics_api_request("GET", surveys_url)
 
   # Get question information
   qi <- resp$result$questions

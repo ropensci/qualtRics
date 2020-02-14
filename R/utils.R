@@ -106,14 +106,14 @@ check_params <- function(...) {
     "convert",
     "import_id",
     "label",
-    "include_displayorder"
+    "include_display_order"
   ) %in% names(args))) {
     assert_options_logical(
       args$verbose,
       args$convert,
       args$import_id,
       args$label,
-      args$include_displayorder
+      args$include_display_order
     )
   }
 
@@ -167,12 +167,6 @@ check_params <- function(...) {
       assert_includedQuestionIds_string(args$include_questions)
     }
   }
-  # Check if newline_string is a string
-  if ("newline_string" %in% names(args)) {
-    if (!is.null(args$newline_string)) {
-      assert_newlineReplacement_string(args$newline_string)
-    }
-  }
 }
 
 #' Append to listed server to create root URL
@@ -223,39 +217,36 @@ create_fetch_url <- function(base_url, surveyID) {
   fetch_url <-
     paste0(
       create_survey_url(base_url, surveyID),
-  "export-responses/"
-  )
-return(fetch_url)
+      "export-responses/"
+    )
+  return(fetch_url)
 }
 
 
 #' Create raw JSON payload to post response exports request
 #'
-#' @param surveyID Survey ID
 #' @param label Flag
-#' @param last_response Flag
 #' @param start_date Flag
 #' @param end_date Flag
 #' @param limit Flag
-#' @param local_time Flag
+#' @param time_zone Flag
 #' @param unanswer_recode Flag
+#' @param unanswer_recode_multi Flag
+#' @param include_display_order Flag
 #' @param include_questions Flag
 #'
-#' @seealso Functions \code{\link{all_surveys}} and \code{\link{registerOptions}}
-#' have more details on these parameters
+#' @seealso See \code{\link{all_surveys}} for more details on these parameters
 #'
 #' @return JSON file with options to send to API
 
-create_raw_payload <- function(
-                               label = TRUE,
+create_raw_payload <- function(label = TRUE,
                                start_date = NULL,
                                end_date = NULL,
                                limit = NULL,
                                time_zone = NULL,
                                unanswer_recode = NULL,
                                unanswer_recode_multi = NULL,
-                               include_displayorder = TRUE,
-                               newline_string = NULL,
+                               include_display_order = TRUE,
                                include_questions = NULL) {
   paste0(
     '{"format": ', '"', "csv", '"',
@@ -286,7 +277,7 @@ create_raw_payload <- function(
         ', "seenUnansweredRecode": ',
         unanswer_recode
       )
-      ),
+    ),
     ifelse(
       is.null(unanswer_recode_multi),
       "",
@@ -302,16 +293,6 @@ create_raw_payload <- function(
         ', "timeZone": ',
         '"',
         time_zone,
-        '"'
-      )
-    ),
-    ifelse(
-      is.null(newline_string),
-      "",
-      paste0(
-        ', "newlineReplacement": ',
-        '"',
-        newline_string,
         '"'
       )
     ),
@@ -334,7 +315,7 @@ create_raw_payload <- function(
     ", ",
     '"useLabels": ', tolower(label),
     ", ",
-    '"includeDisplayOrder": ', tolower(include_displayorder),
+    '"includeDisplayOrder": ', tolower(include_display_order),
     "}"
   )
 }
@@ -371,7 +352,8 @@ qualtrics_api_request <- function(verb = c("GET", "POST"),
 
 #' Download response export
 #'
-#' @param check_url URL provided by Qualtrics API that shows the download percentage completeness
+#' @param fetch_url URL provided by Qualtrics API that shows the download percentage completeness
+#' @param requestID ID
 #' @param verbose See \code{\link{fetch_survey}}
 
 
