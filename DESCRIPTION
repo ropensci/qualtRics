@@ -32,7 +32,6 @@ Imports:
     jsonlite,
     assertthat,
     sjlabelled,
-    yaml,
     dplyr,
     rlang,
     purrr,

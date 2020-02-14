@@ -235,8 +235,7 @@ create_fetch_url <- function(base_url, surveyID) {
 #' @param include_display_order Flag
 #' @param include_questions Flag
 #'
-#' @seealso Functions \code{\link{all_surveys}} and \code{\link{registerOptions}}
-#' have more details on these parameters
+#' @seealso See \code{\link{all_surveys}} for more details on these parameters
 #'
 #' @return JSON file with options to send to API
 

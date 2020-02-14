@@ -33,7 +33,7 @@ qualtRicsConfigFile(
 \item{root_url}{String. Deprecated. Use `base_url` instead. This will be removed in future versions.}
 }
 \description{
-This function is soft deprecated; use \code{\link[qualtRics]{qualtrics_api_credentials}} instead.
+This function is deprecated; use \code{\link[qualtRics]{qualtrics_api_credentials}} instead.
 }
 \examples{
 \dontrun{

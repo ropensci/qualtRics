@@ -1,19 +1,5 @@
 #' Download a survey and import it into R
 #'
-#' This function is soft deprecated; use \code{\link[qualtRics]{fetch_survey}}
-#' instead.
-#' @param ... All arguments for \code{fetch_survey}
-#'
-#' @export
-getSurvey <- function(...) {
-  warning("Soon, `getSurvey` will be deprecated. Try using `fetch_survey()` instead.")
-  fetch_survey(...)
-}
-
-
-
-#' Download a survey and import it into R
-#'
 #' Download a Qualtrics survey you own via API and import the survey directly into R.
 #'
 #' @param surveyID String. Unique ID for the survey you want to download.
@@ -59,10 +45,9 @@ getSurvey <- function(...) {
 #' values. Defaults to \code{NULL}. See
 #' \url{https://api.qualtrics.com/docs/dates-and-times} for more information on
 #' format.
-#' @param ... optional arguments. You can pass all arguments listed in
-#' \code{\link{registerOptions}} (except a different base url / api key).
-#' You can also pass a argument 'fileEncoding' (see 'fileEncoding' argument in
-#' \code{\link[qualtRics]{read_survey}}) to import your survey using a specific encoding.
+#' @param ... Optional arguments, such as a `fileEncoding` (see `fileEncoding`
+#' argument in \code{\link[qualtRics]{read_survey}}) to import your survey using
+#' a specific encoding.
 #'
 #' @seealso See \url{https://api.qualtrics.com/docs/response-exports} for documentation on the Qualtrics API.
 #' @export

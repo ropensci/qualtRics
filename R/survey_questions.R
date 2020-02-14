@@ -1,18 +1,5 @@
 #' Retrieve a data frame containing question IDs and labels
 #'
-#' This function is soft deprecated; use \code{\link[qualtRics]{survey_questions}}
-#' instead.
-#' @param ... All arguments for \code{survey_questions}
-#'
-#' @export
-getSurveyQuestions <- function(...) {
-  warning("Soon, `getSurveyQuestions` will be deprecated. Try using `survey_questions()` instead.")
-  survey_questions(...)
-}
-
-
-#' Retrieve a data frame containing question IDs and labels
-#'
 #' @param surveyID A string. Unique ID for the survey you want to download.
 #' Returned as `id` by the \link[qualtRics]{all_surveys} function.
 #'

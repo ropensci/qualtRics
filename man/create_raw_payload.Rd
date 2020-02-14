@@ -42,6 +42,5 @@ JSON file with options to send to API
 Create raw JSON payload to post response exports request
 }
 \seealso{
-Functions \code{\link{all_surveys}} and \code{\link{registerOptions}}
-have more details on these parameters
+See \code{\link{all_surveys}} for more details on these parameters
 }

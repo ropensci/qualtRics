@@ -84,10 +84,9 @@ values. Defaults to \code{NULL}. See
 \url{https://api.qualtrics.com/docs/dates-and-times} for more information on
 format.}
 
-\item{...}{optional arguments. You can pass all arguments listed in
-\code{\link{registerOptions}} (except a different base url / api key).
-You can also pass a argument 'fileEncoding' (see 'fileEncoding' argument in
-\code{\link[qualtRics]{read_survey}}) to import your survey using a specific encoding.}
+\item{...}{Optional arguments, such as a `fileEncoding` (see `fileEncoding`
+argument in \code{\link[qualtRics]{read_survey}}) to import your survey using
+a specific encoding.}
 }
 \description{
 Download a Qualtrics survey you own via API and import the survey directly into R.
