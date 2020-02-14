@@ -177,7 +177,7 @@ fetch_survey <- function(surveyID,
   # READ DATA AND SET VARIABLES ----
 
   # Read data
-  data <- read_survey(survey.fpath, import_id = import_id)
+  data <- read_survey(survey.fpath, import_id = import_id, time_zone = time_zone)
 
   # Add types
   if (convert & label) {
