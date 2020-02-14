@@ -12,7 +12,7 @@ Authors@R: c(person("Jasper", "Ginn", role = c("aut"),
              email = "julia.silge@gmail.com",
              comment = c(ORCID = "0000-0002-3671-836X")),
              person("Phoebe", "Wong", role = c("ctb"),
-             email = "phoebe.wong@berkeley.edu")
+             email = "phoebe.wong@berkeley.edu"),
              person("O'Brien", "Joseph", role = c("ctb"),
              email = "joseph.obrien@utexas.edu")
              )
@@ -35,7 +35,6 @@ Imports:
     jsonlite,
     assertthat,
     sjlabelled,
-    yaml,
     dplyr,
     rlang,
     purrr,
