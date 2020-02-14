@@ -11,10 +11,9 @@ fetch_survey(
   end_date = NULL,
   unanswer_recode = NULL,
   unanswer_recode_multi = unanswer_recode,
-  include_displayorder = TRUE,
+  include_display_order = TRUE,
   limit = NULL,
   include_questions = NULL,
-  newline_string = NULL,
   save_dir = NULL,
   force_request = FALSE,
   verbose = TRUE,
@@ -40,8 +39,15 @@ Defaults to \code{NULL}.}
 specified date. Accepts dates as character strings in format "YYYY-MM-DD".
 Defaults to \code{NULL}.}
 
-\item{unanswer_recode}{String. Recode seen but unanswered questions with a
-string value. Defaults to \code{NULL}.}
+\item{unanswer_recode}{Integer. Recode seen but unanswered questions with an
+integer-like value, such as 999. Defaults to \code{NULL}.}
+
+\item{unanswer_recode_multi}{Integer. Recode seen but unanswered multi-select
+questions with an integer-like value, such as 999. Defaults to value for
+\code{unaswer_recode}.}
+
+\item{include_display_order}{Display order information (such as for
+surveys with randomization).}
 
 \item{limit}{Integer. Maximum number of responses exported. Defaults to
 \code{NULL} (all responses).}
@@ -73,14 +79,15 @@ types (e.g. multiple choice) to proper data type in R. Defaults to \code{TRUE}.}
 \item{import_id}{Logical. If \code{TRUE}, use Qualtrics import IDs instead of
 question IDs as column names. Defaults to \code{FALSE}.}
 
+\item{time_zone}{String. A local timezone to determine response date
+values. Defaults to \code{NULL}. See
+\url{https://api.qualtrics.com/docs/dates-and-times} for more information on
+format.}
+
 \item{...}{optional arguments. You can pass all arguments listed in
 \code{\link{registerOptions}} (except a different base url / api key).
 You can also pass a argument 'fileEncoding' (see 'fileEncoding' argument in
 \code{\link[qualtRics]{read_survey}}) to import your survey using a specific encoding.}
-
-\item{local_time}{Logical. Use local timezone to determine response date
-values? Defaults to \code{FALSE}. See
-\url{https://api.qualtrics.com/docs/dates-and-times} for more information.}
 }
 \description{
 Download a Qualtrics survey you own via API and import the survey directly into R.
@@ -106,7 +113,7 @@ mysurvey <- fetch_survey(
   end_date = "2018-01-31",
   limit = 100,
   label = TRUE,
-  unanswer_recode = "UNANS",
+  unanswer_recode = 999,
   verbose = TRUE
 )
 }

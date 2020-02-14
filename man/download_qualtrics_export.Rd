@@ -7,9 +7,11 @@
 download_qualtrics_export(fetch_url, requestID, verbose = FALSE)
 }
 \arguments{
-\item{verbose}{See \code{\link{fetch_survey}}}
+\item{fetch_url}{URL provided by Qualtrics API that shows the download percentage completeness}
 
-\item{check_url}{URL provided by Qualtrics API that shows the download percentage completeness}
+\item{requestID}{ID}
+
+\item{verbose}{See \code{\link{fetch_survey}}}
 }
 \description{
 Download response export

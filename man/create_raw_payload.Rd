@@ -12,8 +12,7 @@ create_raw_payload(
   time_zone = NULL,
   unanswer_recode = NULL,
   unanswer_recode_multi = NULL,
-  include_displayorder = TRUE,
-  newline_string = NULL,
+  include_display_order = TRUE,
   include_questions = NULL
 )
 }
@@ -26,15 +25,15 @@ create_raw_payload(
 
 \item{limit}{Flag}
 
+\item{time_zone}{Flag}
+
 \item{unanswer_recode}{Flag}
 
+\item{unanswer_recode_multi}{Flag}
+
+\item{include_display_order}{Flag}
+
 \item{include_questions}{Flag}
-
-\item{surveyID}{Survey ID}
-
-\item{last_response}{Flag}
-
-\item{local_time}{Flag}
 }
 \value{
 JSON file with options to send to API

@@ -26,8 +26,13 @@ getSurvey <- function(...) {
 #' @param end_date String. Filter to only exports responses recorded before the
 #' specified date. Accepts dates as character strings in format "YYYY-MM-DD".
 #' Defaults to \code{NULL}.
-#' @param unanswer_recode String. Recode seen but unanswered questions with a
-#' string value. Defaults to \code{NULL}.
+#' @param unanswer_recode Integer. Recode seen but unanswered questions with an
+#' integer-like value, such as 999. Defaults to \code{NULL}.
+#' @param unanswer_recode_multi Integer. Recode seen but unanswered multi-select
+#' questions with an integer-like value, such as 999. Defaults to value for
+#' \code{unaswer_recode}.
+#' @param include_display_order Display order information (such as for
+#' surveys with randomization).
 #' @param limit Integer. Maximum number of responses exported. Defaults to
 #' \code{NULL} (all responses).
 #' @param include_questions Vector of strings (e.g. c('QID1', 'QID2', 'QID3').
@@ -50,9 +55,10 @@ getSurvey <- function(...) {
 #' types (e.g. multiple choice) to proper data type in R. Defaults to \code{TRUE}.
 #' @param import_id Logical. If \code{TRUE}, use Qualtrics import IDs instead of
 #' question IDs as column names. Defaults to \code{FALSE}.
-#' @param local_time Logical. Use local timezone to determine response date
-#' values? Defaults to \code{FALSE}. See
-#' \url{https://api.qualtrics.com/docs/dates-and-times} for more information.
+#' @param time_zone String. A local timezone to determine response date
+#' values. Defaults to \code{NULL}. See
+#' \url{https://api.qualtrics.com/docs/dates-and-times} for more information on
+#' format.
 #' @param ... optional arguments. You can pass all arguments listed in
 #' \code{\link{registerOptions}} (except a different base url / api key).
 #' You can also pass a argument 'fileEncoding' (see 'fileEncoding' argument in
@@ -81,7 +87,7 @@ getSurvey <- function(...) {
 #'   end_date = "2018-01-31",
 #'   limit = 100,
 #'   label = TRUE,
-#'   unanswer_recode = "UNANS",
+#'   unanswer_recode = 999,
 #'   verbose = TRUE
 #' )
 #' }
@@ -92,10 +98,9 @@ fetch_survey <- function(surveyID,
                          end_date = NULL,
                          unanswer_recode = NULL,
                          unanswer_recode_multi = unanswer_recode,
-                         include_displayorder = TRUE,
+                         include_display_order = TRUE,
                          limit = NULL,
                          include_questions = NULL,
-                         newline_string = NULL,
                          save_dir = NULL,
                          force_request = FALSE,
                          verbose = TRUE,
@@ -122,8 +127,7 @@ fetch_survey <- function(surveyID,
     save_dir = save_dir,
     unanswer_recode = unanswer_recode,
     unanswer_recode_multi = unanswer_recode_multi,
-    include_displayorder = include_displayorder,
-    newline_string = newline_string,
+    include_display_order = include_display_order,
     limit = limit
   )
 
@@ -153,8 +157,7 @@ fetch_survey <- function(surveyID,
     end_date = end_date,
     unanswer_recode = unanswer_recode,
     unanswer_recode_multi = unanswer_recode_multi,
-    include_displayorder = include_displayorder,
-    newline_string = newline_string,
+    include_display_order = include_display_order,
     limit = limit,
     time_zone = time_zone,
     include_questions = include_questions
