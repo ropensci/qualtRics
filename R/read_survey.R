@@ -10,6 +10,10 @@
 #' question IDs as column names. Defaults to \code{FALSE}.
 #' @param strip_html Logical. If \code{TRUE}, then remove HTML tags. Defaults
 #' to \code{TRUE}.
+#' @param time_zone String. A local timezone to determine response date
+#' values. Defaults to \code{NULL} which corresponds to UTC time. See
+#' \url{https://api.qualtrics.com/docs/time-zones} for more information on
+#' format.
 #' @param legacy Logical. If \code{TRUE}, then import "legacy" format CSV files
 #' (as of 2017). Defaults to \code{FALSE}.
 #'
@@ -37,6 +41,7 @@
 read_survey <- function(file_name,
                         strip_html = TRUE,
                         import_id = FALSE,
+                        time_zone = NULL,
                         legacy = FALSE) {
 
   # START UP: CHECK ARGUMENTS PASSED BY USER ----
@@ -50,6 +55,11 @@ read_survey <- function(file_name,
   assert_surveyFile_exists(file_name)
   # skip 2 rows if legacy format, else 3 when loading the data
   skipNr <- ifelse(legacy, 2, 3)
+
+  # Set time_zone to UTC if left unspecified
+  if(is.null(time_zone)){
+    time_zone <- "UTC"
+  }
 
   # READ DATA ----
 
@@ -129,7 +139,8 @@ read_survey <- function(file_name,
   # Remaining NAs default to 'empty string'
   subquestions[is.na(subquestions)] <- ""
 
-  rawdata <- readr::type_convert(rawdata)
+  rawdata <- readr::type_convert(rawdata,
+                                 locale = readr::locale(tz = time_zone))
 
   # Add labels to data
   rawdata <- sjlabelled::set_label(rawdata, unlist(subquestions))

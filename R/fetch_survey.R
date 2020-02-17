@@ -42,14 +42,15 @@
 #' @param import_id Logical. If \code{TRUE}, use Qualtrics import IDs instead of
 #' question IDs as column names. Defaults to \code{FALSE}.
 #' @param time_zone String. A local timezone to determine response date
-#' values. Defaults to \code{NULL}. See
-#' \url{https://api.qualtrics.com/docs/dates-and-times} for more information on
+#' values. Defaults to \code{NULL} which corresponds to UTC time. See
+#' \url{https://api.qualtrics.com/docs/time-zones} for more information on
 #' format.
 #' @param ... Optional arguments, such as a `fileEncoding` (see `fileEncoding`
 #' argument in \code{\link[qualtRics]{read_survey}}) to import your survey using
 #' a specific encoding.
 #'
-#' @seealso See \url{https://api.qualtrics.com/docs/response-exports} for documentation on the Qualtrics API.
+#' @seealso See \url{https://api.qualtrics.com/reference} for documentation on
+#' the Qualtrics API.
 #' @export
 #' @examples
 #' \dontrun{
@@ -165,7 +166,7 @@ fetch_survey <- function(surveyID,
   # READ DATA AND SET VARIABLES ----
 
   # Read data
-  data <- read_survey(survey.fpath, import_id = import_id)
+  data <- read_survey(survey.fpath, import_id = import_id, time_zone = time_zone)
 
   # Add types
   if (convert & label) {
