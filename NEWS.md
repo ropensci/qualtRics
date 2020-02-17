@@ -4,6 +4,7 @@
 - Remove unnecessary dependency on yaml and deprecate `qualtRicsConfigFile()`, to avoid unexpected behavior
 - Deprecate old versions of functions: `getSurveys()`, `getSurveyQuestions()`, `getSurvey()`, `readSurvey()`
 - Move to updated version of Qualtrics API (#130) thanks to @jmobrien
+- Correctly handle time zone conversions (#137) thanks to @jmobrien
 
 # qualtRics 3.1.1
 
