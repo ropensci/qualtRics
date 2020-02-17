@@ -80,8 +80,8 @@ types (e.g. multiple choice) to proper data type in R. Defaults to \code{TRUE}.}
 question IDs as column names. Defaults to \code{FALSE}.}
 
 \item{time_zone}{String. A local timezone to determine response date
-values. Defaults to \code{NULL}. See
-\url{https://api.qualtrics.com/docs/dates-and-times} for more information on
+values. Defaults to \code{NULL} which corresponds to UTC time. See
+\url{https://api.qualtrics.com/docs/time-zones} for more information on
 format.}
 
 \item{...}{Optional arguments, such as a `fileEncoding` (see `fileEncoding`
@@ -119,5 +119,6 @@ mysurvey <- fetch_survey(
 
 }
 \seealso{
-See \url{https://api.qualtrics.com/docs/response-exports} for documentation on the Qualtrics API.
+See \url{https://api.qualtrics.com/reference} for documentation on
+the Qualtrics API.
 }

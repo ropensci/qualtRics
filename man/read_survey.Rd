@@ -4,7 +4,13 @@
 \alias{read_survey}
 \title{Read a CSV file exported from Qualtrics}
 \usage{
-read_survey(file_name, strip_html = TRUE, import_id = FALSE, legacy = FALSE)
+read_survey(
+  file_name,
+  strip_html = TRUE,
+  import_id = FALSE,
+  time_zone = NULL,
+  legacy = FALSE
+)
 }
 \arguments{
 \item{file_name}{String. A CSV data file.}
@@ -14,6 +20,11 @@ to \code{TRUE}.}
 
 \item{import_id}{Logical. If \code{TRUE}, use Qualtrics import IDs instead of
 question IDs as column names. Defaults to \code{FALSE}.}
+
+\item{time_zone}{String. A local timezone to determine response date
+values. Defaults to \code{NULL} which corresponds to UTC time. See
+\url{https://api.qualtrics.com/docs/time-zones} for more information on
+format.}
 
 \item{legacy}{Logical. If \code{TRUE}, then import "legacy" format CSV files
 (as of 2017). Defaults to \code{FALSE}.}
