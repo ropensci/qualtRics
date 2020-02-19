@@ -222,6 +222,25 @@ create_fetch_url <- function(base_url, surveyID) {
   return(fetch_url)
 }
 
+create_mailinglists_url <- function(base_url){
+  # create mailinglist url
+  mailinglists_url <-
+    paste0(
+      create_root_url(base_url),
+      "mailinglists/"
+    )
+  return(mailinglists_url)
+}
+
+create_mailinglist_url <- function(base_url, mailinglistID){
+  # create url
+  mailinglist_url <-
+    paste0(
+      create_mailinglists_url(base_url),
+      mailinglistID, "/contacts/"
+    )
+  return(mailinglist_url)
+}
 
 #' Create raw JSON payload to post response exports request
 #'
