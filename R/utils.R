@@ -234,6 +234,7 @@ create_fetch_url <- function(base_url, surveyID) {
 #' @param unanswer_recode_multi Flag
 #' @param include_display_order Flag
 #' @param include_questions Flag
+#' @param breakout_sets Flag
 #'
 #' @seealso See \code{\link{all_surveys}} for more details on these parameters
 #'
@@ -247,7 +248,8 @@ create_raw_payload <- function(label = TRUE,
                                unanswer_recode = NULL,
                                unanswer_recode_multi = NULL,
                                include_display_order = TRUE,
-                               include_questions = NULL) {
+                               include_questions = NULL,
+                               breakout_sets = NULL) {
   paste0(
     '{"format": ', '"', "csv", '"',
     ifelse(
@@ -316,6 +318,14 @@ create_raw_payload <- function(label = TRUE,
     '"useLabels": ', tolower(label),
     ", ",
     '"includeDisplayOrder": ', tolower(include_display_order),
+    ifelse(
+      is.null(breakout_sets),
+      "",
+      paste0(
+        ', "breakoutSets": ',
+        tolower(breakout_sets)
+      )
+    ),
     "}"
   )
 }

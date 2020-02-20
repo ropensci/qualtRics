@@ -13,7 +13,8 @@ create_raw_payload(
   unanswer_recode = NULL,
   unanswer_recode_multi = NULL,
   include_display_order = TRUE,
-  include_questions = NULL
+  include_questions = NULL,
+  breakout_sets = NULL
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ create_raw_payload(
 \item{include_display_order}{Flag}
 
 \item{include_questions}{Flag}
+
+\item{breakout_sets}{Flag}
 }
 \value{
 JSON file with options to send to API

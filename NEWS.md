@@ -5,6 +5,7 @@
 - Deprecate old versions of functions: `getSurveys()`, `getSurveyQuestions()`, `getSurvey()`, `readSurvey()`
 - Move to updated version of Qualtrics API (#130) thanks to @jmobrien
 - Correctly handle time zone conversions (#137) thanks to @jmobrien
+- Add `breakout_sets` parameter thanks to @shaun-jacks
 
 # qualtRics 3.1.1
 
