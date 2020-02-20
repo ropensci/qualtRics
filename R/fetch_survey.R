@@ -45,7 +45,7 @@
 #' values. Defaults to \code{NULL} which corresponds to UTC time. See
 #' \url{https://api.qualtrics.com/docs/time-zones} for more information on
 #' format.
-#' #' @param breakout_sets Logical. If \code{TRUE}, then the
+#' @param breakout_sets Logical. If \code{TRUE}, then the
 #' \code{\link[qualtRics]{fetch_survey}} function will split multiple
 #' choice question answers into columns. If \code{FALSE}, each multiple choice
 #' question is one column. Defaults to \code{TRUE}.
