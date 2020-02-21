@@ -6,6 +6,7 @@
 - Move to updated version of Qualtrics API (#130) thanks to @jmobrien
 - Correctly handle time zone conversions (#137) thanks to @jmobrien
 - Add `breakout_sets` parameter thanks to @shaun-jacks
+- Fix bug in `infer_data_types()` for answers choices that include HTML
 
 # qualtRics 3.1.1
 
