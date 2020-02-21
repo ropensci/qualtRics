@@ -525,6 +525,7 @@ wrapper_mc <- function(data, question_meta) {
                                   meta_levels = purrr::map_chr(value,
                                                                "choiceText")),
                     meta_levels)
+  ln <- remove_html(ln)
 
   # Convert
   dplyr::mutate(
@@ -535,4 +536,9 @@ wrapper_mc <- function(data, question_meta) {
                                       ordered = TRUE
     )
   )
+}
+
+## simple HTML stripping
+remove_html <- function(string) {
+  stringr::str_remove_all(string, '<[^>]+>')
 }
