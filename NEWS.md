@@ -1,4 +1,4 @@
-# qualtRics 3.1.2 [WIP]
+# qualtRics 3.1.2
 
 - For empty surveys, return zero row dataframe (#127)
 - Remove unnecessary dependency on yaml and deprecate `qualtRicsConfigFile()`, to avoid unexpected behavior
