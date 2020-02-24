@@ -42,8 +42,8 @@ qualtRics 3.0 (2018-02-03)
 
 ### MINOR IMPROVEMENTS
 
-- Using package [httptest](https://cran.r-project.org/web/packages/httptest/index.html) for mock API requests so that API calls can be tested. 
-- `getSurveys()` and `getSurveyQuestions()` now return a [tibble](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html)
+- Using package [httptest](https://CRAN.R-project.org/package=httptest) for mock API requests so that API calls can be tested. 
+- `getSurveys()` and `getSurveyQuestions()` now return a [tibble](https://CRAN.R-project.org/package=tibble)
 
 ### BUG FIXES
 
