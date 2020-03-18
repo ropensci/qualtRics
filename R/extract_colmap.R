@@ -1,5 +1,5 @@
-#' Title
-#' Test file for extract_colmap, a way of extracting column mappings from existing dataframes
+#' Test function: a way of extracting column mappings from existing dataframes
+#'
 #' could be used as both helper function and as a replacement for column_map, once
 #' updated to also generate column mappings from existing response download data frames,
 #' or from saved response downloads, etc.
