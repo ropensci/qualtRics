@@ -14,13 +14,18 @@
 #' values. Defaults to \code{NULL} which corresponds to UTC time. See
 #' \url{https://api.qualtrics.com/docs/time-zones} for more information on
 #' format.
+#' @param colmap_attrs Logical. If \code{TRUE}, then attributes will be added to
+#' each column in downloaded CSV providing info linking columns back to survey
+#' question content obtainable using \code{metadata}. Defaults to \code{FALSE}.
 #' @param legacy Logical. If \code{TRUE}, then import "legacy" format CSV files
 #' (as of 2017). Defaults to \code{FALSE}.
 #'
 #' @importFrom sjlabelled set_label
-#' @importFrom jsonlite fromJSON
+#' @importFrom purrr map
 #' @importFrom stringr str_match
 #' @importFrom readr read_csv
+#' @importFrom readr locale
+#' @importFrom readr type_convert
 #' @return A data frame. Variable labels are stored as attributes. They are not
 #' printed on the console but are visibile in the RStudio viewer.
 #' @export
@@ -42,13 +47,17 @@ read_survey <- function(file_name,
                         strip_html = TRUE,
                         import_id = FALSE,
                         time_zone = NULL,
-                        legacy = FALSE) {
+                        colmap_attrs = TRUE,
+                        legacy = FALSE
+) {
 
   # START UP: CHECK ARGUMENTS PASSED BY USER ----
 
   if (import_id & legacy) {
-    stop("Import IDs as column names are not supported for legacy CSVs.\nSet import_id = FALSE.",
-         call. = FALSE)
+    warning("Using import IDs as column names are not supported for legacy CSVs. Defaulting to user-defined variable names; set import_id = FALSE in future.")
+  }
+  if (colmap_attrs & legacy) {
+    warning("Column mapping can not be obtained from legacy CSVs. set colmap_attrs = FALSE in future.")
   }
 
   # check if file exists
@@ -99,17 +108,22 @@ read_survey <- function(file_name,
   # Add names
   names(rawdata) <- names(header)
 
-  if (import_id) {
-    new_ids <- suppressMessages(readr::read_csv(
-      file = file_name,
-      col_names = FALSE,
-      col_types = readr::cols(.default = readr::col_character()),
-      skip = skipNr - 1,
-      n_max = 1
-    ))
 
-    names(rawdata) <- gsub("^\\{'ImportId': '(.*)'\\}$", "\\1",
-                           unlist(new_ids))
+  # GET COLUMN MAPPING ------------------------------------------------------
+
+  if(!legacy && (import_id || colmap_attrs)){
+
+    col_map <-
+      get_colmap(file_name = file_name,
+                 qnames = names(header),
+                 as_list = TRUE
+      )
+
+    # Rename variables to be QID's rather than user-defined variable names:
+    if (import_id) {
+      names(rawdata) <- purrr::map_chr(col_map, "ImportId")
+    }
+
   }
 
   # If Qualtrics adds an empty column at the end, remove it
@@ -117,6 +131,7 @@ read_survey <- function(file_name,
     header <- header[, 1:(ncol(header) - 1)]
     rawdata <- rawdata[, 1:(ncol(rawdata) - 1)]
   }
+
   # extract second row, remove it from df
   secondrow <- unlist(header)
   row.names(rawdata) <- NULL
@@ -141,6 +156,16 @@ read_survey <- function(file_name,
 
   # Add labels to data
   rawdata <- sjlabelled::set_label(rawdata, unlist(subquestions))
+
+  # Write attributes as additional components:
+  if(!legacy && (import_id || colmap_attrs)){
+    for(i in names(col_map)){
+      for (j in seq_along(col_map[[i]])){
+        attr(rawdata[[i]], names(col_map[[i]])[j]) <-
+          col_map[[i]][[j]]
+      }
+    }
+  }
 
   # RETURN ----
 
