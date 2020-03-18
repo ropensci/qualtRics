@@ -22,6 +22,9 @@
 #'
 #' @importFrom sjlabelled set_label
 #' @importFrom purrr map
+#' @importFrom purrr imap
+#' @importFrom purrr map_dfr
+#' @importFrom tidyr unite
 #' @importFrom stringr str_match
 #' @importFrom readr read_csv
 #' @importFrom readr locale
@@ -119,9 +122,23 @@ read_survey <- function(file_name,
                  as_list = TRUE
       )
 
-    # Rename variables to be QID's rather than user-defined variable names:
+    # Rename variables to be "ImportId_ChoiceId" rather than user-defined variable names:
     if (import_id) {
-      names(rawdata) <- purrr::map_chr(col_map, "ImportId")
+      qid_names_df <-
+        bind_rows(col_map)[c("ImportId", "choiceId")]
+
+      qid_names <-
+        tidyr::unite(qid_names_df, col = qidnames,
+                     sep = "_", na.rm = TRUE)$qidnames
+
+      names(rawdata) <- qid_names
+
+      if(colmap_attrs){
+        # Swap the column map element names (qnames) w/the internal QID (ImportID))
+        col_map <-
+          setNames(imap(col_map, ~c(list(qname = .y), .x)), qid_names)
+      }
+
     }
 
   }
@@ -133,6 +150,8 @@ read_survey <- function(file_name,
   }
 
   # extract second row, remove it from df
+
+
   secondrow <- unlist(header)
   row.names(rawdata) <- NULL
 
@@ -158,7 +177,8 @@ read_survey <- function(file_name,
   rawdata <- sjlabelled::set_label(rawdata, unlist(subquestions))
 
   # Write attributes as additional components:
-  if(!legacy && (import_id || colmap_attrs)){
+  if(!legacy && colmap_attrs){
+
     for(i in names(col_map)){
       for (j in seq_along(col_map[[i]])){
         attr(rawdata[[i]], names(col_map[[i]])[j]) <-
@@ -167,7 +187,7 @@ read_survey <- function(file_name,
     }
   }
 
-  # RETURN ----
+# RETURN ----
 
-  return(rawdata)
+return(rawdata)
 }
