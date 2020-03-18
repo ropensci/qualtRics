@@ -1,10 +1,12 @@
-# qualtRics 3.1.2 [WIP]
+# qualtRics 3.1.2
 
 - For empty surveys, return zero row dataframe (#127)
 - Remove unnecessary dependency on yaml and deprecate `qualtRicsConfigFile()`, to avoid unexpected behavior
 - Deprecate old versions of functions: `getSurveys()`, `getSurveyQuestions()`, `getSurvey()`, `readSurvey()`
 - Move to updated version of Qualtrics API (#130) thanks to @jmobrien
 - Correctly handle time zone conversions (#137) thanks to @jmobrien
+- Add `breakout_sets` parameter thanks to @shaun-jacks
+- Fix bug in `infer_data_types()` for answers choices that include HTML
 
 # qualtRics 3.1.1
 
@@ -40,8 +42,8 @@ qualtRics 3.0 (2018-02-03)
 
 ### MINOR IMPROVEMENTS
 
-- Using package [httptest](https://cran.r-project.org/web/packages/httptest/index.html) for mock API requests so that API calls can be tested. 
-- `getSurveys()` and `getSurveyQuestions()` now return a [tibble](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html)
+- Using package [httptest](https://CRAN.R-project.org/package=httptest) for mock API requests so that API calls can be tested. 
+- `getSurveys()` and `getSurveyQuestions()` now return a [tibble](https://CRAN.R-project.org/package=tibble)
 
 ### BUG FIXES
 

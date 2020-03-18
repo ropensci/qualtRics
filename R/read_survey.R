@@ -123,10 +123,7 @@ read_survey <- function(file_name,
 
   # Clean variable labels
   if (strip_html) {
-    # weird regex to strip HTML tags, leaving only content
-    # https://www.r-bloggers.com/htmltotext-extracting-text-from-html-via-xpath/ # nolint
-    pattern <- "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>" # nolint
-    secondrow <- gsub(pattern, "\\4", secondrow)
+    secondrow <- remove_html(secondrow)
   }
 
   # Scale Question with subquestion:
