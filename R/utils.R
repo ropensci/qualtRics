@@ -302,7 +302,7 @@ create_raw_payload <- function(label = TRUE,
       is.null(include_questions),
       "",
       paste0(
-        ', "includedQuestionIds": ',
+        ', "questionIds": ',
         "[", paste0('"', include_questions, '"', collapse = ", "), "]"
       )
     ),

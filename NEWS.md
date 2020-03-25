@@ -1,3 +1,7 @@
+# qualtRics 3.1.2.900 [WIP]
+
+- Update `include_questions` argument to use correct name in API request.
+
 # qualtRics 3.1.2
 
 - For empty surveys, return zero row dataframe (#127)
