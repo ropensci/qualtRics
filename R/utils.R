@@ -550,8 +550,8 @@ remove_html <- function(string) {
 #' helps \code{read_survey} to extract column map attributes to be put w/in response data:
 #'
 #' @param file_name file name passed from read_survey
-#' @param .header passed in from \code{read_survey}, else gets from file
-#' @param .as_list does output come as a tibble of column mappings (much like column_map currently) or
+#' @param qnames passed in from \code{read_survey}, else gets from file
+#' @param as_list does output come as a tibble of column mappings (much like column_map currently) or
 #' instead as a list (used internally within \code{read_survey})
 #'
 #' @importFrom purrr map
