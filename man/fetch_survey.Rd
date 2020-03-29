@@ -22,6 +22,7 @@ fetch_survey(
   import_id = FALSE,
   time_zone = NULL,
   breakout_sets = TRUE,
+  colmap_attrs = FALSE,
   ...
 )
 }
@@ -89,6 +90,10 @@ format.}
 \code{\link[qualtRics]{fetch_survey}} function will split multiple
 choice question answers into columns. If \code{FALSE}, each multiple choice
 question is one column. Defaults to \code{TRUE}.}
+
+\item{colmap_attrs}{Logical. If \code{TRUE}, then attributes will be added to
+each column in downloaded CSV providing info linking columns back to survey
+question content obtainable using \code{metadata}. Defaults to \code{FALSE}.}
 
 \item{...}{Optional arguments, such as a `fileEncoding` (see `fileEncoding`
 argument in \code{\link[qualtRics]{read_survey}}) to import your survey using

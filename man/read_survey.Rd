@@ -9,6 +9,7 @@ read_survey(
   strip_html = TRUE,
   import_id = FALSE,
   time_zone = NULL,
+  colmap_attrs = TRUE,
   legacy = FALSE
 )
 }
@@ -25,6 +26,10 @@ question IDs as column names. Defaults to \code{FALSE}.}
 values. Defaults to \code{NULL} which corresponds to UTC time. See
 \url{https://api.qualtrics.com/docs/time-zones} for more information on
 format.}
+
+\item{colmap_attrs}{Logical. If \code{TRUE}, then attributes will be added to
+each column in downloaded CSV providing info linking columns back to survey
+question content obtainable using \code{metadata}. Defaults to \code{FALSE}.}
 
 \item{legacy}{Logical. If \code{TRUE}, then import "legacy" format CSV files
 (as of 2017). Defaults to \code{FALSE}.}
