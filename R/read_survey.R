@@ -20,6 +20,7 @@
 #' @param legacy Logical. If \code{TRUE}, then import "legacy" format CSV files
 #' (as of 2017). Defaults to \code{FALSE}.
 #'
+#' @importFrom stats setNames
 #' @importFrom sjlabelled set_label
 #' @importFrom purrr map
 #' @importFrom purrr imap
