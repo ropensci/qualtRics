@@ -228,6 +228,7 @@ create_fetch_url <- function(base_url, surveyID) {
 #' @param unanswer_recode_multi Flag
 #' @param include_display_order Flag
 #' @param include_questions Flag
+#' @param breakout_sets Flag
 #'
 #' @seealso See \code{\link{all_surveys}} for more details on these parameters
 #'
@@ -241,7 +242,8 @@ create_raw_payload <- function(label = TRUE,
                                unanswer_recode = NULL,
                                unanswer_recode_multi = NULL,
                                include_display_order = TRUE,
-                               include_questions = NULL) {
+                               include_questions = NULL,
+                               breakout_sets = NULL) {
   paste0(
     '{"format": ', '"', "csv", '"',
     ifelse(
@@ -294,7 +296,7 @@ create_raw_payload <- function(label = TRUE,
       is.null(include_questions),
       "",
       paste0(
-        ', "includedQuestionIds": ',
+        ', "questionIds": ',
         "[", paste0('"', include_questions, '"', collapse = ", "), "]"
       )
     ),
@@ -310,6 +312,14 @@ create_raw_payload <- function(label = TRUE,
     '"useLabels": ', tolower(label),
     ", ",
     '"includeDisplayOrder": ', tolower(include_display_order),
+    ifelse(
+      is.null(breakout_sets),
+      "",
+      paste0(
+        ', "breakoutSets": ',
+        tolower(breakout_sets)
+      )
+    ),
     "}"
   )
 }
@@ -509,6 +519,7 @@ wrapper_mc <- function(data, question_meta) {
                                   meta_levels = purrr::map_chr(value,
                                                                "choiceText")),
                     meta_levels)
+  ln <- remove_html(ln)
 
   # Convert
   dplyr::mutate(
@@ -519,4 +530,9 @@ wrapper_mc <- function(data, question_meta) {
                                       ordered = TRUE
     )
   )
+}
+
+## simple HTML stripping
+remove_html <- function(string) {
+  stringr::str_remove_all(string, '<[^>]+>')
 }

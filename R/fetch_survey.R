@@ -44,6 +44,10 @@
 #' values. Defaults to \code{NULL} which corresponds to UTC time. See
 #' \url{https://api.qualtrics.com/docs/time-zones} for more information on
 #' format.
+#' @param breakout_sets Logical. If \code{TRUE}, then the
+#' \code{\link[qualtRics]{fetch_survey}} function will split multiple
+#' choice question answers into columns. If \code{FALSE}, each multiple choice
+#' question is one column. Defaults to \code{TRUE}.
 #' @param ... Optional arguments, such as a `fileEncoding` (see `fileEncoding`
 #' argument in \code{\link[qualtRics]{read_survey}}) to import your survey using
 #' a specific encoding.
@@ -95,6 +99,7 @@ fetch_survey <- function(surveyID,
                          convert = TRUE,
                          import_id = FALSE,
                          time_zone = NULL,
+                         breakout_sets = TRUE,
                          ...) {
 
   if (lifecycle::is_present(last_response)) {
@@ -118,7 +123,8 @@ fetch_survey <- function(surveyID,
     unanswer_recode = unanswer_recode,
     unanswer_recode_multi = unanswer_recode_multi,
     include_display_order = include_display_order,
-    limit = limit
+    limit = limit,
+    breakout_sets = breakout_sets
   )
 
   # See if survey already in tempdir
@@ -150,7 +156,8 @@ fetch_survey <- function(surveyID,
     include_display_order = include_display_order,
     limit = limit,
     time_zone = time_zone,
-    include_questions = include_questions
+    include_questions = include_questions,
+    breakout_sets = breakout_sets
   )
 
   # SEND POST REQUEST TO API ----
