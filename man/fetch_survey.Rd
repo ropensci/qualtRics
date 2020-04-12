@@ -6,7 +6,7 @@
 \usage{
 fetch_survey(
   surveyID,
-  last_response = NULL,
+  last_response = deprecated(),
   start_date = NULL,
   end_date = NULL,
   unanswer_recode = NULL,
@@ -28,8 +28,7 @@ fetch_survey(
 \item{surveyID}{String. Unique ID for the survey you want to download.
 Returned as \code{id} by the \link[qualtRics]{all_surveys} function.}
 
-\item{last_response}{String. Export all responses received after the
-specified response ID. Defaults to \code{NULL}.}
+\item{last_response}{Deprecated.}
 
 \item{start_date}{String. Filter to only exports responses recorded after the
 specified date. Accepts dates as character strings in format "YYYY-MM-DD".

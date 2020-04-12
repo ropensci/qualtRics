@@ -27,7 +27,7 @@ BugReports: https://github.com/ropensci/qualtRics/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
-RoxygenNote: 7.0.2.9000
+RoxygenNote: 7.1.0
 Imports:
     httr,
     stringr,
@@ -38,7 +38,8 @@ Imports:
     dplyr,
     rlang,
     purrr,
-    tibble
+    tibble,
+    lifecycle
 Suggests:
     knitr,
     rmarkdown,

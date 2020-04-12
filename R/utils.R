@@ -131,12 +131,6 @@ check_params <- function(...) {
   if ("end_date" %in% names(args)) {
     if (!is.null(args$end_date)) assert_endDate_string(args$end_date)
   }
-  # No longer used:
-  # if ("last_response" %in% names(args)) {
-  #   if (!is.null(args$last_response)) {
-  #     assert_lastResponseId_string(args$last_response)
-  #   }
-  # }
   # Check if save_dir exists
   if ("save_dir" %in% names(args)) {
     if (!is.null(args$save_dir)) {

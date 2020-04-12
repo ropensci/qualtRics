@@ -5,6 +5,7 @@
 - Deprecate old versions of functions: `getSurveys()`, `getSurveyQuestions()`, `getSurvey()`, `readSurvey()`
 - Move to updated version of Qualtrics API (#130) thanks to @jmobrien
 - Correctly handle time zone conversions (#137) thanks to @jmobrien
+- Deprecate `last_response` argument no longer used by API (#153)
 
 # qualtRics 3.1.1
 

@@ -4,8 +4,7 @@
 #'
 #' @param surveyID String. Unique ID for the survey you want to download.
 #' Returned as \code{id} by the \link[qualtRics]{all_surveys} function.
-#' @param last_response String. Export all responses received after the
-#' specified response ID. Defaults to \code{NULL}.
+#' @param last_response Deprecated.
 #' @param start_date String. Filter to only exports responses recorded after the
 #' specified date. Accepts dates as character strings in format "YYYY-MM-DD".
 #' Defaults to \code{NULL}.
@@ -51,6 +50,8 @@
 #'
 #' @seealso See \url{https://api.qualtrics.com/reference} for documentation on
 #' the Qualtrics API.
+#'
+#' @importFrom lifecycle deprecated
 #' @export
 #' @examples
 #' \dontrun{
@@ -79,7 +80,7 @@
 #' }
 #'
 fetch_survey <- function(surveyID,
-                         last_response = NULL,
+                         last_response = deprecated(),
                          start_date = NULL,
                          end_date = NULL,
                          unanswer_recode = NULL,
@@ -96,6 +97,10 @@ fetch_survey <- function(surveyID,
                          time_zone = NULL,
                          ...) {
 
+  if (lifecycle::is_present(last_response)) {
+    lifecycle::deprecate_warn("3.1.2", "fetch_survey(last_response = )")
+  }
+
   ## Are the API credentials stored?
   assert_base_url()
   assert_api_key()
@@ -106,7 +111,6 @@ fetch_survey <- function(surveyID,
     import_id = import_id,
     time_zone = time_zone,
     label = label,
-    last_response = last_response,
     start_date = start_date,
     end_date = end_date,
     include_questions = include_questions,
