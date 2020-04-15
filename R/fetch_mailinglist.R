@@ -9,7 +9,7 @@
 #' @examples
 #' \dontrun{
 #' mailinglists <- all_mailinglists()
-#' mailinglist <- fetcH_mailinglist(mailinglists$id[[1]])
+#' mailinglist <- fetch_mailinglist(mailinglists$id[[1]])
 #' }
 
 fetch_mailinglist <- function(mailinglistID){

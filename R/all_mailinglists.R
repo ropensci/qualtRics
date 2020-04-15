@@ -15,9 +15,15 @@ all_mailinglists <- function(){
 
   fetch_url <- create_mailinglists_url(Sys.getenv("QUALTRICS_BASE_URL"))
 
-  res <- qualtrics_api_request("GET", url = fetch_url)
+  elements <- list()
 
-  elements <- res$result$elements
+  while(!is.null(fetch_url)){
+
+    res <- qualtrics_api_request("GET", url = fetch_url)
+    elements <- append(elements, res$result$elements)
+    fetch_url <- res$result$nextPage
+
+  }
 
   x <- purrr::map_df(elements, purrr::flatten)
 
