@@ -239,6 +239,7 @@ create_fetch_url <- function(base_url, surveyID) {
 #' @seealso See \code{\link{all_surveys}} for more details on these parameters
 #'
 #' @importFrom jsonlite toJSON
+#' @importFrom purrr discard
 #'
 #' @return JSON file with options to send to API
 
