@@ -255,6 +255,20 @@ create_raw_payload <- function(label = TRUE,
 
   params <- as.list(environment())
 
+  names_crosswalk <-
+    c(label = "useLabels",
+      start_date = "startDate",
+      end_date = "endDate",
+      limit = "limit",
+      time_zone = "timeZone",
+      unanswer_recode = "seenUnansweredRecode",
+      unanswer_recode_multi = "multiselectSeenUnansweredRecode",
+      include_display_order = "useLabels",
+      include_questions = "questionIds",
+      breakout_sets = "breakoutSets")
+
+
+
   if(!is.null(params$start_date)){
     params$start_date <- paste0(start_date, "T00:00:00Z")
   }
@@ -262,8 +276,14 @@ create_raw_payload <- function(label = TRUE,
     params$end_date <- paste0(end_date, "T00:00:00Z")
   }
 
+  # Adjust names to fit API names:
+
+  names(params) <- names_crosswalk[names(params)]
+
+  # Add in format param:
   params$format <- "csv"
 
+  # convert to JSON:
   payload <- jsonlite::toJSON(params, auto_unbox = TRUE)
 
   return(payload)
