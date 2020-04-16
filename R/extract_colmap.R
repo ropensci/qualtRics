@@ -10,16 +10,7 @@
 
 extract_colmap <- function(r_dat) {
 
-  # Make a new column map from the existing response df,
-  return(
-    imap_dfr(r_dat, ~{
-      # Get attributes for each column:
-      attrs <- attributes(.x)
-      # Drop the class and tz (added by read_csv to dates) attrs:
-      attrs[c("tzone", "class")] <- NULL
-      # Add the variable name in the front for more usability:
-      c(qname = .y, attrs)
-    })
-  )
+  return(attr(r_dat, "column_map"))
+
 }
 

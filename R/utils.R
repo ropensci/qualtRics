@@ -115,7 +115,7 @@ check_params <- function(...) {
       args$label,
       args$include_display_order,
       args$breakout_sets,
-      args$colmap_attrs
+      args$add_column_map
     )
   }
 
@@ -551,8 +551,8 @@ remove_html <- function(string) {
 #'
 #' @param file_name file name passed from read_survey
 #' @param qnames passed in from \code{read_survey}, else gets from file
-#' @param as_list does output come as a tibble of column mappings (much like column_map currently) or
-#' instead as a list (used internally within \code{read_survey})
+#' @param as_dataframe does output come as a tibble of column mappings (much like column_map currently) or
+#' instead as a list (used internally within \code{read_survey})?
 #'
 #' @importFrom purrr map
 #' @importFrom jsonlite fromJSON
@@ -563,40 +563,34 @@ remove_html <- function(string) {
 
 get_colmap <- function(file_name,
                        qnames = NULL,
-                       as_list = FALSE) {
+                       as_dataframe = FALSE) {
 
-  # Get variable names from download:
   if(is.null(qnames)){
-    qnames <-
-      unlist(
-        suppressWarnings(suppressMessages(readr::read_csv(
-          file = file_name,
-          col_names = FALSE,
-          col_types = readr::cols(.default = readr::col_character()),
-          n_max = 1
-        )))
-      )
+    qnames <- suppressWarnings(suppressMessages(readr::read_csv(
+      file = file_name,
+      col_names = FALSE,
+      col_types = readr::cols(.default = readr::col_character()),
+      n_max = 1
+    )))
   }
 
-  # Pull column map JSON from file:
-  colmap_raw <- suppressMessages(
+  # Pull header rows JSON from file:
+  colmap_raw <- suppressWarnings(suppressMessages(
     readr::read_csv(
       file = file_name,
       col_names = FALSE,
       col_types = readr::cols(.default = readr::col_character()),
       skip = 2,
       n_max = 1
-    ))
+    )))
+
+  names(colmap_raw) <- qnames
 
   # Convert to a list of attributes for each variable:
   # (equiv. of exportColumnMap object from old Get Survey API) from row 3 of csv:
   col_map <- purrr::map(colmap_raw, jsonlite::fromJSON)
 
-  # Add user-defined variable names to col_map:
-  names(col_map) <- qnames
-
-
-  if(!as_list){
+  if(as_dataframe){
     # convert col_map to dataframe (tibble) w/initial column qname, cont. user-def. varnames:
     # NOTE: will contain only columns for column map elements actually in the downloaded data:
     col_map <-

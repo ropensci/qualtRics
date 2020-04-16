@@ -49,9 +49,10 @@
 #' \code{\link[qualtRics]{fetch_survey}} function will split multiple
 #' choice question answers into columns. If \code{FALSE}, each multiple choice
 #' question is one column. Defaults to \code{TRUE}.
-#' @param colmap_attrs Logical. If \code{TRUE}, then attributes will be added to
-#' each column in downloaded CSV providing info linking columns back to survey
-#' question content obtainable using \code{metadata}. Defaults to \code{FALSE}.
+#' @param add_column_map Logical. If \code{TRUE}, then a dataframe will be added
+#' as an attribute to the main response dataframe, that provides information
+#' linking variables back to associated content obtainable using \code{metadata}.
+#' Defaults to \code{FALSE}.
 #' @param ... Optional arguments, such as a `fileEncoding` (see `fileEncoding`
 #' argument in \code{\link[qualtRics]{read_survey}}) to import your survey using
 #' a specific encoding.
@@ -102,7 +103,7 @@ fetch_survey <- function(surveyID,
                          import_id = FALSE,
                          time_zone = NULL,
                          breakout_sets = TRUE,
-                         colmap_attrs = FALSE,
+                         add_column_map = TRUE,
                          ...) {
 
   ## Are the API credentials stored?
@@ -125,7 +126,7 @@ fetch_survey <- function(surveyID,
     include_display_order = include_display_order,
     limit = limit,
     breakout_sets = breakout_sets,
-    colmap_attrs = colmap_attrs
+    add_column_map = add_column_map
   )
 
   # See if survey already in tempdir
@@ -181,12 +182,13 @@ fetch_survey <- function(surveyID,
   data <- read_survey(survey.fpath,
                       import_id = import_id,
                       time_zone = time_zone,
-                      colmap_attrs = colmap_attrs)
+                      add_column_map = add_column_map)
 
   # Add types
   if (convert & label) {
     data <- infer_data_types(data, surveyID)
   }
+
   # Save survey as RDS file in temp folder so that it can be easily
   # retrieved this session.
   saveRDS(data, paste0(tempdir(), "/", surveyID, ".rds"))

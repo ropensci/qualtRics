@@ -26,10 +26,13 @@
 #' @importFrom purrr imap
 #' @importFrom purrr map_dfr
 #' @importFrom tidyr unite
+#' @importFrom tidyr everything
 #' @importFrom stringr str_match
 #' @importFrom readr read_csv
 #' @importFrom readr locale
 #' @importFrom readr type_convert
+#' @importFrom dplyr select
+#'
 #' @return A data frame. Variable labels are stored as attributes. They are not
 #' printed on the console but are visibile in the RStudio viewer.
 #' @export
@@ -51,7 +54,7 @@ read_survey <- function(file_name,
                         strip_html = TRUE,
                         import_id = FALSE,
                         time_zone = NULL,
-                        colmap_attrs = TRUE,
+                        add_column_map = TRUE,
                         legacy = FALSE
 ) {
 
@@ -60,7 +63,7 @@ read_survey <- function(file_name,
   if (import_id & legacy) {
     warning("Using import IDs as column names are not supported for legacy CSVs. Defaulting to user-defined variable names; set import_id = FALSE in future.")
   }
-  if (colmap_attrs & legacy) {
+  if (add_column_map & legacy) {
     warning("Column mapping can not be obtained from legacy CSVs. set colmap_attrs = FALSE in future.")
   }
 
@@ -76,7 +79,9 @@ read_survey <- function(file_name,
 
   # READ DATA ----
 
-  # import data including variable names (row 1) and variable labels (row 2)
+  # import raw data excluding variable names (row 1)
+  # variable JSON (row 2, v3 only)
+  # and descriptions (row 3, or 2 if legacy)
   rawdata <- suppressMessages(readr::read_csv(
     file = file_name,
     col_names = FALSE,
@@ -84,7 +89,8 @@ read_survey <- function(file_name,
     skip = skipNr,
     na = c("")
   ))
-  # Load headers
+
+  # Load user-defined variable names + description:
   header <- suppressWarnings(suppressMessages(readr::read_csv(
     file = file_name,
     col_names = TRUE,
@@ -115,29 +121,31 @@ read_survey <- function(file_name,
 
   # GET COLUMN MAPPING ------------------------------------------------------
 
-  if(!legacy && (import_id || colmap_attrs)){
+  if(!legacy && (import_id || add_column_map)){
 
     col_map <-
       get_colmap(file_name = file_name,
                  qnames = names(header),
-                 as_list = TRUE
+                 as_dataframe = TRUE
       )
 
     # Rename variables to be "ImportId_ChoiceId" rather than user-defined variable names:
     if (import_id) {
-      qid_names_df <-
-        bind_rows(col_map)[c("ImportId", "choiceId")]
 
       qid_names <-
-        tidyr::unite(qid_names_df, col = qidnames,
-                     sep = "_", na.rm = TRUE)$qidnames
+        tidyr::unite(qid_names_df,
+                     col = qidnames,
+                     c(ImportId, choiceId),
+                     sep = "_",
+                     na.rm = TRUE)[["qidnames"]]
 
       names(rawdata) <- qid_names
 
-      if(colmap_attrs){
-        # Swap the column map element names (qnames) w/the internal QID (ImportID))
-        col_map <-
-          setNames(imap(col_map, ~c(list(qname = .y), .x)), qid_names)
+      if(add_column_map){
+
+        # Swap the column map element names (qname) w/the internal QID (ImportID))
+        col_map$qname <- qid_names
+
       }
 
     }
@@ -151,8 +159,6 @@ read_survey <- function(file_name,
   }
 
   # extract second row, remove it from df
-
-
   secondrow <- unlist(header)
   row.names(rawdata) <- NULL
 
@@ -174,21 +180,21 @@ read_survey <- function(file_name,
   rawdata <- readr::type_convert(rawdata,
                                  locale = readr::locale(tz = time_zone))
 
-  # Add labels to data
+  # Add descriptions to data as attribute "label"
   rawdata <- sjlabelled::set_label(rawdata, unlist(subquestions))
 
-  # Write attributes as additional components:
-  if(!legacy && colmap_attrs){
+  if(!legacy && add_column_map){
 
-    for(i in names(col_map)){
-      for (j in seq_along(col_map[[i]])){
-        attr(rawdata[[i]], names(col_map[[i]])[j]) <-
-          col_map[[i]][[j]]
-      }
-    }
+    # Add decscriptive information:
+    col_map$description <- unlist(subquestions)
+    # Rearrange w/qname, descriptions, and then the rest:
+    col_map <- dplyr::select(col_map, qname, description, tidyr::everything())
+    # add to output as a data frame attribute:
+    attr(rawdata, "column_map") <- col_map
+
   }
 
-# RETURN ----
+  # RETURN ----
 
-return(rawdata)
+  return(rawdata)
 }
