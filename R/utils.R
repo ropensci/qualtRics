@@ -263,7 +263,7 @@ create_raw_payload <- function(label = TRUE,
       time_zone = "timeZone",
       unanswer_recode = "seenUnansweredRecode",
       unanswer_recode_multi = "multiselectSeenUnansweredRecode",
-      include_display_order = "useLabels",
+      include_display_order = "includeDisplayOrder",
       include_questions = "questionIds",
       breakout_sets = "breakoutSets")
 
