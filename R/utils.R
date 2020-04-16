@@ -238,6 +238,8 @@ create_fetch_url <- function(base_url, surveyID) {
 #'
 #' @seealso See \code{\link{all_surveys}} for more details on these parameters
 #'
+#' @importFrom jsonlite toJSON
+#'
 #' @return JSON file with options to send to API
 
 create_raw_payload <- function(label = TRUE,
@@ -250,85 +252,23 @@ create_raw_payload <- function(label = TRUE,
                                include_display_order = TRUE,
                                include_questions = NULL,
                                breakout_sets = NULL) {
-  paste0(
-    '{"format": ', '"', "csv", '"',
-    ifelse(
-      is.null(start_date),
-      "",
-      paste0(
-        ', "startDate": ',
-        '"',
-        paste0(start_date, "T00:00:00Z"),
-        '"'
-      )
-    ),
-    ifelse(
-      is.null(end_date),
-      "",
-      paste0(
-        ', "endDate": ',
-        '"',
-        paste0(end_date, "T00:00:00Z"),
-        '"'
-      )
-    ),
-    ifelse(
-      is.null(unanswer_recode),
-      "",
-      paste0(
-        ', "seenUnansweredRecode": ',
-        unanswer_recode
-      )
-    ),
-    ifelse(
-      is.null(unanswer_recode_multi),
-      "",
-      paste0(
-        ', "multiselectSeenUnansweredRecode": ',
-        unanswer_recode_multi
-      )
-    ),
-    ifelse(
-      is.null(time_zone),
-      "",
-      paste0(
-        ', "timeZone": ',
-        '"',
-        time_zone,
-        '"'
-      )
-    ),
-    ifelse(
-      is.null(include_questions),
-      "",
-      paste0(
-        ', "includedQuestionIds": ',
-        "[", paste0('"', include_questions, '"', collapse = ", "), "]"
-      )
-    ),
-    ifelse(
-      is.null(limit),
-      "",
-      paste0(
-        ', "limit": ',
-        limit
-      )
-    ),
-    ", ",
-    '"useLabels": ', tolower(label),
-    ", ",
-    '"includeDisplayOrder": ', tolower(include_display_order),
-    ifelse(
-      is.null(breakout_sets),
-      "",
-      paste0(
-        ', "breakoutSets": ',
-        tolower(breakout_sets)
-      )
-    ),
-    "}"
-  )
+
+  params <- as.list(environment())
+
+  if(!is.null(params$start_date)){
+    params$start_date <- paste0(start_date, "T00:00:00Z")
+  }
+  if(!is.null(params$end_date)){
+    params$end_date <- paste0(end_date, "T00:00:00Z")
+  }
+
+  params$format <- "csv"
+
+  payload <- jsonlite::toJSON(params, auto_unbox = TRUE)
+
+  return(payload)
 }
+
 
 #' Send httr requests to Qualtrics API
 #'
