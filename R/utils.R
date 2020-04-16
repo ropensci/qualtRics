@@ -283,6 +283,9 @@ create_raw_payload <- function(label = TRUE,
   # Add in format param:
   params$format <- "csv"
 
+  # Drop any NULL elements:
+  params <- purrr::discard(params, ~is.null(.x))
+
   # convert to JSON:
   payload <- jsonlite::toJSON(params, auto_unbox = TRUE)
 
