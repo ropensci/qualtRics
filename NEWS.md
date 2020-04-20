@@ -1,3 +1,7 @@
+# qualtRics 3.1.2.900 [WIP]
+
+- Update `include_questions` argument to use correct name in API request.
+
 # qualtRics 3.1.2
 
 - For empty surveys, return zero row dataframe (#127)
@@ -7,6 +11,7 @@
 - Correctly handle time zone conversions (#137) thanks to @jmobrien
 - Add `breakout_sets` parameter thanks to @shaun-jacks
 - Fix bug in `infer_data_types()` for answers choices that include HTML
+- Deprecate `last_response` argument no longer used by API (#153)
 
 # qualtRics 3.1.1
 

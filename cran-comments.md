@@ -1,6 +1,6 @@
 ## Release summary
 
-This is the 9th CRAN release of qualtRics (the 3rd since it has returned to CRAN since being archived). This release includes bug fixes, an update to the new Qualtrics API version, and more reliable behavior under more circumstances.
+This is the 9th CRAN release of qualtRics (the 3rd since it has returned to CRAN since being archived). This release includes bug fixes, an update to the new Qualtrics API version, and more reliable behavior under various circumstances.
 
 ## Test environments
 * local OS X install, R 3.6.2
