@@ -3,7 +3,6 @@
 #'
 #' @param mailinglistID String. Unique ID for the mailing list you want to download. Returned as \code{id} by the \link[qualtRics]{all_mailinglists} function.
 #'
-#' @return
 #' @export
 #'
 #' @examples
