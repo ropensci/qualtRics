@@ -8,9 +8,19 @@
 #'
 #' @examples
 #' \dontrun{
+#' # Register your Qualtrics credentials if you haven't already
+#' qualtrics_api_credentials(
+#'   api_key = "<YOUR-API-KEY>",
+#'   base_url = "<YOUR-BASE-URL>"
+#' )
+#'
+#' # Retrieve a list of all mailing lists
 #' mailinglists <- all_mailinglists()
-#' mailinglist <- fetch_mailinglist(mailinglists$id[[1]])
+#'
+#' # Retrieve a single mailing list
+#' mailinglist <- fetch_mailinglist(mailinglists$id[1])
 #' }
+#'
 
 fetch_mailinglist <- function(mailinglistID){
 
