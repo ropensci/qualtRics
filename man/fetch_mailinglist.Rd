@@ -9,15 +9,12 @@ fetch_mailinglist(mailinglistID)
 \arguments{
 \item{mailinglistID}{String. Unique ID for the mailing list you want to download. Returned as \code{id} by the \link[qualtRics]{all_mailinglists} function.}
 }
-\value{
-
-}
 \description{
 Download a mailing list from Qualtrics
 }
 \examples{
 \dontrun{
 mailinglists <- all_mailinglists()
-mailinglist <- fetcH_mailinglist(mailinglists$id[[1]])
+mailinglist <- fetch_mailinglist(mailinglists$id[[1]])
 }
 }
