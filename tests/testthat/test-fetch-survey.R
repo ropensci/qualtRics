@@ -2,7 +2,7 @@ context("Download a survey from qualtRics and pull it into R using the fetch_sur
 
 test_that("fetch_survey() throws error", {
   qualtrics_api_credentials(api_key = "1234",
-                            base_url = "https://yourdatacenterid.qualtrics.com")
+                            base_url = "yourdatacenterid.qualtrics.com")
   # Query fake ID with generic root url
   expect_error(
     qualtRics::fetch_survey("1234"),
@@ -24,7 +24,7 @@ test_that("fetch_survey() reads a stored survey in temporary directory if exists
   # Register dummy key
   qualtrics_api_credentials(
     api_key = "1234",
-    base_url = "https://yourdatacenterid.qualtrics.com"
+    base_url = "yourdatacenterid.qualtrics.com"
   )
   # Store RDS file
   data <- "SUCCESS"
