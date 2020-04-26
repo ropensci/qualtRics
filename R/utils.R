@@ -176,9 +176,10 @@ check_params <- function(...) {
 #'
 #' @return Root URL
 
-create_root_url <- function(base_url) {
+create_root_url <- function(base_url){
   # create root url
   root_url <- paste0(
+    "https://",
     base_url,
     ifelse(substr(
       base_url, nchar(base_url),
