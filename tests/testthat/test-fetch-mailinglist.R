@@ -1,8 +1,10 @@
 
 test_that("fetch_mailinglist returns a tbl_df with expected column names and types", {
 
+  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
+
   vcr::use_cassette("fetch_mailinglist", {
-    x <- fetch_mailinglist()
+    x <- fetch_mailinglist("")
   })
 
   expect_s3_class(x, c("tbl_df","tbl","data.frame"))
@@ -16,6 +18,6 @@ test_that("fetch_mailinglist returns a tbl_df with expected column names and typ
   expect_type(x$email, "character")
   expect_type(x$externalDataReference, "character")
   expect_type(x$language, "character")
-  expect_type(x$unsubscribed, "character")
+  expect_type(x$unsubscribed, "logical")
 
 })

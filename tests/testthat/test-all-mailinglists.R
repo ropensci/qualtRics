@@ -1,6 +1,8 @@
 
 test_that("all_mailinglists returns a tbl_df with expected column names and types", {
 
+  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
+
   vcr::use_cassette("all_mailinglists", {
     x <- all_mailinglists()
   })
