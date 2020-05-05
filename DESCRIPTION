@@ -44,5 +44,5 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
-    httptest
+    webmockr
 VignetteBuilder: knitr
