@@ -1,7 +1,7 @@
 Package: qualtRics
 Type: Package
 Title: Download 'Qualtrics' Survey Data
-Version: 3.1.1.900
+Version: 3.1.2
 Authors@R: c(person("Jasper", "Ginn", role = c("aut"),
              email = "jasperginn@gmail.com"),
              person("Samuel", "Kaminsky", role = c("ctb"),
@@ -17,6 +17,8 @@ Authors@R: c(person("Jasper", "Ginn", role = c("aut"),
              email = "joseph.obrien@utexas.edu"),
              person("Seneca", "Daniel", role = c("ctb"),
              email = "seneca.danielh@gmail.com")
+             person("Shaun", "Jackson", role = c("ctb"),
+             email = "shaunbjackson@gmail.com")
              )
 Description: Provides functions to access survey results directly into R using 
     the 'Qualtrics' API. 'Qualtrics' <https://www.qualtrics.com/about/> is an 
@@ -40,11 +42,12 @@ Imports:
     dplyr,
     rlang,
     purrr,
-    tibble
+    tibble,
+    lifecycle
 Suggests:
     knitr,
     rmarkdown,
     testthat,
-    httptest,
     vcr
+    webmockr
 VignetteBuilder: knitr
