@@ -2,7 +2,7 @@
 
 - Update `include_questions` argument to use correct name in API request.
 - Build API payloads with jsonlite (#155) thanks to @jmobrien
-- Convert most tests to webmockr (#161) thanks to @shaun-jacks
+- Convert tests to webmockr and vcr (#140 and #161) thanks to @shaun-jacks and @dsen6644
 
 # qualtRics 3.1.2
 

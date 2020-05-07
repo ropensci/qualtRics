@@ -13,7 +13,7 @@
 #'
 qualtRicsConfigFile <- function(...) {
 
-  .Deprecated("qualtrics::qualtrics_api_credentials()")
+  .Deprecated("qualtrics_api_credentials")
 
 }
 
@@ -25,7 +25,7 @@ qualtRicsConfigFile <- function(...) {
 #'
 #' @export
 getSurveyQuestions <- function(...) {
-  .Deprecated("`getSurveyQuestions` is deprecated. Try using `survey_questions()` instead.")
+  .Deprecated("survey_questions")
   survey_questions(...)
 }
 
@@ -37,7 +37,7 @@ getSurveyQuestions <- function(...) {
 #'
 #' @export
 getSurvey <- function(...) {
-  .Deprecated("`getSurvey` is deprecated. Try using `fetch_survey()` instead.")
+  .Deprecated("fetch_survey")
   fetch_survey(...)
 }
 
@@ -53,7 +53,7 @@ getSurvey <- function(...) {
 #'
 #' @export
 readSurvey <- function(...) {
-  .Deprecated("`readSurvey` is deprecated. Try using `read_survey()` instead.")
+  .Deprecated("read_survey")
   read_survey(...)
 }
 

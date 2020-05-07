@@ -15,6 +15,8 @@ Authors@R: c(person("Jasper", "Ginn", role = c("aut"),
              email = "phoebe.wong@berkeley.edu"),
              person("O'Brien", "Joseph", role = c("ctb"),
              email = "joseph.obrien@utexas.edu"),
+             person("Seneca", "Daniel", role = c("ctb"),
+             email = "seneca.danielh@gmail.com"),
              person("Shaun", "Jackson", role = c("ctb"),
              email = "shaunbjackson@gmail.com")
              )
@@ -46,5 +48,6 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
+    vcr,
     webmockr
 VignetteBuilder: knitr

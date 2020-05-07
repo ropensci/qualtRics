@@ -1,125 +1,77 @@
-library(webmockr)
+context("Download a survey from qualtRics and pull it into R using the fetch_survey() function")
 
-context("Download a survey from qualtRics and pull it into R using the fetch_survey() function") # nolint
+test_that("fetch_survey() returns survey with default params", {
 
-test_that("fetch_survey() should make proper request with default params to start response export", { # nolint
-  webmockr::enable()
-  # We mock dependent functions since we are only testing the requests
-  local_mock(`qualtRics::check_for_warnings` = function(resp) NULL)
-  local_mock(`qualtRics::download_qualtrics_export` =
-               function(url, id, verbose) tempdir())
-  local_mock(`qualtRics::read_survey` =
-               function(path="", import_id="", time_zone="") NULL)
-  local_mock(`qualtRics::infer_data_types` = function(data, id) NULL)
-  local_mock(`qualtRics::qualtrics_response_codes` = function(res) list(
-    OK = TRUE,
-    content = list(
-      result = list(
-        progressId = '1'
-      )
-    )
-  ))
+  skip_on_cran()
 
+  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
 
-  mock_key <- 'api_key_123'
-  mock_host <- 'https://test.qualtrics.com'
-  mock_id <- '1234'
-  expected_path <- sprintf('/API/v3/surveys/%s/export-responses/', mock_id)
-  qualtrics_api_credentials(mock_key, mock_host)
-  # Stub our request to check if expected request was made
-  stub_request('POST', paste0(mock_host, expected_path)) %>%
-    wi_th(
-      headers = list('X-API-TOKEN' = mock_key,
-                     'Content-Type' = 'application/json',
-                     'Accept' = '*/*',
-                     'accept-encoding' = 'gzip, deflate'),
-      body = list(
-        useLabels=TRUE,
-        includeDisplayOrder=TRUE,
-        breakoutSets=TRUE,
-        format="csv")
-    )
+  vcr::use_cassette("fetch_survey", {
+    x <- fetch_survey("SV_3gbwq8aJgqPwQDP")
+  })
 
-  # Will throw error if expected request not made
-  reqIsSuccessful <-
-    suppressWarnings(fetch_survey(mock_id, force_request = TRUE)) %>%
-    is.null()
+  expect_s3_class(x, c("spec_tbl_df", "tbl_df","tbl","data.frame"))
+  expect_named(x, c("StartDate", "EndDate", "Status", "IPAddress", "Progress",
+                    "Duration (in seconds)", "Finished", "RecordedDate",
+                    "ResponseId", "RecipientLastName", "RecipientFirstName",
+                    "RecipientEmail", "ExternalReference", "LocationLatitude",
+                    "LocationLongitude", "DistributionChannel", "UserLanguage",
+                    "Q63", "Q16", "Q17", "Q18", "Q19", "Q22", "SolutionRevision"))
+  expect_type(x$StartDate, "double")
+  expect_type(x$Status, "character")
+  expect_type(x$`Duration (in seconds)`, "double")
+  expect_type(x$Finished, "logical")
+  expect_type(x$ResponseId, "character")
+  expect_type(x$Q63, "integer")
+  expect_type(x$Q22, "character")
 
-  expect_true(reqIsSuccessful)
-
-  stub_registry_clear()
-  webmockr::disable()
 })
 
-test_that("fetch_survey() should send the proper payload with custom params", {
-  webmockr::enable()
-  # We mock dependent functions since we are only testing the requests
-  local_mock(`qualtRics::check_for_warnings` = function(resp) NULL)
-  local_mock(`qualtRics::download_qualtrics_export` =
-               function(url, id, verbose) tempdir())
-  local_mock(`qualtRics::read_survey` =
-               function(path="", import_id="", time_zone="") NULL)
-  local_mock(`qualtRics::infer_data_types` = function(data, id) NULL)
-  local_mock(`qualtRics::qualtrics_response_codes` = function(res) list(
-    OK = TRUE,
-    content = list(
-      result = list(
-        progressId = '1'
-      )
-    )
-  ))
+test_that("fetch_survey() returns survey with custom params", {
 
+  skip_on_cran()
 
-  mock_key <- 'api_key_123'
-  mock_host <- 'https://test.qualtrics.com'
-  mock_id <- '1234'
-  expected_path <- sprintf('/API/v3/surveys/%s/export-responses/', mock_id)
-  qualtrics_api_credentials(mock_key, mock_host)
-  # Stub our request to check if expected request was made correctly
-  stub_request('POST', paste0(mock_host, expected_path)) %>%
-    wi_th(
-      headers = list('X-API-TOKEN' = mock_key,
-                     'Content-Type' = 'application/json',
-                     'Accept' = '*/*',
-                     'accept-encoding' = 'gzip, deflate'),
-      body = list(
-        useLabels=TRUE,
-        format="csv",
-        startDate = "2019-01-01T00:00:00Z",
-        endDate = "2020-01-01T00:00:00Z",
-        limit = 100,
-        breakoutSets=FALSE,
-        includeDisplayOrder=TRUE,
-        seenUnansweredRecode=-999,
-        multiselectSeenUnansweredRecode=-888,
-        questionIds=c('QID1')
-      )
-    )
+  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
 
-  # Will throw error if expected request not made as specified
-  reqIsSuccessful <-
-    suppressWarnings(fetch_survey(
-      mock_id,
+  vcr::use_cassette("fetch_survey_custom", {
+    x <- fetch_survey(
+      "SV_56icaa9YAafpAqx",
       force_request = TRUE,
-      label=TRUE,
-      start_date="2019-01-01",
-      end_date="2020-01-01",
-      limit = 100,
-      breakout_sets = FALSE,
-      unanswer_recode=-999,
-      unanswer_recode_multi=-888,
-      include_questions=c('QID1')
-      )) %>%
-    is.null()
+      start_date = "2020-01-01",
+      end_date = "2020-03-01",
+      unanswer_recode = 999,
+      limit = 15,
+      include_questions = c("QID9", "QID21"),
+      breakout_sets = FALSE
+    )
+  })
 
-  expect_true(reqIsSuccessful)
+  expect_s3_class(x, c("spec_tbl_df", "tbl_df","tbl","data.frame"))
+  expect_equal(nrow(x), 15)
+  expect_named(x, c("StartDate", "EndDate", "Status",
+                    "Progress", "Duration (in seconds)", "Finished",
+                    "RecordedDate", "ResponseId", "DistributionChannel",
+                    "UserLanguage", "Q3.2", "Q4.1",
+                    "SolutionRevision",
+                    "Q3.8 - Parent Topics",
+                    "Q3.8 - Sentiment Polarity",
+                    "Q3.8 - Sentiment Score",
+                    "Q3.8 - Sentiment",
+                    "Q3.8 - Topic Sentiment Label",
+                    "Q3.8 - Topic Sentiment Score",
+                    "Q3.8 - Topics"))
+  expect_type(x$StartDate, "double")
+  expect_type(x$Status, "character")
+  expect_type(x$`Duration (in seconds)`, "double")
+  expect_type(x$Finished, "logical")
+  expect_type(x$ResponseId, "character")
+  expect_type(x$`Q3.2`, "integer")
+  expect_type(x$`Q4.1`, "integer")
 
-  stub_registry_clear()
-  webmockr::disable()
 })
 
-test_that("using fetch_survey() with a base URL that doesn't end with '.qualtrics.com' fails", { # nolint
-  # Store dummy key
+test_that("using fetch_survey() with a base URL that doesn't end with '.qualtrics.com' fails", {
+
   qualtrics_api_credentials(api_key = "1234", base_url = "abcd")
   # This should error on check_params()
   expect_error(
@@ -128,11 +80,11 @@ test_that("using fetch_survey() with a base URL that doesn't end with '.qualtric
   ) # nolint
 })
 
-test_that("fetch_survey() reads a stored survey in temporary directory if exists", { # nolint
+test_that("fetch_survey() reads a stored survey in temporary directory if exists", {
   # Register dummy key
   qualtrics_api_credentials(
     api_key = "1234",
-    base_url = "https://yourdatacenterid.qualtrics.com"
+    base_url = "yourdatacenterid.qualtrics.com"
   )
   # Store RDS file
   data <- "SUCCESS"
@@ -145,12 +97,13 @@ test_that("fetch_survey() reads a stored survey in temporary directory if exists
     qualtRics::fetch_survey("surveyID"),
     "Found an earlier download for survey with id surveyID. Loading this file.
 Set 'force_request' to TRUE if you want to override this"
-  ) # nolint
+  )
 })
 
 test_that("Save directory exists for fetch_survey()", {
   expect_error(
-    qualtRics::fetch_survey("1234",
+    qualtRics::fetch_survey(
+      "1234",
       save_dir = "/users/jasper/desktop/idonotexist"
     ),
     "does not exist."

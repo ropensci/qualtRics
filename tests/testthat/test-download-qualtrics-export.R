@@ -1,3 +1,5 @@
+library(webmockr)
+
 context("download_qualtrics_export")
 
 test_that("it should make the proper export progress and download file requests", { # nolint
