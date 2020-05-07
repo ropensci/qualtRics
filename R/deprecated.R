@@ -57,6 +57,16 @@ readSurvey <- function(...) {
   read_survey(...)
 }
 
+#' Retrieve a data frame of all active surveys on Qualtrics
+#'
+#' This function is deprecated; use \code{\link[qualtRics]{all_surveys}}
+#' instead.
+#' @export
+getSurveys <- function() {
+  .Deprecated("all_surveys")
+  all_surveys()
+}
+
 
 
 

@@ -1,15 +1,5 @@
 #' Retrieve a data frame of all active surveys on Qualtrics
 #'
-#' This function is soft deprecated; use \code{\link[qualtRics]{all_surveys}}
-#' instead.
-#' @export
-getSurveys <- function() {
-  warning("Soon, `getSurveys` will be deprecated. Try using `all_surveys()` instead.")
-  all_surveys()
-}
-
-#' Retrieve a data frame of all active surveys on Qualtrics
-#'
 #' @seealso See \url{https://api.qualtrics.com/docs} for documentation on the
 #' Qualtrics API.
 #' @importFrom dplyr bind_rows
