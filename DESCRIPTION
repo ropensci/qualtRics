@@ -14,7 +14,9 @@ Authors@R: c(person("Jasper", "Ginn", role = c("aut"),
              person("Phoebe", "Wong", role = c("ctb"),
              email = "phoebe.wong@berkeley.edu"),
              person("O'Brien", "Joseph", role = c("ctb"),
-             email = "joseph.obrien@utexas.edu")
+             email = "joseph.obrien@utexas.edu"),
+             person("Shaun", "Jackson", role = c("ctb"),
+             email = "shaunbjackson@gmail.com")
              )
 Description: Provides functions to access survey results directly into R using 
     the 'Qualtrics' API. 'Qualtrics' <https://www.qualtrics.com/about/> is an 
@@ -44,5 +46,5 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
-    httptest
+    webmockr
 VignetteBuilder: knitr
