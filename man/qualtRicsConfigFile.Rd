@@ -4,33 +4,10 @@
 \alias{qualtRicsConfigFile}
 \title{Prints an Example of a QualtRics Configuration File to the Console.}
 \usage{
-qualtRicsConfigFile(
-  api_token = NULL,
-  base_url = NULL,
-  verbose = TRUE,
-  useLabels = TRUE,
-  convertVariables = TRUE,
-  useLocalTime = FALSE,
-  dateWarning = TRUE,
-  root_url = NULL
-)
+qualtRicsConfigFile(...)
 }
 \arguments{
-\item{api_token}{String. API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})}
-
-\item{base_url}{String. Base url for your institution (see: \url{https://api.qualtrics.com/docs/root-url})}
-
-\item{verbose}{Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.}
-
-\item{useLabels}{Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.}
-
-\item{convertVariables}{Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert certain question types (e.g. multiple choice) to proper data type in R. Defaults to TRUE.}
-
-\item{useLocalTime}{Logical. Use local timezone to determine response date values? Defaults to FALSE. See \url{https://api.qualtrics.com/docs/dates-and-times} for more information.}
-
-\item{dateWarning}{Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.}
-
-\item{root_url}{String. Deprecated. Use `base_url` instead. This will be removed in future versions.}
+\item{...}{All arguments for \code{qualtRicsConfigFile}}
 }
 \description{
 This function is deprecated; use \code{\link[qualtRics]{qualtrics_api_credentials}} instead.
@@ -41,7 +18,4 @@ This function is deprecated; use \code{\link[qualtRics]{qualtrics_api_credential
 qualtRicsConfigFile()
 }
 
-}
-\seealso{
-See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API. See \url{https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file.
 }
