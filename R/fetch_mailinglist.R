@@ -47,8 +47,9 @@ fetch_mailinglist <- function(mailinglistID){
                       unsubscribed = purrr::map_lgl(elements, "unsubscribed", .default = NA))
 
   x <- dplyr::bind_cols(x,
-                        enframe(purrr::map(elements, "embeddedData", .default = NA_character_),
-                                name = NULL, value = "embeddedData"))
+                        tibble::enframe(purrr::map(elements, "embeddedData",
+                                                   .default = NA_character_),
+                                        name = NULL, value = "embeddedData"))
 
   return(x)
 
