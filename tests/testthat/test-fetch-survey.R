@@ -2,6 +2,8 @@ context("Download a survey from qualtRics and pull it into R using the fetch_sur
 
 test_that("fetch_survey() returns survey with default params", {
 
+  skip_on_cran()
+
   qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
 
   vcr::use_cassette("fetch_survey", {
@@ -26,6 +28,8 @@ test_that("fetch_survey() returns survey with default params", {
 })
 
 test_that("fetch_survey() returns survey with custom params", {
+
+  skip_on_cran()
 
   qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
 
