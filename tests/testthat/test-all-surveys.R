@@ -31,8 +31,8 @@ test_that("all_surveys() sends the proper request to Qualtrics", {
   # Define expectations
   expected <- list(
     verb     = "GET",
-    base_url = "test.qualtrics.com",
-    url      = "test.qualtrics.com/API/v3/surveys/",
+    base_url = "https://test.qualtrics.com",
+    url      = "https://test.qualtrics.com/API/v3/surveys/",
     api_key  = "1234",
     headers  = list(
       'X-API-TOKEN' = "1234",

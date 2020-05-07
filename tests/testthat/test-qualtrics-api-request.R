@@ -5,7 +5,7 @@ context("qualtrics-api-request")
 test_that("it should make an http request with verb, url, and api-key", {
   webmockr::enable()
 
-  mock_url <- 'testUrl.com'
+  mock_url <- 'https://testUrl.com'
   verb <- 'GET'
   mock_api_key <- '1234'
   qualtrics_api_credentials(mock_api_key, mock_url)
@@ -30,7 +30,7 @@ test_that("it should make an http request with verb, url, and api-key", {
 
 test_that("it should throw an error after certain 400 and 500 status codes", {
   webmockr::enable()
-  mock_url <- 'testUrl.com'
+  mock_url <- 'https://testUrl.com'
   verb <- 'GET'
   mock_api_key <- '1234'
   qualtrics_api_credentials(mock_api_key, mock_url)

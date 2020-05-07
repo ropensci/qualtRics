@@ -21,7 +21,7 @@ test_that("it should make the proper export progress and download file requests"
                  OK = TRUE
                ))
   local_mock(writeBin = function(object, con) NULL)
-  mock_host <- 'env.qualtrics.com'
+  mock_host <- 'https://env.qualtrics.com'
   mock_key <- 'api_key'
   mock_survey_id <- '1234'
   mock_export_id <- 'export123'

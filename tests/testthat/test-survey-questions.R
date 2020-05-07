@@ -38,7 +38,7 @@ test_that("survey_questions() makes a request with expected structure, and parse
   # Define expectations
   expected <- list(
     verb     = "GET",
-    host     = "test.qualtrics.com",
+    host     = "https://test.qualtrics.com",
     path     = "/API/v3/surveys/",
     id       = "sv1",
     api_key  = "1234",
@@ -90,7 +90,7 @@ test_that("getSurveyQuestions() throws a warning", {
   # Define expectations
   expected <- list(
     verb     = "GET",
-    host     = "test.qualtrics.com",
+    host     = "https://test.qualtrics.com",
     path     = "/API/v3/surveys/",
     id       = "sv1",
     api_key  = "1234",

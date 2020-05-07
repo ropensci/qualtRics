@@ -22,7 +22,7 @@ test_that("fetch_survey() should make proper request with default params to star
 
 
   mock_key <- 'api_key_123'
-  mock_host <- 'test.qualtrics.com'
+  mock_host <- 'https://test.qualtrics.com'
   mock_id <- '1234'
   expected_path <- sprintf('/API/v3/surveys/%s/export-responses/', mock_id)
   qualtrics_api_credentials(mock_key, mock_host)
@@ -71,7 +71,7 @@ test_that("fetch_survey() should send the proper payload with custom params", {
 
 
   mock_key <- 'api_key_123'
-  mock_host <- 'test.qualtrics.com'
+  mock_host <- 'https://test.qualtrics.com'
   mock_id <- '1234'
   expected_path <- sprintf('/API/v3/surveys/%s/export-responses/', mock_id)
   qualtrics_api_credentials(mock_key, mock_host)
@@ -174,7 +174,7 @@ test_that("Handle convert and label conditions", {
 test_that("unanswer_recode is integer-ish", {
   qualtrics_api_credentials(
     api_key = "1234",
-    base_url = "yourdatacenterid.qualtrics.com"
+    base_url = "https://yourdatacenterid.qualtrics.com"
   )
   # Call fetch_survey
   expect_error(

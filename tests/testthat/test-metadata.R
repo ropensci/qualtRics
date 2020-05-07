@@ -189,7 +189,7 @@ test_that("metadata() should make the proper request to Qualtrics", {
   # Define expectations
   expected <- list(
     verb     = "GET",
-    host     = "test.qualtrics.com",
+    host     = "https://test.qualtrics.com",
     path     = "/API/v3/surveys/",
     id       = "sv1",
     api_key  = "1234",
