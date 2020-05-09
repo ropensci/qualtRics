@@ -131,12 +131,6 @@ check_params <- function(...) {
   if ("end_date" %in% names(args)) {
     if (!is.null(args$end_date)) assert_endDate_string(args$end_date)
   }
-  # No longer used:
-  # if ("last_response" %in% names(args)) {
-  #   if (!is.null(args$last_response)) {
-  #     assert_lastResponseId_string(args$last_response)
-  #   }
-  # }
   # Check if save_dir exists
   if ("save_dir" %in% names(args)) {
     if (!is.null(args$save_dir)) {
@@ -176,9 +170,10 @@ check_params <- function(...) {
 #'
 #' @return Root URL
 
-create_root_url <- function(base_url) {
+create_root_url <- function(base_url){
   # create root url
   root_url <- paste0(
+    "https://",
     base_url,
     ifelse(substr(
       base_url, nchar(base_url),
@@ -222,6 +217,25 @@ create_fetch_url <- function(base_url, surveyID) {
   return(fetch_url)
 }
 
+create_mailinglists_url <- function(base_url){
+  # create mailinglist url
+  mailinglists_url <-
+    paste0(
+      create_root_url(base_url),
+      "mailinglists/"
+    )
+  return(mailinglists_url)
+}
+
+create_mailinglist_url <- function(base_url, mailinglistID){
+  # create url
+  mailinglist_url <-
+    paste0(
+      create_mailinglists_url(base_url),
+      mailinglistID, "/contacts/"
+    )
+  return(mailinglist_url)
+}
 
 #' Create raw JSON payload to post response exports request
 #'
@@ -234,8 +248,12 @@ create_fetch_url <- function(base_url, surveyID) {
 #' @param unanswer_recode_multi Flag
 #' @param include_display_order Flag
 #' @param include_questions Flag
+#' @param breakout_sets Flag
 #'
 #' @seealso See \code{\link{all_surveys}} for more details on these parameters
+#'
+#' @importFrom jsonlite toJSON
+#' @importFrom purrr discard
 #'
 #' @return JSON file with options to send to API
 
@@ -247,78 +265,47 @@ create_raw_payload <- function(label = TRUE,
                                unanswer_recode = NULL,
                                unanswer_recode_multi = NULL,
                                include_display_order = TRUE,
-                               include_questions = NULL) {
-  paste0(
-    '{"format": ', '"', "csv", '"',
-    ifelse(
-      is.null(start_date),
-      "",
-      paste0(
-        ', "startDate": ',
-        '"',
-        paste0(start_date, "T00:00:00Z"),
-        '"'
-      )
-    ),
-    ifelse(
-      is.null(end_date),
-      "",
-      paste0(
-        ', "endDate": ',
-        '"',
-        paste0(end_date, "T00:00:00Z"),
-        '"'
-      )
-    ),
-    ifelse(
-      is.null(unanswer_recode),
-      "",
-      paste0(
-        ', "seenUnansweredRecode": ',
-        unanswer_recode
-      )
-    ),
-    ifelse(
-      is.null(unanswer_recode_multi),
-      "",
-      paste0(
-        ', "multiselectSeenUnansweredRecode": ',
-        unanswer_recode_multi
-      )
-    ),
-    ifelse(
-      is.null(time_zone),
-      "",
-      paste0(
-        ', "timeZone": ',
-        '"',
-        time_zone,
-        '"'
-      )
-    ),
-    ifelse(
-      is.null(include_questions),
-      "",
-      paste0(
-        ', "includedQuestionIds": ',
-        "[", paste0('"', include_questions, '"', collapse = ", "), "]"
-      )
-    ),
-    ifelse(
-      is.null(limit),
-      "",
-      paste0(
-        ', "limit": ',
-        limit
-      )
-    ),
-    ", ",
-    '"useLabels": ', tolower(label),
-    ", ",
-    '"includeDisplayOrder": ', tolower(include_display_order),
-    "}"
-  )
+                               include_questions = NULL,
+                               breakout_sets = NULL) {
+
+  params <- as.list(environment())
+
+  names_crosswalk <-
+    c(label = "useLabels",
+      start_date = "startDate",
+      end_date = "endDate",
+      limit = "limit",
+      time_zone = "timeZone",
+      unanswer_recode = "seenUnansweredRecode",
+      unanswer_recode_multi = "multiselectSeenUnansweredRecode",
+      include_display_order = "includeDisplayOrder",
+      include_questions = "questionIds",
+      breakout_sets = "breakoutSets")
+
+
+
+  if(!is.null(params$start_date)){
+    params$start_date <- paste0(start_date, "T00:00:00Z")
+  }
+  if(!is.null(params$end_date)){
+    params$end_date <- paste0(end_date, "T00:00:00Z")
+  }
+
+  # Adjust names to fit API names:
+
+  names(params) <- names_crosswalk[names(params)]
+
+  # Add in format param:
+  params$format <- "csv"
+
+  # Drop any NULL elements:
+  params <- purrr::discard(params, ~is.null(.x))
+
+  # convert to JSON:
+  jsonlite::toJSON(params, auto_unbox = TRUE)
+  
 }
+
 
 #' Send httr requests to Qualtrics API
 #'
@@ -399,15 +386,7 @@ download_qualtrics_export <- function(fetch_url, requestID, verbose = FALSE) {
     # Retry if first attempt fails
     httr::GET(file_url, httr::add_headers(headers))
   })
-  # If content is test request, then load temp file (this is purely for testing)
-  # httptest library didn't work the way it needed and somehow still called the API
-  # leading to errors
-  if (f$request$url == "t.qualtrics.com/API/v3/responseexports/T_123/file") {
-    if (f$request$headers["X-API-TOKEN"] == "1234") {
-      ct <- readRDS("files/file_fetch_survey.rds")
-      f$content <- ct
-    }
-  }
+
   # Load raw zip file
   ty <- qualtrics_response_codes(f, raw = TRUE)
   # To zip file
@@ -515,6 +494,7 @@ wrapper_mc <- function(data, question_meta) {
                                   meta_levels = purrr::map_chr(value,
                                                                "choiceText")),
                     meta_levels)
+  ln <- remove_html(ln)
 
   # Convert
   dplyr::mutate(
@@ -525,4 +505,9 @@ wrapper_mc <- function(data, question_meta) {
                                       ordered = TRUE
     )
   )
+}
+
+## simple HTML stripping
+remove_html <- function(string) {
+  stringr::str_remove_all(string, '<[^>]+>')
 }

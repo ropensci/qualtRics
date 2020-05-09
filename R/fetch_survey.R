@@ -4,8 +4,7 @@
 #'
 #' @param surveyID String. Unique ID for the survey you want to download.
 #' Returned as \code{id} by the \link[qualtRics]{all_surveys} function.
-#' @param last_response String. Export all responses received after the
-#' specified response ID. Defaults to \code{NULL}.
+#' @param last_response Deprecated.
 #' @param start_date String. Filter to only exports responses recorded after the
 #' specified date. Accepts dates as character strings in format "YYYY-MM-DD".
 #' Defaults to \code{NULL}.
@@ -45,12 +44,18 @@
 #' values. Defaults to \code{NULL} which corresponds to UTC time. See
 #' \url{https://api.qualtrics.com/docs/time-zones} for more information on
 #' format.
+#' @param breakout_sets Logical. If \code{TRUE}, then the
+#' \code{\link[qualtRics]{fetch_survey}} function will split multiple
+#' choice question answers into columns. If \code{FALSE}, each multiple choice
+#' question is one column. Defaults to \code{TRUE}.
 #' @param ... Optional arguments, such as a `fileEncoding` (see `fileEncoding`
 #' argument in \code{\link[qualtRics]{read_survey}}) to import your survey using
 #' a specific encoding.
 #'
 #' @seealso See \url{https://api.qualtrics.com/reference} for documentation on
 #' the Qualtrics API.
+#'
+#' @importFrom lifecycle deprecated
 #' @export
 #' @examples
 #' \dontrun{
@@ -79,7 +84,7 @@
 #' }
 #'
 fetch_survey <- function(surveyID,
-                         last_response = NULL,
+                         last_response = deprecated(),
                          start_date = NULL,
                          end_date = NULL,
                          unanswer_recode = NULL,
@@ -94,7 +99,12 @@ fetch_survey <- function(surveyID,
                          convert = TRUE,
                          import_id = FALSE,
                          time_zone = NULL,
+                         breakout_sets = TRUE,
                          ...) {
+
+  if (lifecycle::is_present(last_response)) {
+    lifecycle::deprecate_warn("3.1.2", "fetch_survey(last_response = )")
+  }
 
   ## Are the API credentials stored?
   assert_base_url()
@@ -106,7 +116,6 @@ fetch_survey <- function(surveyID,
     import_id = import_id,
     time_zone = time_zone,
     label = label,
-    last_response = last_response,
     start_date = start_date,
     end_date = end_date,
     include_questions = include_questions,
@@ -114,7 +123,8 @@ fetch_survey <- function(surveyID,
     unanswer_recode = unanswer_recode,
     unanswer_recode_multi = unanswer_recode_multi,
     include_display_order = include_display_order,
-    limit = limit
+    limit = limit,
+    breakout_sets = breakout_sets
   )
 
   # See if survey already in tempdir
@@ -146,7 +156,8 @@ fetch_survey <- function(surveyID,
     include_display_order = include_display_order,
     limit = limit,
     time_zone = time_zone,
-    include_questions = include_questions
+    include_questions = include_questions,
+    breakout_sets = breakout_sets
   )
 
   # SEND POST REQUEST TO API ----

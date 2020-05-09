@@ -1,26 +1,29 @@
-context("Get a list of all surveys that the user has access to on Qualtrics")
+context("All surveys that the user has access to on Qualtrics")
 
-# Test - use mock API from httptest package
-with_mock_api({
-  test_that("all_surveys() returns a data frame with columns 'id', 'name', 'ownerId', 'lastModified', 'isActive' columns", { # nolint
-    testthat::skip_on_cran()
-    qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
-    # Get survey
-    surveys <- all_surveys()
-    # TESTS
-    expect_that(
-      names(surveys),
-      is_identical_to(c("id", "name", "ownerId", "lastModified", "isActive"))
-    ) # nolint
-    expect_equal(nrow(surveys), 1)
-    expect_type(surveys, "list")
+test_that("all_surveys() sends the proper request to Qualtrics", {
+
+  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
+
+  vcr::use_cassette("all_surveys", {
+    x <- all_surveys()
   })
+
+  expect_s3_class(x, c("tbl_df","tbl","data.frame"))
+  expect_named(x, c("id", "name", "ownerId", "lastModified",
+                    "creationDate", "isActive"))
+  expect_type(x$id, "character")
+  expect_type(x$name, "character")
+  expect_type(x$ownerId, "character")
+  expect_type(x$lastModified, "character")
+  expect_type(x$creationDate, "character")
+  expect_type(x$isActive, "logical")
+
 })
 
 test_that("all_surveys() throws an error", {
-  # Store dummy key
-  qualtrics_api_credentials(api_key = "1234", base_url = "yourdatacenterid.qualtrics.com")
-  # This should fail in 'do.call'
+
+  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
+
   expect_error(
     all_surveys(),
     "you may not have the\nrequired authorization"

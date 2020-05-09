@@ -1,0 +1,53 @@
+context("Get metadata for a survey")
+
+test_that("metadata() should throw an error if passing invalid options to input", {
+
+  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
+
+  expect_error(
+    metadata("mockId1", get = list(invalidKey = TRUE))
+  )
+
+})
+
+test_that("metadata() should throw warning if input questions are not a vector", {
+
+  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
+
+  expect_error(
+    metadata("mockId1", questions = "I am not a vector")
+  )
+
+})
+
+test_that("metadata() should return metadata + questions + responsecounts", {
+
+  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
+
+  vcr::use_cassette("metadata", {
+    x <- metadata("SV_3gbwq8aJgqPwQDP")
+  })
+
+  expect_type(x, c("list"))
+  expect_named(x, c("metadata", "questions", "responsecounts"))
+  expect_equal(length(x$questions), 6)
+  expect_equal(length(x$responsecounts), 3)
+  expect_s3_class(x$metadata, "data.frame")
+
+})
+
+
+test_that("metadata() returns flow if specified", {
+  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
+
+  vcr::use_cassette("metadata_flow", {
+    x <- metadata("SV_3gbwq8aJgqPwQDP", get = list(flow = TRUE))
+  })
+
+  expect_type(x, c("list"))
+  expect_named(x, c("metadata", "questions", "responsecounts", "flow"))
+  expect_equal(length(x$questions), 6)
+  expect_equal(length(x$responsecounts), 3)
+  expect_s3_class(x$metadata, "data.frame")
+  expect_equal(length(x$flow), 4)
+})
