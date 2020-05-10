@@ -9,7 +9,8 @@ read_survey(
   strip_html = TRUE,
   import_id = FALSE,
   time_zone = NULL,
-  legacy = FALSE
+  legacy = FALSE,
+  col_types = NULL
 )
 }
 \arguments{
@@ -28,6 +29,10 @@ format.}
 
 \item{legacy}{Logical. If \code{TRUE}, then import "legacy" format CSV files
 (as of 2017). Defaults to \code{FALSE}.}
+
+\item{col_types}{Optional. This argument provides a way to
+manually overwrite column types that were incorrectly guessed. Takes a cols specification.
+See example below and  \link[readr]{readr::cols} for formatting details. Defaults to \code{NULL}.}
 }
 \value{
 A data frame. Variable labels are stored as attributes. They are not
@@ -52,5 +57,9 @@ df <- read_survey(file)
 file <- system.file("extdata", "sample_legacy.csv", package = "qualtRics")
 df <- read_survey(file, legacy = TRUE)
 
+# Example changing column type
+file <- system.file("extdata", "sample.csv", package = "qualtRics")
+# Force EndDate to be a string
+df <- read_survey(file, col_types=cols(EndDate=col_character()))
 
 }
