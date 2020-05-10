@@ -126,7 +126,7 @@ mysurvey <- fetch_survey(
   unanswer_recode = 999,
   verbose = TRUE,
   #Manually override EndDate to be a character vector
-  col_types = readr::cols(EndDate=character())
+  col_types = readr::cols(EndDate=readr::col_character())
 )
 }
 
