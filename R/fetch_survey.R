@@ -48,6 +48,10 @@
 #' \code{\link[qualtRics]{fetch_survey}} function will split multiple
 #' choice question answers into columns. If \code{FALSE}, each multiple choice
 #' question is one column. Defaults to \code{TRUE}.
+#' @param col_types Optional. This argument provides a way to
+#' manually overwrite column types that were incorrectly guessed. Takes a cols specification.
+#' See example below and  \link[readr]{readr::cols} for formatting details. Defaults to \code{NULL}.
+#' Overwritten by \code{convert=TRUE}.
 #' @param ... Optional arguments, such as a `fileEncoding` (see `fileEncoding`
 #' argument in \code{\link[qualtRics]{read_survey}}) to import your survey using
 #' a specific encoding.
@@ -79,7 +83,9 @@
 #'   limit = 100,
 #'   label = TRUE,
 #'   unanswer_recode = 999,
-#'   verbose = TRUE
+#'   verbose = TRUE,
+#'   #Manually override EndDate to be a character vector
+#'   col_types = readr::cols(EndDate=character())
 #' )
 #' }
 #'
@@ -100,6 +106,7 @@ fetch_survey <- function(surveyID,
                          import_id = FALSE,
                          time_zone = NULL,
                          breakout_sets = TRUE,
+                         col_types = NULL,
                          ...) {
 
   if (lifecycle::is_present(last_response)) {
@@ -177,7 +184,8 @@ fetch_survey <- function(surveyID,
   # READ DATA AND SET VARIABLES ----
 
   # Read data
-  data <- read_survey(survey.fpath, import_id = import_id, time_zone = time_zone)
+  data <- read_survey(survey.fpath, import_id = import_id,
+                      time_zone = time_zone, col_types = col_types)
 
   # Add types
   if (convert & label) {
