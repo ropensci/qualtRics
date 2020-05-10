@@ -60,6 +60,6 @@ df <- read_survey(file, legacy = TRUE)
 # Example changing column type
 file <- system.file("extdata", "sample.csv", package = "qualtRics")
 # Force EndDate to be a string
-df <- read_survey(file, col_types=cols(EndDate=col_character()))
+df <- read_survey(file, col_types = readr::cols(EndDate=readr::col_character()))
 
 }
