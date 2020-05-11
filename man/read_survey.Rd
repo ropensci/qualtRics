@@ -30,9 +30,10 @@ format.}
 \item{legacy}{Logical. If \code{TRUE}, then import "legacy" format CSV files
 (as of 2017). Defaults to \code{FALSE}.}
 
-\item{col_types}{Optional. This argument provides a way to
-manually overwrite column types that were incorrectly guessed. Takes a cols specification.
-See example below and  \link[readr]{readr::cols} for formatting details. Defaults to \code{NULL}.}
+\item{col_types}{Optional. This argument provides a way to manually overwrite
+column types that may be incorrectly guessed. Takes a \code{\link[readr]{cols}}
+specification. See example below and \code{\link[readr]{cols}} for formatting
+details. Defaults to \code{NULL}.}
 }
 \value{
 A data frame. Variable labels are stored as attributes. They are not
@@ -60,6 +61,6 @@ df <- read_survey(file, legacy = TRUE)
 # Example changing column type
 file <- system.file("extdata", "sample.csv", package = "qualtRics")
 # Force EndDate to be a string
-df <- read_survey(file, col_types = readr::cols(EndDate=readr::col_character()))
+df <- read_survey(file, col_types = readr::cols(EndDate = readr::col_character()))
 
 }

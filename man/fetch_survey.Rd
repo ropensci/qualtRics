@@ -90,10 +90,10 @@ format.}
 choice question answers into columns. If \code{FALSE}, each multiple choice
 question is one column. Defaults to \code{TRUE}.}
 
-\item{col_types}{Optional. This argument provides a way to
-manually overwrite column types that were incorrectly guessed. Takes a cols specification.
-See example below and  \link[readr]{readr::cols} for formatting details. Defaults to \code{NULL}.
-Overwritten by \code{convert=TRUE}.}
+\item{col_types}{Optional. This argument provides a way to manually overwrite
+column types that may be incorrectly guessed. Takes a \code{\link[readr]{cols}}
+specification. See example below and \code{\link[readr]{cols}} for formatting
+details. Defaults to \code{NULL}. Overwritten by \code{convert = TRUE}.}
 
 \item{...}{Optional arguments, such as a `fileEncoding` (see `fileEncoding`
 argument in \code{\link[qualtRics]{read_survey}}) to import your survey using
@@ -125,8 +125,8 @@ mysurvey <- fetch_survey(
   label = TRUE,
   unanswer_recode = 999,
   verbose = TRUE,
-  #Manually override EndDate to be a character vector
-  col_types = readr::cols(EndDate=readr::col_character())
+  # Manually override EndDate to be a character vector
+  col_types = readr::cols(EndDate = readr::col_character())
 )
 }
 
