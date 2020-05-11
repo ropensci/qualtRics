@@ -4,19 +4,19 @@ Title: Download 'Qualtrics' Survey Data
 Version: 3.1.2
 Authors@R: c(person("Jasper", "Ginn", role = c("aut"),
              email = "jasperginn@gmail.com"),
-             person("Samuel", "Kaminsky", role = c("ctb"),
-             email = "samuel.e.kaminsky@gmail.com"),
              person("Shaun", "Jackson", role = c("ctb"),
              email = "shaunbjackson@gmail.com"),
+             person("Samuel", "Kaminsky", role = c("ctb"),
+             email = "samuel.e.kaminsky@gmail.com"),
              person("Eric", "Knudsen", role = c("ctb"),
              email = "ericknud1@gmail.com"),
              person("Joseph", "O'Brien", role = c("ctb"),
              email = "joseph.obrien@utexas.edu"),
+             person("Daniel", "Seneca", role = c("ctb"),
+             email = "seneca.danielh@gmail.com"),
              person("Julia", "Silge", role = c("aut", "cre"),
              email = "julia.silge@gmail.com",
              comment = c(ORCID = "0000-0002-3671-836X")),
-             person("Daniel", "Seneca", role = c("ctb"),
-             email = "seneca.danielh@gmail.com"),
              person("Phoebe", "Wong", role = c("ctb"),
              email = "phoebe.wong@berkeley.edu")
              )
