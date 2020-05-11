@@ -43,7 +43,7 @@ test_that("fetch_survey() returns survey with custom params", {
       limit = 15,
       include_questions = c("QID9", "QID21"),
       breakout_sets = FALSE,
-      col_types = readr::cols(EndDate=readr::col_character()),
+      col_types = readr::cols(EndDate = readr::col_character()),
     )
   })
 
