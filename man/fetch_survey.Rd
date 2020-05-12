@@ -22,6 +22,7 @@ fetch_survey(
   import_id = FALSE,
   time_zone = NULL,
   breakout_sets = TRUE,
+  col_types = NULL,
   ...
 )
 }
@@ -89,6 +90,11 @@ format.}
 choice question answers into columns. If \code{FALSE}, each multiple choice
 question is one column. Defaults to \code{TRUE}.}
 
+\item{col_types}{Optional. This argument provides a way to manually overwrite
+column types that may be incorrectly guessed. Takes a \code{\link[readr]{cols}}
+specification. See example below and \code{\link[readr]{cols}} for formatting
+details. Defaults to \code{NULL}. Overwritten by \code{convert = TRUE}.}
+
 \item{...}{Optional arguments, such as a `fileEncoding` (see `fileEncoding`
 argument in \code{\link[qualtRics]{read_survey}}) to import your survey using
 a specific encoding.}
@@ -118,7 +124,9 @@ mysurvey <- fetch_survey(
   limit = 100,
   label = TRUE,
   unanswer_recode = 999,
-  verbose = TRUE
+  verbose = TRUE,
+  # Manually override EndDate to be a character vector
+  col_types = readr::cols(EndDate = readr::col_character())
 )
 }
 
