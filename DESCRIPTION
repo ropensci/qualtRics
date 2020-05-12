@@ -4,6 +4,8 @@ Title: Download 'Qualtrics' Survey Data
 Version: 3.1.2
 Authors@R: c(person("Jasper", "Ginn", role = c("aut"),
              email = "jasperginn@gmail.com"),
+             person("Jackson", "Curtis", role = c("ctb"),
+             email = "jcurtis210@gmail.com"),
              person("Shaun", "Jackson", role = c("ctb"),
              email = "shaunbjackson@gmail.com"),
              person("Samuel", "Kaminsky", role = c("ctb"),
