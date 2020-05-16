@@ -42,7 +42,8 @@ test_that("fetch_survey() returns survey with custom params", {
       unanswer_recode = 999,
       limit = 15,
       include_questions = c("QID9", "QID21"),
-      breakout_sets = FALSE
+      breakout_sets = FALSE,
+      col_types = readr::cols(EndDate = readr::col_character()),
     )
   })
 
@@ -61,6 +62,7 @@ test_that("fetch_survey() returns survey with custom params", {
                     "Q3.8 - Topic Sentiment Score",
                     "Q3.8 - Topics"))
   expect_type(x$StartDate, "double")
+  expect_type(x$EndDate, "character")
   expect_type(x$Status, "character")
   expect_type(x$`Duration (in seconds)`, "double")
   expect_type(x$Finished, "logical")

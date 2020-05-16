@@ -16,6 +16,10 @@
 #' format.
 #' @param legacy Logical. If \code{TRUE}, then import "legacy" format CSV files
 #' (as of 2017). Defaults to \code{FALSE}.
+#' @param col_types Optional. This argument provides a way to manually overwrite
+#' column types that may be incorrectly guessed. Takes a \code{\link[readr]{cols}}
+#' specification. See example below and \code{\link[readr]{cols}} for formatting
+#' details. Defaults to \code{NULL}.
 #'
 #' @importFrom sjlabelled set_label
 #' @importFrom jsonlite fromJSON
@@ -37,12 +41,17 @@
 #' file <- system.file("extdata", "sample_legacy.csv", package = "qualtRics")
 #' df <- read_survey(file, legacy = TRUE)
 #'
+#' # Example changing column type
+#' file <- system.file("extdata", "sample.csv", package = "qualtRics")
+#' # Force EndDate to be a string
+#' df <- read_survey(file, col_types = readr::cols(EndDate = readr::col_character()))
 #'
 read_survey <- function(file_name,
                         strip_html = TRUE,
                         import_id = FALSE,
                         time_zone = NULL,
-                        legacy = FALSE) {
+                        legacy = FALSE,
+                        col_types = NULL) {
 
   # START UP: CHECK ARGUMENTS PASSED BY USER ----
 
@@ -137,7 +146,8 @@ read_survey <- function(file_name,
   subquestions[is.na(subquestions)] <- ""
 
   rawdata <- readr::type_convert(rawdata,
-                                 locale = readr::locale(tz = time_zone))
+                                 locale = readr::locale(tz = time_zone),
+                                 col_types = col_types)
 
   # Add labels to data
   rawdata <- sjlabelled::set_label(rawdata, unlist(subquestions))
