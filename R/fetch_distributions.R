@@ -1,7 +1,7 @@
 
 #' Download distribution data for a survey from Qualtrics
 #'
-#' @param surveyID String. Unique ID for the survey distribution data you want to download.
+#' @param surveyID String. Unique survey ID for the distribution data you want to download.
 #'
 #' @export
 #'
