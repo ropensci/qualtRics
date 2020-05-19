@@ -237,6 +237,16 @@ create_mailinglist_url <- function(base_url, mailinglistID){
   return(mailinglist_url)
 }
 
+create_distributions_url <- function(base_url, surveyID){
+  # create url
+  distributions_url <-
+    paste0(
+      create_root_url(base_url),
+      "distributions?surveyId=", surveyID
+    )
+  return(distributions_url)
+}
+
 #' Create raw JSON payload to post response exports request
 #'
 #' @param label Flag
@@ -303,7 +313,7 @@ create_raw_payload <- function(label = TRUE,
 
   # convert to JSON:
   jsonlite::toJSON(params, auto_unbox = TRUE)
-  
+
 }
 
 

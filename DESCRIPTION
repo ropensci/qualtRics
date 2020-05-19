@@ -45,6 +45,7 @@ Imports:
     rlang,
     purrr,
     tibble,
+    lubridate,
     lifecycle
 Suggests:
     knitr,
