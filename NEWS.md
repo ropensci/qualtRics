@@ -1,4 +1,4 @@
-# qualtRics 3.1.2.900 [WIP]
+# qualtRics 3.1.3
 
 - Update `include_questions` argument to use correct name in API request.
 - Build API payloads with jsonlite (#155) thanks to @jmobrien
