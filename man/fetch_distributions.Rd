@@ -7,7 +7,7 @@
 fetch_distributions(surveyID)
 }
 \arguments{
-\item{surveyID}{String. Unique ID for the survey distribution data you want to download.}
+\item{surveyID}{String. Unique survey ID for the distribution data you want to download.}
 }
 \description{
 Download distribution data for a survey from Qualtrics
