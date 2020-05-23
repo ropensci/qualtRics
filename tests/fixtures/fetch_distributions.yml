@@ -1,0 +1,35 @@
+http_interactions:
+- request:
+    method: get
+    uri: https://<<<my_base_url>>>/API/v3/distributions?surveyId=SV_06UZjqo3sx9ijAN
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      X-API-TOKEN: <<<my_api_key>>>
+      Content-Type: application/json
+      Accept: '*/*'
+      accept-encoding: gzip, deflate
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      content-length: '126'
+      content-type: application/json
+      request-time: '88'
+      server: devplat-gateway
+      date: Sat, 23 May 2020 19:02:33 GMT
+      connection: keep-alive
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com;
+        report-uri https://sjc1.qualtrics.com/csp-report
+      strict-transport-security: max-age=31536000; includeSubDomains; preload
+    body:
+      encoding: UTF-8
+      file: no
+      string: '{"result":{"elements":[],"nextPage":null},"meta":{"httpStatus":"200
+        - OK","requestId":"5760d35b-2d94-4247-8227-364e318f38a2"}}'
+  recorded_at: 2020-05-23 19:02:33 GMT
+  recorded_with: vcr/0.4.0, webmockr/0.5.0
