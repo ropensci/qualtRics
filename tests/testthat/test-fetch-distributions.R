@@ -2,10 +2,10 @@ context("Fetch distribution data for a survey")
 
 test_that("fetch_distributions returns a tbl_df with expected column names and types", {
 
-  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
+  readRenviron("~/.Renviron")
 
   vcr::use_cassette("fetch_distributions", {
-    x <- fetch_distributions("SV_3gbwq8aJgqPwQDP")
+    x <- fetch_distributions("SV_0CBoEpG6UVXH4SV")
   })
 
   expect_s3_class(x, c("tbl_df","tbl","data.frame"))
