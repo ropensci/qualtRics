@@ -1,5 +1,7 @@
 # qualtRics (development version)
 
+- Add `fetch_distributions()` to access distribution data for a specific survey thanks to @dsen6644 (#169)
+
 # qualtRics 3.1.3
 
 - Update `include_questions` argument to use correct name in API request.
