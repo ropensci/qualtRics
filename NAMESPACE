@@ -3,6 +3,7 @@
 export(all_mailinglists)
 export(all_surveys)
 export(column_map)
+export(fetch_distributions)
 export(fetch_mailinglist)
 export(fetch_survey)
 export(getSurvey)
