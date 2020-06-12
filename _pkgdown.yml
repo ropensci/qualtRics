@@ -5,3 +5,30 @@ template:
 
 toc:
   depth: 3
+
+reference:
+- title: Core functions
+  desc: ~
+  contents:
+  - '`all_surveys`'
+  - '`fetch_survey`'
+  - '`read_survey`'
+- title: Other helper functions
+  desc: ~
+  contents:
+  - '`all_mailinglists`'
+  - '`column_map`'
+  - '`fetch_distributions`'
+  - '`fetch_mailinglist`'
+  - '`metadata`'
+  - '`qualtrics_api_credentials`'
+  - '`survey_questions`'
+- title: Deprecated
+  desc: ~
+  contents:
+  - '`getSurvey`'
+  - '`getSurveyQuestions`'
+  - '`getSurveys`'
+  - '`qualtRicsConfigFile`'
+  - '`readSurvey`'
+
