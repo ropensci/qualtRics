@@ -20,7 +20,7 @@ assert_base_url <- function() {
                           msg = paste0(
                             "The Qualtrics base URL must end with '.qualtrics.com'. Your base URL looks like this: '",
                             Sys.getenv("QUALTRICS_BASE_URL"),
-                            "'.\nPlease visit https://api.qualtrics.com/docs/root-url for instructions about the Qualtrics base URL."
+                            "'.\nPlease visit https://api.qualtrics.com/docs/ for instructions about the Qualtrics base URL."
                           )
   )
 }

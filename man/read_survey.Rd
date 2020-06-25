@@ -24,8 +24,8 @@ question IDs as column names. Defaults to \code{FALSE}.}
 
 \item{time_zone}{String. A local timezone to determine response date
 values. Defaults to \code{NULL} which corresponds to UTC time. See
-\url{https://api.qualtrics.com/docs/time-zones} for more information on
-format.}
+\url{https://api.qualtrics.com/instructions/docs/Instructions/dates-and-times.md}
+for more information on format.}
 
 \item{legacy}{Logical. If \code{TRUE}, then import "legacy" format CSV files
 (as of 2017). Defaults to \code{FALSE}.}
