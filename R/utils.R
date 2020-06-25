@@ -63,9 +63,7 @@ qualtrics_response_codes <- function(res, raw = FALSE) {
 
 #' Construct a header to send to Qualtrics API
 #'
-#' @param API_TOKEN API token. Available in your Qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})
-#'
-#' @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API.
+#' @param API_TOKEN API token. Available in your Qualtrics account (see: \url{https://api.qualtrics.com/docs/})
 
 construct_header <- function(API_TOKEN) {
   # Construct and return
@@ -166,7 +164,7 @@ check_params <- function(...) {
 #' Append to listed server to create root URL
 #'
 #' @param base_url Base URL for your institution (see
-#' \url{https://api.qualtrics.com/docs/root-url}
+#' \url{https://api.qualtrics.com/docs/}
 #'
 #' @return Root URL
 

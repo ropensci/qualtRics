@@ -12,8 +12,8 @@
 #' to \code{TRUE}.
 #' @param time_zone String. A local timezone to determine response date
 #' values. Defaults to \code{NULL} which corresponds to UTC time. See
-#' \url{https://api.qualtrics.com/docs/time-zones} for more information on
-#' format.
+#' \url{https://api.qualtrics.com/instructions/docs/Instructions/dates-and-times.md}
+#' for more information on format.
 #' @param legacy Logical. If \code{TRUE}, then import "legacy" format CSV files
 #' (as of 2017). Defaults to \code{FALSE}.
 #' @param col_types Optional. This argument provides a way to manually overwrite

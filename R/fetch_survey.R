@@ -42,8 +42,8 @@
 #' question IDs as column names. Defaults to \code{FALSE}.
 #' @param time_zone String. A local timezone to determine response date
 #' values. Defaults to \code{NULL} which corresponds to UTC time. See
-#' \url{https://api.qualtrics.com/docs/time-zones} for more information on
-#' format.
+#' \url{https://api.qualtrics.com/instructions/docs/Instructions/dates-and-times.md}
+#' for more information on format.
 #' @param breakout_sets Logical. If \code{TRUE}, then the
 #' \code{\link[qualtRics]{fetch_survey}} function will split multiple
 #' choice question answers into columns. If \code{FALSE}, each multiple choice

@@ -13,10 +13,10 @@ qualtrics_api_credentials(
 }
 \arguments{
 \item{api_key}{The API key provided to you from Qualtrics formatted in quotes.
-Learn more about Qualtrics API keys at \url{https://api.qualtrics.com/docs/finding-qualtrics-ids}}
+Learn more about Qualtrics API keys at \url{https://api.qualtrics.com/docs/}}
 
 \item{base_url}{The institution-specific base URL for your Qualtrics account,
-formatted in quotes. Find your base URL at \url{https://api.qualtrics.com/docs/root-url}}
+formatted in quotes. Find your base URL at \url{https://api.qualtrics.com/docs/}}
 
 \item{overwrite}{If TRUE, will overwrite existing Qualtrics
 credentials that you already have in your \code{.Renviron} file.}

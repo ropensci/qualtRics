@@ -7,11 +7,8 @@
 construct_header(API_TOKEN)
 }
 \arguments{
-\item{API_TOKEN}{API token. Available in your Qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})}
+\item{API_TOKEN}{API token. Available in your Qualtrics account (see: \url{https://api.qualtrics.com/docs/})}
 }
 \description{
 Construct a header to send to Qualtrics API
-}
-\seealso{
-See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API.
 }
