@@ -117,9 +117,10 @@ read_survey <- function(file_name,
       n_max = 1
     ))
 
-    names(rawdata) <- jsonlite::fromJSON(
+     name_json <- jsonlite::fromJSON(
       paste0('[', paste(as.character(unlist(new_ids)), collapse = ','), ']')
-    )$ImportId
+    )
+     names(rawdata) <- gsub("_NA", "", paste(name_json$ImportId, name_json$choiceId, sep = "_"))
   }
 
   # If Qualtrics adds an empty column at the end, remove it
