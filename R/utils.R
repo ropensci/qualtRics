@@ -185,21 +185,21 @@ create_root_url <- function(base_url){
 }
 
 
-create_surveys_url <- function(base_url) {
+create_surveys_url <- function(base_url, survey_definition = FALSE) {
   # create surveys url
   surveys_url <-
     paste0(
       create_root_url(base_url),
-      "surveys/"
+      ifelse(survey_definition, "survey-definitions/", "surveys/")
     )
   return(surveys_url)
 }
 
-create_survey_url <- function(base_url, surveyID) {
+create_survey_url <- function(base_url, surveyID, survey_definition = FALSE) {
   # create url
   survey_url <-
     paste0(
-      create_surveys_url(base_url),
+      create_surveys_url(base_url, survey_definition),
       surveyID, "/"
     )
   return(survey_url)
