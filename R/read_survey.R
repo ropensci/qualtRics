@@ -88,17 +88,6 @@ read_survey <- function(file_name,
     n_max = 1
   )))
 
-  # Message for no data in survey
-  if (nrow(rawdata) < 1) {
-    message("The survey you are importing has no responses.")
-    tbl <- tibble::as_tibble(matrix(nrow = 0,
-                                    ncol = length(names(header))),
-                             .name_repair = "minimal")
-    colnames(tbl) <- names(header)
-    tbl <- dplyr::mutate_all(tbl, as.character)
-    return(tbl)
-  }
-
   # MANIPULATE DATA ----
 
   # make them data.frame's, else the factor conversion
@@ -120,11 +109,26 @@ read_survey <- function(file_name,
      name_json <- jsonlite::fromJSON(
       paste0('[', paste(as.character(unlist(new_ids)), collapse = ','), ']')
     )
-     names(rawdata) <- gsub(
+
+     import_ids <- gsub(
        "_NA",
        "",
        paste(name_json$ImportId, name_json$choiceId, sep = "_")
      )
+
+     names(rawdata) <- import_ids
+  }
+
+  # Message for no data in survey
+
+  if (nrow(rawdata) < 1) {
+    message("The survey you are importing has no responses.")
+    tbl <- tibble::as_tibble(matrix(nrow = 0,
+                                    ncol = length(names(header))),
+                             .name_repair = "minimal")
+    colnames(tbl) <- if(import_id) import_ids else names(header)
+    tbl <- dplyr::mutate_all(tbl, as.character)
+    return(tbl)
   }
 
   # If Qualtrics adds an empty column at the end, remove it
