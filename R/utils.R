@@ -306,11 +306,20 @@ create_raw_payload <- function(label = TRUE,
   # Add in format param:
   params$format <- "csv"
 
+  # Unbox
+  params_ub <- map(params, function(x){
+    if(length(x) == 1) jsonlite::unbox(x) else x
+    }
+  )
+
+  # But "questionIds" needs to be boxed
+  params_ub["questionIds"] <- params["questionIds"]
+
   # Drop any NULL elements:
-  params <- purrr::discard(params, ~is.null(.x))
+  params_ub <- purrr::discard(params_ub, ~ is.null(.x))
 
   # convert to JSON:
-  jsonlite::toJSON(params, auto_unbox = TRUE)
+  jsonlite::toJSON(params_ub, auto_unbox = FALSE)
 
 }
 
