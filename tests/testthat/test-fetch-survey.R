@@ -72,6 +72,45 @@ test_that("fetch_survey() returns survey with custom params", {
 
 })
 
+test_that("fetch_survey() returns survey with only one QID", {
+
+  skip_on_cran()
+
+  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
+
+  vcr::use_cassette("fetch_one_qid", {
+    x <- fetch_survey(
+      "SV_56icaa9YAafpAqx",
+      force_request = TRUE,
+      limit = 15,
+      include_questions = c("QID9"),
+      breakout_sets = FALSE
+    )
+  })
+
+  expect_s3_class(x, c("spec_tbl_df", "tbl_df","tbl","data.frame"))
+  expect_equal(nrow(x), 15)
+  expect_named(x, c("StartDate", "EndDate", "Status",
+                    "Progress", "Duration (in seconds)", "Finished",
+                    "RecordedDate", "ResponseId", "DistributionChannel",
+                    "UserLanguage", "Q3.2",
+                    "SolutionRevision",
+                    "Q3.8 - Parent Topics",
+                    "Q3.8 - Sentiment Polarity",
+                    "Q3.8 - Sentiment Score",
+                    "Q3.8 - Sentiment",
+                    "Q3.8 - Topic Sentiment Label",
+                    "Q3.8 - Topic Sentiment Score",
+                    "Q3.8 - Topics"))
+  expect_type(x$Status, "character")
+  expect_type(x$`Duration (in seconds)`, "double")
+  expect_type(x$Finished, "logical")
+  expect_type(x$ResponseId, "character")
+  expect_s3_class(x$`Q3.2`, "factor")
+
+})
+
+
 test_that("using fetch_survey() with a base URL that doesn't end with '.qualtrics.com' fails", {
 
   qualtrics_api_credentials(api_key = "1234", base_url = "abcd")
