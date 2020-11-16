@@ -4,6 +4,7 @@
 - Handle mailing list embedded data better thanks to @dsen6644 (#175)
 - Updated links to API documentation
 - Create unique column names for questions using `choiceId` thanks to @lyh970817 (#182)
+- Fix bug when `include_questions` only contains one QID thanks to @lyh970817 (#197)
 
 # qualtRics 3.1.3
 
