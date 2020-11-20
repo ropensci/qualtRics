@@ -1,8 +1,8 @@
 context("Get metadata for a survey")
 
-test_that("metadata() should throw an error if passing invalid options to input", {
+qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
 
-  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
+test_that("metadata() should throw an error if passing invalid options to input", {
 
   expect_error(
     metadata("mockId1", get = list(invalidKey = TRUE))
@@ -12,8 +12,6 @@ test_that("metadata() should throw an error if passing invalid options to input"
 
 test_that("metadata() should throw warning if input questions are not a vector", {
 
-  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
-
   expect_error(
     metadata("mockId1", questions = "I am not a vector")
   )
@@ -21,8 +19,6 @@ test_that("metadata() should throw warning if input questions are not a vector",
 })
 
 test_that("metadata() should return metadata + questions + responsecounts", {
-
-  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
 
   vcr::use_cassette("metadata", {
     x <- metadata("SV_3gbwq8aJgqPwQDP")
@@ -38,7 +34,6 @@ test_that("metadata() should return metadata + questions + responsecounts", {
 
 
 test_that("metadata() returns flow if specified", {
-  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
 
   vcr::use_cassette("metadata_flow", {
     x <- metadata("SV_3gbwq8aJgqPwQDP", get = list(flow = TRUE))

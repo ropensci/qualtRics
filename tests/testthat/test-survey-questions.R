@@ -1,9 +1,9 @@
 
 context("Get survey questions for a survey")
 
-test_that("survey_questions() makes a request with expected structure, and parses response", {
+qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
 
-  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
+test_that("survey_questions() makes a request with expected structure, and parses response", {
 
   vcr::use_cassette("survey_questions", {
     x <- survey_questions("SV_3gbwq8aJgqPwQDP")
@@ -20,8 +20,6 @@ test_that("survey_questions() makes a request with expected structure, and parse
 })
 
 test_that("survey_questions() throws an error", {
-
-  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
 
   expect_error(
     qualtRics::survey_questions("1234"),
