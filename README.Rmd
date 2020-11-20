@@ -16,8 +16,7 @@ knitr::opts_chunk$set(
 **License:** [MIT](https://opensource.org/licenses/MIT)
 
 <!-- badges: start -->
-[![Build Status](https://travis-ci.org/ropensci/qualtRics.svg?branch=master)](https://travis-ci.org/ropensci/qualtRics)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/fv9bmqcmty1wwrgu?svg=true)](https://ci.appveyor.com/project/JasperHG90/qualtrics-g2a4u)
+[![R-CMD-check](https://github.com/ropensci/qualtRics/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/qualtRics/actions)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/qualtRics)](https://cran.r-project.org/package=qualtRics)
 [![CODECOV](https://codecov.io/gh/ropensci/qualtRics/branch/master/graphs/badge.svg)](https://codecov.io/gh/ropensci/qualtRics)
 [![rOpenSci](https://badges.ropensci.org/192_status.svg)](https://github.com/ropensci/onboarding/issues/192)
