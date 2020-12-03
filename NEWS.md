@@ -1,3 +1,18 @@
+# qualtRics (development version)
+
+- Add `fetch_distributions()` to access distribution data for a specific survey thanks to @dsen6644 (#169)
+- Handle mailing list embedded data better thanks to @dsen6644 (#175)
+- Updated links to API documentation
+- Create unique column names for questions using `choiceId` thanks to @lyh970817 (#182)
+- Fix bug when `include_questions` only contains one QID thanks to @lyh970817 (#197)
+
+# qualtRics 3.1.3
+
+- Update `include_questions` argument to use correct name in API request.
+- Build API payloads with jsonlite (#155) thanks to @jmobrien
+- Convert tests to webmockr and vcr (#140 and #161) thanks to @shaun-jacks and @dsen6644
+- Allow user to specify column types for both `fetch_survey()` and `read_survey()` (#162) thanks to @jntrcs 
+
 # qualtRics 3.1.2
 
 - For empty surveys, return zero row dataframe (#127)
@@ -7,6 +22,7 @@
 - Correctly handle time zone conversions (#137) thanks to @jmobrien
 - Add `breakout_sets` parameter thanks to @shaun-jacks
 - Fix bug in `infer_data_types()` for answers choices that include HTML
+- Deprecate `last_response` argument no longer used by API (#153)
 
 # qualtRics 3.1.1
 

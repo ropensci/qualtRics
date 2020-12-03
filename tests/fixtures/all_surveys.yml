@@ -1,0 +1,34 @@
+http_interactions:
+- request:
+    method: get
+    uri: https://t.qualtrics.com/API/v3/surveys/
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      X-API-TOKEN: <<<my_api_key>>>
+      Content-Type: application/json
+      Accept: '*/*'
+      accept-encoding: gzip, deflate
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      content-length: '850'
+      content-type: application/json
+      request-time: '123'
+      server: devplat-gateway
+      date: Thu, 07 May 2020 21:37:27 GMT
+      connection: keep-alive
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com;
+        report-uri https://sjc1.qualtrics.com/csp-report
+      strict-transport-security: max-age=31536000; includeSubDomains; preload
+    body:
+      encoding: ASCII-8BIT
+      file: no
+      string: eyJyZXN1bHQiOnsiZWxlbWVudHMiOlt7ImlkIjoiU1ZfM2did3E4YUpncVB3UURQIiwibmFtZSI6IkJlc2thciBBcm1vciIsIm93bmVySWQiOiJVUl84d2ZHNXFzTXh1aDBKcm4iLCJsYXN0TW9kaWZpZWQiOiIyMDIwLTAyLTIwVDAxOjE5OjExWiIsImNyZWF0aW9uRGF0ZSI6IjIwMjAtMDItMjBUMDA6MzU6NDBaIiwiaXNBY3RpdmUiOnRydWV9LHsiaWQiOiJTVl81NmljYWE5WUFhZnBBcXgiLCJuYW1lIjoiQ2F0cyBDYW4gSGF2ZSBhIExpdHRsZSBTYWxhbWkiLCJvd25lcklkIjoiVVJfOHdmRzVxc014dWgwSnJuIiwibGFzdE1vZGlmaWVkIjoiMjAyMC0wMi0xMVQwNDowNTowMVoiLCJjcmVhdGlvbkRhdGUiOiIyMDIwLTAyLTExVDAzOjM0OjQ1WiIsImlzQWN0aXZlIjp0cnVlfSx7ImlkIjoiU1ZfNUJKUm8yUkdIYWpJbE9CIiwibmFtZSI6IlNvdXJkb3VnaCBCcmVhZCIsIm93bmVySWQiOiJVUl84d2ZHNXFzTXh1aDBKcm4iLCJsYXN0TW9kaWZpZWQiOiIyMDIwLTAzLTI5VDIwOjQ4OjQ0WiIsImNyZWF0aW9uRGF0ZSI6IjIwMjAtMDMtMjlUMjA6MzM6MTJaIiwiaXNBY3RpdmUiOnRydWV9LHsiaWQiOiJTVl9lellJMEYzVjlLNVRyM0QiLCJuYW1lIjoiUHJpb3JpdGllcyBmb3IgdGlkeW1vZGVscyIsIm93bmVySWQiOiJVUl84d2ZHNXFzTXh1aDBKcm4iLCJsYXN0TW9kaWZpZWQiOiIyMDIwLTA1LTA2VDE5OjE4OjM2WiIsImNyZWF0aW9uRGF0ZSI6IjIwMjAtMDQtMjNUMTg6MjM6MjVaIiwiaXNBY3RpdmUiOnRydWV9XSwibmV4dFBhZ2UiOm51bGx9LCJtZXRhIjp7Imh0dHBTdGF0dXMiOiIyMDAgLSBPSyIsInJlcXVlc3RJZCI6ImM0ZGNmNjA5LTE5MDktNGVkMC05NGFkLTI5ZTlhYWRlY2U2ZCJ9fQ==
+  recorded_at: 2020-05-07 21:37:27 GMT
+  recorded_with: vcr/0.5.4, webmockr/0.6.2

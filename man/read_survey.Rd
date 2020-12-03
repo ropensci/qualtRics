@@ -9,7 +9,8 @@ read_survey(
   strip_html = TRUE,
   import_id = FALSE,
   time_zone = NULL,
-  legacy = FALSE
+  legacy = FALSE,
+  col_types = NULL
 )
 }
 \arguments{
@@ -23,11 +24,16 @@ question IDs as column names. Defaults to \code{FALSE}.}
 
 \item{time_zone}{String. A local timezone to determine response date
 values. Defaults to \code{NULL} which corresponds to UTC time. See
-\url{https://api.qualtrics.com/docs/time-zones} for more information on
-format.}
+\url{https://api.qualtrics.com/instructions/docs/Instructions/dates-and-times.md}
+for more information on format.}
 
 \item{legacy}{Logical. If \code{TRUE}, then import "legacy" format CSV files
 (as of 2017). Defaults to \code{FALSE}.}
+
+\item{col_types}{Optional. This argument provides a way to manually overwrite
+column types that may be incorrectly guessed. Takes a \code{\link[readr]{cols}}
+specification. See example below and \code{\link[readr]{cols}} for formatting
+details. Defaults to \code{NULL}.}
 }
 \value{
 A data frame. Variable labels are stored as attributes. They are not
@@ -52,5 +58,9 @@ df <- read_survey(file)
 file <- system.file("extdata", "sample_legacy.csv", package = "qualtRics")
 df <- read_survey(file, legacy = TRUE)
 
+# Example changing column type
+file <- system.file("extdata", "sample.csv", package = "qualtRics")
+# Force EndDate to be a string
+df <- read_survey(file, col_types = readr::cols(EndDate = readr::col_character()))
 
 }

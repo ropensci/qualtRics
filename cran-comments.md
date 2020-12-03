@@ -1,10 +1,10 @@
 ## Release summary
 
-This is the 9th CRAN release of qualtRics (the 3rd since it has returned to CRAN since being archived). This release includes bug fixes, an update to the new Qualtrics API version, and more reliable behavior under more circumstances.
+This is the 10th CRAN release of qualtRics (the 4th since it has returned to CRAN since being archived). This release updates the test framework, allows users to specify column types for import, and builds API paylods more reliably.
 
 ## Test environments
-* local OS X install, R 3.6.2
-* ubuntu 14.04 (on travis-ci), R 3.6.2
+* local OS X install, R 4.0.0
+* ubuntu 14.04 (on travis-ci), 4.0.0
 * win-builder (devel and release)
 
 ## R CMD check results

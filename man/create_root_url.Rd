@@ -8,7 +8,7 @@ create_root_url(base_url)
 }
 \arguments{
 \item{base_url}{Base URL for your institution (see
-\url{https://api.qualtrics.com/docs/root-url}}
+\url{https://api.qualtrics.com/docs/}}
 }
 \value{
 Root URL
