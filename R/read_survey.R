@@ -12,13 +12,17 @@
 #' to \code{TRUE}.
 #' @param time_zone String. A local timezone to determine response date
 #' values. Defaults to \code{NULL} which corresponds to UTC time. See
-#' \url{https://api.qualtrics.com/docs/time-zones} for more information on
-#' format.
+#' \url{https://api.qualtrics.com/instructions/docs/Instructions/dates-and-times.md}
+#' for more information on format.
 #' @param colmap_attrs Logical. If \code{TRUE}, then attributes will be added to
 #' each column in downloaded CSV providing info linking columns back to survey
 #' question content obtainable using \code{metadata}. Defaults to \code{FALSE}.
 #' @param legacy Logical. If \code{TRUE}, then import "legacy" format CSV files
 #' (as of 2017). Defaults to \code{FALSE}.
+#' @param col_types Optional. This argument provides a way to manually overwrite
+#' column types that may be incorrectly guessed. Takes a \code{\link[readr]{cols}}
+#' specification. See example below and \code{\link[readr]{cols}} for formatting
+#' details. Defaults to \code{NULL}.
 #'
 #' @importFrom stats setNames
 #' @importFrom sjlabelled set_label
@@ -49,14 +53,19 @@
 #' file <- system.file("extdata", "sample_legacy.csv", package = "qualtRics")
 #' df <- read_survey(file, legacy = TRUE)
 #'
+#' # Example changing column type
+#' file <- system.file("extdata", "sample.csv", package = "qualtRics")
+#' # Force EndDate to be a string
+#' df <- read_survey(file, col_types = readr::cols(EndDate = readr::col_character()))
 #'
 read_survey <- function(file_name,
                         strip_html = TRUE,
                         import_id = FALSE,
                         time_zone = NULL,
+                        legacy = FALSE,
                         add_column_map = TRUE,
-                        legacy = FALSE
-) {
+                        col_types = NULL) {
+
 
   # START UP: CHECK ARGUMENTS PASSED BY USER ----
 
@@ -118,7 +127,6 @@ read_survey <- function(file_name,
   # Add names
   names(rawdata) <- names(header)
 
-
   # GET COLUMN MAPPING ------------------------------------------------------
 
   if(!legacy && (import_id || add_column_map)){
@@ -178,7 +186,8 @@ read_survey <- function(file_name,
   subquestions[is.na(subquestions)] <- ""
 
   rawdata <- readr::type_convert(rawdata,
-                                 locale = readr::locale(tz = time_zone))
+                                 locale = readr::locale(tz = time_zone),
+                                 col_types = col_types)
 
   # Add descriptions to data as attribute "label"
   rawdata <- sjlabelled::set_label(rawdata, unlist(subquestions))

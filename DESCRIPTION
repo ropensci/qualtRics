@@ -1,20 +1,26 @@
 Package: qualtRics
 Type: Package
 Title: Download 'Qualtrics' Survey Data
-Version: 3.1.2
+Version: 3.1.3.9000
 Authors@R: c(person("Jasper", "Ginn", role = c("aut"),
              email = "jasperginn@gmail.com"),
+             person("Jackson", "Curtis", role = c("ctb"),
+             email = "jcurtis210@gmail.com"),
+             person("Shaun", "Jackson", role = c("ctb"),
+             email = "shaunbjackson@gmail.com"),
              person("Samuel", "Kaminsky", role = c("ctb"),
              email = "samuel.e.kaminsky@gmail.com"),
              person("Eric", "Knudsen", role = c("ctb"),
              email = "ericknud1@gmail.com"),
+             person("Joseph", "O'Brien", role = c("ctb"),
+             email = "joseph.obrien@utexas.edu"),
+             person("Daniel", "Seneca", role = c("ctb"),
+             email = "seneca.danielh@gmail.com"),
              person("Julia", "Silge", role = c("aut", "cre"),
              email = "julia.silge@gmail.com",
              comment = c(ORCID = "0000-0002-3671-836X")),
              person("Phoebe", "Wong", role = c("ctb"),
-             email = "phoebe.wong@berkeley.edu"),
-             person("O'Brien", "Joseph", role = c("ctb"),
-             email = "joseph.obrien@utexas.edu")
+             email = "phoebe.wong@berkeley.edu")
              )
 Description: Provides functions to access survey results directly into R using 
     the 'Qualtrics' API. 'Qualtrics' <https://www.qualtrics.com/about/> is an 
@@ -27,7 +33,9 @@ BugReports: https://github.com/ropensci/qualtRics/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
-RoxygenNote: 7.1.0
+
+RoxygenNote: 7.1.1
+
 Imports:
     httr,
     stringr,
@@ -38,11 +46,14 @@ Imports:
     dplyr,
     rlang,
     purrr,
-    tidyr,
-    tibble
+    tibble,
+    lubridate,
+    lifecycle
+
 Suggests:
     knitr,
     rmarkdown,
     testthat,
-    httptest
+    vcr,
+    webmockr
 VignetteBuilder: knitr

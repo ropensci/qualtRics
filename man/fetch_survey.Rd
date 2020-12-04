@@ -6,7 +6,7 @@
 \usage{
 fetch_survey(
   surveyID,
-  last_response = NULL,
+  last_response = deprecated(),
   start_date = NULL,
   end_date = NULL,
   unanswer_recode = NULL,
@@ -22,6 +22,7 @@ fetch_survey(
   import_id = FALSE,
   time_zone = NULL,
   breakout_sets = TRUE,
+  col_types = NULL,
   colmap_attrs = FALSE,
   ...
 )
@@ -30,8 +31,7 @@ fetch_survey(
 \item{surveyID}{String. Unique ID for the survey you want to download.
 Returned as \code{id} by the \link[qualtRics]{all_surveys} function.}
 
-\item{last_response}{String. Export all responses received after the
-specified response ID. Defaults to \code{NULL}.}
+\item{last_response}{Deprecated.}
 
 \item{start_date}{String. Filter to only exports responses recorded after the
 specified date. Accepts dates as character strings in format "YYYY-MM-DD".
@@ -83,17 +83,18 @@ question IDs as column names. Defaults to \code{FALSE}.}
 
 \item{time_zone}{String. A local timezone to determine response date
 values. Defaults to \code{NULL} which corresponds to UTC time. See
-\url{https://api.qualtrics.com/docs/time-zones} for more information on
-format.}
+\url{https://api.qualtrics.com/instructions/docs/Instructions/dates-and-times.md}
+for more information on format.}
 
 \item{breakout_sets}{Logical. If \code{TRUE}, then the
 \code{\link[qualtRics]{fetch_survey}} function will split multiple
 choice question answers into columns. If \code{FALSE}, each multiple choice
 question is one column. Defaults to \code{TRUE}.}
 
-\item{colmap_attrs}{Logical. If \code{TRUE}, then attributes will be added to
-each column in downloaded CSV providing info linking columns back to survey
-question content obtainable using \code{metadata}. Defaults to \code{FALSE}.}
+\item{col_types}{Optional. This argument provides a way to manually overwrite
+column types that may be incorrectly guessed. Takes a \code{\link[readr]{cols}}
+specification. See example below and \code{\link[readr]{cols}} for formatting
+details. Defaults to \code{NULL}. Overwritten by \code{convert = TRUE}.}
 
 \item{...}{Optional arguments, such as a `fileEncoding` (see `fileEncoding`
 argument in \code{\link[qualtRics]{read_survey}}) to import your survey using
@@ -124,7 +125,9 @@ mysurvey <- fetch_survey(
   limit = 100,
   label = TRUE,
   unanswer_recode = 999,
-  verbose = TRUE
+  verbose = TRUE,
+  # Manually override EndDate to be a character vector
+  col_types = readr::cols(EndDate = readr::col_character())
 )
 }
 

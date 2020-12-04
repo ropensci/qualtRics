@@ -2,15 +2,8 @@
 #'
 #' This function is deprecated; use \code{\link[qualtRics]{qualtrics_api_credentials}} instead.
 #'
-#' @param api_token String. API token. Available in your qualtrics account (see: \url{https://api.qualtrics.com/docs/authentication})
-#' @param base_url String. Base url for your institution (see: \url{https://api.qualtrics.com/docs/root-url})
-#' @param verbose Logical. If TRUE, verbose messages will be printed to the R console. Defaults to TRUE.
-#' @param useLabels Logical. TRUE to export survey responses as Choice Text or FALSE to export survey responses as values.
-#' @param convertVariables Logical. If TRUE, then the \code{\link[qualtRics]{getSurvey}} function will convert certain question types (e.g. multiple choice) to proper data type in R. Defaults to TRUE.
-#' @param useLocalTime Logical. Use local timezone to determine response date values? Defaults to FALSE. See \url{https://api.qualtrics.com/docs/dates-and-times} for more information.
-#' @param dateWarning Logical. Once per session, qualtRics will emit a warning about date conversion for surveys. You can turn this warning off by changing the flag to FALSE. Defaults to TRUE.
-#' @param root_url String. Deprecated. Use `base_url` instead. This will be removed in future versions.
-#' @seealso See \url{https://api.qualtrics.com/docs/root-url} for documentation on the Qualtrics API. See \url{https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file} for more information about the qualtRics configuration file.
+#' @param ... All arguments for \code{qualtRicsConfigFile}
+#'
 #' @export
 #' @examples
 #' \dontrun{
@@ -18,52 +11,10 @@
 #' qualtRicsConfigFile()
 #' }
 #'
-qualtRicsConfigFile <- function(api_token = NULL,
-                                base_url = NULL,
-                                verbose = TRUE,
-                                useLabels = TRUE,
-                                convertVariables = TRUE,
-                                useLocalTime = FALSE,
-                                dateWarning = TRUE,
-                                root_url = NULL) {
+qualtRicsConfigFile <- function(...) {
 
-  .Deprecated("`qualtRicsConfigFile` is deprecated. Use `qualtrics_api_credentials()` instead.")
+  .Deprecated("qualtrics_api_credentials")
 
-  # Check for deprecated arguments
-  calls <- names(vapply(match.call(), deparse, "character"))[-1]
-  # Check if deprecated params passed
-  if (any("root_url" %in% calls)) {
-    warning("'root_url' is deprecated and will be removed in qualtRics 4.0.\n Please use 'base_url' instead.")
-    base_url <- root_url
-  }
-  # Temporary
-  root_url <- base_url
-
-  # Paste together a message to cat to console
-  msg <- paste0(
-    "Copy-paste the lines between the dashes into a new plain text file, replace the
-values for the api_token and root_url if they are not yet filled out. and save it in
-your working directory as '.qualtRics.yml'. Execute '?qualtRics::qualtRicsConfigFile'
-to view an explanation of the additional arguments. Visit
-https://github.com/ropensci/qualtRics/blob/master/README.md#using-a-configuration-file
-for more information.", "\n\n", # nolint
-    "--------------", "\n",
-    "api_token: ", ifelse(is.null(api_token), "<YOUR-API-TOKEN-HERE>",
-      paste0(api_token)
-    ), "\n",
-    "base_url: ", ifelse(is.null(root_url), "<YOUR-ROOT-URL-HERE>",
-      paste0(root_url)
-    ), "\n",
-    "verbose: ", verbose, "\n",
-    "uselabels: ", useLabels, "\n",
-    "convertvariables: ", convertVariables, "\n",
-    "uselocaltime: ", useLocalTime, "\n",
-    "datewarning: ", dateWarning, "\n",
-    "--------------"
-  )
-
-  # Cat to console
-  cat(msg)
 }
 
 #' Retrieve a data frame containing question IDs and labels
@@ -74,7 +25,7 @@ for more information.", "\n\n", # nolint
 #'
 #' @export
 getSurveyQuestions <- function(...) {
-  .Deprecated("`getSurveyQuestions` is deprecated. Try using `survey_questions()` instead.")
+  .Deprecated("survey_questions")
   survey_questions(...)
 }
 
@@ -86,7 +37,7 @@ getSurveyQuestions <- function(...) {
 #'
 #' @export
 getSurvey <- function(...) {
-  .Deprecated("`getSurvey` is deprecated. Try using `fetch_survey()` instead.")
+  .Deprecated("fetch_survey")
   fetch_survey(...)
 }
 
@@ -102,8 +53,18 @@ getSurvey <- function(...) {
 #'
 #' @export
 readSurvey <- function(...) {
-  .Deprecated("`readSurvey` is deprecated. Try using `read_survey()` instead.")
+  .Deprecated("read_survey")
   read_survey(...)
+}
+
+#' Retrieve a data frame of all active surveys on Qualtrics
+#'
+#' This function is deprecated; use \code{\link[qualtRics]{all_surveys}}
+#' instead.
+#' @export
+getSurveys <- function() {
+  .Deprecated("all_surveys")
+  all_surveys()
 }
 
 
