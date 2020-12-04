@@ -23,6 +23,7 @@ fetch_survey(
   time_zone = NULL,
   breakout_sets = TRUE,
   col_types = NULL,
+  colmap_attrs = FALSE,
   ...
 )
 }

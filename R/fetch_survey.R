@@ -52,6 +52,10 @@
 #' column types that may be incorrectly guessed. Takes a \code{\link[readr]{cols}}
 #' specification. See example below and \code{\link[readr]{cols}} for formatting
 #' details. Defaults to \code{NULL}. Overwritten by \code{convert = TRUE}.
+#' @param add_column_map Logical. If \code{TRUE}, then a dataframe will be added
+#' as an attribute to the main response dataframe, that provides information
+#' linking variables back to associated content obtainable using \code{metadata}.
+#' Defaults to \code{FALSE}.
 #' @param ... Optional arguments, such as a `fileEncoding` (see `fileEncoding`
 #' argument in \code{\link[qualtRics]{read_survey}}) to import your survey using
 #' a specific encoding.
@@ -107,6 +111,7 @@ fetch_survey <- function(surveyID,
                          time_zone = NULL,
                          breakout_sets = TRUE,
                          col_types = NULL,
+                         add_column_map = TRUE,
                          ...) {
 
   if (lifecycle::is_present(last_response)) {
@@ -131,7 +136,8 @@ fetch_survey <- function(surveyID,
     unanswer_recode_multi = unanswer_recode_multi,
     include_display_order = include_display_order,
     limit = limit,
-    breakout_sets = breakout_sets
+    breakout_sets = breakout_sets,
+    add_column_map = add_column_map
   )
 
   # See if survey already in tempdir
@@ -184,13 +190,17 @@ fetch_survey <- function(surveyID,
   # READ DATA AND SET VARIABLES ----
 
   # Read data
+
   data <- read_survey(survey.fpath, import_id = import_id,
-                      time_zone = time_zone, col_types = col_types)
+                      time_zone = time_zone, 
+                      col_types = col_types,
+                      add_column_map = add_column_map)
 
   # Add types
   if (convert & label) {
     data <- infer_data_types(data, surveyID)
   }
+
   # Save survey as RDS file in temp folder so that it can be easily
   # retrieved this session.
   saveRDS(data, paste0(tempdir(), "/", surveyID, ".rds"))
