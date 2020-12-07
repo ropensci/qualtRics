@@ -2,15 +2,17 @@
 % Please edit documentation in R/extract_colmap.R
 \name{extract_colmap}
 \alias{extract_colmap}
-\title{Test function: a way of extracting column mappings from existing dataframes}
+\title{Helper function to extract the column map attached to a response data
+download obtained from fetch_survey (using the default
+\code{colmap_attrs = TRUE})}
 \usage{
-extract_colmap(r_dat)
+extract_colmap(respdata)
 }
 \arguments{
-\item{r_dat}{response data obtained from fetch_survey w/\code{colmap_attrs = TRUE}}
+\item{respdata}{Response data including a column map dataframe as an attribute}
 }
 \description{
-could be used as both helper function and as a replacement for column_map, once
-updated to also generate column mappings from existing response download data frames,
-or from saved response downloads, etc.
+Helper function to extract the column map attached to a response data
+download obtained from fetch_survey (using the default
+\code{colmap_attrs = TRUE})
 }

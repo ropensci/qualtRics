@@ -1,16 +1,16 @@
-#' Test function: a way of extracting column mappings from existing dataframes
+#' Helper function to extract the column map attached to a response data
+#' download obtained from fetch_survey (using the default
+#' \code{colmap_attrs = TRUE})
 #'
-#' could be used as both helper function and as a replacement for column_map, once
-#' updated to also generate column mappings from existing response download data frames,
-#' or from saved response downloads, etc.
-#'
-#' @param r_dat response data obtained from fetch_survey w/\code{colmap_attrs = TRUE}
+#' @param respdata Response data including a column map dataframe as an attribute
 #'
 #' @importFrom purrr imap_dfr
+#'
+#' @export
 
-extract_colmap <- function(r_dat) {
+extract_colmap <- function(respdata) {
 
-  return(attr(r_dat, "column_map"))
+  return(attr(respdata, "column_map"))
 
 }
 

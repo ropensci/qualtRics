@@ -55,7 +55,7 @@
 #' @param add_column_map Logical. If \code{TRUE}, then a dataframe will be added
 #' as an attribute to the main response dataframe, that provides information
 #' linking variables back to associated content obtainable using \code{metadata}.
-#' Defaults to \code{FALSE}.
+#' Defaults to \code{TRUE}.
 #' @param ... Optional arguments, such as a `fileEncoding` (see `fileEncoding`
 #' argument in \code{\link[qualtRics]{read_survey}}) to import your survey using
 #' a specific encoding.
@@ -192,7 +192,7 @@ fetch_survey <- function(surveyID,
   # Read data
 
   data <- read_survey(survey.fpath, import_id = import_id,
-                      time_zone = time_zone, 
+                      time_zone = time_zone,
                       col_types = col_types,
                       add_column_map = add_column_map)
 

@@ -23,7 +23,7 @@ fetch_survey(
   time_zone = NULL,
   breakout_sets = TRUE,
   col_types = NULL,
-  colmap_attrs = FALSE,
+  add_column_map = TRUE,
   ...
 )
 }
@@ -95,6 +95,11 @@ question is one column. Defaults to \code{TRUE}.}
 column types that may be incorrectly guessed. Takes a \code{\link[readr]{cols}}
 specification. See example below and \code{\link[readr]{cols}} for formatting
 details. Defaults to \code{NULL}. Overwritten by \code{convert = TRUE}.}
+
+\item{add_column_map}{Logical. If \code{TRUE}, then a dataframe will be added
+as an attribute to the main response dataframe, that provides information
+linking variables back to associated content obtainable using \code{metadata}.
+Defaults to \code{TRUE}.}
 
 \item{...}{Optional arguments, such as a `fileEncoding` (see `fileEncoding`
 argument in \code{\link[qualtRics]{read_survey}}) to import your survey using
