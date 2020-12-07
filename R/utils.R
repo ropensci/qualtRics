@@ -547,7 +547,7 @@ remove_html <- function(string) {
 #' @importFrom readr cols
 #' @importFrom dplyr bind_rows
 
-get_colmap <- function(file_name,
+make_colmap <- function(file_name,
                        qnames = NULL,
                        as_dataframe = FALSE) {
 

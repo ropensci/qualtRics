@@ -132,7 +132,7 @@ read_survey <- function(file_name,
   if(!legacy && (import_id || add_column_map)){
 
     col_map <-
-      get_colmap(file_name = file_name,
+      make_colmap(file_name = file_name,
                  qnames = names(header),
                  as_dataframe = TRUE
       )
