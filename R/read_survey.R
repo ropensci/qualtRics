@@ -24,7 +24,6 @@
 #' specification. See example below and \code{\link[readr]{cols}} for formatting
 #' details. Defaults to \code{NULL}.
 #'
-#' @importFrom stats setNames
 #' @importFrom sjlabelled set_label
 #' @importFrom purrr map
 #' @importFrom purrr imap
