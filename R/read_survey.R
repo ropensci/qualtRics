@@ -122,7 +122,7 @@ read_survey <- function(file_name,
 
   # Remove metadata rows:
   responsedata <-
-    slice(rawdata, -header_rows)
+    dplyr::slice(rawdata, -header_rows)
 
   # Infer data types from data:
   responsedata <-
@@ -136,21 +136,21 @@ read_survey <- function(file_name,
 
   # Take the first two rows (or just the first if legacy)
   colmapdata <-
-    slice(rawdata, header_rows)
+    dplyr::slice(rawdata, header_rows)
 
   # Create the column map:
   if(!legacy){
 
     # Add a reference column:
     colmapdata <-
-      mutate(colmapdata,
+      dplyr::mutate(colmapdata,
              metadata_type = c("description", "JSON"))
 
     # Pivot twice to create the column:
     col_map <-
       tidyr::pivot_longer(colmapdata,
                           -metadata_type,
-                          names_to = "qnames")
+                          names_to = "qname")
     col_map <-
       tidyr::pivot_wider(col_map,
                          names_from = "metadata_type",
@@ -185,7 +185,7 @@ read_survey <- function(file_name,
   # New columns in column map for main and sub questions from description:
 
   col_map <-
-    mutate(col_map,
+    dplyr::mutate(col_map,
            tibble::as_tibble(
              # Separate out descriptions based on whether there's a " - " separator
              # Only separates a single time
@@ -220,7 +220,7 @@ read_survey <- function(file_name,
   # Add descriptions to data as attribute "label"
   if(add_var_labels){
     responsedata <-
-      sjlabelled::set_label(responsedata, col_map$descriptions)
+      sjlabelled::set_label(responsedata, col_map$description)
   }
 
   # Add column map:
