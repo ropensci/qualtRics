@@ -32,12 +32,16 @@
 #' details. Defaults to \code{NULL}.
 #'
 #' @importFrom sjlabelled set_label
+#' @importFrom jsonlite fromJSON
+#' @importFrom assertthat has_name
 #' @importFrom purrr map
 #' @importFrom purrr imap
 #' @importFrom purrr map_dfr
 #' @importFrom tidyr unite
 #' @importFrom tidyr everything
-#' @importFrom stringr str_match
+#' @importFrom tidyr pivot_longer
+#' @importFrom tidyr pivot_wider
+#' @importFrom stringr str_split_fixed
 #' @importFrom readr read_csv
 #' @importFrom readr locale
 #' @importFrom readr type_convert
