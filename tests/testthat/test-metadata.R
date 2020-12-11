@@ -34,7 +34,7 @@ test_that("metadata() should return metadata + questions + responsecounts", {
 test_that("metadata() returns flow if specified", {
 
   vcr::use_cassette("metadata_flow", {
-    x <- metadata("SV_3gbwq8aJgqPwQDP", get = list(flow = TRUE))
+    x <- metadata("SV_3gbwq8aJgqPwQDP", get = c("metadata", "questions", "responsecounts", "flow"))
   })
 
   expect_type(x, c("list"))
