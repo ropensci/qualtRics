@@ -49,12 +49,12 @@
 #' \code{\link[qualtRics]{fetch_survey}} function will split multiple
 #' choice question answers into columns. If \code{FALSE}, each multiple choice
 #' question is one column. Defaults to \code{TRUE}.
-#' #' @param add_column_map Logical. If \code{TRUE}, then a column map data frame
+#' @param add_column_map Logical. If \code{TRUE}, then a column map data frame
 #' will be added as an attribute to the main response data frame.
 #' This column map captures qualtrics-provided metadata associated with the
 #' response download, such as an item description and internal ID's. Defaults to
 #' \code{TRUE}.
-#' #' @param add_var_labels Logical. If \code{TRUE}, then the item description from
+#' @param add_var_labels Logical. If \code{TRUE}, then the item description from
 #' each variable (equivalent to the one in the column map) will be added as a
 #' "label" attribute using \code{\link[sjlabelled]{set_label}}. Useful for
 #' reference as well as cross-compatibility with other stats packages (e.g.,
