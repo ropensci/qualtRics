@@ -47,7 +47,7 @@
 #' @importFrom readr type_convert
 #' @importFrom dplyr select
 #' @importFrom dplyr slice
-#' @importFrom dplyr set_names
+#' @importFrom rlang set_names
 #'
 #' @return A data frame. Variable labels are stored as attributes. They are not
 #' printed on the console but are visibile in the RStudio viewer.
@@ -119,7 +119,7 @@ read_survey <- function(file_name,
 
   # If Qualtrics adds an empty column at the end, remove it
   if (grepl(",$", readLines(file_name, n = 1))) {
-    rawdata <- responsedata[, 1:(ncol(responsedata) - 1)]
+    rawdata <- rawdata[, 1:(ncol(rawdata) - 1)]
   }
 
   # CREATE RESPONSE DATA FRAME ----

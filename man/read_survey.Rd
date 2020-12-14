@@ -11,6 +11,7 @@ read_survey(
   time_zone = NULL,
   legacy = FALSE,
   add_column_map = TRUE,
+  add_var_labels = TRUE,
   col_types = NULL
 )
 }
@@ -31,14 +32,22 @@ for more information on format.}
 \item{legacy}{Logical. If \code{TRUE}, then import "legacy" format CSV files
 (as of 2017). Defaults to \code{FALSE}.}
 
+\item{add_column_map}{Logical. If \code{TRUE}, then a column map data frame
+will be added as an attribute to the main response data frame.
+This column map captures qualtrics-provided metadata associated with the
+response download, such as an item description and internal ID's. Defaults to
+\code{TRUE}.}
+
+\item{add_var_labels}{Logical. If \code{TRUE}, then the item description from
+each variable (equivalent to the one in the column map) will be added as a
+"label" attribute using \code{\link[sjlabelled]{set_label}}. Useful for
+reference as well as cross-compatibility with other stats packages (e.g.,
+Stata, see documentation in \code{sjlabelled}). Defaults to \code{TRUE}.}
+
 \item{col_types}{Optional. This argument provides a way to manually overwrite
 column types that may be incorrectly guessed. Takes a \code{\link[readr]{cols}}
 specification. See example below and \code{\link[readr]{cols}} for formatting
 details. Defaults to \code{NULL}.}
-
-\item{colmap_attrs}{Logical. If \code{TRUE}, then attributes will be added to
-each column in downloaded CSV providing info linking columns back to survey
-question content obtainable using \code{metadata}. Defaults to \code{FALSE}.}
 }
 \value{
 A data frame. Variable labels are stored as attributes. They are not

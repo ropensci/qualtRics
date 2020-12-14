@@ -42,6 +42,7 @@ Imports:
     assertthat,
     sjlabelled,
     dplyr,
+    tidyr,
     rlang,
     purrr,
     tibble,
