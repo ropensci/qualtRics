@@ -41,7 +41,7 @@ Imports:
     jsonlite,
     assertthat,
     sjlabelled,
-    dplyr,
+    dplyr (>= 1.0),
     tidyr,
     rlang,
     purrr,
