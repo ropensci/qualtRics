@@ -1,6 +1,7 @@
 context("Column mapping for one survey from response download (v3 approach)")
 
-qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
+# qualtrics_api_credentials(api_key = "1234", base_url = "www.qualtrics.com")
+readRenviron("~/.Renviron")
 
 test_that("extract_colmap() retrieves an appropriate column map generated within read_survey", {
 

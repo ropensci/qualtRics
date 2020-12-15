@@ -20,6 +20,7 @@ test_that("all_surveys() sends the proper request to Qualtrics", {
 
 })
 
+qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
 test_that("all_surveys() throws an error", {
 
   expect_error(
