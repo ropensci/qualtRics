@@ -1,7 +1,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://t.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/
+    uri: https://www.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/
     body:
       encoding: ''
       string: '{"useLabels":true,"includeDisplayOrder":true,"breakoutSets":true,"format":"csv"}'
@@ -34,7 +34,7 @@ http_interactions:
   recorded_with: vcr/0.5.4, webmockr/0.6.2
 - request:
     method: get
-    uri: https://t.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_d45coaeKvu6dzyB
+    uri: https://www.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_d45coaeKvu6dzyB
     body:
       encoding: ''
       string: ''
@@ -67,7 +67,7 @@ http_interactions:
   recorded_with: vcr/0.5.4, webmockr/0.6.2
 - request:
     method: get
-    uri: https://t.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_d45coaeKvu6dzyB
+    uri: https://www.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_d45coaeKvu6dzyB
     body:
       encoding: ''
       string: ''
@@ -100,7 +100,7 @@ http_interactions:
   recorded_with: vcr/0.5.4, webmockr/0.6.2
 - request:
     method: get
-    uri: https://t.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/4f92b338-9f49-4922-9160-0cd638f9129d/file
+    uri: https://www.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/4f92b338-9f49-4922-9160-0cd638f9129d/file
     body:
       encoding: ''
       string: ''
@@ -136,7 +136,7 @@ http_interactions:
   recorded_with: vcr/0.5.4, webmockr/0.6.2
 - request:
     method: get
-    uri: https://t.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/
+    uri: https://www.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/
     body:
       encoding: ''
       string: ''
