@@ -21,6 +21,7 @@ qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
 
 test_that("survey_questions() throws an error where URL & key are bad", {
 
+
   expect_error(
     qualtRics::survey_questions("1234"),
     "you may not have the\nrequired authorization"
