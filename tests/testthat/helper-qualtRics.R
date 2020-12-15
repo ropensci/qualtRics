@@ -1,4 +1,5 @@
 
+`readRenviron("~/.Renviron")`
 library(vcr)
 
 # Load in credentials, if saved (for new tests):
