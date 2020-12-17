@@ -1,6 +1,6 @@
 context("Get metadata for a survey")
 
-qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
+qualtrics_api_credentials(api_key = "1234", base_url = "www.qualtrics.com")
 
 test_that("metadata() should throw an error if passing invalid options to input", {
 

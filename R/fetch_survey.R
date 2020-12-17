@@ -39,7 +39,8 @@
 #' \code{\link[qualtRics]{fetch_survey}} function will convert certain question
 #' types (e.g. multiple choice) to proper data type in R. Defaults to \code{TRUE}.
 #' @param import_id Logical. If \code{TRUE}, use Qualtrics import IDs instead of
-#' question IDs as column names. Defaults to \code{FALSE}.
+#' question IDs as column names. Will also alter names in the column map, if
+#' used. Defaults to \code{FALSE}.
 #' @param time_zone String. A local timezone to determine response date
 #' values. Defaults to \code{NULL} which corresponds to UTC time. See
 #' \url{https://api.qualtrics.com/instructions/docs/Instructions/dates-and-times.md}
@@ -48,6 +49,16 @@
 #' \code{\link[qualtRics]{fetch_survey}} function will split multiple
 #' choice question answers into columns. If \code{FALSE}, each multiple choice
 #' question is one column. Defaults to \code{TRUE}.
+#' @param add_column_map Logical. If \code{TRUE}, then a column map data frame
+#' will be added as an attribute to the main response data frame.
+#' This column map captures qualtrics-provided metadata associated with the
+#' response download, such as an item description and internal ID's. Defaults to
+#' \code{TRUE}.
+#' @param add_var_labels Logical. If \code{TRUE}, then the item description from
+#' each variable (equivalent to the one in the column map) will be added as a
+#' "label" attribute using \code{\link[sjlabelled]{set_label}}. Useful for
+#' reference as well as cross-compatibility with other stats packages (e.g.,
+#' Stata, see documentation in \code{sjlabelled}). Defaults to \code{TRUE}.
 #' @param col_types Optional. This argument provides a way to manually overwrite
 #' column types that may be incorrectly guessed. Takes a \code{\link[readr]{cols}}
 #' specification. See example below and \code{\link[readr]{cols}} for formatting
@@ -106,6 +117,8 @@ fetch_survey <- function(surveyID,
                          import_id = FALSE,
                          time_zone = NULL,
                          breakout_sets = TRUE,
+                         add_column_map = TRUE,
+                         add_var_labels = TRUE,
                          col_types = NULL,
                          ...) {
 
@@ -131,7 +144,9 @@ fetch_survey <- function(surveyID,
     unanswer_recode_multi = unanswer_recode_multi,
     include_display_order = include_display_order,
     limit = limit,
-    breakout_sets = breakout_sets
+    breakout_sets = breakout_sets,
+    add_column_map = add_column_map,
+    add_var_labels = add_var_labels
   )
 
   # See if survey already in tempdir
@@ -184,13 +199,17 @@ fetch_survey <- function(surveyID,
   # READ DATA AND SET VARIABLES ----
 
   # Read data
+
   data <- read_survey(survey.fpath, import_id = import_id,
-                      time_zone = time_zone, col_types = col_types)
+                      time_zone = time_zone,
+                      col_types = col_types,
+                      add_column_map = add_column_map)
 
   # Add types
   if (convert & label) {
     data <- infer_data_types(data, surveyID)
   }
+
   # Save survey as RDS file in temp folder so that it can be easily
   # retrieved this session.
   saveRDS(data, paste0(tempdir(), "/", surveyID, ".rds"))
