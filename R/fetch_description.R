@@ -111,7 +111,7 @@ fetch_description <-
         "QuestionCount")
     # Convert NULLs to NAs and make into tidy dataframe:
     metadata <-
-      enframe(
+      tibble::enframe(
         unlist(
           purrr::map(result[metadata_names],
                      rlang::`%||%`,
@@ -123,7 +123,7 @@ fetch_description <-
 
     # Convert NULLs to NAs and make into tidy dataframe:
     projectinfo <-
-      enframe(
+      tibble::enframe(
         unlist(
           purrr::map(result[["ProjectInfo"]],
                      rlang::`%||%`,
@@ -141,7 +141,7 @@ fetch_description <-
 
     # Convert NULLs to NAs and make into tidy dataframe:
     surveyoptions <-
-      enframe(
+      tibble::enframe(
         unlist(
           purrr::map(result$SurveyOptions,
                      rlang::`%||%`,
