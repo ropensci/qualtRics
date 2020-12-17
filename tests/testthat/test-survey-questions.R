@@ -1,7 +1,7 @@
 
 context("Get survey questions for a survey")
 
-qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
+qualtrics_api_credentials(api_key = "1234", base_url = "www.qualtrics.com")
 
 test_that("survey_questions() makes a request with expected structure, and parses response", {
 
@@ -19,6 +19,7 @@ test_that("survey_questions() makes a request with expected structure, and parse
 
 })
 
+qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
 test_that("survey_questions() throws an error", {
 
   expect_error(
