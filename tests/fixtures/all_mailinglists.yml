@@ -1,7 +1,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://t.qualtrics.com/API/v3/mailinglists/
+    uri: https://www.qualtrics.com/API/v3/mailinglists/
     body:
       encoding: ''
       string: ''

@@ -1,6 +1,6 @@
 context("Download a survey from qualtRics and pull it into R using the fetch_survey() function")
 
-qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
+qualtrics_api_credentials(api_key = "1234", base_url = "www.qualtrics.com")
 
 test_that("fetch_survey() returns survey with default params", {
 

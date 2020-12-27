@@ -1,6 +1,6 @@
 context("All surveys that the user has access to on Qualtrics")
 
-qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
+qualtrics_api_credentials(api_key = "1234", base_url = "www.qualtrics.com")
 
 test_that("all_surveys() sends the proper request to Qualtrics", {
 
@@ -19,6 +19,8 @@ test_that("all_surveys() sends the proper request to Qualtrics", {
   expect_type(x$isActive, "logical")
 
 })
+
+qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
 
 test_that("all_surveys() throws an error", {
 
