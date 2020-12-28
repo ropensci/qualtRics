@@ -8,13 +8,13 @@ readRenviron("~/.Renviron")
 Sys.setenv("QUALTRICS_BASE_URL" = "www.qualtrics.com")
 
 # Set up a fake API key if none is saved
-if (Sys.getenv("QUALTRICS_API_KEY") != ""){
+if (Sys.getenv("QUALTRICS_API_KEY") == ""){
  Sys.setenv("QUALTRICS_API_KEY" = "1234")
 }
 
 # Store these for resetting later when needed
 holder_API <- Sys.getenv("QUALTRICS_API_KEY")
-holder_URL <- Sys.getenv("QUALTRICS_API_KEY")
+holder_URL <- Sys.getenv("QUALTRICS_BASE_URL")
 
   # Set directory and mask API token
 invisible(vcr::vcr_configure(
