@@ -15,7 +15,3 @@ invisible(vcr::vcr_configure(
     list(
       "<<<my_api_key>>>" = Sys.getenv('QUALTRICS_API_KEY')
     )))
-<<<<<<< HEAD
-=======
-
->>>>>>> Update to fix testing
