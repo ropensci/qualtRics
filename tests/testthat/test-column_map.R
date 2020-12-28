@@ -1,7 +1,5 @@
 context("Column mapping for one survey")
 
-qualtrics_api_credentials(api_key = "1234", base_url = "www.qualtrics.com")
-
 test_that("column_map() retrieves survey column mapping", {
 
   vcr::use_cassette("column_map", {
