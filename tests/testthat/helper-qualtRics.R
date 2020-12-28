@@ -16,6 +16,12 @@ if (Sys.getenv("QUALTRICS_API_KEY") == ""){
 holder_API <- Sys.getenv("QUALTRICS_API_KEY")
 holder_URL <- Sys.getenv("QUALTRICS_BASE_URL")
 
+# NOTE: If writing new test that changes the credentials for some reason, add
+# this line (uncommented) to end of the testing file:
+# qualtrics_api_credentials(api_key = holder_API, base_url = holder_URL)
+
+
+
   # Set directory and mask API token
 invisible(vcr::vcr_configure(
   dir = "../fixtures",
