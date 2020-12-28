@@ -20,10 +20,10 @@ test_that("all_surveys() sends the proper request to Qualtrics", {
 
 
 # Set to bad URL:
-qualtrics_api_credentials(api_key = holder_API,
+qualtrics_api_credentials(api_key = "1234",
                           base_url = "t.qualtrics.com")
 
-test_that("all_surveys() throws an error when URL is bad", {
+test_that("all_surveys() throws an error when URL & key is bad", {
 
   expect_error(
     all_surveys(),
@@ -31,6 +31,6 @@ test_that("all_surveys() throws an error when URL is bad", {
   )
 })
 
-# Reset the URL:
+# Reset the credentials:
 qualtrics_api_credentials(api_key = holder_API, base_url = holder_URL)
 
