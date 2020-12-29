@@ -1,7 +1,5 @@
 context("Download a survey from qualtRics and pull it into R using the fetch_survey() function")
 
-qualtrics_api_credentials(api_key = "1234", base_url = "www.qualtrics.com")
-
 test_that("fetch_survey() returns survey with default params", {
 
   skip_on_cran()
@@ -163,4 +161,10 @@ test_that("using fetch_survey() with a base URL that doesn't end with '.qualtric
     qualtRics::fetch_survey(),
     "The Qualtrics base URL must end with"
   ) # nolint
+
+
 })
+
+# Restore the credentials for other tests:
+qualtrics_api_credentials(api_key = holder_API, base_url = holder_URL)
+

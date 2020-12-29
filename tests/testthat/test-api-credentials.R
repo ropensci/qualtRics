@@ -1,5 +1,6 @@
 context("API credentials")
 
+
 test_that("absence of API key or base URL raises an error", {
   Sys.setenv("QUALTRICS_API_KEY" = "")
   Sys.setenv("QUALTRICS_BASE_URL" = "")
@@ -29,3 +30,6 @@ test_that("can store and access credentials", {
 test_that("qualtRicsConfigFile() gives a warning", {
   expect_warning(qualtRics::qualtRicsConfigFile(), "deprecated") # nolint
 })
+
+# Restore the credentials for other tests:
+qualtrics_api_credentials(api_key = holder_API, base_url = holder_URL)

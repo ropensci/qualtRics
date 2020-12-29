@@ -60,3 +60,8 @@ test_that("it should make the proper export progress and download file requests"
   webmockr::stub_registry_clear()
   webmockr::disable()
 })
+
+
+# Reset the credentials:
+qualtrics_api_credentials(api_key = holder_API, base_url = holder_URL)
+
