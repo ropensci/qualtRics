@@ -38,7 +38,7 @@ http_interactions:
   recorded_with: vcr/0.5.4, webmockr/0.7.0
 - request:
     method: get
-    uri: https://t.qualtrics.com/API/v3/surveys/SV_6s93xhVtm1e4j3v/export-responses/ES_a2XGlmYGjbmMz8V
+    uri: https://www.qualtrics.com/API/v3/surveys/SV_6s93xhVtm1e4j3v/export-responses/ES_a2XGlmYGjbmMz8V
     body:
       encoding: ''
       string: ''
@@ -75,7 +75,7 @@ http_interactions:
   recorded_with: vcr/0.5.4, webmockr/0.7.0
 - request:
     method: get
-    uri: https://t.qualtrics.com/API/v3/surveys/SV_6s93xhVtm1e4j3v/export-responses/6d84327b-68a7-4e4f-9b7f-6a19ee981574-def/file
+    uri: https://www.qualtrics.com/API/v3/surveys/SV_6s93xhVtm1e4j3v/export-responses/6d84327b-68a7-4e4f-9b7f-6a19ee981574-def/file
     body:
       encoding: ''
       string: ''
@@ -115,7 +115,7 @@ http_interactions:
   recorded_with: vcr/0.5.4, webmockr/0.7.0
 - request:
     method: get
-    uri: https://t.qualtrics.com/API/v3/surveys/SV_6s93xhVtm1e4j3v/
+    uri: https://www.qualtrics.com/API/v3/surveys/SV_6s93xhVtm1e4j3v/
     body:
       encoding: ''
       string: ''
