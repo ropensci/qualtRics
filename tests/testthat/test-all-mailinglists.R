@@ -1,7 +1,5 @@
 context("All mailing lists that the user has access to on Qualtrics")
 
-qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
-
 test_that("all_mailinglists returns a tbl_df with expected column names and types", {
 
   vcr::use_cassette("all_mailinglists", {
