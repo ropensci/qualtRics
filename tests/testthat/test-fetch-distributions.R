@@ -1,7 +1,5 @@
 context("Fetch distribution data for a survey")
 
-qualtrics_api_credentials(api_key = "1234", base_url = "www.qualtrics.com")
-
 test_that("fetch_distributions returns a tbl_df with expected column names and types", {
 
   vcr::use_cassette("fetch_distributions", {
