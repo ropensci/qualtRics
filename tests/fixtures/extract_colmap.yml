@@ -1,7 +1,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://t.qualtrics.com/API/v3/surveys/SV_6s93xhVtm1e4j3v/export-responses/
+    uri: https://www.qualtrics.com/API/v3/surveys/SV_6s93xhVtm1e4j3v/export-responses/
     body:
       encoding: ''
       string: '{"useLabels":true,"includeDisplayOrder":true,"breakoutSets":true,"format":"csv"}'
