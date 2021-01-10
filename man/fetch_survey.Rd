@@ -95,7 +95,7 @@ question is one column. Defaults to \code{TRUE}.}
 
 \item{add_column_map}{Logical. If \code{TRUE}, then a column map data frame
 will be added as an attribute to the main response data frame.
-This column map captures qualtrics-provided metadata associated with the
+This column map captures Qualtrics-provided metadata associated with the
 response download, such as an item description and internal ID's. Defaults to
 \code{TRUE}.}
 
@@ -131,6 +131,8 @@ surveys <- all_surveys()
 # Retrieve a single survey
 mysurvey <- fetch_survey(surveyID = surveys$id[6])
 
+attr(mysurvey, "column_map")
+
 mysurvey <- fetch_survey(
   surveyID = surveys$id[6],
   save_dir = tempdir(),
@@ -143,6 +145,7 @@ mysurvey <- fetch_survey(
   # Manually override EndDate to be a character vector
   col_types = readr::cols(EndDate = readr::col_character())
 )
+
 }
 
 }

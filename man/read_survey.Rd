@@ -34,7 +34,7 @@ for more information on format.}
 
 \item{add_column_map}{Logical. If \code{TRUE}, then a column map data frame
 will be added as an attribute to the main response data frame.
-This column map captures qualtrics-provided metadata associated with the
+This column map captures Qualtrics-provided metadata associated with the
 response download, such as an item description and internal ID's. Defaults to
 \code{TRUE}.}
 
