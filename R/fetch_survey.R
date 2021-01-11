@@ -67,7 +67,7 @@
 #' argument in \code{\link[qualtRics]{read_survey}}) to import your survey using
 #' a specific encoding.
 #'
-#' @seealso See \url{https://api.qualtrics.com/reference} for documentation on
+#' @seealso See \url{https://api.qualtrics.com/reference/} for documentation on
 #' the Qualtrics API.
 #'
 #' @importFrom lifecycle deprecated

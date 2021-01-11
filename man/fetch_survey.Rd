@@ -148,6 +148,6 @@ mysurvey <- fetch_survey(
 
 }
 \seealso{
-See \url{https://api.qualtrics.com/reference} for documentation on
+See \url{https://api.qualtrics.com/reference/} for documentation on
 the Qualtrics API.
 }

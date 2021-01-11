@@ -12,14 +12,14 @@ knitr::opts_chunk$set(
 
 # qualtRics
 
-**Authors:** [Julia Silge](https://juliasilge.com/), [Jasper Ginn](http://www.jasperginn.io)<br/>
+**Authors:** [Julia Silge](https://juliasilge.com/), [Jasper Ginn](https://jasperhg90.github.io/)<br/>
 **License:** [MIT](https://opensource.org/licenses/MIT)
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/ropensci/qualtRics/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/qualtRics/actions)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/qualtRics)](https://cran.r-project.org/package=qualtRics)
 [![CODECOV](https://codecov.io/gh/ropensci/qualtRics/branch/master/graphs/badge.svg)](https://codecov.io/gh/ropensci/qualtRics)
-[![rOpenSci](https://badges.ropensci.org/192_status.svg)](https://github.com/ropensci/onboarding/issues/192)
+[![rOpenSci](https://badges.ropensci.org/192_status.svg)](https://github.com/ropensci/software-review/issues/192)
 [![DOI](https://zenodo.org/badge/70817337.svg)](https://zenodo.org/badge/latestdoi/70817337)
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.00690/status.svg)](https://doi.org/10.21105/joss.00690)
 [![Downloads](https://cranlogs.r-pkg.org/badges/qualtRics)](https://CRAN.R-project.org/package=qualtRics)
@@ -104,13 +104,13 @@ See the qualtRics vignette for more details on variable metadata, automatic conv
 ## Related work
 
 - [Jason Bryer](https://github.com/jbryer/qualtrics) wrote an R package to work with the previous version of the Qualtrics API
-- [QualtricsTools](https://github.com/emmamorgan-tufts/QualtricsTools/) creates automatic reports in shiny.
+- [QualtricsTools](https://github.com/emma-morgan/QualtricsTools) creates automatic reports in shiny.
 - [qsurvey](https://github.com/jamesdunham/qsurvey) by James Dunham focuses on testing and review of surveys before fielding, and analysis of responses afterward.
 
 
 ### Community Guidelines
 
-This project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms. Feedback, bug reports (and fixes!), and feature requests are welcome; file issues or seek support [here](http://github.com/ropensci/qualtRics/issues).
+This project is released with a [Contributor Code of Conduct](https://github.com/ropensci/qualtRics/blob/master/CONDUCT.md). By participating in this project you agree to abide by its terms. Feedback, bug reports (and fixes!), and feature requests are welcome; file issues or seek support [here](https://github.com/ropensci/qualtRics/issues).
 
 
 [![ropensci_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
