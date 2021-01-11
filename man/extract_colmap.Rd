@@ -2,9 +2,7 @@
 % Please edit documentation in R/extract_colmap.R
 \name{extract_colmap}
 \alias{extract_colmap}
-\title{Helper function to extract the column map attached to a response data
-download obtained from fetch_survey (using the default
-\code{colmap_attrs = TRUE})}
+\title{Extract column map from survey data download}
 \usage{
 extract_colmap(respdata)
 }
@@ -13,6 +11,6 @@ extract_colmap(respdata)
 }
 \description{
 Helper function to extract the column map attached to a response data
-download obtained from fetch_survey (using the default
-\code{colmap_attrs = TRUE})
+download obtained from \code{\link[qualtRics]{fetch_survey}} (using the
+default \code{add_column_map = TRUE})
 }

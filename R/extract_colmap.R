@@ -1,6 +1,8 @@
+#' Extract column map from survey data download
+#'
 #' Helper function to extract the column map attached to a response data
-#' download obtained from fetch_survey (using the default
-#' \code{colmap_attrs = TRUE})
+#' download obtained from \code{\link[qualtRics]{fetch_survey}} (using the
+#' default \code{add_column_map = TRUE})
 #'
 #' @param respdata Response data including a column map dataframe as an attribute
 #'
