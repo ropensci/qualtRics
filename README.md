@@ -10,14 +10,14 @@
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/ropensci/qualtRics/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/qualtRics/actions)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/qualtRics)](https://cran.r-project.org/package=qualtRics)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/qualtRics)](https://cran.r-project.org/package=qualtRics)
 [![CODECOV](https://codecov.io/gh/ropensci/qualtRics/branch/master/graphs/badge.svg)](https://codecov.io/gh/ropensci/qualtRics)
 [![rOpenSci](https://badges.ropensci.org/192_status.svg)](https://github.com/ropensci/onboarding/issues/192)
 [![DOI](https://zenodo.org/badge/70817337.svg)](https://zenodo.org/badge/latestdoi/70817337)
-[![DOI](http://joss.theoj.org/papers/10.21105/joss.00690/status.svg)](https://doi.org/10.21105/joss.00690)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.00690/status.svg)](https://doi.org/10.21105/joss.00690)
 [![Downloads](https://cranlogs.r-pkg.org/badges/qualtRics)](https://CRAN.R-project.org/package=qualtRics)
 [![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/qualtRics?color=orange)](https://CRAN.R-project.org/package=qualtRics)
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 <!-- badges: end -->
 
 [Qualtrics](https://www.qualtrics.com/) is an online survey and data collection software platform. Qualtrics is used across many domains in both academia and industry for online surveys and research. While users can manually download survey responses from Qualtrics through a browser, importing this data into R is then cumbersome. The qualtRics R package implements the retrieval of survey data using the Qualtrics API and aims to reduce the pre-processing steps needed in analyzing such surveys. Currently, this package is the only package on CRAN that offers such functionality, and is included in the official Qualtrics API documentation. 
@@ -57,7 +57,7 @@ Currently, the package contains three core functions:
 It also contains helper functions:
 
 1. `qualtrics_api_credentials()` stores your API key and base url in environment variables.
-2. `survey_questions()` retrieves a data frame containing questions and question IDs for a survey.
+2. `survey_questions()` retrieves a data frame containing questions and question IDs for a survey; `extract_colmap()` retrieves a similar data frame with more detailed mapping from columns to labels.
 3. `metadata()` retrieves metadata about your survey, such as questions, survey flow, number of responses etc.
 
 Note that you can only export surveys that you own, or to which you have been given administration rights.
