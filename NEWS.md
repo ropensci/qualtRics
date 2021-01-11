@@ -5,6 +5,7 @@
 - Updated links to API documentation
 - Create unique column names for questions using `choiceId` thanks to @lyh970817 (#182)
 - Fix bug when `include_questions` only contains one QID thanks to @lyh970817 (#197)
+- Generate correct/updated column mapping for survey responses thanks to @jmobrien (#199). These column mappings are available as an attribute on survey results or via the new `extract_colmap()` function. 
 
 # qualtRics 3.1.3
 

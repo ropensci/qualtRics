@@ -119,7 +119,11 @@ assert_options_logical <- function(verbose,
                                    convert,
                                    import_id,
                                    label,
-                                   include_displayorder) {
+                                   include_displayorder,
+                                   breakout_sets,
+                                   add_column_map,
+                                   add_var_labels
+                                   ) {
   assertthat::assert_that(assertthat::is.flag(verbose),
                           msg = "'verbose' must be TRUE or FALSE."
   )
@@ -137,5 +141,14 @@ assert_options_logical <- function(verbose,
   )
   assertthat::assert_that(assertthat::is.flag(include_displayorder),
                           msg = "'include_displayorder' must be TRUE or FALSE."
+  )
+  assertthat::assert_that(assertthat::is.flag(breakout_sets),
+                          msg = "'breakout_sets' must be TRUE or FALSE."
+  )
+  assertthat::assert_that(assertthat::is.flag(add_column_map),
+                          msg = "'add_column_map' must be TRUE or FALSE."
+  )
+  assertthat::assert_that(assertthat::is.flag(add_var_labels),
+                          msg = "'add_var_labels' must be TRUE or FALSE."
   )
 } # nolint end
