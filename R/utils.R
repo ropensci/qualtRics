@@ -111,7 +111,10 @@ check_params <- function(...) {
       args$convert,
       args$import_id,
       args$label,
-      args$include_display_order
+      args$include_display_order,
+      args$breakout_sets,
+      args$add_column_map,
+      args$add_var_labels
     )
   }
 

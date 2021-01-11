@@ -16,6 +16,16 @@
 #' for more information on format.
 #' @param legacy Logical. If \code{TRUE}, then import "legacy" format CSV files
 #' (as of 2017). Defaults to \code{FALSE}.
+#' @param add_column_map Logical. If \code{TRUE}, then a column map data frame
+#' will be added as an attribute to the main response data frame.
+#' This column map captures Qualtrics-provided metadata associated with the
+#' response download, such as an item description and internal ID's. Defaults to
+#' \code{TRUE}.
+#' @param add_var_labels Logical. If \code{TRUE}, then the item description from
+#' each variable (equivalent to the one in the column map) will be added as a
+#' "label" attribute using \code{\link[sjlabelled]{set_label}}. Useful for
+#' reference as well as cross-compatibility with other stats packages (e.g.,
+#' Stata, see documentation in \code{sjlabelled}). Defaults to \code{TRUE}.
 #' @param col_types Optional. This argument provides a way to manually overwrite
 #' column types that may be incorrectly guessed. Takes a \code{\link[readr]{cols}}
 #' specification. See example below and \code{\link[readr]{cols}} for formatting
@@ -23,8 +33,22 @@
 #'
 #' @importFrom sjlabelled set_label
 #' @importFrom jsonlite fromJSON
-#' @importFrom stringr str_match
+#' @importFrom assertthat has_name
+#' @importFrom purrr map
+#' @importFrom purrr imap
+#' @importFrom purrr map_dfr
+#' @importFrom tidyr unite
+#' @importFrom tidyr everything
+#' @importFrom tidyr pivot_longer
+#' @importFrom tidyr pivot_wider
+#' @importFrom stringr str_split_fixed
 #' @importFrom readr read_csv
+#' @importFrom readr locale
+#' @importFrom readr type_convert
+#' @importFrom dplyr select
+#' @importFrom dplyr slice
+#' @importFrom rlang set_names
+#'
 #' @return A data frame. Variable labels are stored as attributes. They are not
 #' printed on the console but are visibile in the RStudio viewer.
 #' @export
@@ -51,114 +75,164 @@ read_survey <- function(file_name,
                         import_id = FALSE,
                         time_zone = NULL,
                         legacy = FALSE,
+                        add_column_map = TRUE,
+                        add_var_labels = TRUE,
                         col_types = NULL) {
+
 
   # START UP: CHECK ARGUMENTS PASSED BY USER ----
 
+  # Ignore import_id if legacy = TRUE
   if (import_id & legacy) {
-    stop("Import IDs as column names are not supported for legacy CSVs.\nSet import_id = FALSE.",
-         call. = FALSE)
+    warning("Using import IDs as column names are not supported for legacy response files. Defaulting to user-defined variable names; set import_id = FALSE in future.")
+    import_id = FALSE
   }
 
   # check if file exists
   assert_surveyFile_exists(file_name)
-  # skip 2 rows if legacy format, else 3 when loading the data
-  skipNr <- ifelse(legacy, 2, 3)
 
   # Set time_zone to UTC if left unspecified
   if(is.null(time_zone)){
     time_zone <- "UTC"
   }
 
-  # READ DATA ----
+  # Identify metadata rows - single row for legacy, first 2 rows for current:
+    if(legacy){
+      header_rows <- 1
+    } else {
+      header_rows <- 1:2
+    }
 
-  # import data including variable names (row 1) and variable labels (row 2)
-  rawdata <- suppressMessages(readr::read_csv(
-    file = file_name,
-    col_names = FALSE,
-    col_types = readr::cols(.default = readr::col_character()),
-    skip = skipNr,
-    na = c("")
-  ))
-  # Load headers
-  header <- suppressWarnings(suppressMessages(readr::read_csv(
-    file = file_name,
-    col_names = TRUE,
-    col_types = readr::cols(.default = readr::col_character()),
-    n_max = 1
-  )))
 
-  # Message for no data in survey
-  if (nrow(rawdata) < 1) {
-    message("The survey you are importing has no responses.")
-    tbl <- tibble::as_tibble(matrix(nrow = 0,
-                                    ncol = length(names(header))),
-                             .name_repair = "minimal")
-    colnames(tbl) <- names(header)
-    tbl <- dplyr::mutate_all(tbl, as.character)
-    return(tbl)
-  }
+  # READ RAW DATA ----
 
-  # MANIPULATE DATA ----
+  # import raw data excluding variable names (row 1)
+  # variable JSON (row 2, v3 only)
+  # and descriptions (row 3, or 2 if legacy)
 
-  # make them data.frame's, else the factor conversion
-  # in `infer_data_types` crashes
-  # rawdata <- as.data.frame(rawdata)
-  # header <- as.data.frame(header)
-  # Add names
-  names(rawdata) <- names(header)
-
-  if (import_id) {
-    new_ids <- suppressMessages(readr::read_csv(
+  rawdata <- suppressMessages(
+    readr::read_csv(
       file = file_name,
-      col_names = FALSE,
       col_types = readr::cols(.default = readr::col_character()),
-      skip = skipNr - 1,
-      n_max = 1
+      na = c("")
     ))
-
-     name_json <- jsonlite::fromJSON(
-      paste0('[', paste(as.character(unlist(new_ids)), collapse = ','), ']')
-    )
-     names(rawdata) <- gsub(
-       "_NA",
-       "",
-       paste(name_json$ImportId, name_json$choiceId, sep = "_")
-     )
-  }
 
   # If Qualtrics adds an empty column at the end, remove it
   if (grepl(",$", readLines(file_name, n = 1))) {
-    header <- header[, 1:(ncol(header) - 1)]
     rawdata <- rawdata[, 1:(ncol(rawdata) - 1)]
   }
-  # extract second row, remove it from df
-  secondrow <- unlist(header)
-  row.names(rawdata) <- NULL
 
-  # Clean variable labels
-  if (strip_html) {
-    secondrow <- remove_html(secondrow)
+  # CREATE RESPONSE DATA FRAME ----
+
+  # Remove metadata rows:
+  responsedata <-
+    dplyr::slice(rawdata, -header_rows)
+
+  # Infer data types from data:
+  responsedata <-
+    readr::type_convert(
+      responsedata,
+      locale = readr::locale(tz = time_zone),
+      col_types = col_types)
+
+
+  # GENERATE COLUMN MAP ----
+
+  # Take the first two rows (or just the first if legacy)
+  colmapdata <-
+    dplyr::slice(rawdata, header_rows)
+
+  # Create the column map:
+  if(!legacy){
+
+    # Add a reference column:
+    colmapdata <-
+      dplyr::mutate(colmapdata,
+             metadata_type = c("description", "JSON"))
+
+    # Pivot twice to create the column:
+    col_map <-
+      tidyr::pivot_longer(colmapdata,
+                          -metadata_type,
+                          names_to = "qname")
+    col_map <-
+      tidyr::pivot_wider(col_map,
+                         names_from = "metadata_type",
+                         values_from = "value")
+
+    # Process the JSON column into other columns, dropping the raw JSON:
+    col_map <-
+      dplyr::mutate(col_map,
+                    purrr::map_dfr(JSON, jsonlite::fromJSON),
+                    .keep = "unused")
+
+    # If choiceId does not exist, create it for consistency:
+    if(!assertthat::has_name(col_map, "choiceId")){
+      col_map$choiceId <- NA
+    }
+
+  } else {
+    # If legacy, just create a simple column map with name and description:
+    col_map <-
+      pivot_longer(colmapdata,
+                   tidyr::everything(),
+                   names_to = "qname",
+                   values_to = "description")
   }
 
-  # Scale Question with subquestion:
-  # If it matches one of ".?!" followed by "-", take subsequent part
-  subquestions <- stringr::str_match(secondrow, ".*[:punct:]\\s*-(.*)")[, 2]
+  # If desired, clean variable labels in column map
 
-  # Else if subquestion returns NA, use whole string
-  subquestions[is.na(subquestions)] <- unlist(secondrow[is.na(subquestions)])
+  if (strip_html) {
+    col_map$description <- remove_html(col_map$description)
+  }
 
-  # Remaining NAs default to 'empty string'
-  subquestions[is.na(subquestions)] <- ""
+  # New columns in column map for main and sub questions from description:
 
-  rawdata <- readr::type_convert(rawdata,
-                                 locale = readr::locale(tz = time_zone),
-                                 col_types = col_types)
+  col_map <-
+    dplyr::mutate(col_map,
+           tibble::as_tibble(
+             # Separate out descriptions based on whether there's a " - " separator
+             # Only separates a single time
+             stringr::str_split_fixed(description, "\\s-\\s", n = 2),
+             # Add names
+             .name_repair = ~c("main", "sub")
+           ),
+           # Store after variable description:
+           .after = description
+    )
 
-  # Add labels to data
-  rawdata <- sjlabelled::set_label(rawdata, unlist(subquestions))
+# ASSIGNING QID'S IF import_id = TRUE ----
+  if (import_id) {
+
+    # Rename variables to be "ImportId_ChoiceId" rather than user-defined variable names:
+    qid_names <-
+      tidyr::unite(col_map,
+                   col = qidnames,
+                   c(ImportId, choiceId),
+                   sep = "_",
+                   na.rm = TRUE)[["qidnames"]]
+
+    # Change the response data and column map to use these QID names:
+    names(responsedata) <- qid_names
+    col_map$qname <- qid_names
+
+  }
+
+
+# FINAL CLEANUP ----
+
+  # Add descriptions to data as attribute "label"
+  if(add_var_labels){
+    responsedata <-
+      sjlabelled::set_label(responsedata, col_map$description)
+  }
+
+  # Add column map:
+  if(add_column_map){
+    attr(responsedata, "column_map") <- col_map
+  }
 
   # RETURN ----
 
-  return(rawdata)
+  return(responsedata)
 }
