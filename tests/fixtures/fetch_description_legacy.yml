@@ -1,160 +1,7 @@
 http_interactions:
 - request:
-    method: post
-    uri: https://www.qualtrics.com/API/v3/surveys/SV_6s93xhVtm1e4j3v/export-responses/
-    body:
-      encoding: ''
-      string: '{"useLabels":true,"includeDisplayOrder":true,"breakoutSets":true,"format":"csv"}'
-    headers:
-      X-API-TOKEN: <<<my_api_key>>>
-      Content-Type: application/json
-      Accept: '*/*'
-      accept-encoding: gzip, deflate
-  response:
-    status:
-      status_code: 200
-      category: Success
-      reason: OK
-      message: 'Success: (200) OK'
-    headers:
-      content-length: '174'
-      content-type: application/json
-      referrer-policy: origin-when-cross-origin, strict-origin-when-cross-origin
-      request-time: '562'
-      server: devplat-gateway
-      x-content-type-options: nosniff
-      x-frame-options: DENY
-      x-permitted-cross-domain-policies: master-only
-      x-xss-protection: 1; mode=block
-      date: Tue, 15 Dec 2020 22:47:47 GMT
-      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com;
-        report-uri https://sjc1.qualtrics.com/csp-report
-      strict-transport-security: max-age=31536000; includeSubDomains; preload
-    body:
-      encoding: ASCII-8BIT
-      file: no
-      string: |-
-        eyJyZXN1bHQiOnsicHJvZ3Jlc3NJZCI6IkVTXzl0WGNpY2lyamlUcmU0SiIsInBlcmNlbnRDb21wbGV0
-        ZSI6MC4wLCJzdGF0dXMiOiJpblByb2dyZXNzIn0sIm1ldGEiOnsicmVxdWVzdElkIjoiNTQyNGFkNjEt
-        OTc4Ni00YWNiLWE1NGQtZGI4YWE0ODg2MTA1IiwiaHR0cFN0YXR1cyI6IjIwMCAtIE9LIn19
-  recorded_at: 2020-12-15 22:47:48 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
-- request:
     method: get
-    uri: https://www.qualtrics.com/API/v3/surveys/SV_6s93xhVtm1e4j3v/export-responses/ES_9tXcicirjiTre4J
-    body:
-      encoding: ''
-      string: ''
-    headers:
-      X-API-TOKEN: <<<my_api_key>>>
-      Content-Type: application/json
-      Accept: '*/*'
-      accept-encoding: gzip, deflate
-  response:
-    status:
-      status_code: 200
-      category: Success
-      reason: OK
-      message: 'Success: (200) OK'
-    headers:
-      content-length: '192'
-      content-type: application/json
-      referrer-policy: origin-when-cross-origin, strict-origin-when-cross-origin
-      request-time: '31'
-      server: devplat-gateway
-      x-content-type-options: nosniff
-      x-frame-options: DENY
-      x-permitted-cross-domain-policies: master-only
-      x-xss-protection: 1; mode=block
-      date: Tue, 15 Dec 2020 22:47:47 GMT
-      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com;
-        report-uri https://sjc1.qualtrics.com/csp-report
-      strict-transport-security: max-age=31536000; includeSubDomains; preload
-    body:
-      encoding: ASCII-8BIT
-      file: no
-      string: |-
-        eyJyZXN1bHQiOnsiZmlsZUlkIjoiZWY4ZjA1YjYtZWY1OS00M2U3LWE4ZWQtNjQ4OWQ4MTkxOWZiLWRl
-        ZiIsInBlcmNlbnRDb21wbGV0ZSI6MTAwLjAsInN0YXR1cyI6ImNvbXBsZXRlIn0sIm1ldGEiOnsicmVx
-        dWVzdElkIjoiYWViYmI5NjAtMjFiOS00YWM2LTgzYzAtYjE3MTEyYjAxYTk5IiwiaHR0cFN0YXR1cyI6
-        IjIwMCAtIE9LIn19
-  recorded_at: 2020-12-15 22:47:48 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
-- request:
-    method: get
-    uri: https://www.qualtrics.com/API/v3/surveys/SV_6s93xhVtm1e4j3v/export-responses/ef8f05b6-ef59-43e7-a8ed-6489d81919fb-def/file
-    body:
-      encoding: ''
-      string: ''
-    headers:
-      X-API-TOKEN: <<<my_api_key>>>
-      Content-Type: application/json
-      Accept: '*/*'
-      accept-encoding: gzip, deflate
-  response:
-    status:
-      status_code: 200
-      category: Success
-      reason: OK
-      message: 'Success: (200) OK'
-    headers:
-      content-disposition: attachment; filename=API+TEST+PROJECT.zip
-      content-length: '1905'
-      content-type: application/zip
-      referrer-policy: origin-when-cross-origin, strict-origin-when-cross-origin
-      request-time: '93'
-      server: devplat-gateway
-      x-content-type-options: nosniff
-      x-frame-options: DENY
-      x-permitted-cross-domain-policies: master-only
-      x-xss-protection: 1; mode=block
-      content-encoding: gzip
-      date: Tue, 15 Dec 2020 22:47:48 GMT
-      vary: Accept-Encoding
-      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com;
-        report-uri https://sjc1.qualtrics.com/csp-report
-      strict-transport-security: max-age=31536000; includeSubDomains; preload
-    body:
-      encoding: ASCII-8BIT
-      file: no
-      string: |-
-        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
-        AAAAAA==
-  recorded_at: 2020-12-15 22:47:48 GMT
-  recorded_with: vcr/0.6.0, webmockr/0.7.4
-- request:
-    method: get
-    uri: https://www.qualtrics.com/API/v3/surveys/SV_6s93xhVtm1e4j3v/
+    uri: https://utexas.ca1.qualtrics.com/API/v3/surveys/SV_6s93xhVtm1e4j3v/
     body:
       encoding: ''
       string: ''
@@ -173,14 +20,14 @@ http_interactions:
       content-length: '4738'
       content-type: application/json
       referrer-policy: origin-when-cross-origin, strict-origin-when-cross-origin
-      request-time: '148'
+      request-time: '164'
       server: devplat-gateway
       x-content-type-options: nosniff
       x-frame-options: DENY
       x-permitted-cross-domain-policies: master-only
       x-xss-protection: 1; mode=block
       content-encoding: gzip
-      date: Tue, 15 Dec 2020 22:47:48 GMT
+      date: Mon, 11 Jan 2021 19:24:11 GMT
       vary: Accept-Encoding
       content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com;
         report-uri https://sjc1.qualtrics.com/csp-report
@@ -489,8 +336,8 @@ http_interactions:
         W3siaWQiOiJCTF8wckVNbGwxMU9HZElyV3QiLCJ0eXBlIjoiQmxvY2sifSx7ImlkIjoiQkxfMFZaMDI1
         RjllNldPdWxuIiwidHlwZSI6IkJsb2NrIn0seyJpZCI6IkJMX2NVQ3FoOTVPbkFnZjVsMyIsInR5cGUi
         OiJCbG9jayJ9XSwiZW1iZWRkZWREYXRhIjpbXSwiY29tbWVudHMiOnt9LCJsb29wQW5kTWVyZ2UiOnt9
-        LCJyZXNwb25zZUNvdW50cyI6eyJhdWRpdGFibGUiOjAsImdlbmVyYXRlZCI6MjQsImRlbGV0ZWQiOjI0
-        fX0sIm1ldGEiOnsiaHR0cFN0YXR1cyI6IjIwMCAtIE9LIiwicmVxdWVzdElkIjoiY2NiNWUwOTQtN2U4
-        OC00ODBmLTgwMDItMzBhODg4OTJmOWQ2In19
-  recorded_at: 2020-12-15 22:47:48 GMT
+        LCJyZXNwb25zZUNvdW50cyI6eyJhdWRpdGFibGUiOjAsImdlbmVyYXRlZCI6MTAsImRlbGV0ZWQiOjB9
+        fSwibWV0YSI6eyJodHRwU3RhdHVzIjoiMjAwIC0gT0siLCJyZXF1ZXN0SWQiOiI2MGI3MGZhMC05OTUy
+        LTQwYWEtODVlNi1hNTA0ODViMWM4YzkifX0=
+  recorded_at: 2021-01-11 19:24:11 GMT
   recorded_with: vcr/0.6.0, webmockr/0.7.4
