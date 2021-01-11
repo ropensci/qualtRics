@@ -14,3 +14,16 @@ Helper function to extract the column map attached to a response data
 download obtained from \code{\link[qualtRics]{fetch_survey}} (using the
 default \code{add_column_map = TRUE})
 }
+\examples{
+\dontrun{
+# Retrieve a list of surveys
+surveys <- all_surveys()
+
+# Retrieve a single survey
+mysurvey <- fetch_survey(surveyID = surveys$id[6])
+
+# Extract column mapping for survey
+extract_colmap(mysurvey)
+}
+
+}

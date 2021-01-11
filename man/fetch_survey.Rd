@@ -131,8 +131,6 @@ surveys <- all_surveys()
 # Retrieve a single survey
 mysurvey <- fetch_survey(surveyID = surveys$id[6])
 
-attr(mysurvey, "column_map")
-
 mysurvey <- fetch_survey(
   surveyID = surveys$id[6],
   save_dir = tempdir(),

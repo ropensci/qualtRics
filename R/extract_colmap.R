@@ -9,6 +9,18 @@
 #' @importFrom purrr imap_dfr
 #'
 #' @export
+#' @examples
+#' \dontrun{
+#' # Retrieve a list of surveys
+#' surveys <- all_surveys()
+#'
+#' # Retrieve a single survey
+#' mysurvey <- fetch_survey(surveyID = surveys$id[6])
+#'
+#' # Extract column mapping for survey
+#' extract_colmap(mysurvey)
+#' }
+#'
 
 extract_colmap <- function(respdata) {
 
