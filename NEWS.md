@@ -1,4 +1,4 @@
-# qualtRics (development version)
+# qualtRics 3.1.4
 
 - Add `fetch_distributions()` to access distribution data for a specific survey thanks to @dsen6644 (#169)
 - Handle mailing list embedded data better thanks to @dsen6644 (#175)
