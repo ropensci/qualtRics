@@ -1,7 +1,7 @@
 Package: qualtRics
 Type: Package
 Title: Download 'Qualtrics' Survey Data
-Version: 3.1.4
+Version: 3.1.4.9000
 Authors@R: c(person("Jasper", "Ginn", role = c("aut"),
              email = "jasperginn@gmail.com"),
              person("Jackson", "Curtis", role = c("ctb"),
