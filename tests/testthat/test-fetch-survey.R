@@ -4,8 +4,6 @@ test_that("fetch_survey() returns survey with default params", {
 
   skip_on_cran()
 
-  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
-
   vcr::use_cassette("fetch_survey", {
     x <- fetch_survey("SV_3gbwq8aJgqPwQDP")
   })
@@ -30,8 +28,6 @@ test_that("fetch_survey() returns survey with default params", {
 test_that("fetch_survey() returns survey with custom params", {
 
   skip_on_cran()
-
-  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
 
   vcr::use_cassette("fetch_survey_custom", {
     x <- fetch_survey(
@@ -72,22 +68,45 @@ test_that("fetch_survey() returns survey with custom params", {
 
 })
 
-test_that("using fetch_survey() with a base URL that doesn't end with '.qualtrics.com' fails", {
+test_that("fetch_survey() returns survey with only one QID", {
 
-  qualtrics_api_credentials(api_key = "1234", base_url = "abcd")
-  # This should error on check_params()
-  expect_error(
-    qualtRics::fetch_survey(),
-    "The Qualtrics base URL must end with"
-  ) # nolint
+  skip_on_cran()
+
+  vcr::use_cassette("fetch_one_qid", {
+    x <- fetch_survey(
+      "SV_56icaa9YAafpAqx",
+      force_request = TRUE,
+      limit = 15,
+      include_questions = c("QID9"),
+      breakout_sets = FALSE
+    )
+  })
+
+  expect_s3_class(x, c("spec_tbl_df", "tbl_df","tbl","data.frame"))
+  expect_equal(nrow(x), 15)
+  expect_named(x, c("StartDate", "EndDate", "Status",
+                    "Progress", "Duration (in seconds)", "Finished",
+                    "RecordedDate", "ResponseId", "DistributionChannel",
+                    "UserLanguage", "Q3.2",
+                    "SolutionRevision",
+                    "Q3.8 - Parent Topics",
+                    "Q3.8 - Sentiment Polarity",
+                    "Q3.8 - Sentiment Score",
+                    "Q3.8 - Sentiment",
+                    "Q3.8 - Topic Sentiment Label",
+                    "Q3.8 - Topic Sentiment Score",
+                    "Q3.8 - Topics"))
+  expect_type(x$Status, "character")
+  expect_type(x$`Duration (in seconds)`, "double")
+  expect_type(x$Finished, "logical")
+  expect_type(x$ResponseId, "character")
+  expect_s3_class(x$`Q3.2`, "factor")
+
 })
 
+
+
 test_that("fetch_survey() reads a stored survey in temporary directory if exists", {
-  # Register dummy key
-  qualtrics_api_credentials(
-    api_key = "1234",
-    base_url = "yourdatacenterid.qualtrics.com"
-  )
   # Store RDS file
   data <- "SUCCESS"
   curr.wd <- getwd()
@@ -127,13 +146,25 @@ test_that("Handle convert and label conditions", {
 })
 
 test_that("unanswer_recode is integer-ish", {
-  qualtrics_api_credentials(
-    api_key = "1234",
-    base_url = "https://yourdatacenterid.qualtrics.com"
-  )
   # Call fetch_survey
   expect_error(
     fetch_survey("1234", unanswer_recode = "hello"),
     "unanswer_recode must be an integer-like scalar"
   )
 })
+
+test_that("using fetch_survey() with a base URL that doesn't end with '.qualtrics.com' fails", {
+
+  qualtrics_api_credentials(api_key = "1234", base_url = "abcd")
+  # This should error on check_params()
+  expect_error(
+    qualtRics::fetch_survey(),
+    "The Qualtrics base URL must end with"
+  ) # nolint
+
+
+})
+
+# Restore the credentials for other tests:
+qualtrics_api_credentials(api_key = holder_API, base_url = holder_URL)
+

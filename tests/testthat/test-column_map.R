@@ -2,8 +2,6 @@ context("Column mapping for one survey")
 
 test_that("column_map() retrieves survey column mapping", {
 
-  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
-
   vcr::use_cassette("column_map", {
     x <- column_map("SV_5BJRo2RGHajIlOB")
   })

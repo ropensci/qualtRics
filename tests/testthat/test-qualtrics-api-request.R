@@ -73,3 +73,6 @@ test_that("it should throw an error after certain 400 and 500 status codes", {
   webmockr::disable()
 })
 
+# Restore the credentials for other tests:
+qualtrics_api_credentials(api_key = holder_API, base_url = holder_URL)
+

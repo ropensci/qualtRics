@@ -1,7 +1,7 @@
 Package: qualtRics
 Type: Package
 Title: Download 'Qualtrics' Survey Data
-Version: 3.1.3.9000
+Version: 3.1.4.9000
 Authors@R: c(person("Jasper", "Ginn", role = c("aut"),
              email = "jasperginn@gmail.com"),
              person("Jackson", "Curtis", role = c("ctb"),
@@ -33,7 +33,7 @@ BugReports: https://github.com/ropensci/qualtRics/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
-RoxygenNote: 7.1.0.9000
+RoxygenNote: 7.1.1
 Imports:
     httr,
     stringr,
@@ -41,7 +41,8 @@ Imports:
     jsonlite,
     assertthat,
     sjlabelled,
-    dplyr,
+    dplyr (>= 1.0),
+    tidyr,
     rlang,
     purrr,
     tibble,
@@ -53,4 +54,5 @@ Suggests:
     testthat,
     vcr,
     webmockr
-VignetteBuilder: knitr
+VignetteBuilder: 
+    knitr

@@ -33,7 +33,7 @@ Currently, the package contains three core functions:
 It also contains helper functions:
 
 1. `qualtrics_api_credentials()` stores your API key and base url in environment variables.
-2. `survey_questions()` retrieves a data frame containing questions and question IDs for a survey.
+2. `survey_questions()` retrieves a data frame containing questions and question IDs for a survey; `extract_colmap()` retrieves a similar data frame with more detailed mapping from columns to labels.
 3. `metadata()` retrieves metadata about your survey, such as questions, survey flow, number of responses etc.
 
 Note that you can only export surveys that you own, or to which you have been given administration rights.
@@ -81,7 +81,7 @@ mysurvey <- fetch_survey(surveys$id[4],
 ```
 
 
-Note that your date and time settings may not correspond to your own timezone. You can find out how to do this [here](https://www.qualtrics.com/support/survey-platform/managing-your-account/research-core-account-settings/#user-settings). See [this page](https://api.qualtrics.com/instructions/docs/Instructions/dates-and-times.md) for more information about how Qualtrics handles dates and times. **Keep in mind that this is important if you plan on using times / dates as cut-off points to filter data**.
+Note that your date and time settings may not correspond to your own timezone. You can find out how to do this [here](https://www.qualtrics.com/support/survey-platform/managing-your-account/research-core-account-settings/#user-settings). See [this page](https://api-test.qualtrics.com/docs/publicapidocs/docs/Instructions/dates-and-times.md) for more information about how Qualtrics handles dates and times. **Keep in mind that this is important if you plan on using times / dates as cut-off points to filter data**.
 
 You may also reference a response ID; `fetch_survey()` will then download all responses that were submitted after that response:
 

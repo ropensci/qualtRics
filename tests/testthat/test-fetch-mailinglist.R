@@ -2,8 +2,6 @@ context("Fetch a single mailing list by ID")
 
 test_that("fetch_mailinglist returns a tbl_df with expected column names and types", {
 
-  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
-
   vcr::use_cassette("fetch_mailinglist", {
     x <- fetch_mailinglist("ML_6xLATuSWeOcGWyh")
   })

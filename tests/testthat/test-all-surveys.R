@@ -2,8 +2,6 @@ context("All surveys that the user has access to on Qualtrics")
 
 test_that("all_surveys() sends the proper request to Qualtrics", {
 
-  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
-
   vcr::use_cassette("all_surveys", {
     x <- all_surveys()
   })
@@ -20,12 +18,19 @@ test_that("all_surveys() sends the proper request to Qualtrics", {
 
 })
 
-test_that("all_surveys() throws an error", {
 
-  qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
+# Set to bad URL:
+qualtrics_api_credentials(api_key = "1234",
+                          base_url = "t.qualtrics.com")
+
+test_that("all_surveys() throws an error when URL & key is bad", {
 
   expect_error(
     all_surveys(),
     "you may not have the\nrequired authorization"
   )
 })
+
+# Reset the credentials:
+qualtrics_api_credentials(api_key = holder_API, base_url = holder_URL)
+
