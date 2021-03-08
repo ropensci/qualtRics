@@ -6,9 +6,9 @@
 #'
 #' @param surveyID A string. Unique ID for the survey you want to download.
 #' Returned as 'id' by the \link[qualtRics]{all_surveys} function.
-#' @param get A list containing `TRUE`/`FALSE` values of one of the following:
-#' `metadata`, `questions`, `responsecounts`, `blocks`, `flow`, `embedded_data`,
-#' or `comments`. A `TRUE` value will return that specific element. If you leave
+#' @param get A character vector containing any of the following: `metadata`,
+#' `questions`, `responsecounts`, `blocks`, `flow`, `embedded_data`,
+#' or `comments`. Will return included elements. If you leave
 #' this empty, the function will return the `metadata`, `questions`, and
 #' `responsecounts` elements. See examples below for more information.
 #' @param ... Additional options. User may pass an argument called `questions`,
@@ -66,7 +66,18 @@ metadata <- function(surveyID,
     message("Use of logical lists for argument 'get' has been deprecated.
     In future, use a character vector including desired elements")
 
-    get <- names(get)[unlist(get)]
+    # Pull out the TRUE elements of the list:
+    get_true <- names(get)[unlist(get)]
+    # Pull out the FALSE elements of the list:
+    get_false <- names(get)[!unlist(get)]
+
+    # Restore old behavior when using lists (metadata, questions, responsecounts
+    # included unless specifically specified as FALSE):
+    get <-
+      setdiff(
+        union(c("metadata", "questions", "responsecounts"),
+                 get_true),
+        get_false)
 
   }
 

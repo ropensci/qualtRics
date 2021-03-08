@@ -10,9 +10,9 @@ metadata(surveyID, get = NULL, ...)
 \item{surveyID}{A string. Unique ID for the survey you want to download.
 Returned as 'id' by the \link[qualtRics]{all_surveys} function.}
 
-\item{get}{A list containing `TRUE`/`FALSE` values of one of the following:
-`metadata`, `questions`, `responsecounts`, `blocks`, `flow`, `embedded_data`,
-or `comments`. A `TRUE` value will return that specific element. If you leave
+\item{get}{A character vector containing any of the following: `metadata`,
+`questions`, `responsecounts`, `blocks`, `flow`, `embedded_data`,
+or `comments`. Will return included elements. If you leave
 this empty, the function will return the `metadata`, `questions`, and
 `responsecounts` elements. See examples below for more information.}
 
