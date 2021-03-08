@@ -463,12 +463,7 @@ infer_data_types <- function(data,
                              verbose = FALSE) {
 
   # Download survey metadata
-  md <- tibble::enframe(metadata(surveyID,
-                                 get = list(
-                                   "questions" = TRUE,
-                                   "metadata" = FALSE,
-                                   "responsecounts" = FALSE
-                                 ))[[1]])
+  md <- md <- tibble::enframe(metadata(surveyID, get = "questions")[[1]])
 
   # Check which questions are of allowed types
   md_parsed <- dplyr::mutate(md,
