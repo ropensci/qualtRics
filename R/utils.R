@@ -248,6 +248,16 @@ create_distributions_url <- function(base_url, surveyID){
   return(distributions_url)
 }
 
+create_distribution_history_url <- function(base_url, distributionId){
+  # create url
+  distribution_history_url <-
+    paste0(
+      create_root_url(base_url),
+      "distributions/", distributionId, "/history"
+    )
+  return(distribution_history_url)
+}
+
 #' Create raw JSON payload to post response exports request
 #'
 #' @param label Flag
