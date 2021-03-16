@@ -52,6 +52,7 @@
 #' }
 #'
 metadata <- function(surveyID,
+                     survey_definition,
                      get = list(),
                      ...) {
 
@@ -103,7 +104,7 @@ metadata <- function(surveyID,
   # QUERY API ----
 
   # Function-specific API stuff
-  survey_url <- create_survey_url(Sys.getenv("QUALTRICS_BASE_URL"), surveyID)
+  survey_url <- create_survey_url(Sys.getenv("QUALTRICS_BASE_URL"), surveyID, survey_definition)
 
   # Send GET request to specific survey
   resp <- qualtrics_api_request("GET", survey_url)
@@ -114,57 +115,91 @@ metadata <- function(surveyID,
   # RESHAPE DATA ----
 
   # Metadata
-  metadata <- data.frame(
-    "surveyID" = resp_filt$id,
-    "name" = resp_filt$name,
-    "ownerId" = resp_filt$ownerId,
-    "organizationId" = resp_filt$organizationId,
-    "isActive" = resp_filt$isActive,
-    "creationDate" = resp_filt$creationDate,
-    "lastModifiedDate" = resp_filt$lastModifiedDate,
-    "expiration_startdate" = ifelse(is.null(resp_filt$expiration$startDate),
-      NA,
-      resp_filt$expiration$startDate
-    ),
-    "expiration_endDate" = ifelse(is.null(resp_filt$expiration$endDate),
-      NA,
-      resp_filt$expiration$endDate
+  if (survey_definition) {
+    metadata <- data.frame(
+      "surveyID" = resp_filt$SurveyID,
+      "name" = resp_filt$SurveyName,
+      "ownerId" = resp_filt$OwnerID,
+      "organizationId" = resp_filt$CreatorID,
+      "isActive" = resp_filt$SurveyStatus
     )
-  )
-  # Response counts
-  responsecounts <- data.frame(
-    "auditable" = resp_filt$responseCounts$auditable,
-    "generated" = resp_filt$responseCounts$generated,
-    "deleted" = resp_filt$responseCounts$deleted
-  )
 
-  # Metadata about questions
-  if (!is.null(q_select)) {
-    qnames <- vapply(resp_filt$questions, function(x) {
-      x$questionName
-    }, "")
-    if (all(q_select %in% qnames)) {
-      questions <- resp_filt$questions[which(qnames %in% q_select)]
+    if (!is.null(q_select)) {
+      qnames <- vapply(resp_filt$Questions, function(x) {
+        x$DataExportTag
+      }, "")
+      if (all(q_select %in% qnames)) {
+        questions <- resp_filt$Questions[which(qnames %in% q_select)]
+      } else {
+        warning(paste0("One or more questions you queried are not present in your survey.\nReturning all questions instead.")) # nolint
+        questions <- resp_filt$Questions
+      }
     } else {
-      warning(paste0("One or more questions you queried are not present in your survey.\nReturning all questions instead.")) # nolint
+      questions <- resp_filt$Questions
+    }
+
+    # Construct metadata
+    met <- list(
+      "metadata" = metadata,
+      "questions" = questions,
+      "blocks" = resp_filt$Blocks,
+      "flow" = resp_filt$SurveyFlow
+    )
+  }
+  else {
+    metadata <- data.frame(
+      "surveyID" = resp_filt$id,
+      "name" = resp_filt$name,
+      "ownerId" = resp_filt$ownerId,
+      "organizationId" = resp_filt$organizationId,
+      "isActive" = resp_filt$isActive,
+      "creationDate" = resp_filt$creationDate,
+      "lastModifiedDate" = resp_filt$lastModifiedDate,
+      "expiration_startdate" = ifelse(is.null(resp_filt$expiration$startDate),
+        NA,
+        resp_filt$expiration$startDate
+      ),
+      "expiration_endDate" = ifelse(is.null(resp_filt$expiration$endDate),
+        NA,
+        resp_filt$expiration$endDate
+      )
+    )
+    # Response counts
+    responsecounts <- data.frame(
+      "auditable" = resp_filt$responseCounts$auditable,
+      "generated" = resp_filt$responseCounts$generated,
+      "deleted" = resp_filt$responseCounts$deleted
+    )
+
+    # Metadata about questions
+    if (!is.null(q_select)) {
+      qnames <- vapply(resp_filt$questions, function(x) {
+        x$questionName
+      }, "")
+      if (all(q_select %in% qnames)) {
+        questions <- resp_filt$questions[which(qnames %in% q_select)]
+      } else {
+        warning(paste0("One or more questions you queried are not present in your survey.\nReturning all questions instead.")) # nolint
+        questions <- resp_filt$questions
+      }
+    } else {
       questions <- resp_filt$questions
     }
-  } else {
-    questions <- resp_filt$questions
+
+    # Construct metadata
+    met <- list(
+      "metadata" = metadata,
+      "questions" = questions,
+      "responsecounts" = responsecounts,
+      "blocks" = resp_filt$blocks,
+      "flow" = resp_filt$flow,
+      "embedded_data" = resp_filt$embeddedData,
+      "comments" = resp_filt$comments
+    )
   }
 
   # WRAP UP AND RETURN ----
 
-  # Construct metadata
-  met <- list(
-    "metadata" = metadata,
-    "questions" = questions,
-    "responsecounts" = responsecounts,
-    "blocks" = resp_filt$blocks,
-    "flow" = resp_filt$flow,
-    "embedded_data" = resp_filt$embeddedData,
-    "comments" = resp_filt$comments
-  )
   # Make subset
   met_ss <- met[names(standard_list[vapply(
     standard_list,
