@@ -5,15 +5,15 @@
 #' of responses, general metadata, survey flow, etc.
 #'
 #' @param surveyID A string. Unique ID for the survey you want to download.
-#' Returned as 'id' by the \link[qualtRics]{all_surveys} function.
-#' @param get A character vector containing any of the following: `metadata`,
-#' `questions`, `responsecounts`, `blocks`, `flow`, `embedded_data`,
-#' or `comments`. Will return included elements. If you leave
-#' this empty, the function will return the `metadata`, `questions`, and
-#' `responsecounts` elements. See examples below for more information.
+#' Returned as "id" by the [all_surveys] function.
+#' @param get A character vector containing any of the following: "metadata",
+#' "questions", "responsecounts", "blocks", "flow", "embedded_data",
+#' or "comments". Will return included elements. By default, the function
+#' returns the "metadata", "questions", and "responsecounts" elements.
+#' See examples below for more information.
 #' @param ... Additional options. User may pass an argument called `questions`,
-#' which should be a vector containing the names of questions for which you
-#' want to return metadata.
+#' a vector containing the names of questions for which you want to
+#' return metadata.
 #'
 #' @importFrom assertthat assert_that
 #' @export
@@ -161,7 +161,10 @@ metadata <- function(surveyID,
     if (all(q_select %in% qnames)) {
       questions <- resp_filt$questions[which(qnames %in% q_select)]
     } else {
-      warning(paste0("One or more questions you queried are not present in your survey.\nReturning all questions instead.")) # nolint
+      rlang::warn(
+        paste0("One or more questions you queried are not present in your survey.",
+               "\nReturning all questions instead.")
+      ) # nolint
       questions <- resp_filt$questions
     }
   } else {

@@ -1,18 +1,21 @@
-#' Download complete survey description using the current (v3) Qualtrics
-#' "Get Survey" API endpoint.
+#' Download complete survey description using the Qualtrics v3 "Get Survey"
+#' API endpoint.
 #'
 #' @param surveyID A string. Unique ID for the survey you want to download.
-#' Returned as 'id' by the \link[qualtRics]{all_surveys} function.
+#' Returned as "id" by the [all_surveys] function.
 #' @param elements A character vector. Lists elements of survey definition to be
 #' maintained.  Possible elements are "metadata", "surveyoptions", "flow",
-#' "blocks", "questions", "responsesets", and/or "scoring", case-insensitive.
+#' "blocks", "questions", "responsesets", and/or "scoring" (case-insensitive).
 #' If `legacy = TRUE`, then possible elements are "metadata", "questions",
 #' "responsecounts", "blocks", "flow", "embedded_data", and/or "comments".
 #' @param legacy Logical.  If TRUE, will use older Get Survey API endpoint
-#' via a call to legacy function metadata().
-#' @param ... Additional options only used when `legacy = TRUE`. User may pass
-#' an argument called `questions`, which should be a vector containing the names
-#' of questions for which you want to return metadata.
+#' via a call to legacy function [metadata].
+#' @param ... Additional options, only used when `legacy = TRUE`. User may pass
+#' an argument called `questions`, a vector containing the names of questions
+#' for which you want to return metadata.
+#'
+#' @return A list containing survey description metadata. The contents of the
+#' returned list depend on `elements`.
 #'
 #' @importFrom purrr map
 #' @importFrom purrr pluck<-
@@ -64,19 +67,33 @@ fetch_description <-
     assert_base_url()
     assert_api_key()
 
-    if(is.null(elements)){
-
+    if (is.null(elements)) {
       elements <-
-        c("metadata", "surveyoptions", "flow", "blocks", "questions", "responsesets", "scoring")
+        c(
+          "metadata",
+          "surveyoptions",
+          "flow",
+          "blocks",
+          "questions",
+          "responsesets",
+          "scoring"
+        )
 
     } else {
-
       # case insensitivity:
       elements <- tolower(elements)
 
       # Check if bad elements were passed by user:
       allowed <-
-        c("metadata", "surveyoptions", "flow", "blocks", "questions", "responsesets", "scoring")
+        c(
+          "metadata",
+          "surveyoptions",
+          "flow",
+          "blocks",
+          "questions",
+          "responsesets",
+          "scoring"
+        )
 
       assertthat::assert_that(
         all(tolower(elements) %in% allowed),
@@ -105,10 +122,19 @@ fetch_description <-
 
     # Mark the elements that are a part of metadata:
     metadata_names <-
-      c("BrandID", "BrandBaseURL",  "SurveyName", "SurveyStatus",
-        "SurveyID", "OwnerID", "CreatorID",
-        "LastModified", "LastAccessed", "LastActivated",
-        "QuestionCount")
+      c(
+        "BrandID",
+        "BrandBaseURL",
+        "SurveyName",
+        "SurveyStatus",
+        "SurveyID",
+        "OwnerID",
+        "CreatorID",
+        "LastModified",
+        "LastAccessed",
+        "LastActivated",
+        "QuestionCount"
+      )
     # Convert NULLs to NAs and make into tidy dataframe:
     metadata <-
       tibble::enframe(
