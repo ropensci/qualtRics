@@ -1,5 +1,7 @@
 # qualtRics (development version)
 
+- Add `fetch_description()` to download complete survey description metadata from v3 API endpoint (more up-to-date than older `metadata()`) thanks to @jmobrien (#207)
+
 # qualtRics 3.1.4
 
 - Add `fetch_distributions()` to access distribution data for a specific survey thanks to @dsen6644 (#169)
