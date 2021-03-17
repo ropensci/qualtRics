@@ -2,31 +2,35 @@
 % Please edit documentation in R/fetch_description.R
 \name{fetch_description}
 \alias{fetch_description}
-\title{Download complete survey description using the current (v3) Qualtrics
-"Get Survey" API endpoint.}
+\title{Download complete survey description using the Qualtrics v3 "Get Survey"
+API endpoint.}
 \usage{
 fetch_description(surveyID, elements = NULL, legacy = FALSE, ...)
 }
 \arguments{
 \item{surveyID}{A string. Unique ID for the survey you want to download.
-Returned as 'id' by the \link[qualtRics]{all_surveys} function.}
+Returned as "id" by the \link{all_surveys} function.}
 
 \item{elements}{A character vector. Lists elements of survey definition to be
 maintained.  Possible elements are "metadata", "surveyoptions", "flow",
-"blocks", "questions", "responsesets", and/or "scoring", case-insensitive.
-If `legacy = TRUE`, then possible elements are "metadata", "questions",
+"blocks", "questions", "responsesets", and/or "scoring" (case-insensitive).
+If \code{legacy = TRUE}, then possible elements are "metadata", "questions",
 "responsecounts", "blocks", "flow", "embedded_data", and/or "comments".}
 
 \item{legacy}{Logical.  If TRUE, will use older Get Survey API endpoint
-via a call to legacy function metadata().}
+via a call to legacy function \link{metadata}.}
 
-\item{...}{Additional options only used when `legacy = TRUE`. User may pass
-an argument called `questions`, which should be a vector containing the names
-of questions for which you want to return metadata.}
+\item{...}{Additional options, only used when \code{legacy = TRUE}. User may pass
+an argument called \code{questions}, a vector containing the names of questions
+for which you want to return metadata.}
+}
+\value{
+A list containing survey description metadata. The contents of the
+returned list depend on \code{elements}.
 }
 \description{
-Download complete survey description using the current (v3) Qualtrics
-"Get Survey" API endpoint.
+Download complete survey description using the Qualtrics v3 "Get Survey"
+API endpoint.
 }
 \examples{
 \dontrun{
