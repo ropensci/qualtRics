@@ -218,6 +218,16 @@ create_fetch_url <- function(base_url, surveyID) {
   return(fetch_url)
 }
 
+create_description_url <- function(base_url, surveyID) {
+  # create url
+  survey_url <-
+    paste0(
+      create_root_url(base_url),
+      "survey-definitions/", surveyID, "/"
+    )
+  return(survey_url)
+}
+
 create_mailinglists_url <- function(base_url){
   # create mailinglist url
   mailinglists_url <-
@@ -453,12 +463,7 @@ infer_data_types <- function(data,
                              verbose = FALSE) {
 
   # Download survey metadata
-  md <- tibble::enframe(metadata(surveyID,
-                                 get = list(
-                                   "questions" = TRUE,
-                                   "metadata" = FALSE,
-                                   "responsecounts" = FALSE
-                                 ))[[1]])
+  md <- md <- tibble::enframe(metadata(surveyID, get = "questions")[[1]])
 
   # Check which questions are of allowed types
   md_parsed <- dplyr::mutate(md,
