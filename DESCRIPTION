@@ -33,7 +33,8 @@ BugReports: https://github.com/ropensci/qualtRics/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: TRUE
-RoxygenNote: 7.1.1
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1.9001
 Imports:
     httr,
     stringr,
