@@ -19,15 +19,17 @@
 #'}
 #'
 
-fetch_distribution_history <- function(distributionID){
+fetch_distribution_history <- function(distributionID, surveyID){
 
   # qualtrics distribution history parameters can be found at https://api.qualtrics.com/guides/reference/distributions.json/paths/~1distributions~1%7BdistributionId%7D~1history/get
 
   assert_base_url()
   assert_api_key()
+  assert_parent_distribution(distributionID = distributionID,
+                             surveyID = surveyID)
 
   fetch_url <- create_distribution_history_url(base_url = Sys.getenv("QUALTRICS_BASE_URL"),
-                                               distributionID = distributionID)
+                                               distributionId = distributionID)
 
   elements <- list()
 
@@ -51,6 +53,15 @@ fetch_distribution_history <- function(distributionID){
                       openedAt = purrr::map_chr(elements, "openedAt", .default = NA_character_),
                       responseStartedAt = purrr::map_chr(elements, "responseStartedAt", .default = NA_character_),
                       surveySessionId = purrr::map_chr(elements, "surveySessionId", .default = NA_character_))
+
+  links <- list_distribution_links(base_url = Sys.getenv("QUALTRICS_BASE_URL"),
+                                   distributionId = distributionID,
+                                   surveyId = surveyID)
+
+  links <- dplyr::select(links, contactId, email, linkExpiration, lastName,
+                         firstName, externalDataReference, unsubscribed)
+
+  x <- dplyr::left_join(x, links, by = "contactId")
 
   return(x)
 
