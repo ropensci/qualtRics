@@ -243,7 +243,7 @@ create_distribution_url <- function(base_url, distributionId, surveyId){
   distribution_url <-
     paste0(
       create_root_url(base_url),
-      "distributions/", distributionId, "?surveyId=", surveyID
+      "distributions/", distributionId, "?surveyId=", surveyId
     )
   return(distribution_url)
 }

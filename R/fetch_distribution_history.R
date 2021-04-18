@@ -55,8 +55,8 @@ fetch_distribution_history <- function(distributionID, surveyID){
                       surveySessionId = purrr::map_chr(elements, "surveySessionId", .default = NA_character_))
 
   links <- list_distribution_links(base_url = Sys.getenv("QUALTRICS_BASE_URL"),
-                                   distributionId = distributionID,
-                                   surveyId = surveyID)
+                                   distributionID = distributionID,
+                                   surveyID = surveyID)
 
   links <- dplyr::select(links, contactId, email, linkExpiration, lastName,
                          firstName, externalDataReference, unsubscribed)
