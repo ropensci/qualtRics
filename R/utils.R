@@ -19,15 +19,15 @@ qualtrics_response_codes <- function(res, raw = FALSE) {
       "OK" = TRUE
     ))
   } else if (res$status_code == 401) {
-    stop("Qualtrics API raised an authentication (401) error - you may not have the\nrequired authorization. Please check your API key and root url.") # nolint
+    rlang::abort("Qualtrics API raised an authentication (401) error - you may not have the\nrequired authorization. Please check your API key and root url.") # nolint
   } else if (res$status_code == 403) {
-    stop("Qualtrics API raised an forbidden (403) error - you may have a valid API\nkey that lacks permissions to query the API. Please check your settings and/or talk to your administrators.") # nolint
+    rlang::abort("Qualtrics API raised an forbidden (403) error - you may have a valid API\nkey that lacks permissions to query the API. Please check your settings and/or talk to your administrators.") # nolint
   } else if (res$status_code == 400) {
-    stop("Qualtrics API raised a bad request (400) error - Please report this on\nhttps://github.com/ropensci/qualtRics/issues") # nolint
+    rlang::abort("Qualtrics API raised a bad request (400) error - Please report this on\nhttps://github.com/ropensci/qualtRics/issues") # nolint
   } else if (res$status_code == 404) {
-    stop("Qualtrics API complains that the requested resource cannot be found (404 error).\nPlease check if you are using the correct survey ID.") # nolint
+    rlang::abort("Qualtrics API complains that the requested resource cannot be found (404 error).\nPlease check if you are using the correct survey ID.") # nolint
   } else if (res$status_code == 500) {
-    stop(paste0(
+    rlang::abort(paste0(
       "Qualtrics API reports an internal server (500) error. Please contact\nQualtrics Support (https://www.qualtrics.com/contact/) and provide the instanceId and errorCode below.", "\n", # nolint
       "\n",
       "instanceId:", " ",
@@ -41,7 +41,7 @@ qualtrics_response_codes <- function(res, raw = FALSE) {
       "OK" = FALSE
     ))
   } else if (res$status_code == 503) {
-    stop(paste0(
+    rlang::abort(paste0(
       "Qualtrics API reports a temporary internal server (500) error. Please\ncontact Qualtrics Support (https://www.qualtrics.com/contact/) with the instanceId and\nerrorCode below or retry your query.", "\n", # nolint
       "\n",
       "instanceId:", " ", httr::content(res)$meta$error$instanceId,
@@ -53,11 +53,11 @@ qualtrics_response_codes <- function(res, raw = FALSE) {
       "OK" = FALSE
     ))
   } else if (res$status_code == 413) {
-    stop("The request body was too large. This can also happen in cases where a\nmultipart/form-data request is malformed.") # nolint
+    rlang::abort("The request body was too large. This can also happen in cases where a\nmultipart/form-data request is malformed.") # nolint
   } else if (res$status_code == 429) {
-    stop("You have reached the concurrent request limit.")
+    rlang::abort("You have reached the concurrent request limit.")
   } else {
-    stop(paste0("Qualtrics API reports a ", res$status_code, " status code."))
+    rlang::abort(paste0("Qualtrics API reports a ", res$status_code, " status code."))
   }
 }
 
@@ -119,8 +119,18 @@ check_params <- function(...) {
   }
 
   if (args$convert) {
-    assertthat::assert_that(args$label,
-                            msg = "To convert to factors, we need the Qualtrics labels.\nUse `label = TRUE` or `convert = FALSE`.")
+    assertthat::assert_that(
+      args$label,
+      msg = "To convert to factors, we need the Qualtrics labels.\nUse `label = TRUE` or `convert = FALSE`."
+    )
+  }
+
+  if (!(args$label & args$breakout_sets)) {
+    rlang::warn(
+      c("Use caution with `breakout_sets = FALSE` plus `label = FALSE`",
+        "Results will likely be incorrectly guessed and read in as numeric",
+        "Use a `col_types` specification to override")
+    )
   }
 
   # Check if params are of the right type
@@ -437,9 +447,8 @@ download_qualtrics_export <- function(fetch_url, requestID, verbose = FALSE) {
   u <- tryCatch({
     utils::unzip(tf, exdir = tempdir())
   }, error = function(e) {
-    stop(paste0(
-      "Error extracting ",
-      "csv",
+    rlang::abort(paste0(
+      "Error extracting CSV",
       " from zip file. Please re-run your query."
     ))
   })
@@ -492,7 +501,12 @@ infer_data_types <- function(data,
 
   # Check if warning given
   if (Sys.getenv("QUALTRICS_WARNING_DATE_GIVEN") == "") {
-    warning("The 'StartDate', 'EndDate' and 'RecordedDate' variables were converted without passing\na specific timezone. If you like to set these timestamps to your own timezone, please\nvisit https://www.qualtrics.com/support/survey-platform/getting-started/managing-your-account/\n(under 'User Settings'). See https://api.qualtrics.com/docs/dates-and-times for more\ninformation about how the Qualtrics API handles dates and times.")
+    rlang::inform(
+      c("'StartDate', 'EndDate', and 'RecordedDate' were converted without a specific timezone",
+        "To set a timezone, visit https://www.qualtrics.com/support/survey-platform/managing-your-account/",
+        "Timezone information is under 'User Settings'",
+        "See https://api.qualtrics.com/instructions/docs/Instructions/dates-and-times.md for more")
+    )
     Sys.setenv("QUALTRICS_WARNING_DATE_GIVEN" = TRUE)
   }
   # Return data

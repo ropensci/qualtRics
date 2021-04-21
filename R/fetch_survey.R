@@ -155,7 +155,7 @@ fetch_survey <- function(surveyID,
     if (paste0(surveyID, ".rds") %in% list.files(tempdir())) {
       data <- readRDS(paste0(tempdir(), "/", surveyID, ".rds"))
       if (verbose) {
-        message(paste0(
+        rlang::inform(paste0(
           "Found an earlier download for survey with id ", surveyID, # nolint
           ". Loading this file.\nSet 'force_request' to TRUE if you want to override this."
         ))

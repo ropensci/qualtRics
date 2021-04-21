@@ -84,7 +84,9 @@ read_survey <- function(file_name,
 
   # Ignore import_id if legacy = TRUE
   if (import_id & legacy) {
-    warning("Using import IDs as column names are not supported for legacy response files. Defaulting to user-defined variable names; set import_id = FALSE in future.")
+    rlang::warn(c("Using import IDs as column names is not supported for legacy response files.",
+                  "Defaulting to user-defined variable names",
+                  "Set import_id = FALSE in future."))
     import_id = FALSE
   }
 
