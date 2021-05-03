@@ -104,7 +104,10 @@ check_params <- function(...) {
     "convert",
     "import_id",
     "label",
-    "include_display_order"
+    "include_display_order",
+    "breakout_sets",
+    "add_column_map",
+    "add_var_labels"
   ) %in% names(args))) {
     assert_options_logical(
       args$verbose,
@@ -125,7 +128,7 @@ check_params <- function(...) {
     )
   }
 
-  if (!(args$label & args$breakout_sets)) {
+  if (!args$label & !args$breakout_sets) {
     rlang::warn(
       c("Use caution with `breakout_sets = FALSE` plus `label = FALSE`",
         "Results will likely be incorrectly guessed and read in as numeric",
