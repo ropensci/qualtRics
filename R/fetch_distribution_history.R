@@ -43,7 +43,7 @@ fetch_distribution_history <- function(distributionID, surveyID){
 
   x <- tibble::tibble(contactId = purrr::map_chr(elements, "contactId", .default = NA_character_),
                       contactLookupId = purrr::map_chr(elements, "contactLookupId", .default = NA_character_),
-                      distributionID = purrr::map_chr(elements, "distributionID", .default = NA_character_),
+                      distributionID = purrr::map_chr(elements, "distributionId", .default = NA_character_),
                       status = purrr::map_chr(elements, "status", .default = NA_character_),
                       surveyLink = purrr::map_chr(elements, "surveyLink", .default = NA_character_),
                       contactFrequencyRuleId = purrr::map_chr(elements, "contactFrequencyRuleId", .default = NA_character_),
@@ -54,8 +54,7 @@ fetch_distribution_history <- function(distributionID, surveyID){
                       responseStartedAt = purrr::map_chr(elements, "responseStartedAt", .default = NA_character_),
                       surveySessionId = purrr::map_chr(elements, "surveySessionId", .default = NA_character_))
 
-  links <- list_distribution_links(base_url = Sys.getenv("QUALTRICS_BASE_URL"),
-                                   distributionID = distributionID,
+  links <- list_distribution_links(distributionID = distributionID,
                                    surveyID = surveyID)
 
   links <- dplyr::select(links, contactId, email, linkExpiration, lastName,
