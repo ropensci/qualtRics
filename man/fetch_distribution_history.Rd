@@ -8,6 +8,9 @@ fetch_distribution_history(distributionID, surveyID)
 }
 \arguments{
 \item{distributionID}{String. Unique distribution ID for the distribution history you want to download.}
+
+\item{surveyID}{String. Unique ID for the survey you want to download.
+Returned as \code{id} by the \link[qualtRics]{all_surveys} function.}
 }
 \description{
 Download distribution history data for a distribution from Qualtrics
@@ -22,7 +25,10 @@ qualtrics_api_credentials(
 
 surveys <- all_surveys()
 distributions <- fetch_distributions(surveys$id[1])
-distribution_history <- fetch_distribution_history(distributions$id[1])
+distribution_history <- fetch_distribution_history(
+    distributions$id[1],
+    surveyID = surveys$id[1]
+)
 }
 
 }

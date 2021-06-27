@@ -2,6 +2,7 @@
 #' Download distribution history data for a distribution from Qualtrics
 #'
 #' @param distributionID String. Unique distribution ID for the distribution history you want to download.
+#' @inheritParams fetch_survey
 #'
 #' @export
 #'
@@ -15,7 +16,10 @@
 #'
 #' surveys <- all_surveys()
 #' distributions <- fetch_distributions(surveys$id[1])
-#' distribution_history <- fetch_distribution_history(distributions$id[1])
+#' distribution_history <- fetch_distribution_history(
+#'     distributions$id[1],
+#'     surveyID = surveys$id[1]
+#' )
 #'}
 #'
 
