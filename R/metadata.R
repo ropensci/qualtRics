@@ -5,15 +5,15 @@
 #' of responses, general metadata, survey flow, etc.
 #'
 #' @param surveyID A string. Unique ID for the survey you want to download.
-#' Returned as 'id' by the \link[qualtRics]{getSurveys} function.
-#' @param get A list containing `TRUE`/`FALSE` values of one of the following:
-#' `metadata`, `questions`, `responsecounts`, `blocks`, `flow`, `embedded_data`,
-#' or `comments`. A `TRUE` value will return that specific element. If you leave
-#' this empty, the function will return the `metadata`, `questions`, and
-#' `responsecounts` elements. See examples below for more information.
+#' Returned as "id" by the [all_surveys] function.
+#' @param get A character vector containing any of the following: "metadata",
+#' "questions", "responsecounts", "blocks", "flow", "embedded_data",
+#' or "comments". Will return included elements. By default, the function
+#' returns the "metadata", "questions", and "responsecounts" elements.
+#' See examples below for more information.
 #' @param ... Additional options. User may pass an argument called `questions`,
-#' which should be a vector containing the names of questions for which you
-#' want to return metadata.
+#' a vector containing the names of questions for which you want to
+#' return metadata.
 #'
 #' @importFrom assertthat assert_that
 #' @export
@@ -34,13 +34,13 @@
 #' # Get metadata with specific elements
 #' md_specific <- metadata(
 #'   surveyID = id,
-#'   get = list(questions = FALSE, flow = TRUE)
+#'   get = c("flow")
 #' )
 #'
 #' # Get specific question metadata
 #' question_specific <- metadata(
 #'   surveyID = id,
-#'   get = list(questions = TRUE),
+#'   get = c("questions"),
 #'   questions = c("Q1", "Q2")
 #' )
 #'
@@ -52,7 +52,7 @@
 #' }
 #'
 metadata <- function(surveyID,
-                     get = list(),
+                     get = NULL,
                      ...) {
 
   # OPTIONS AND PREP ----
@@ -61,39 +61,54 @@ metadata <- function(surveyID,
   assert_base_url()
   assert_api_key()
 
-  # Check if illegal options were passed by user
-  allowed <- c(
-    "metadata", "questions", "responsecounts",
-    "blocks", "flow", "embedded_data", "comments"
-  )
-  check <- union(allowed, names(get))
-  assertthat::assert_that(length(check) <= length(allowed), # nolint
-    msg = "One or more options you passed to 'get' are not valid. Please check your\ninput and try again."
-  ) # nolint
+  # Deal with old list format for get parameter:
+  if(is.list(get)){
+    message("Use of logical lists for argument 'get' has been deprecated.
+    In future, use a character vector including desired elements")
 
-  # Change standard options if any
-  standard_list <- list(
-    "metadata" = TRUE,
-    "questions" = TRUE,
-    "responsecounts" = TRUE,
-    "blocks" = FALSE,
-    "flow" = FALSE,
-    "embedded_data" = FALSE,
-    "comments" = FALSE
-  )
-  # Cycle over each argument and change
-  if (length(get) > 0) {
-    for (g in names(get)) {
-      standard_list[[g]] <- get[[g]]
-    }
+    # Pull out the TRUE elements of the list:
+    get_true <- names(get)[unlist(get)]
+    # Pull out the FALSE elements of the list:
+    get_false <- names(get)[!unlist(get)]
+
+    # Restore old behavior when using lists (metadata, questions, responsecounts
+    # included unless specifically specified as FALSE):
+    get <-
+      setdiff(
+        union(c("metadata", "questions", "responsecounts"),
+                 get_true),
+        get_false)
+
   }
 
+  if(is.null(get)){
+
+    # Set default options for argument 'get'
+    get <- c("metadata", "questions", "responsecounts")
+
+  } else {
+
+    # Check if illegal options were passed to get by user
+    allowed <- c(
+      "metadata", "questions", "responsecounts",
+      "blocks", "flow", "embedded_data", "comments"
+    )
+
+    # Make case insensitive:
+    get <- tolower(get)
+
+    assertthat::assert_that(
+      all(get %in% allowed), # nolint
+      msg = "One or more entries in 'get' are not valid. Please check your\ninput and try again."
+    ) # nolint
+
+  }
   # Other options
   opts <- list(...)
   if ("questions" %in% names(opts)) {
     # Check that is a vector
     assertthat::assert_that(is.vector(opts$questions),
-      msg = "'questions' argument must be a vector"
+                            msg = "'questions' argument must be a vector"
     )
     q_select <- opts$questions
   } else {
@@ -123,12 +138,12 @@ metadata <- function(surveyID,
     "creationDate" = resp_filt$creationDate,
     "lastModifiedDate" = resp_filt$lastModifiedDate,
     "expiration_startdate" = ifelse(is.null(resp_filt$expiration$startDate),
-      NA,
-      resp_filt$expiration$startDate
+                                    NA,
+                                    resp_filt$expiration$startDate
     ),
     "expiration_endDate" = ifelse(is.null(resp_filt$expiration$endDate),
-      NA,
-      resp_filt$expiration$endDate
+                                  NA,
+                                  resp_filt$expiration$endDate
     )
   )
   # Response counts
@@ -146,7 +161,10 @@ metadata <- function(surveyID,
     if (all(q_select %in% qnames)) {
       questions <- resp_filt$questions[which(qnames %in% q_select)]
     } else {
-      warning(paste0("One or more questions you queried are not present in your survey.\nReturning all questions instead.")) # nolint
+      rlang::warn(
+        paste0("One or more questions you queried are not present in your survey.",
+               "\nReturning all questions instead.")
+      ) # nolint
       questions <- resp_filt$questions
     }
   } else {
@@ -166,10 +184,7 @@ metadata <- function(surveyID,
     "comments" = resp_filt$comments
   )
   # Make subset
-  met_ss <- met[names(standard_list[vapply(
-    standard_list,
-    function(x) x == TRUE, TRUE
-  )])] # nolint
+  met_ss <- met[names(met) %in% get]
 
   # RETURN ----
 

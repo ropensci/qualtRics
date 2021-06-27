@@ -4,21 +4,21 @@
 \alias{metadata}
 \title{Download metadata for a survey}
 \usage{
-metadata(surveyID, get = list(), ...)
+metadata(surveyID, get = NULL, ...)
 }
 \arguments{
 \item{surveyID}{A string. Unique ID for the survey you want to download.
-Returned as 'id' by the \link[qualtRics]{getSurveys} function.}
+Returned as "id" by the \link{all_surveys} function.}
 
-\item{get}{A list containing `TRUE`/`FALSE` values of one of the following:
-`metadata`, `questions`, `responsecounts`, `blocks`, `flow`, `embedded_data`,
-or `comments`. A `TRUE` value will return that specific element. If you leave
-this empty, the function will return the `metadata`, `questions`, and
-`responsecounts` elements. See examples below for more information.}
+\item{get}{A character vector containing any of the following: "metadata",
+"questions", "responsecounts", "blocks", "flow", "embedded_data",
+or "comments". Will return included elements. By default, the function
+returns the "metadata", "questions", and "responsecounts" elements.
+See examples below for more information.}
 
-\item{...}{Additional options. User may pass an argument called `questions`,
-which should be a vector containing the names of questions for which you
-want to return metadata.}
+\item{...}{Additional options. User may pass an argument called \code{questions},
+a vector containing the names of questions for which you want to
+return metadata.}
 }
 \description{
 Using this function, you can retrieve metadata about your survey. This
@@ -42,13 +42,13 @@ md <- metadata(surveyID = surveys$id[6])
 # Get metadata with specific elements
 md_specific <- metadata(
   surveyID = id,
-  get = list(questions = FALSE, flow = TRUE)
+  get = c("flow")
 )
 
 # Get specific question metadata
 question_specific <- metadata(
   surveyID = id,
-  get = list(questions = TRUE),
+  get = c("questions"),
   questions = c("Q1", "Q2")
 )
 

@@ -38,8 +38,6 @@ fetch_distributions <- function(surveyID){
 
   }
 
-  elements <- res$result$elements
-
   headers <- purrr::map(elements, "headers", .default = NA_character_)
   subjectMessage <- purrr::map(headers, "subjectMessage", .default = NA_character_)
   recipients <- purrr::map(elements, "recipients", .default = NA_character_)

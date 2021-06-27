@@ -43,7 +43,7 @@ test_that("logical params should throw error if any not logical", {
 })
 
 test_that("should error if save_dir does not exist", {
-expect_error(check_params(
+  expect_error(check_params(
     convert = FALSE,
     save_dir="/i/do/not/exist123"
   ))
@@ -51,53 +51,70 @@ expect_error(check_params(
 
 test_that("unanswer_recode should error if not integer-like", {
   expect_error(check_params(
+    label = TRUE,
     convert = FALSE,
     unanswer_recode="a1"
   ))
 
   expect_error(check_params(
+    label = TRUE,
     convert = FALSE,
     unanswer_recode=1.123
   ))
 })
 
 test_that("unanswer_recode should not error if integer-like", {
-  expect_true(is.null(check_params(
-    convert = FALSE,
-    unanswer_recode=123
-  )))
+  expect_error(
+    check_params(
+      label = TRUE,
+      convert = FALSE,
+      unanswer_recode = 123,
+      breakout_sets = TRUE
+    ),
+    NA)
 })
 
 test_that("unanswer_recode_multi should error if not integer-like", {
   expect_error(check_params(
+    label = TRUE,
     convert = FALSE,
-    unanswer_recode_multi="a1"
+    unanswer_recode_multi = "a1",
+    breakout_sets = TRUE
   ))
 
   expect_error(check_params(
+    label = TRUE,
     convert = FALSE,
-    unanswer_recode_multi=1.123
+    unanswer_recode_multi = 1.123,
+    breakout_sets = TRUE
   ))
 })
 
 test_that("unanswer_recode_multi should not error if integer-like", {
-  expect_true(is.null(check_params(
-    convert = FALSE,
-    unanswer_recode_multi=123
-  )))
+  expect_error(
+    check_params(
+      label = TRUE,
+      convert = FALSE,
+      unanswer_recode_multi = 123,
+      breakout_sets = TRUE
+    ),
+    NA)
 })
 
 test_that("limit should error if less than 0", {
   expect_error(check_params(
+    label = TRUE,
     convert = FALSE,
-    limit=-1
+    limit = -1,
+    breakout_sets = TRUE
   ))
 })
 
 
 test_that("include_questions should error if not a string", {
-  expect_error(check_params(
-    convert = FALSE,
-    include_questions=-1
-  ))
+  expect_error(
+    check_params(label = TRUE,
+                 convert = FALSE,
+                 include_questions = -1)
+  )
 })
