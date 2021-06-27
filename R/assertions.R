@@ -114,6 +114,21 @@ assert_surveyFile_exists <- function(file_name) {
   )
 }
 
+# Check that distribution is parent distribution
+
+assert_parent_distribution <- function(distributionID, surveyID) {
+
+  fetch_url <- create_distribution_url(base_url = Sys.getenv("QUALTRICS_BASE_URL"),
+                                       distributionId = distributionID,
+                                       surveyId = surveyID)
+  x <- qualtrics_api_request("GET", url = fetch_url)
+
+  assertthat::assert_that(is.null(x$result$parentDistributionId),
+                          msg = "distributionID not parent distribution"
+
+  )
+}
+
 # Check if these arguments are logical
 assert_options_logical <- function(verbose,
                                    convert,

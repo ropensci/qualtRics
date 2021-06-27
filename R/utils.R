@@ -261,6 +261,16 @@ create_mailinglist_url <- function(base_url, mailinglistID){
   return(mailinglist_url)
 }
 
+create_distribution_url <- function(base_url, distributionId, surveyId){
+  # create url
+  distribution_url <-
+    paste0(
+      create_root_url(base_url),
+      "distributions/", distributionId, "?surveyId=", surveyId
+    )
+  return(distribution_url)
+}
+
 create_distributions_url <- function(base_url, surveyID){
   # create url
   distributions_url <-
@@ -269,6 +279,26 @@ create_distributions_url <- function(base_url, surveyID){
       "distributions?surveyId=", surveyID
     )
   return(distributions_url)
+}
+
+create_distribution_history_url <- function(base_url, distributionId){
+  # create url
+  distribution_history_url <-
+    paste0(
+      create_root_url(base_url),
+      "distributions/", distributionId, "/history"
+    )
+  return(distribution_history_url)
+}
+
+create_distribution_links_url <- function(base_url, distributionId, surveyId){
+  # create url
+  distribution_links_url <-
+    paste0(
+      create_root_url(base_url),
+      "distributions/", distributionId, "/links?surveyId=", surveyId
+    )
+  return(distribution_links_url)
 }
 
 #' Create raw JSON payload to post response exports request
