@@ -179,11 +179,14 @@ check_params <- function(...) {
 
 #' Generate URL for specific API query by type and (if appropriate) ID
 #'
-#' @param request string.  the specific API request desired.  Generally named the same as associated functions, but without underscores, so the request for `fetch_survey()` would be be "fetchsurvey"
-#' @param id the id of the specific object requested (survey, mailinglist, etc.), if relevant
+#' @param query string.  the specific API query desired.  Generally named the
+#'   same as associated functions, but without underscores, so the request for
+#'   `fetch_survey()` would be be "fetchsurvey"
+#' @param id the id of the specific object requested (survey, mailinglist,
+#'   etc.), if relevant
 #'
 #' @return endpoint URL to be passed to querying tools
-generate_url <- function(type, id){
+generate_url <- function(query, id){
 
   # Get the user's specific base URL from environment:
   base_url <- Sys.getenv("QUALTRICS_BASE_URL")
@@ -211,10 +214,10 @@ generate_url <- function(type, id){
       fetchdistributions = "%s/distributions?surveyId=%s"
     )
 
-  if(type %in% c("allsurveys", "allmailinglists")){
-    endpoint_url <- sprintf(endpoint_list[[type]], root_url)
+  if(query %in% c("allsurveys", "allmailinglists")){
+    endpoint_url <- sprintf(endpoint_list[[query]], root_url)
   } else {
-    endpoint_url <- sprintf(endpoint_list[[type]], root_url, id)
+    endpoint_url <- sprintf(endpoint_list[[query]], root_url, id)
   }
 
   return(endpoint_url)
