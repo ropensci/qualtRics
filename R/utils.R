@@ -169,10 +169,22 @@ check_params <- function(...) {
       assert_limit_abovezero(args$limit)
     }
   }
-  # Check if includedQuestionIds is a string
+  # Check if include_questions is a string
   if ("include_questions" %in% names(args)) {
     if (!is.null(args$include_questions)) {
       assert_includedQuestionIds_string(args$include_questions)
+    }
+  }
+  # Check if include_embedded is a string
+  if ("include_questions" %in% names(args)) {
+    if (!is.null(args$include_embedded)) {
+      assert_includedembeddedDataIds_string(args$include_embedded)
+    }
+  }
+  # Check if include_metadata is a string
+  if ("include_questions" %in% names(args)) {
+    if (!is.null(args$include_metadata)) {
+      assert_includedsurveyMetadataIds_string(args$include_metadata)
     }
   }
 }
@@ -300,6 +312,8 @@ create_raw_payload <- function(label = TRUE,
                                unanswer_recode_multi = NULL,
                                include_display_order = TRUE,
                                include_questions = NULL,
+                               include_embedded = NULL,
+                               include_metadata = NULL,
                                breakout_sets = NULL) {
 
   params <- as.list(environment())
@@ -314,19 +328,34 @@ create_raw_payload <- function(label = TRUE,
       unanswer_recode_multi = "multiselectSeenUnansweredRecode",
       include_display_order = "includeDisplayOrder",
       include_questions = "questionIds",
+      include_embedded = "embeddedDataIds",
+      include_metadata = "surveyMetadataIds",
       breakout_sets = "breakoutSets")
 
 
-
+  # Fix a few parameters:
   if(!is.null(params$start_date)){
     params$start_date <- paste0(start_date, "T00:00:00Z")
   }
   if(!is.null(params$end_date)){
     params$end_date <- paste0(end_date, "T00:00:00Z")
   }
+  # If these are NA, the user wants none of this content,
+  # so exclude it via making it into an empty string vector:
+  if(length(params$include_questions) == 1 &&
+     is.na(params$include_questions[1])){
+    params$include_questions <- character()
+  }
+  if(length(params$include_embedded) == 1 &&
+     is.na(params$include_embedded[1])){
+    params$include_embedded <- character()
+  }
+  if(length(params$include_metadata) == 1 &&
+     is.na(params$include_metadata[1])){
+    params$include_metadata <- character()
+  }
 
   # Adjust names to fit API names:
-
   names(params) <- names_crosswalk[names(params)]
 
   # Add in format param:
@@ -338,8 +367,10 @@ create_raw_payload <- function(label = TRUE,
     }
   )
 
-  # But "questionIds" needs to be boxed
+  # But the variable inclusion items needs to be boxed:
   params_ub["questionIds"] <- params["questionIds"]
+  params_ub["embeddedDataIds"] <- params["embeddedDataIds"]
+  params_ub["surveyMetadataIds"] <- params["surveyMetadataIds"]
 
   # Drop any NULL elements:
   params_ub <- purrr::discard(params_ub, ~ is.null(.x))

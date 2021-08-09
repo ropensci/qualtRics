@@ -91,8 +91,23 @@ assert_timeZone_string <- function(time_zone) {
 
 # Check if include_questions are string(s)
 assert_includedQuestionIds_string <- function(include_questions) {
-  assertthat::assert_that(mode(include_questions) == "character",
-                          msg = "'include_questions' must be a character vector."
+  assertthat::assert_that(mode(include_questions) == "character" |
+                            (length(include_questions) == 1 && is.na(include_questions[1])),
+                          msg = "if present, 'include_questions' must be a character vector or NA."
+  )
+}
+# Check if include_embedded are string(s)
+assert_includedembeddedDataIds_string <- function(include_embedded) {
+  assertthat::assert_that(mode(include_embedded) == "character" |
+                            (length(include_embedded) == 1 && is.na(include_embedded[1])),
+                          msg = "if present, 'include_embedded' must be a character vector or NA."
+  )
+}
+# Check if include_metadata are string(s)
+assert_includedsurveyMetadataIds_string <- function(include_metadata) {
+  assertthat::assert_that(mode(include_metadata) == "character" |
+                            (length(include_metadata) == 1 && is.na(include_metadata[1])),
+                          msg = "if present, 'include_metadata' must be a character vector or NA."
   )
 }
 
