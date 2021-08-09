@@ -177,98 +177,48 @@ check_params <- function(...) {
   }
 }
 
-#' Append to listed server to create root URL
+#' Generate URL for specific API query by type and (if appropriate) ID
 #'
-#' @param base_url Base URL for your institution (see
-#' \url{https://api.qualtrics.com/docs/}
+#' @param request string.  the specific API request desired.  Generally named the same as associated functions, but without underscores, so the request for `fetch_survey()` would be be "fetchsurvey"
+#' @param id the id of the specific object requested (survey, mailinglist, etc.), if relevant
 #'
-#' @return Root URL
+#' @return endpoint URL to be passed to querying tools
+generate_url <- function(type, id){
 
-create_root_url <- function(base_url){
-  # create root url
-  root_url <- paste0(
-    "https://",
-    base_url,
-    ifelse(substr(
-      base_url, nchar(base_url),
-      nchar(base_url)
-    ) == "/",
-    paste0("API/v3/"),
-    paste0("/API/v3/")
+  # Get the user's specific base URL from environment:
+  base_url <- Sys.getenv("QUALTRICS_BASE_URL")
+
+  # make sure that the base_url ends w/o forward slash:
+  base_url <-
+    ifelse(
+      substring(base_url, nchar(base_url)) == "/",
+      substr(base_url, 1, nchar(base_url)-1),
+      base_url
     )
-  )
-  return(root_url)
-}
 
+  # Construct root URL for the v3 api endpoint:
+  root_stem <- "https://%s/API/v3"
+  root_url <- sprintf(root_stem, base_url)
 
-create_surveys_url <- function(base_url) {
-  # create surveys url
-  surveys_url <-
-    paste0(
-      create_root_url(base_url),
-      "surveys/"
+  endpoint_list <-
+    list(
+      allsurveys = "%s/surveys/",
+      allmailinglists = "%s/mailinglists/",
+      metadata = "%s/surveys/%s/",
+      fetchsurvey = "%s/surveys/%s/export-responses/",
+      fetchdescription = "%s/survey-definitions/%s/",
+      fetchmailinglist = "%s/mailinglists/%s/contacts/",
+      fetchdistributions = "%s/distributions?surveyId=%s"
     )
-  return(surveys_url)
-}
 
-create_survey_url <- function(base_url, surveyID) {
-  # create url
-  survey_url <-
-    paste0(
-      create_surveys_url(base_url),
-      surveyID, "/"
-    )
-  return(survey_url)
-}
+  if(type %in% c("allsurveys", "allmailinglists")){
+    endpoint_url <- sprintf(endpoint_list[[type]], root_url)
+  } else {
+    endpoint_url <- sprintf(endpoint_list[[type]], root_url, id)
+  }
 
-create_fetch_url <- function(base_url, surveyID) {
-  # create url
-  fetch_url <-
-    paste0(
-      create_survey_url(base_url, surveyID),
-      "export-responses/"
-    )
-  return(fetch_url)
-}
+  return(endpoint_url)
 
-create_description_url <- function(base_url, surveyID) {
-  # create url
-  survey_url <-
-    paste0(
-      create_root_url(base_url),
-      "survey-definitions/", surveyID, "/"
-    )
-  return(survey_url)
-}
-
-create_mailinglists_url <- function(base_url){
-  # create mailinglist url
-  mailinglists_url <-
-    paste0(
-      create_root_url(base_url),
-      "mailinglists/"
-    )
-  return(mailinglists_url)
-}
-
-create_mailinglist_url <- function(base_url, mailinglistID){
-  # create url
-  mailinglist_url <-
-    paste0(
-      create_mailinglists_url(base_url),
-      mailinglistID, "/contacts/"
-    )
-  return(mailinglist_url)
-}
-
-create_distributions_url <- function(base_url, surveyID){
-  # create url
-  distributions_url <-
-    paste0(
-      create_root_url(base_url),
-      "distributions?surveyId=", surveyID
-    )
-  return(distributions_url)
 }
 
 #' Create raw JSON payload to post response exports request

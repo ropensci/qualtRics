@@ -26,7 +26,7 @@ fetch_mailinglist <- function(mailinglistID){
   assert_base_url()
   assert_api_key()
 
-  fetch_url <- create_mailinglist_url(Sys.getenv("QUALTRICS_BASE_URL"), mailinglistID)
+  fetch_url <- generate_url("fetchmailinglist", mailinglistID)
 
   elements <- list()
 

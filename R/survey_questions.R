@@ -35,11 +35,8 @@ survey_questions <- function(surveyID) {
   assert_base_url()
   assert_api_key()
 
-  # Function-specific API stuff
-  surveys_url <- create_surveys_url(Sys.getenv("QUALTRICS_BASE_URL"))
-
-  # Add survey id
-  surveys_url <- paste0(surveys_url, surveyID)
+  # Generate URL for metadata endpoint:
+  surveys_url <- generate_url("metadata", surveyID)
 
   # SEND REQUEST TO API ----
 
