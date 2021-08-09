@@ -167,7 +167,8 @@ fetch_survey <- function(surveyID,
   # CONSTRUCT API CALL ----
 
   # fetch URL:
-  fetch_url <- generate_url("fetchsurvey", surveyID)
+  fetch_url <- generate_url(query = "fetchsurvey",
+                            surveyID = surveyID)
 
   # Create raw JSON payload
   raw_payload <- create_raw_payload(

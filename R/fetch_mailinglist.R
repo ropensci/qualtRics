@@ -28,7 +28,8 @@ fetch_mailinglist <- function(mailinglistID){
   assert_base_url()
   assert_api_key()
 
-  fetch_url <- generate_url("fetchmailinglist", mailinglistID)
+  fetch_url <- generate_url(query = "fetchmailinglist",
+                            mailinglistID = mailinglistID)
 
   elements <- list()
 

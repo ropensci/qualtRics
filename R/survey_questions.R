@@ -36,7 +36,8 @@ survey_questions <- function(surveyID) {
   assert_api_key()
 
   # Generate URL for metadata endpoint:
-  surveys_url <- generate_url("metadata", surveyID)
+  surveys_url <- generate_url(query = "metadata",
+                              surveyID = surveyID)
 
   # SEND REQUEST TO API ----
 

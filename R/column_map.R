@@ -38,7 +38,8 @@ column_map <- function(surveyID) {
   assert_api_key()
 
   # Function-specific API stuff
-  survey_url <- generate_url("metadata", surveyID)
+  survey_url <- generate_url(query = "metadata",
+                             surveyID = surveyID)
 
   # SEND REQUEST TO API ----
   # Send GET request to specific survey

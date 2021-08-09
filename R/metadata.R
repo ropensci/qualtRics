@@ -118,7 +118,8 @@ metadata <- function(surveyID,
   # QUERY API ----
 
   # Function-specific API stuff
-  survey_url <- generate_url("metadata", surveyID)
+  survey_url <- generate_url(query = "metadata",
+                             surveyID = surveyID)
 
   # Send GET request to specific survey
   resp <- qualtrics_api_request("GET", survey_url)

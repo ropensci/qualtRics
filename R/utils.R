@@ -182,11 +182,16 @@ check_params <- function(...) {
 #' @param query string.  the specific API query desired.  Generally named the
 #'   same as associated functions, but without underscores, so the request for
 #'   `fetch_survey()` would be be "fetchsurvey"
-#' @param id the id of the specific object requested (survey, mailinglist,
-#'   etc.), if relevant
+#' @param ... named elements of URL for specific query desired, such as surveyID
+#'   or mailinglistID
+#'
+#' @importFrom glue glue
 #'
 #' @return endpoint URL to be passed to querying tools
-generate_url <- function(query, id){
+generate_url <- function(query, ...){
+
+  args <- list(...)
+  list2env(args, envir = environment())
 
   # Get the user's specific base URL from environment:
   base_url <- Sys.getenv("QUALTRICS_BASE_URL")
@@ -199,26 +204,28 @@ generate_url <- function(query, id){
       base_url
     )
 
-  # Construct root URL for the v3 api endpoint:
-  root_stem <- "https://%s/API/v3"
-  root_url <- sprintf(root_stem, base_url)
+  # Construct URL root for the v3 api endpoint:
+  root_url <- glue::glue("https://{base_url}/API/v3")
 
+  # List of templates for how to build URLs
+  # (add to this when new functions made):
   endpoint_list <-
     list(
-      allsurveys = "%s/surveys/",
-      allmailinglists = "%s/mailinglists/",
-      metadata = "%s/surveys/%s/",
-      fetchsurvey = "%s/surveys/%s/export-responses/",
-      fetchdescription = "%s/survey-definitions/%s/",
-      fetchmailinglist = "%s/mailinglists/%s/contacts/",
-      fetchdistributions = "%s/distributions?surveyId=%s"
+      allsurveys = "{rooturl}/surveys/",
+      allmailinglists = "{rooturl}/mailinglists/",
+      metadata = "{rooturl}/surveys/{surveyID}/",
+      fetchsurvey = "{rooturl}/surveys/{surveyID}/export-responses/",
+      fetchdescription = "{rooturl}/survey-definitions/{surveyID}/",
+      fetchmailinglist = "{rooturl}/mailinglists/{mailinglistID}/contacts/",
+      fetchdistributions = "{rooturl}/distributions?surveyId={surveyID}"
     )
 
-  if(query %in% c("allsurveys", "allmailinglists")){
-    endpoint_url <- sprintf(endpoint_list[[query]], root_url)
-  } else {
-    endpoint_url <- sprintf(endpoint_list[[query]], root_url, id)
-  }
+  # Get specific template needed
+  endpoint_template <- endpoint_list[[query]]
+
+  # Construct the actual URL:
+  endpoint_url <-
+    glue::glue(endpoint_template, rooturl = root_url, ...)
 
   return(endpoint_url)
 

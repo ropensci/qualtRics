@@ -22,7 +22,7 @@ all_mailinglists <- function(){
   assert_api_key()
 
   # Function-specific API stuff
-  fetch_url <- generate_url("allmailinglists")
+  fetch_url <- generate_url(query = "allmailinglists")
 
   elements <- list()
 

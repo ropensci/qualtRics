@@ -25,7 +25,8 @@ fetch_distributions <- function(surveyID){
   assert_base_url()
   assert_api_key()
 
-  fetch_url <- generate_url("fetchdistributions", surveyID)
+  fetch_url <- generate_url(query = "fetchdistributions",
+                            surveyID = surveyID)
 
   elements <- list()
 

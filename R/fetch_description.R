@@ -106,7 +106,8 @@ fetch_description <-
 
     # Function-specific API stuff
     description_url <-
-      generate_url("fetchdescription", surveyID)
+      generate_url(query = "fetchdescription",
+                   surveyID = surveyID)
 
     # Send GET request to survey-definitions endpoint:
     resp <- qualtrics_api_request("GET", description_url)
