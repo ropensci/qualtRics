@@ -179,15 +179,17 @@ check_params <- function(...) {
 
 #' Generate URL for specific API query by type and (if appropriate) ID
 #'
-#' @param query string.  the specific API query desired.  Generally named the
-#'   same as associated functions, but without underscores, so the request for
-#'   `fetch_survey()` would be be "fetchsurvey"
-#' @param ... named elements of URL for specific query desired, such as surveyID
-#'   or mailinglistID
+#' @param query string.  The specific API query desired.  Generally named the
+#'   same as associated functions but without underscores, so the request for
+#'   `fetch_survey()` would be be "fetchsurvey".
+#' @param ... Named elements of URL for specific query desired, such as
+#'   `surveyID` or `mailinglistID`
 #'
 #' @importFrom glue glue
 #'
-#' @return endpoint URL to be passed to querying tools
+#' @return Endpoint URL to be passed to querying tools
+#' @keywords internal
+#' @export
 generate_url <- function(query, ...){
 
   args <- list(...)
@@ -209,25 +211,21 @@ generate_url <- function(query, ...){
 
   # List of templates for how to build URLs
   # (add to this when new functions made):
-  endpoint_list <-
-    list(
+  endpoint_template <-
+    switch(
+      query,
       allsurveys = "{rooturl}/surveys/",
       allmailinglists = "{rooturl}/mailinglists/",
       metadata = "{rooturl}/surveys/{surveyID}/",
       fetchsurvey = "{rooturl}/surveys/{surveyID}/export-responses/",
       fetchdescription = "{rooturl}/survey-definitions/{surveyID}/",
       fetchmailinglist = "{rooturl}/mailinglists/{mailinglistID}/contacts/",
-      fetchdistributions = "{rooturl}/distributions?surveyId={surveyID}"
+      fetchdistributions = "{rooturl}/distributions?surveyId={surveyID}",
+      rlang::abort("Internal error: invalid URL generation query")
     )
 
-  # Get specific template needed
-  endpoint_template <- endpoint_list[[query]]
-
   # Construct the actual URL:
-  endpoint_url <-
-    glue::glue(endpoint_template, rooturl = root_url, ...)
-
-  return(endpoint_url)
+  glue::glue(endpoint_template, rooturl = root_url, ...)
 
 }
 
@@ -295,7 +293,7 @@ create_raw_payload <- function(label = TRUE,
   # Unbox
   params_ub <- map(params, function(x){
     if(length(x) == 1) jsonlite::unbox(x) else x
-    }
+  }
   )
 
   # But "questionIds" needs to be boxed
@@ -312,9 +310,10 @@ create_raw_payload <- function(label = TRUE,
 
 #' Send httr requests to Qualtrics API
 #'
-#' @param verb Type of request to be sent (@seealso \code{\link[httr]{VERB}})
-#' @param url Qualtrics endpoint URL created by \code{\link{create_root_url}} functions
-#' @param body Options created by \code{\link{create_raw_payload}} function
+#' @param verb Type of request to be sent (@seealso [httr::VERB()])
+#' @param url Qualtrics endpoint URL created by [generate_url()] functions
+#' @param body Options created by [create_raw_payload()] function
+#' @keywords internal
 
 qualtrics_api_request <- function(verb = c("GET", "POST"),
                                   url = url,
