@@ -1,7 +1,9 @@
 
 #' Download a mailing list from Qualtrics
 #'
-#' @param mailinglistID String. Unique ID for the mailing list you want to download. Returned as \code{id} by the \link[qualtRics]{all_mailinglists} function.
+#' @param mailinglistID String. Unique ID for the mailing list you want to
+#'   download. Returned as \code{id} by the \link[qualtRics]{all_mailinglists}
+#'   function.
 #'
 #' @export
 #'
@@ -26,7 +28,8 @@ fetch_mailinglist <- function(mailinglistID){
   assert_base_url()
   assert_api_key()
 
-  fetch_url <- create_mailinglist_url(Sys.getenv("QUALTRICS_BASE_URL"), mailinglistID)
+  fetch_url <- generate_url(query = "fetchmailinglist",
+                            mailinglistID = mailinglistID)
 
   elements <- list()
 

@@ -39,7 +39,7 @@ all_surveys <- function() {
   assert_api_key()
 
   # Function-specific API stuff
-  surveys_url <- create_surveys_url(Sys.getenv("QUALTRICS_BASE_URL"))
+  surveys_url <- generate_url(query = "allsurveys")
 
   # SEND REQUEST TO QUALTRICS ----
 

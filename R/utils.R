@@ -177,98 +177,56 @@ check_params <- function(...) {
   }
 }
 
-#' Append to listed server to create root URL
+#' Generate URL for specific API query by type and (if appropriate) ID
 #'
-#' @param base_url Base URL for your institution (see
-#' \url{https://api.qualtrics.com/docs/}
+#' @param query string.  The specific API query desired.  Generally named the
+#'   same as associated functions but without underscores, so the request for
+#'   `fetch_survey()` would be be "fetchsurvey".
+#' @param ... Named elements of URL for specific query desired, such as
+#'   `surveyID` or `mailinglistID`
 #'
-#' @return Root URL
+#' @importFrom glue glue
+#'
+#' @return Endpoint URL to be passed to querying tools
+#' @keywords internal
+#' @export
+generate_url <- function(query, ...){
 
-create_root_url <- function(base_url){
-  # create root url
-  root_url <- paste0(
-    "https://",
-    base_url,
-    ifelse(substr(
-      base_url, nchar(base_url),
-      nchar(base_url)
-    ) == "/",
-    paste0("API/v3/"),
-    paste0("/API/v3/")
+  args <- list(...)
+  list2env(args, envir = environment())
+
+  # Get the user's specific base URL from environment:
+  base_url <- Sys.getenv("QUALTRICS_BASE_URL")
+
+  # make sure that the base_url ends w/o forward slash:
+  base_url <-
+    ifelse(
+      substring(base_url, nchar(base_url)) == "/",
+      substr(base_url, 1, nchar(base_url)-1),
+      base_url
     )
-  )
-  return(root_url)
-}
 
+  # Construct URL root for the v3 api endpoint:
+  root_url <- glue::glue("https://{base_url}/API/v3")
 
-create_surveys_url <- function(base_url) {
-  # create surveys url
-  surveys_url <-
-    paste0(
-      create_root_url(base_url),
-      "surveys/"
+  # List of templates for how to build URLs
+  # (add to this when new functions made):
+  endpoint_template <-
+    switch(
+      query,
+      allsurveys = "{rooturl}/surveys/",
+      allmailinglists = "{rooturl}/mailinglists/",
+      metadata = "{rooturl}/surveys/{surveyID}/",
+      fetchsurvey = "{rooturl}/surveys/{surveyID}/export-responses/",
+      fetchdescription = "{rooturl}/survey-definitions/{surveyID}/",
+      fetchmailinglist = "{rooturl}/mailinglists/{mailinglistID}/contacts/",
+      fetchdistributions = "{rooturl}/distributions?surveyId={surveyID}",
+      rlang::abort("Internal error: invalid URL generation query")
     )
-  return(surveys_url)
-}
 
-create_survey_url <- function(base_url, surveyID) {
-  # create url
-  survey_url <-
-    paste0(
-      create_surveys_url(base_url),
-      surveyID, "/"
-    )
-  return(survey_url)
-}
+  # Construct the actual URL:
+  glue::glue(endpoint_template, rooturl = root_url, ...)
 
-create_fetch_url <- function(base_url, surveyID) {
-  # create url
-  fetch_url <-
-    paste0(
-      create_survey_url(base_url, surveyID),
-      "export-responses/"
-    )
-  return(fetch_url)
-}
-
-create_description_url <- function(base_url, surveyID) {
-  # create url
-  survey_url <-
-    paste0(
-      create_root_url(base_url),
-      "survey-definitions/", surveyID, "/"
-    )
-  return(survey_url)
-}
-
-create_mailinglists_url <- function(base_url){
-  # create mailinglist url
-  mailinglists_url <-
-    paste0(
-      create_root_url(base_url),
-      "mailinglists/"
-    )
-  return(mailinglists_url)
-}
-
-create_mailinglist_url <- function(base_url, mailinglistID){
-  # create url
-  mailinglist_url <-
-    paste0(
-      create_mailinglists_url(base_url),
-      mailinglistID, "/contacts/"
-    )
-  return(mailinglist_url)
-}
-
-create_distributions_url <- function(base_url, surveyID){
-  # create url
-  distributions_url <-
-    paste0(
-      create_root_url(base_url),
-      "distributions?surveyId=", surveyID
-    )
-  return(distributions_url)
 }
 
 #' Create raw JSON payload to post response exports request
@@ -335,7 +293,7 @@ create_raw_payload <- function(label = TRUE,
   # Unbox
   params_ub <- map(params, function(x){
     if(length(x) == 1) jsonlite::unbox(x) else x
-    }
+  }
   )
 
   # But "questionIds" needs to be boxed
@@ -352,9 +310,10 @@ create_raw_payload <- function(label = TRUE,
 
 #' Send httr requests to Qualtrics API
 #'
-#' @param verb Type of request to be sent (@seealso \code{\link[httr]{VERB}})
-#' @param url Qualtrics endpoint URL created by \code{\link{create_root_url}} functions
-#' @param body Options created by \code{\link{create_raw_payload}} function
+#' @param verb Type of request to be sent (@seealso [httr::VERB()])
+#' @param url Qualtrics endpoint URL created by [generate_url()] functions
+#' @param body Options created by [create_raw_payload()] function
+#' @keywords internal
 
 qualtrics_api_request <- function(verb = c("GET", "POST"),
                                   url = url,

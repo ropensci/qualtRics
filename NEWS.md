@@ -2,6 +2,7 @@
 
 - Add `fetch_description()` to download complete survey description metadata from v3 API endpoint (more up-to-date than older `metadata()`) thanks to @jmobrien (#207)
 - Warn users about possible incorrect results from API when `breakout_sets` and `label` are both FALSE
+- Refactor internal URL creation for API calls thanks to @jmobrien (#225)
 
 # qualtRics 3.1.4
 

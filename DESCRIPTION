@@ -1,54 +1,70 @@
-Package: qualtRics
 Type: Package
+Package: qualtRics
 Title: Download 'Qualtrics' Survey Data
 Version: 3.1.4.9000
-Authors@R: c(person("Jasper", "Ginn", role = c("aut"),
+Authors@R: 
+    c(person(given = "Jasper",
+             family = "Ginn",
+             role = "aut",
              email = "jasperginn@gmail.com"),
-             person("Jackson", "Curtis", role = c("ctb"),
+      person(given = "Jackson",
+             family = "Curtis",
+             role = "ctb",
              email = "jcurtis210@gmail.com"),
-             person("Shaun", "Jackson", role = c("ctb"),
+      person(given = "Shaun",
+             family = "Jackson",
+             role = "ctb",
              email = "shaunbjackson@gmail.com"),
-             person("Samuel", "Kaminsky", role = c("ctb"),
+      person(given = "Samuel",
+             family = "Kaminsky",
+             role = "ctb",
              email = "samuel.e.kaminsky@gmail.com"),
-             person("Eric", "Knudsen", role = c("ctb"),
+      person(given = "Eric",
+             family = "Knudsen",
+             role = "ctb",
              email = "ericknud1@gmail.com"),
-             person("Joseph", "O'Brien", role = c("ctb"),
+      person(given = "Joseph",
+             family = "O'Brien",
+             role = "ctb",
              email = "joseph.obrien@utexas.edu"),
-             person("Daniel", "Seneca", role = c("ctb"),
+      person(given = "Daniel",
+             family = "Seneca",
+             role = "ctb",
              email = "seneca.danielh@gmail.com"),
-             person("Julia", "Silge", role = c("aut", "cre"),
+      person(given = "Julia",
+             family = "Silge",
+             role = c("aut", "cre"),
              email = "julia.silge@gmail.com",
              comment = c(ORCID = "0000-0002-3671-836X")),
-             person("Phoebe", "Wong", role = c("ctb"),
-             email = "phoebe.wong@berkeley.edu")
-             )
-Description: Provides functions to access survey results directly into R using 
-    the 'Qualtrics' API. 'Qualtrics' <https://www.qualtrics.com/about/> is an 
-    online survey and data collection software platform. See 
-    <https://api.qualtrics.com/> for more information about the 'Qualtrics' API. 
-    This package is community-maintained and is not officially supported by 
-    'Qualtrics'.
-URL: https://docs.ropensci.org/qualtRics/, https://github.com/ropensci/qualtRics
-BugReports: https://github.com/ropensci/qualtRics/issues
+      person(given = "Phoebe",
+             family = "Wong",
+             role = "ctb",
+             email = "phoebe.wong@berkeley.edu"))
+Description: Provides functions to access survey results directly into R
+    using the 'Qualtrics' API. 'Qualtrics'
+    <https://www.qualtrics.com/about/> is an online survey and data
+    collection software platform. See <https://api.qualtrics.com/> for
+    more information about the 'Qualtrics' API.  This package is
+    community-maintained and is not officially supported by 'Qualtrics'.
 License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: TRUE
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1.9001
+URL: https://docs.ropensci.org/qualtRics/,
+    https://github.com/ropensci/qualtRics
+BugReports: https://github.com/ropensci/qualtRics/issues
 Imports:
-    httr,
-    stringr,
-    readr,
-    jsonlite,
     assertthat,
-    sjlabelled,
     dplyr (>= 1.0),
-    tidyr,
-    rlang,
-    purrr,
-    tibble,
+    glue,
+    httr,
+    jsonlite,
+    lifecycle,
     lubridate,
-    lifecycle
+    purrr,
+    readr,
+    rlang,
+    sjlabelled,
+    stringr,
+    tibble,
+    tidyr
 Suggests:
     knitr,
     rmarkdown,
@@ -57,3 +73,7 @@ Suggests:
     webmockr
 VignetteBuilder: 
     knitr
+Encoding: UTF-8
+LazyData: TRUE
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1.9001
