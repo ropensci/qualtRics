@@ -4,6 +4,8 @@
 #'
 #' @param surveyID String. Unique ID for the survey you want to download.
 #' Returned as \code{id} by the \link[qualtRics]{all_surveys} function.
+#' @param survey_name String. Name of the survey you want to download as it
+#' appears in the Qualtrics UI.
 #' @param last_response Deprecated.
 #' @param start_date String. Filter to only exports responses recorded after the
 #' specified date. Accepts dates as character strings in format "YYYY-MM-DD".
@@ -101,7 +103,8 @@
 #'
 #' }
 #'
-fetch_survey <- function(surveyID,
+fetch_survey <- function(surveyID = NULL,
+                         survey_name = NULL,
                          last_response = deprecated(),
                          start_date = NULL,
                          end_date = NULL,
@@ -149,6 +152,26 @@ fetch_survey <- function(surveyID,
     add_column_map = add_column_map,
     add_var_labels = add_var_labels
   )
+
+  # Provide surveyID if survey_name is provided
+  if (is.null(surveyID)) {
+    if (is.null(survey_name)) {
+      stop("Please provide either a surveyID or survey_name.")
+    } else {
+      surveyID <-
+        all_surveys() %>%
+        dplyr::filter(name == survey_name) %>%
+        dplyr::pull(id)
+
+      # Check for survey name entered incorrectly or for multiple surveys with the same name.
+      if (length(surveyID) == 0) {
+        stop("No matches for survey name found - please check that you've entered a valid survey name.")
+      } else if (length(surveyID) > 1) {
+        stop("Multiple matches for this survey name found - please enter a unique surveyID instead.")
+      }
+    }
+  }
+
 
   # See if survey already in tempdir
   if (!force_request) {

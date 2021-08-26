@@ -5,7 +5,8 @@
 \title{Download a survey and import it into R}
 \usage{
 fetch_survey(
-  surveyID,
+  surveyID = NULL,
+  survey_name = NULL,
   last_response = deprecated(),
   start_date = NULL,
   end_date = NULL,
@@ -31,6 +32,9 @@ fetch_survey(
 \arguments{
 \item{surveyID}{String. Unique ID for the survey you want to download.
 Returned as \code{id} by the \link[qualtRics]{all_surveys} function.}
+
+\item{survey_name}{String. Name of the survey you want to download as it
+appears in the Qualtrics UI.}
 
 \item{last_response}{Deprecated.}
 
