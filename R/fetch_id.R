@@ -46,6 +46,6 @@ fetch_id <- function(x, survey_name) {
     msg = "Error: Multiple surveyIDs returned. Please supply a unique survey_name."
   )
 
-
+  return(survey_id)
 
 }
