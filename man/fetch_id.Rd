@@ -2,18 +2,23 @@
 % Please edit documentation in R/fetch_id.R
 \name{fetch_id}
 \alias{fetch_id}
-\title{Fetch a Qualtrics surveyID based on the survey name in the Qualtrics UI}
+\title{Fetch a unique Qualtrics survey ID based on survey name in the Qualtrics UI}
 \usage{
-fetch_id(x, survey_name)
+fetch_id(.data, survey_name)
 }
 \arguments{
-\item{x}{Dataframe created by the function all_surveys().}
+\item{.data}{Data frame of active surveys created by the function
+\code{\link[=all_surveys]{all_surveys()}}.}
 
 \item{survey_name}{Name of the survey as it appears in the Qualtrics UI. Must
-be unique to be passed to fetch_id().}
+be unique to be passed to \code{fetch_id()}.}
 }
 \description{
-Fetch a Qualtrics surveyID based on the survey name in the Qualtrics UI
+Fetch a unique Qualtrics survey ID based on survey name in the Qualtrics UI
+}
+\details{
+Survey names in the Qualtrics platform are not required to be
+unique, but the \code{survey_name} argument for this function \emph{must} be unique.
 }
 \examples{
 \dontrun{

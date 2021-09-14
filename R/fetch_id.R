@@ -1,10 +1,13 @@
-#' Fetch a Qualtrics surveyID based on the survey name in the Qualtrics UI
+#' Fetch a unique Qualtrics survey ID based on survey name in the Qualtrics UI
 #'
-#' @param x Dataframe created by the function all_surveys().
+#' @param .data Data frame of active surveys created by the function
+#' [all_surveys()].
 #' @param survey_name Name of the survey as it appears in the Qualtrics UI. Must
-#' be unique to be passed to fetch_id().
+#' be unique to be passed to `fetch_id()`.
 #'
-#' @importFrom magrittr %>%
+#' @details Survey names in the Qualtrics platform are not required to be
+#' unique, but the `survey_name` argument for this function _must_ be unique.
+#'
 #' @export
 #'
 #' @examples
@@ -23,32 +26,30 @@
 #'
 #' }
 
-fetch_id <- function(x, survey_name) {
+fetch_id <- function(.data, survey_name) {
 
   # check that a dataframe from all_surveys() is supplied to x
   assertthat::assert_that(
-    "id" %in% colnames(x) & "name" %in% colnames(x),
-    msg = "Error: x incompatible. Please pass a dataframe created by all_surveys()\nExample: all_surveys() %>% fetch_id(survey_name)"
+    "id" %in% colnames(.data) & "name" %in% colnames(.data),
+    msg = paste0("Error: Please pass a dataframe created by all_surveys() with columns 'id' and 'name'",
+                 "\nExample: all_surveys() %>% fetch_id(survey_name)")
   )
 
   # pull survey id
-  survey_id <-
-    x %>%
-    dplyr::filter(name == survey_name) %>%
-    dplyr::pull(id)
+  survey_id <- dplyr::filter(.data, name == survey_name)
+  survey_id <- dplyr::pull(survey_id, id)
 
   # check that at least one survey_name is found
   assertthat::assert_that(
     length(survey_id) > 0,
-    msg = "Error: No surveyIDs returned. Please verify that the survey_name \nis correct and try again."
+    msg = "Error: No survey IDs returned.\nPlease verify that `survey_name` is correct and try again."
   )
 
   # check that survey_name is unique and returns one surveyID
   assertthat::assert_that(
     length(survey_id) < 2,
-    msg = "Error: Multiple surveyIDs returned. Please supply a unique survey_name."
+    msg = "Error: Multiple survey IDs returned. Please supply a unique `survey_name`."
   )
 
-  return(survey_id)
-
+  survey_id
 }
