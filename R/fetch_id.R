@@ -4,6 +4,9 @@
 #' @param survey_name Name of the survey as it appears in the Qualtrics UI. Must
 #' be unique to be passed to fetch_id().
 #'
+#' @importFrom magrittr %>%
+#' @export
+#'
 #' @examples
 #' \dontrun{
 #' # Register your Qualtrics credentials if you haven't already

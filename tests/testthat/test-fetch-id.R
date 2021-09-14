@@ -28,7 +28,7 @@ test_that("Dataframe passed to fetch_id() matches all_surveys() format", {
     )
 
   expect_error(
-    qualtRics::fetch_id(z, "Survey Name"),
+    fetch_id(z, "Survey Name"),
     "Error: x incompatible. Please pass a dataframe created by all_surveys()\nExample: all_surveys() %>% fetch_id(survey_name)",
     fixed = TRUE
   )
@@ -38,7 +38,7 @@ test_that("Dataframe passed to fetch_id() matches all_surveys() format", {
 test_that("survey_name exists", {
 
   expect_error(
-    qualtRics::fetch_id(surveys, "Nonexistant Survey Name"),
+    fetch_id(surveys, "Nonexistant Survey Name"),
     "Error: No surveyIDs returned. Please verify that the survey_name \nis correct and try again."
   )
 
@@ -47,7 +47,7 @@ test_that("survey_name exists", {
 test_that("survey_name is unique", {
 
   expect_error(
-    qualtRics::fetch_id(surveys, "Copied Survey Name"),
+    fetch_id(surveys, "Copied Survey Name"),
     "Error: Multiple surveyIDs returned. Please supply a unique survey_name."
   )
 

@@ -58,6 +58,7 @@ Imports:
     jsonlite,
     lifecycle,
     lubridate,
+    magrittr,
     purrr,
     readr,
     rlang,
