@@ -1,8 +1,9 @@
 ## Release summary
 
-This is the 11th CRAN release of qualtRics (the 5th since it has returned to CRAN since being archived). This release updates documentation, fixes bugs, and adds functionality for survey distribution data (`fetch_distributions()`) and column mapping (`extract_colmap()`).
+This is the 12th CRAN release of qualtRics (the 6th since it has returned to CRAN since being archived). This release improves user messaging and internal functions, and adds functionality for survey description data (`fetch_description()`) and finding survey IDs (`fetch_id()`).
 
 ## Test environments
+
 * local macOS install: release
 * macOS 10.15.7 (on GitHub actions): release
 * windows server 2019 10.0.17763 (on GitHub actions): release
