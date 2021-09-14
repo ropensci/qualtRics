@@ -1,7 +1,7 @@
 Type: Package
 Package: qualtRics
 Title: Download 'Qualtrics' Survey Data
-Version: 3.1.5
+Version: 3.1.5.9000
 Authors@R: 
     c(person(given = "Jasper",
              family = "Ginn",
