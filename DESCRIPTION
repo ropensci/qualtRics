@@ -74,6 +74,6 @@ Suggests:
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
-LazyData: TRUE
+LazyData: FALSE
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
