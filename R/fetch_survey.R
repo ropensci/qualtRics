@@ -43,7 +43,7 @@
 #' used. Defaults to \code{FALSE}.
 #' @param time_zone String. A local timezone to determine response date
 #' values. Defaults to \code{NULL} which corresponds to UTC time. See
-#' \url{https://api-test.qualtrics.com/docs/publicapidocs/docs/Instructions/dates-and-times.md}
+#' ["Dates and Times"](https://api.qualtrics.com/instructions/) from Qualtrics
 #' for more information on format.
 #' @param breakout_sets Logical. If \code{TRUE}, then the
 #' \code{\link[qualtRics]{fetch_survey}} function will split multiple
@@ -67,7 +67,7 @@
 #' argument in \code{\link[qualtRics]{read_survey}}) to import your survey using
 #' a specific encoding.
 #'
-#' @seealso See \url{https://api.qualtrics.com/reference/} for documentation on
+#' @seealso See \url{https://api.qualtrics.com/} for documentation on
 #' the Qualtrics API.
 #'
 #' @importFrom lifecycle deprecated

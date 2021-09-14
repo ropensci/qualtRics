@@ -37,6 +37,6 @@ mysurvey <- fetch_survey(
 
 }
 \seealso{
-See \url{https://api.qualtrics.com/docs/} for documentation on the
+See \url{https://api.qualtrics.com/} for documentation on the
 Qualtrics API.
 }

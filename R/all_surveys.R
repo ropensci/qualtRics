@@ -1,6 +1,6 @@
 #' Retrieve a data frame of all active surveys on Qualtrics
 #'
-#' @seealso See \url{https://api.qualtrics.com/docs/} for documentation on the
+#' @seealso See \url{https://api.qualtrics.com/} for documentation on the
 #' Qualtrics API.
 #' @importFrom dplyr bind_rows
 #' @export

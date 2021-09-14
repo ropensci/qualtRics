@@ -85,7 +85,7 @@ used. Defaults to \code{FALSE}.}
 
 \item{time_zone}{String. A local timezone to determine response date
 values. Defaults to \code{NULL} which corresponds to UTC time. See
-\url{https://api-test.qualtrics.com/docs/publicapidocs/docs/Instructions/dates-and-times.md}
+\href{https://api.qualtrics.com/instructions/}{"Dates and Times"} from Qualtrics
 for more information on format.}
 
 \item{breakout_sets}{Logical. If \code{TRUE}, then the
@@ -148,6 +148,6 @@ mysurvey <- fetch_survey(
 
 }
 \seealso{
-See \url{https://api.qualtrics.com/reference/} for documentation on
+See \url{https://api.qualtrics.com/} for documentation on
 the Qualtrics API.
 }

@@ -63,7 +63,7 @@ qualtrics_response_codes <- function(res, raw = FALSE) {
 
 #' Construct a header to send to Qualtrics API
 #'
-#' @param API_TOKEN API token. Available in your Qualtrics account (see: \url{https://api.qualtrics.com/docs/})
+#' @param API_TOKEN API token. Available in your Qualtrics account (see: \url{https://api.qualtrics.com/})
 
 construct_header <- function(API_TOKEN) {
   # Construct and return
