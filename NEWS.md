@@ -3,7 +3,7 @@
 - Add `fetch_description()` to download complete survey description metadata from v3 API endpoint (more up-to-date than older `metadata()`) thanks to @jmobrien (#207)
 - Warn users about possible incorrect results from API when `breakout_sets` and `label` are both FALSE
 - Refactor internal URL creation for API calls thanks to @jmobrien (#225)
-- Add `fetch_id()` to return a surveyID based on a unique survey name as it appears in the Qualtrics UI.  
+- Add `fetch_id()` to return a `surveyID` based on a unique survey name as it appears in the Qualtrics UI thanks to @markjrieke (#230).  
 
 # qualtRics 3.1.4
 
