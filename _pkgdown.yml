@@ -20,6 +20,7 @@ reference:
   - column_map
   - fetch_description
   - fetch_distributions
+  - fetch_id
   - fetch_mailinglist
   - metadata
   - qualtrics_api_credentials

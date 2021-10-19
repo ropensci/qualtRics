@@ -7,12 +7,13 @@
 qualtrics_api_request(verb = c("GET", "POST"), url = url, body = NULL)
 }
 \arguments{
-\item{verb}{Type of request to be sent (@seealso \code{\link[httr]{VERB}})}
+\item{verb}{Type of request to be sent (@seealso \code{\link[httr:VERB]{httr::VERB()}})}
 
-\item{url}{Qualtrics endpoint URL created by \code{\link{create_root_url}} functions}
+\item{url}{Qualtrics endpoint URL created by \code{\link[=generate_url]{generate_url()}} functions}
 
-\item{body}{Options created by \code{\link{create_raw_payload}} function}
+\item{body}{Options created by \code{\link[=create_raw_payload]{create_raw_payload()}} function}
 }
 \description{
 Send httr requests to Qualtrics API
 }
+\keyword{internal}

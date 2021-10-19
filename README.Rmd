@@ -29,9 +29,9 @@ knitr::opts_chunk$set(
 
 [Qualtrics](https://www.qualtrics.com/) is an online survey and data collection software platform. Qualtrics is used across many domains in both academia and industry for online surveys and research. While users can manually download survey responses from Qualtrics through a browser, importing this data into R is then cumbersome. The qualtRics R package implements the retrieval of survey data using the Qualtrics API and aims to reduce the pre-processing steps needed in analyzing such surveys. Currently, this package is the only package on CRAN that offers such functionality, and is included in the official Qualtrics API documentation. 
 
-Note that your institution must support API access and that it must be enabled for your account. Whoever manages your Qualtrics account can help you with this. Please refer to the [Qualtrics documentation](https://api.qualtrics.com/docs/) to find your API token.
+Note that your institution must support API access and that it must be enabled for your account. Whoever manages your Qualtrics account can help you with this. Please refer to the [Qualtrics documentation](https://api.qualtrics.com/) to find your API token.
 
-The authors of this package are not affiliated with Qualtrics, and Qualtrics does not offer support for this package. For specific information about the Qualtrics API, you can refer to the [official documentation](https://api.qualtrics.com/docs/).
+The authors of this package are not affiliated with Qualtrics, and Qualtrics does not offer support for this package. For specific information about the Qualtrics API, you can refer to the [official documentation](https://api.qualtrics.com/).
 
 
 ## Installation

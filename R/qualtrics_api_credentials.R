@@ -10,9 +10,9 @@
 #' existing file, while making a backup of your original file for disaster
 #' recovery purposes.
 #' @param api_key The API key provided to you from Qualtrics formatted in quotes.
-#' Learn more about Qualtrics API keys at \url{https://api.qualtrics.com/docs/}
+#' Learn more about Qualtrics API keys at \url{https://api.qualtrics.com/}
 #' @param base_url The institution-specific base URL for your Qualtrics account,
-#' formatted in quotes. Find your base URL at \url{https://api.qualtrics.com/docs/}
+#' formatted in quotes. Find your base URL at \url{https://api.qualtrics.com/}
 #' @param install If TRUE, will install the key in your \code{.Renviron} file
 #' for use in future sessions.  Defaults to FALSE (single session use).
 #' @param overwrite If TRUE, will overwrite existing Qualtrics

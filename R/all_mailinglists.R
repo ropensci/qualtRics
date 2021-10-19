@@ -21,7 +21,8 @@ all_mailinglists <- function(){
   assert_base_url()
   assert_api_key()
 
-  fetch_url <- create_mailinglists_url(Sys.getenv("QUALTRICS_BASE_URL"))
+  # Function-specific API stuff
+  fetch_url <- generate_url(query = "allmailinglists")
 
   elements <- list()
 

@@ -81,7 +81,7 @@ mysurvey <- fetch_survey(surveys$id[4],
 ```
 
 
-Note that your date and time settings may not correspond to your own timezone. You can find out how to do this [here](https://www.qualtrics.com/support/survey-platform/managing-your-account/research-core-account-settings/#user-settings). See [this page](https://api-test.qualtrics.com/docs/publicapidocs/docs/Instructions/dates-and-times.md) for more information about how Qualtrics handles dates and times. **Keep in mind that this is important if you plan on using times / dates as cut-off points to filter data**.
+Note that your date and time settings may not correspond to your own timezone. You can find out how to do this [here](https://www.qualtrics.com/support/survey-platform/managing-your-account/research-core-account-settings/#user-settings). See ["Dates and Times"](https://api.qualtrics.com/instructions/) for more information about how Qualtrics handles dates and times. **Keep in mind that this is important if you plan on using times / dates as cut-off points to filter data**.
 
 You may also reference a response ID; `fetch_survey()` will then download all responses that were submitted after that response:
 

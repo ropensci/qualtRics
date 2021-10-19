@@ -1,7 +1,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://www.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP
+    uri: https://www.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/
     body:
       encoding: ''
       string: ''
