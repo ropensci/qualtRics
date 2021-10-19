@@ -226,8 +226,9 @@ generate_url <- function(query, ...){
 
   # Construct the actual URL:
   glue::glue(endpoint_template, rooturl = root_url, ...)
+}
 
-create_distribution_url <- function(base_url, distributionId, surveyId){
+create_distribution_url <- function(base_url, distributionId, surveyId) {
   # create url
   distribution_url <-
     paste0(
@@ -237,7 +238,7 @@ create_distribution_url <- function(base_url, distributionId, surveyId){
   return(distribution_url)
 }
 
-create_distributions_url <- function(base_url, surveyID){
+create_distributions_url <- function(base_url, surveyID) {
   # create url
   distributions_url <-
     paste0(
@@ -247,7 +248,7 @@ create_distributions_url <- function(base_url, surveyID){
   return(distributions_url)
 }
 
-create_distribution_history_url <- function(base_url, distributionId){
+create_distribution_history_url <- function(base_url, distributionId) {
   # create url
   distribution_history_url <-
     paste0(
@@ -257,7 +258,7 @@ create_distribution_history_url <- function(base_url, distributionId){
   return(distribution_history_url)
 }
 
-create_distribution_links_url <- function(base_url, distributionId, surveyId){
+create_distribution_links_url <- function(base_url, distributionId, surveyId) {
   # create url
   distribution_links_url <-
     paste0(
