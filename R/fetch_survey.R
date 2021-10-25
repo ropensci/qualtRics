@@ -63,9 +63,6 @@
 #' column types that may be incorrectly guessed. Takes a \code{\link[readr]{cols}}
 #' specification. See example below and \code{\link[readr]{cols}} for formatting
 #' details. Defaults to \code{NULL}. Overwritten by \code{convert = TRUE}.
-#' @param ... Optional arguments, such as a `fileEncoding` (see `fileEncoding`
-#' argument in \code{\link[qualtRics]{read_survey}}) to import your survey using
-#' a specific encoding.
 #'
 #' @seealso See \url{https://api.qualtrics.com/} for documentation on
 #' the Qualtrics API.
@@ -120,8 +117,7 @@ fetch_survey <- function(surveyID,
                          breakout_sets = TRUE,
                          add_column_map = TRUE,
                          add_var_labels = TRUE,
-                         col_types = NULL,
-                         ...) {
+                         col_types = NULL) {
 
   if (lifecycle::is_present(last_response)) {
     lifecycle::deprecate_warn("3.1.2", "fetch_survey(last_response = )")

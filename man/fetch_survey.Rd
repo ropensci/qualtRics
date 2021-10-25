@@ -24,8 +24,7 @@ fetch_survey(
   breakout_sets = TRUE,
   add_column_map = TRUE,
   add_var_labels = TRUE,
-  col_types = NULL,
-  ...
+  col_types = NULL
 )
 }
 \arguments{
@@ -109,10 +108,6 @@ Stata, see documentation in \code{sjlabelled}). Defaults to \code{TRUE}.}
 column types that may be incorrectly guessed. Takes a \code{\link[readr]{cols}}
 specification. See example below and \code{\link[readr]{cols}} for formatting
 details. Defaults to \code{NULL}. Overwritten by \code{convert = TRUE}.}
-
-\item{...}{Optional arguments, such as a \code{fileEncoding} (see \code{fileEncoding}
-argument in \code{\link[qualtRics]{read_survey}}) to import your survey using
-a specific encoding.}
 }
 \description{
 Download a Qualtrics survey you own via API and import the survey directly into R.
