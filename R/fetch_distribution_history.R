@@ -38,8 +38,6 @@ fetch_distribution_history <- function(distributionID){
 
   }
 
-  elements <- res$result$elements
-
   x <- tibble::tibble(contactId = purrr::map_chr(elements, "contactId", .default = NA_character_),
                       contactLookupId = purrr::map_chr(elements, "contactLookupId", .default = NA_character_),
                       distributionID = purrr::map_chr(elements, "distributionID", .default = NA_character_),
