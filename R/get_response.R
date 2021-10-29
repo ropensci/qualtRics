@@ -10,7 +10,9 @@ get_response <- function(surveyID,
   assert_api_key()
 
   # Function-specific API stuff
-  surveys_url <- generate_url(query = "response")
+  surveys_url <- generate_url(query = "response",
+                             surveyID = surveyID,
+                             responseID = responseID)
 
   # SEND REQUEST TO QUALTRICS ----
 
