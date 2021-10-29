@@ -1,6 +1,7 @@
 # Get individual responses
 
-get_response <- function() {
+get_response <- function(surveyID,
+                        responseID) {
 
   # CHECK PARAMS AND PREP QUERY ----
 
