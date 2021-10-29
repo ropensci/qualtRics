@@ -19,13 +19,13 @@ get_response <- function(surveyID,
   # Send GET request to list all surveys
   resp <- qualtrics_api_request("GET", surveys_url)
   # Put results in list
-  master <- list()
+  #   master <- list()
   # Append results
-  master <- append(master, resp$result$elements)
+  #   master <- append(master, resp$result$elements)
 
   # WRAP-UP AND RETURN ----
 
   # Bind to one large data frame & return
-  d <- bind_rows(master)
-  return(d)
+  #   d <- bind_rows(master)
+  return(master)
 }
