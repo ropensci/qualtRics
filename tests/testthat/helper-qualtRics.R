@@ -5,7 +5,7 @@ library(vcr)
 readRenviron("~/.Renviron")
 
 # Use default URL rather than branded one:
-# Sys.setenv("QUALTRICS_BASE_URL" = "www.qualtrics.com")
+Sys.setenv("QUALTRICS_BASE_URL" = "www.qualtrics.com")
 
 # Set up a fake API key if none is saved
 if (Sys.getenv("QUALTRICS_API_KEY") == ""){
