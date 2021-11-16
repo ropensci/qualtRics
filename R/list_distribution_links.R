@@ -42,7 +42,7 @@ list_distribution_links <- function(distributionID, surveyID){
                       transactionId = purrr::map_chr(elements, "transactionId", .default = NA_character_),
                       link = purrr::map_chr(elements, "link", .default = NA_character_),
                       exceededContactFrequency = purrr::map_chr(elements, "exceededContactFrequency", .default = NA_character_),
-                      linkExpiration = purrr::map_chr(elements, "linkExpiration", .default = NA_character_),
+                      linkExpiration = lubridate::ymd_hms(purrr::map_chr(elements, "linkExpiration", .default = NA_character_)),
                       status = purrr::map_chr(elements, "status", .default = NA_character_),
                       lastName = purrr::map_chr(elements, "lastName", .default = NA_character_),
                       firstName = purrr::map_chr(elements, "firstName", .default = NA_character_),
