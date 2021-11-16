@@ -1,7 +1,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://techsmith.az1.qualtrics.com/API/v3/distributions/EMD_RmjB8Gfpjlki6ms/links?surveyId=SV_06PSFx0kpItCz0q
+    uri: https://www.qualtrics.com/API/v3/distributions/EMD_RmjB8Gfpjlki6ms/links?surveyId=SV_06PSFx0kpItCz0q
     body:
       encoding: ''
       string: ''
