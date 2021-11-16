@@ -1,0 +1,50 @@
+http_interactions:
+- request:
+    method: get
+    uri: https://www.qualtrics.com/API/v3/distributions/EMD_RmjB8Gfpjlki6ms/links?surveyId=SV_06PSFx0kpItCz0q
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      X-API-TOKEN: <<<my_api_key>>>
+      Content-Type: application/json
+      Accept: '*/*'
+      accept-encoding: gzip, deflate
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      content-length: '538'
+      content-type: application/json
+      request-time: '738'
+      x-frame-options: DENY
+      x-permitted-cross-domain-policies: master-only
+      x-xss-protection: 1; mode=block
+      x-envoy-upstream-service-time: '740'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      x-edgeconnect-midmile-rtt: '1'
+      x-edgeconnect-origin-mex-latency: '808'
+      date: Tue, 16 Nov 2021 20:47:40 GMT
+      connection: keep-alive
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.lightning.force.com; report-uri https://sjc1.qualtrics.com/csp-report
+      strict-transport-security: max-age=31536000; includeSubDomains; preload
+    body:
+      encoding: ASCII-8BIT
+      file: no
+      string: |-
+        eyJyZXN1bHQiOnsiZWxlbWVudHMiOlt7ImNvbnRhY3RJZCI6IkNJRF82UmtNSVBLTFZuTm4xOTciLCJ0
+        cmFuc2FjdGlvbklkIjpudWxsLCJsaW5rIjoiaHR0cDovL3RlY2hzbWl0aC5hejEucXVhbHRyaWNzLmNv
+        bS9qZmUvZm9ybS9TVl8wNlBTRngwa3BJdEN6MHE/UV9DSEw9Z2wmUV9ETD1SbWpCOEdmcGpsa2k2bXNf
+        MDZQU0Z4MGtwSXRDejBxX01MUlBfZWxCYTg1R1U2NUR1bktDIiwiZXhjZWVkZWRDb250YWN0RnJlcXVl
+        bmN5IjpmYWxzZSwibGlua0V4cGlyYXRpb24iOiIyMDIxLTA3LTMxVDE0OjU4OjAwWiIsInN0YXR1cyI6
+        IkVtYWlsIG5vdCBzZW50IiwibGFzdE5hbWUiOm51bGwsImZpcnN0TmFtZSI6bnVsbCwiZXh0ZXJuYWxE
+        YXRhUmVmZXJlbmNlIjpudWxsLCJlbWFpbCI6InMud2FybmhvZmZAdGVjaHNtaXRoLmNvbSIsInVuc3Vi
+        c2NyaWJlZCI6ZmFsc2V9XSwibmV4dFBhZ2UiOm51bGx9LCJtZXRhIjp7Imh0dHBTdGF0dXMiOiIyMDAg
+        LSBPSyIsInJlcXVlc3RJZCI6IjU4YmY3ZGVkLTk2NmYtNGExMi1hZTQ5LWQ4MWQ1YzM0Y2UwMSJ9fQ==
+  recorded_at: 2021-11-16 20:47:40 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0

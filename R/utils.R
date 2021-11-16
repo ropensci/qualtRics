@@ -221,6 +221,8 @@ generate_url <- function(query, ...){
       fetchdescription = "{rooturl}/survey-definitions/{surveyID}/",
       fetchmailinglist = "{rooturl}/mailinglists/{mailinglistID}/contacts/",
       fetchdistributions = "{rooturl}/distributions?surveyId={surveyID}",
+      fetchdistributionhistory = "{rooturl}/distributions/{distributionID}/history",
+      listdistributionlinks = "{rooturl}/distributions/{distributionID}/links?surveyId={surveyID}",
       rlang::abort("Internal error: invalid URL generation query")
     )
 
