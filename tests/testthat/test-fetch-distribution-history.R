@@ -24,6 +24,3 @@ test_that("fetch_distribution_history() returns a tbl_df with expected column na
   expect_type(x$surveySessionId, "character")
 
 })
-
-qualtrics_api_credentials(api_key = holder_API, base_url = holder_URL)
-qq<-qualtRics:::qualtrics_api_request("GET", url = Sys.getenv("QUALTRICS_BASE_URL"))
