@@ -64,7 +64,8 @@ Imports:
     sjlabelled,
     stringr,
     tibble,
-    tidyr
+    tidyr,
+    xml2
 Suggests:
     knitr,
     rmarkdown,
