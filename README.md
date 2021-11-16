@@ -73,7 +73,7 @@ Currently, the package contains three core functions:
 3.  `read_survey()` allows you to read CSV files you download manually
     from Qualtrics.
 
-It also contains helper functions:
+It also contains multiple helper functions, including:
 
 1.  `qualtrics_api_credentials()` stores your API key and base url in
     environment variables.

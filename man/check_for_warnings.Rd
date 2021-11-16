@@ -12,3 +12,4 @@ check_for_warnings(resp)
 \description{
 Check if httr GET result contains a warning
 }
+\keyword{internal}

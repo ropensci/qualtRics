@@ -5,6 +5,7 @@
 #'
 #' @param res Response from httr::GET
 #' @param raw If TRUE, add 'raw' flag to httr::content() function.
+#' @keywords internal
 
 qualtrics_response_codes <- function(res, raw = FALSE) {
   # Check status code and raise error/warning
@@ -64,6 +65,7 @@ qualtrics_response_codes <- function(res, raw = FALSE) {
 #' Construct a header to send to Qualtrics API
 #'
 #' @param API_TOKEN API token. Available in your Qualtrics account (see: \url{https://api.qualtrics.com/})
+#' @keywords internal
 
 construct_header <- function(API_TOKEN) {
   # Construct and return
@@ -79,7 +81,7 @@ construct_header <- function(API_TOKEN) {
 #' Check if httr GET result contains a warning
 #'
 #' @param resp object returned by \code{\link{qualtrics_response_codes}}
-
+#' @keywords internal
 
 check_for_warnings <- function(resp) {
   # Raise warning if resp contains notice
@@ -94,6 +96,7 @@ check_for_warnings <- function(resp) {
 #' Check if parameters passed to functions are correct
 #'
 #' @param ... options passed to function
+#' @keywords internal
 
 check_params <- function(...) {
   args <- list(...)
@@ -250,6 +253,7 @@ generate_url <- function(query, ...){
 #' @importFrom purrr discard
 #'
 #' @return JSON file with options to send to API
+#' @keywords internal
 
 create_raw_payload <- function(label = TRUE,
                                start_date = NULL,
@@ -346,7 +350,7 @@ qualtrics_api_request <- function(verb = c("GET", "POST"),
 #' @param fetch_url URL provided by Qualtrics API that shows the download percentage completeness
 #' @param requestID ID
 #' @param verbose See \code{\link{fetch_survey}}
-
+#' @keywords internal
 
 download_qualtrics_export <- function(fetch_url, requestID, verbose = FALSE) {
   # Construct header
@@ -430,6 +434,7 @@ download_qualtrics_export <- function(fetch_url, requestID, verbose = FALSE) {
 #'
 #' @importFrom purrr map
 #' @importFrom purrr map_chr
+#' @keywords internal
 
 infer_data_types <- function(data,
                              surveyID,
@@ -483,6 +488,7 @@ infer_data_types <- function(data,
 #' @param question_meta Question metadata
 #'
 #' @importFrom rlang ':='
+#' @keywords internal
 
 wrapper_mc <- function(data, question_meta) {
   # TODO: add ORDER = TRUE/FALSE if user wants factors to be ordered

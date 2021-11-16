@@ -16,3 +16,4 @@ infer_data_types(data, surveyID, verbose = FALSE)
 \description{
 Set proper data types on survey data.
 }
+\keyword{internal}
