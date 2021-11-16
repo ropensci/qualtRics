@@ -26,3 +26,4 @@ Changelog\.md$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
 ^\.github$
+^codecov\.yml$
