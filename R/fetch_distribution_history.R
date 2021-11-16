@@ -40,15 +40,15 @@ fetch_distribution_history <- function(distributionID){
 
   x <- tibble::tibble(contactId = purrr::map_chr(elements, "contactId", .default = NA_character_),
                       contactLookupId = purrr::map_chr(elements, "contactLookupId", .default = NA_character_),
-                      distributionID = purrr::map_chr(elements, "distributionID", .default = NA_character_),
+                      distributionId = purrr::map_chr(elements, "distributionID", .default = NA_character_),
                       status = purrr::map_chr(elements, "status", .default = NA_character_),
                       surveyLink = purrr::map_chr(elements, "surveyLink", .default = NA_character_),
                       contactFrequencyRuleId = purrr::map_chr(elements, "contactFrequencyRuleId", .default = NA_character_),
                       responseId = purrr::map_chr(elements, "responseId", .default = NA_character_),
-                      responseCompletedAt = purrr::map_chr(elements, "responseCompletedAt", .default = NA_character_),
-                      sentAt = purrr::map_chr(elements, "sentAt", .default = NA_character_),
-                      openedAt = purrr::map_chr(elements, "openedAt", .default = NA_character_),
-                      responseStartedAt = purrr::map_chr(elements, "responseStartedAt", .default = NA_character_),
+                      responseCompletedAt = lubridate::ymd_hms(purrr::map_chr(elements, "responseCompletedAt", .default = NA_character_)),
+                      sentAt = lubridate::ymd_hms(purrr::map_chr(elements, "sentAt", .default = NA_character_)),
+                      openedAt = lubridate::ymd_hms(purrr::map_chr(elements, "openedAt", .default = NA_character_)),
+                      responseStartedAt = lubridate::ymd_hms(purrr::map_chr(elements, "responseStartedAt", .default = NA_character_)),
                       surveySessionId = purrr::map_chr(elements, "surveySessionId", .default = NA_character_))
 
   return(x)

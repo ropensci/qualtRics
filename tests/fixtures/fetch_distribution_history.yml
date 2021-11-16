@@ -1,0 +1,52 @@
+http_interactions:
+- request:
+    method: get
+    uri: https://techsmith.az1.qualtrics.com/API/v3/distributions/EMD_RmjB8Gfpjlki6ms/history
+    body:
+      encoding: ''
+      string: ''
+    headers:
+      X-API-TOKEN: <<<my_api_key>>>
+      Content-Type: application/json
+      Accept: '*/*'
+      accept-encoding: gzip, deflate
+  response:
+    status:
+      status_code: 200
+      category: Success
+      reason: OK
+      message: 'Success: (200) OK'
+    headers:
+      content-length: '653'
+      content-type: application/json
+      request-time: '1643'
+      x-frame-options: DENY
+      x-permitted-cross-domain-policies: master-only
+      x-xss-protection: 1; mode=block
+      x-envoy-upstream-service-time: '1659'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      x-edgeconnect-midmile-rtt: '1'
+      x-edgeconnect-origin-mex-latency: '1729'
+      date: Tue, 16 Nov 2021 16:55:50 GMT
+      connection: keep-alive
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.lightning.force.com; report-uri https://sjc1.qualtrics.com/csp-report
+      strict-transport-security: max-age=31536000; includeSubDomains; preload
+    body:
+      encoding: ASCII-8BIT
+      file: no
+      string: |-
+        eyJyZXN1bHQiOnsiZWxlbWVudHMiOlt7ImNvbnRhY3RJZCI6IkNJRF82UmtNSVBLTFZuTm4xOTciLCJj
+        b250YWN0TG9va3VwSWQiOiJNTFJQX2VsQmE4NUdVNjVEdW5LQyIsImRpc3RyaWJ1dGlvbklkIjoiRU1E
+        X1JtakI4R2ZwamxraTZtcyIsInN0YXR1cyI6IlN1cnZleVN0YXJ0ZWQiLCJzdXJ2ZXlMaW5rIjoiaHR0
+        cDovL3RlY2hzbWl0aC5hejEucXVhbHRyaWNzLmNvbS9qZmUvZm9ybS9TVl8wNlBTRngwa3BJdEN6MHE/
+        UV9DSEw9ZW1haWwmUV9ETD1FTURfUm1qQjhHZnBqbGtpNm1zXzA2UFNGeDBrcEl0Q3owcV9NTFJQX2Vs
+        QmE4NUdVNjVEdW5LQyIsImNvbnRhY3RGcmVxdWVuY3lSdWxlSWQiOm51bGwsInJlc3BvbnNlSWQiOm51
+        bGwsInJlc3BvbnNlQ29tcGxldGVkQXQiOm51bGwsInNlbnRBdCI6IjIwMjEtMDYtMDFUMTg6NTk6MjMu
+        MTYxWiIsIm9wZW5lZEF0IjoiMjAyMS0wNi0wMVQxOTowMzoxMS4wMDBaIiwicmVzcG9uc2VTdGFydGVk
+        QXQiOiIyMDIxLTA2LTAxVDE5OjAzOjE5LjAwMFoiLCJzdXJ2ZXlTZXNzaW9uSWQiOiJGU18zSFM1a0tp
+        QzViaFJNcE8ifV0sIm5leHRQYWdlIjpudWxsfSwibWV0YSI6eyJyZXF1ZXN0SWQiOiJmMGIwYTkxMy0x
+        NDQ0LTQxNGEtODBiMy00Mjg1MzI3OGIxZGIiLCJodHRwU3RhdHVzIjoiMjAwIC0gT0sifX0=
+  recorded_at: 2021-11-16 16:55:49 GMT
+  recorded_with: vcr/1.0.2, webmockr/0.8.0
