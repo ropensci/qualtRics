@@ -135,7 +135,9 @@ read_survey <- function(file_name,
     readr::type_convert(
       responsedata,
       locale = readr::locale(tz = time_zone),
-      col_types = col_types)
+      col_types = col_types,
+      na = character()
+      )
 
 
   # GENERATE COLUMN MAP ----

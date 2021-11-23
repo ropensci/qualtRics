@@ -2,6 +2,8 @@
 
 - Add `fetch_distribution_history()` and `list_distribution_links()` for more handling of distribution data, thanks to @chrisumphlett and @dsen6644 (#221, #239)
 
+- Changed handling of literal `"NA"` text input from users so it is no longer converted to an R `NA` value thanks to @jmobrien (#244)
+
 # qualtRics 3.1.5
 
 - Add `fetch_description()` to download complete survey description metadata from v3 API endpoint (more up-to-date than older `metadata()`) thanks to @jmobrien (#207)
