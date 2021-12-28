@@ -64,7 +64,7 @@ Currently, the package contains three core functions:
 
 It also contains multiple helper functions, including:
 
-1. `qualtrics_api_credentials()` stores your API key and base url in environment variables.
+1. `qualtrics_api_credentials()` stores your API key and base URL in environment variables.
 2. `survey_questions()` retrieves a data frame containing questions and question IDs for a survey; `extract_colmap()` retrieves a similar data frame with more detailed mapping from columns to labels.
 3. `metadata()` retrieves metadata about your survey, such as questions, survey flow, number of responses etc.
 
@@ -72,7 +72,7 @@ Note that you can only export surveys that you own, or to which you have been gi
 
 ## Register your Qualtrics credentials
 
-There are two important credentials you need to authenticate with the Qualtrics API. These are your **API key** and **institution-specific base URL**. The base URL you pass to the qualtRics package should either look like `yourdatacenterid.qualtrics.com` or like `yourorganizationid.yourdatacenterid.qualtrics.com`, without a scheme such as `https://`. The [Qualtrics API documentation](https://api.qualtrics.com/instructions/) explains how you can find your base URL.
+There are two important credentials you need to authenticate with the Qualtrics API. These are your **API key** and **datacenter-specific base URL**. The base URL you pass to the qualtRics package should look like `yourdatacenterid.qualtrics.com`, without a scheme such as `https://`. The [Qualtrics API documentation](https://api.qualtrics.com/instructions/) explains how you can find your base URL.
 
 You can store your API credentials `QUALTRICS_API_KEY` and `QUALTRICS_BASE_URL` in your `.Renviron` file for repeated use across sessions. The qualtRics package has a function to help with this.
 

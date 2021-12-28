@@ -75,7 +75,7 @@ Currently, the package contains three core functions:
 
 It also contains multiple helper functions, including:
 
-1.  `qualtrics_api_credentials()` stores your API key and base url in
+1.  `qualtrics_api_credentials()` stores your API key and base URL in
     environment variables.
 2.  `survey_questions()` retrieves a data frame containing questions and
     question IDs for a survey; `extract_colmap()` retrieves a similar
@@ -89,11 +89,10 @@ been given administration rights.
 ## Register your Qualtrics credentials
 
 There are two important credentials you need to authenticate with the
-Qualtrics API. These are your **API key** and **institution-specific
-base URL**. The base URL you pass to the qualtRics package should either
-look like `yourdatacenterid.qualtrics.com` or like
-`yourorganizationid.yourdatacenterid.qualtrics.com`, without a scheme
-such as `https://`. The [Qualtrics API
+Qualtrics API. These are your **API key** and **datacenter-specific base
+URL**. The base URL you pass to the qualtRics package should look like
+`yourdatacenterid.qualtrics.com`, without a scheme such as `https://`.
+The [Qualtrics API
 documentation](https://api.qualtrics.com/instructions/) explains how you
 can find your base URL.
 
