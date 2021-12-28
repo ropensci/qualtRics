@@ -28,33 +28,41 @@ qualtrics_response_codes <- function(res, raw = FALSE) {
   } else if (res$status_code == 404) {
     rlang::abort("Qualtrics API complains that the requested resource cannot be found (404 error).\nPlease check if you are using the correct survey ID.") # nolint
   } else if (res$status_code == 500) {
-    rlang::abort(paste0(
-      "Qualtrics API reports an internal server (500) error. Please contact\nQualtrics Support (https://www.qualtrics.com/contact/) and provide the instanceId and errorCode below.", "\n", # nolint
-      "\n",
-      "instanceId:", " ",
-      httr::content(res)$meta$error$instanceId,
-      "\n",
-      "errorCode: ",
-      httr::content(res)$meta$error$errorCode
+    rlang::abort(c(
+      "Qualtrics API reports a temporary internal server (500) error.",
+      "Please contact Qualtrics Support or retry your query",
+      glue::glue("instanceId: {httr::content(res)$meta$error$instanceId}"),
+      glue::glue("errorCode: {httr::content(res)$meta$error$errorCode}")
     ))
     return(list(
       "content" = httr::content(res),
       "OK" = FALSE
     ))
   } else if (res$status_code == 503) {
-    rlang::abort(paste0(
-      "Qualtrics API reports a temporary internal server (500) error. Please\ncontact Qualtrics Support (https://www.qualtrics.com/contact/) with the instanceId and\nerrorCode below or retry your query.", "\n", # nolint
-      "\n",
-      "instanceId:", " ", httr::content(res)$meta$error$instanceId,
-      "\n",
-      "errorCode: ", httr::content(res)$meta$error$errorCode
+    rlang::abort(c(
+      "Qualtrics API reports a temporary internal server (503) error.",
+      "Please contact Qualtrics Support or retry your query",
+      glue::glue("instanceId: {httr::content(res)$meta$error$instanceId}"),
+      glue::glue("errorCode: {httr::content(res)$meta$error$errorCode}")
+    ))
+    return(list(
+      "content" = httr::content(res),
+      "OK" = FALSE
+    ))
+  } else if (res$status_code == 504) {
+    rlang::abort(c(
+      "Qualtrics API reports a gateway timeout (504) error.",
+      "These errors are usually resolved by retrying the request",
+      glue::glue("instanceId: {httr::content(res)$meta$error$instanceId}"),
+      glue::glue("errorCode: {httr::content(res)$meta$error$errorCode}")
     ))
     return(list(
       "content" = httr::content(res),
       "OK" = FALSE
     ))
   } else if (res$status_code == 413) {
-    rlang::abort("The request body was too large. This can also happen in cases where a\nmultipart/form-data request is malformed.") # nolint
+    rlang::abort(c("The request body was too large.",
+                   "This can also happen in cases where a multipart/form-data request is malformed.")) # nolint
   } else if (res$status_code == 429) {
     rlang::abort("You have reached the concurrent request limit.")
   } else {
