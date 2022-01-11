@@ -337,11 +337,12 @@ qualtrics_api_request <- function(verb = c("GET", "POST"),
   # Construct header
   headers <- construct_header(Sys.getenv("QUALTRICS_API_KEY"))
   # Send request to Qualtrics API
-  res <- httr::RETRY(verb,
-                     url = url,
-                     httr::add_headers(headers),
-                     body = body,
-					times = 4
+  res <- httr::RETRY(
+    verb,
+    url = url,
+    httr::add_headers(headers),
+    body = body,
+    times = 4
   )
   # Check if response type is OK
   cnt <- qualtrics_response_codes(res)
