@@ -25,6 +25,8 @@ qualtrics_api_credentials(api_key = "1234",
 
 test_that("all_surveys() throws an error when URL & key is bad", {
 
+  skip_on_cran()
+
   expect_error(
     all_surveys(),
     "you may not have the\nrequired authorization"
