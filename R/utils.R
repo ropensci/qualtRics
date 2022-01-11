@@ -338,8 +338,8 @@ qualtrics_api_request <- function(verb = c("GET", "POST"),
   headers <- construct_header(Sys.getenv("QUALTRICS_API_KEY"))
   # Send request to Qualtrics API
   res <- httr::RETRY(verb,
-                    url = url,
-                    httr::add_headers(headers),
+                     url = url,
+                     httr::add_headers(headers),
                     body = body,
 					times = 4
   )
