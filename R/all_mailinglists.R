@@ -1,6 +1,6 @@
-
 #' Retrieve a data frame of all mailing lists from Qualtrics
 #'
+#' @template retry-advice
 #' @export
 #'
 #' @examples

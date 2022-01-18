@@ -2,6 +2,7 @@
 #'
 #' @param distributionID String. Unique distribution ID for the distribution history you want to download.
 #'
+#' @template retry-advice
 #' @export
 #'
 #' @examples

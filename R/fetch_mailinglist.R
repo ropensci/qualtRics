@@ -5,6 +5,7 @@
 #'   download. Returned as \code{id} by the \link[qualtRics]{all_mailinglists}
 #'   function.
 #'
+#' @template retry-advice
 #' @export
 #'
 #' @examples

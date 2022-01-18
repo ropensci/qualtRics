@@ -3,6 +3,7 @@
 #' @param surveyID A string. Unique ID for the survey you want to download.
 #' Returned as `id` by the \link[qualtRics]{all_surveys} function.
 #'
+#' @template retry-advice
 #' @seealso See \url{https://api.qualtrics.com/} for documentation on the
 #' Qualtrics API.
 #' @export

@@ -1,5 +1,6 @@
 #' Retrieve a data frame of all active surveys on Qualtrics
 #'
+#' @template retry-advice
 #' @seealso See \url{https://api.qualtrics.com/} for documentation on the
 #' Qualtrics API.
 #' @importFrom dplyr bind_rows

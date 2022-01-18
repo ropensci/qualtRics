@@ -15,6 +15,7 @@
 #' a vector containing the names of questions for which you want to
 #' return metadata.
 #'
+#' @template retry-advice
 #' @importFrom assertthat assert_that
 #' @export
 #' @examples

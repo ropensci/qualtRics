@@ -13,6 +13,12 @@ Returned as \code{id} by the \link[qualtRics]{all_surveys} function.}
 \description{
 Retrieve a data frame containing survey column mapping
 }
+\details{
+If the request to the Qualtrics API made by this function fails, the request
+will be retried. If you see these failures on a 500 error (such as a 504
+error) be patient while the request is retried; it will typically succeed
+on retrying.
+}
 \examples{
 \dontrun{
 # Register your Qualtrics credentials if you haven't already

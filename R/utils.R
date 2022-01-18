@@ -327,6 +327,7 @@ create_raw_payload <- function(label = TRUE,
 #' @param verb Type of request to be sent (@seealso [httr::VERB()])
 #' @param url Qualtrics endpoint URL created by [generate_url()] functions
 #' @param body Options created by [create_raw_payload()] function
+#' @template retry-advice
 #' @keywords internal
 
 qualtrics_api_request <- function(verb = c("GET", "POST"),
@@ -360,6 +361,7 @@ qualtrics_api_request <- function(verb = c("GET", "POST"),
 #' @param fetch_url URL provided by Qualtrics API that shows the download percentage completeness
 #' @param requestID ID
 #' @param verbose See \code{\link{fetch_survey}}
+#' @template retry-advice
 #' @keywords internal
 
 download_qualtrics_export <- function(fetch_url, requestID, verbose = FALSE) {
