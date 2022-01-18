@@ -62,7 +62,7 @@ Currently, the package contains three core functions:
 2. `fetch_survey()` downloads a survey from Qualtrics and loads it into R.
 3. `read_survey()` allows you to read CSV files you download manually from Qualtrics.
 
-It also contains multiple helper functions, including:
+It also contains [multiple helper functions](https://docs.ropensci.org/qualtRics/reference/index.html#other-helper-functions), including:
 
 1. `qualtrics_api_credentials()` stores your API key and base URL in environment variables.
 2. `survey_questions()` retrieves a data frame containing questions and question IDs for a survey; `extract_colmap()` retrieves a similar data frame with more detailed mapping from columns to labels.
