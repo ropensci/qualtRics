@@ -3,68 +3,68 @@
 #' Download a Qualtrics survey you own via API and import the survey directly into R.
 #'
 #' @param surveyID String. Unique ID for the survey you want to download.
-#' Returned as \code{id} by the \link[qualtRics]{all_surveys} function.
+#' Returned as `id` by the [all_surveys][qualtRics::all_surveys] function.
 #' @param last_response Deprecated.
 #' @param start_date String. Filter to only exports responses recorded after the
 #' specified date. Accepts dates as character strings in format "YYYY-MM-DD".
-#' Defaults to \code{NULL}.
+#' Defaults to `NULL`.
 #' @param end_date String. Filter to only exports responses recorded before the
 #' specified date. Accepts dates as character strings in format "YYYY-MM-DD".
-#' Defaults to \code{NULL}.
+#' Defaults to `NULL`.
 #' @param unanswer_recode Integer. Recode seen but unanswered questions with an
-#' integer-like value, such as 999. Defaults to \code{NULL}.
+#' integer-like value, such as 999. Defaults to `NULL`.
 #' @param unanswer_recode_multi Integer. Recode seen but unanswered multi-select
 #' questions with an integer-like value, such as 999. Defaults to value for
-#' \code{unaswer_recode}.
+#' `unaswer_recode`.
 #' @param include_display_order Display order information (such as for
 #' surveys with randomization).
 #' @param limit Integer. Maximum number of responses exported. Defaults to
-#' \code{NULL} (all responses).
+#' `NULL` (all responses).
 #' @param include_questions Vector of strings (e.g. c('QID1', 'QID2', 'QID3').
-#' Export only specified questions. Defaults to \code{NULL}.
+#' Export only specified questions. Defaults to `NULL`.
 #' @param save_dir String. Directory where survey results will be stored.
 #' Defaults to a temporary directory which is cleaned when your R session is
 #' terminated. This argument is useful if you'd like to store survey results.
 #' The downloaded survey will be stored as an RDS file (see
-#' \code{\link[base]{readRDS}}).
+#' [base::readRDS()]).
 #' @param force_request Logical. fetch_survey() saves each survey in a temporary
 #' directory so that it can quickly be retrieved later. If force_request is
-#' \code{TRUE}, fetch_survey() always downloads the survey from the API instead
-#' of loading it from the temporary directory. Defaults to \code{FALSE}.
-#' @param verbose Logical. If \code{TRUE}, verbose messages will be printed to
-#' the R console. Defaults to \code{TRUE}.
-#' @param label Logical. \code{TRUE} to export survey responses as Choice Text
-#' or \code{FALSE} to export survey responses as values.
-#' @param convert Logical. If \code{TRUE}, then the
-#' \code{\link[qualtRics]{fetch_survey}} function will convert certain question
-#' types (e.g. multiple choice) to proper data type in R. Defaults to \code{TRUE}.
-#' @param import_id Logical. If \code{TRUE}, use Qualtrics import IDs instead of
+#' `TRUE`, fetch_survey() always downloads the survey from the API instead
+#' of loading it from the temporary directory. Defaults to `FALSE`.
+#' @param verbose Logical. If `TRUE`, verbose messages will be printed to
+#' the R console. Defaults to `TRUE`.
+#' @param label Logical. `TRUE` to export survey responses as Choice Text
+#' or `FALSE` to export survey responses as values.
+#' @param convert Logical. If `TRUE`, then the
+#' [qualtRics::fetch_survey()] function will convert certain question
+#' types (e.g. multiple choice) to proper data type in R. Defaults to `TRUE`.
+#' @param import_id Logical. If `TRUE`, use Qualtrics import IDs instead of
 #' question IDs as column names. Will also alter names in the column map, if
-#' used. Defaults to \code{FALSE}.
+#' used. Defaults to `FALSE`.
 #' @param time_zone String. A local timezone to determine response date
-#' values. Defaults to \code{NULL} which corresponds to UTC time. See
+#' values. Defaults to `NULL` which corresponds to UTC time. See
 #' ["Dates and Times"](https://api.qualtrics.com/instructions/) from Qualtrics
 #' for more information on format.
-#' @param breakout_sets Logical. If \code{TRUE}, then the
-#' \code{\link[qualtRics]{fetch_survey}} function will split multiple
-#' choice question answers into columns. If \code{FALSE}, each multiple choice
-#' question is one column. Defaults to \code{TRUE}.
-#' @param add_column_map Logical. If \code{TRUE}, then a column map data frame
+#' @param breakout_sets Logical. If `TRUE`, then the
+#' [qualtRics::fetch_survey()] function will split multiple
+#' choice question answers into columns. If `FALSE`, each multiple choice
+#' question is one column. Defaults to `TRUE`.
+#' @param add_column_map Logical. If `TRUE`, then a column map data frame
 #' will be added as an attribute to the main response data frame.
 #' This column map captures Qualtrics-provided metadata associated with the
 #' response download, such as an item description and internal ID's. Defaults to
-#' \code{TRUE}.
-#' @param add_var_labels Logical. If \code{TRUE}, then the item description from
+#' `TRUE`.
+#' @param add_var_labels Logical. If `TRUE`, then the item description from
 #' each variable (equivalent to the one in the column map) will be added as a
-#' "label" attribute using \code{\link[sjlabelled]{set_label}}. Useful for
+#' "label" attribute using [sjlabelled::set_label()]. Useful for
 #' reference as well as cross-compatibility with other stats packages (e.g.,
-#' Stata, see documentation in \code{sjlabelled}). Defaults to \code{TRUE}.
+#' Stata, see documentation in `sjlabelled`). Defaults to `TRUE`.
 #' @param col_types Optional. This argument provides a way to manually overwrite
-#' column types that may be incorrectly guessed. Takes a \code{\link[readr]{cols}}
-#' specification. See example below and \code{\link[readr]{cols}} for formatting
-#' details. Defaults to \code{NULL}. Overwritten by \code{convert = TRUE}.
+#' column types that may be incorrectly guessed. Takes a [readr::cols()]
+#' specification. See example below and [readr::cols()] for formatting
+#' details. Defaults to `NULL`. Overwritten by `convert = TRUE`.
 #'
-#' @seealso See \url{https://api.qualtrics.com/} for documentation on
+#' @seealso See <https://api.qualtrics.com/> for documentation on
 #' the Qualtrics API.
 #' @template retry-advice
 #' @importFrom lifecycle deprecated
