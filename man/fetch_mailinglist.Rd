@@ -8,7 +8,7 @@ fetch_mailinglist(mailinglistID)
 }
 \arguments{
 \item{mailinglistID}{String. Unique ID for the mailing list you want to
-download. Returned as \code{id} by the \link[qualtRics]{all_mailinglists}
+download. Returned as \code{id} by the \link[=all_mailinglists]{all_mailinglists}
 function.}
 }
 \description{
@@ -18,7 +18,7 @@ Download a mailing list from Qualtrics
 If the request to the Qualtrics API made by this function fails, the request
 will be retried. If you see these failures on a 500 error (such as a 504
 error) be patient while the request is retried; it will typically succeed
-on retrying.
+on retrying. If you see other types of errors, retrying is unlikely to help.
 }
 \examples{
 \dontrun{

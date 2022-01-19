@@ -45,6 +45,6 @@ JSON file with options to send to API
 Create raw JSON payload to post response exports request
 }
 \seealso{
-See \code{\link{all_surveys}} for more details on these parameters
+See \code{\link[=all_surveys]{all_surveys()}} for more details on these parameters
 }
 \keyword{internal}
