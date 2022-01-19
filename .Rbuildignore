@@ -27,3 +27,4 @@ Changelog\.md$
 ^CRAN-RELEASE$
 ^\.github$
 ^codecov\.yml$
+^man-roxygen$

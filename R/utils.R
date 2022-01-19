@@ -72,7 +72,7 @@ qualtrics_response_codes <- function(res, raw = FALSE) {
 
 #' Construct a header to send to Qualtrics API
 #'
-#' @param API_TOKEN API token. Available in your Qualtrics account (see: \url{https://api.qualtrics.com/})
+#' @param API_TOKEN API token. Available in your Qualtrics account (see: <https://api.qualtrics.com/>)
 #' @keywords internal
 
 construct_header <- function(API_TOKEN) {
@@ -88,7 +88,7 @@ construct_header <- function(API_TOKEN) {
 
 #' Check if httr GET result contains a warning
 #'
-#' @param resp object returned by \code{\link{qualtrics_response_codes}}
+#' @param resp object returned by [qualtrics_response_codes()]
 #' @keywords internal
 
 check_for_warnings <- function(resp) {
@@ -255,7 +255,7 @@ generate_url <- function(query, ...){
 #' @param include_questions Flag
 #' @param breakout_sets Flag
 #'
-#' @seealso See \code{\link{all_surveys}} for more details on these parameters
+#' @seealso See [all_surveys()] for more details on these parameters
 #'
 #' @importFrom jsonlite toJSON
 #' @importFrom purrr discard
@@ -343,7 +343,8 @@ qualtrics_api_request <- function(verb = c("GET", "POST"),
     url = url,
     httr::add_headers(headers),
     body = body,
-    times = 4
+    times = 4,
+    terminate_on = 400:451
   )
   # Check if response type is OK
   cnt <- qualtrics_response_codes(res)
@@ -360,7 +361,7 @@ qualtrics_api_request <- function(verb = c("GET", "POST"),
 #'
 #' @param fetch_url URL provided by Qualtrics API that shows the download percentage completeness
 #' @param requestID ID
-#' @param verbose See \code{\link{fetch_survey}}
+#' @param verbose See [fetch_survey()]
 #' @template retry-advice
 #' @keywords internal
 
