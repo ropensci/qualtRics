@@ -14,6 +14,7 @@
 #' an argument called `questions`, a vector containing the names of questions
 #' for which you want to return metadata.
 #'
+#' @template retry-advice
 #' @return A list containing survey description metadata. The contents of the
 #' returned list depend on `elements`.
 #'

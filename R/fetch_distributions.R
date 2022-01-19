@@ -3,6 +3,7 @@
 #'
 #' @param surveyID String. Unique survey ID for the distribution data you want to download.
 #'
+#' @template retry-advice
 #' @export
 #'
 #' @examples

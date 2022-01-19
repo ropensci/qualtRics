@@ -10,6 +10,6 @@ getSurvey(...)
 \item{...}{All arguments for \code{fetch_survey}}
 }
 \description{
-This function is deprecated; use \code{\link[qualtRics]{fetch_survey}}
+This function is deprecated; use \code{\link[=fetch_survey]{fetch_survey()}}
 instead.
 }

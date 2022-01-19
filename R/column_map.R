@@ -1,9 +1,10 @@
 #' Retrieve a data frame containing survey column mapping
 #'
 #' @param surveyID A string. Unique ID for the survey you want to download.
-#' Returned as `id` by the \link[qualtRics]{all_surveys} function.
+#' Returned as `id` by the [all_surveys][qualtRics::all_surveys] function.
 #'
-#' @seealso See \url{https://api.qualtrics.com/} for documentation on the
+#' @template retry-advice
+#' @seealso See <https://api.qualtrics.com/> for documentation on the
 #' Qualtrics API.
 #' @export
 #' @examples

@@ -2,9 +2,10 @@
 #' Download a mailing list from Qualtrics
 #'
 #' @param mailinglistID String. Unique ID for the mailing list you want to
-#'   download. Returned as \code{id} by the \link[qualtRics]{all_mailinglists}
+#'   download. Returned as `id` by the [all_mailinglists][qualtRics::all_mailinglists]
 #'   function.
 #'
+#' @template retry-advice
 #' @export
 #'
 #' @examples

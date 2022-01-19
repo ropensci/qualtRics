@@ -7,6 +7,6 @@
 getSurveys()
 }
 \description{
-This function is deprecated; use \code{\link[qualtRics]{all_surveys}}
+This function is deprecated; use \code{\link[=all_surveys]{all_surveys()}}
 instead.
 }
