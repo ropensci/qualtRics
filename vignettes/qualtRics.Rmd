@@ -54,6 +54,13 @@ qualtrics_api_credentials(api_key = "<YOUR-QUALTRICS_API_KEY>",
 
 After you use this function, reload your environment (`readRenviron("~/.Renviron")`) so you can use the credentials without restarting R.
 
+**NOTE:** If you get an error when fetching a survey like:
+
+> Request proxied. For faster response times, use this host instead: xxx.qualtrics.com
+
+then change your `QUALTRICS_BASE_URL` to use the suggested host.
+
+
 ## A simple Qualtrics workflow
 
 Once your Qualtrics API credentials are stored, you can see what surveys are available to you.
