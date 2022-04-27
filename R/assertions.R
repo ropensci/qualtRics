@@ -18,7 +18,16 @@ assert_base_url <- function() {
   # Test if root URL ends with '.qualtrics.com'
   assertthat::assert_that(endsWith(Sys.getenv("QUALTRICS_BASE_URL"), ".qualtrics.com"),
                           msg = paste0(
-                            "The Qualtrics base URL must end with '.qualtrics.com'. Your base URL looks like this: '",
+                            "The Qualtrics base URL must end with '.qualtrics.com' (no trailing slash). Your base URL looks like this: '",
+                            Sys.getenv("QUALTRICS_BASE_URL"),
+                            "'.\nPlease visit https://api.qualtrics.com/docs/ for instructions about the Qualtrics base URL."
+                          )
+  )
+
+  # Test if root URL does not start with https://
+  assertthat::assert_that(!startsWith(Sys.getenv("QUALTRICS_BASE_URL"), "https://"),
+                          msg = paste0(
+                            "The Qualtrics base URL must not include the protocol ('https://'). Your base URL looks like this: '",
                             Sys.getenv("QUALTRICS_BASE_URL"),
                             "'.\nPlease visit https://api.qualtrics.com/docs/ for instructions about the Qualtrics base URL."
                           )
