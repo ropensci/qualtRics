@@ -12,8 +12,8 @@
 #' @param api_key The API key provided to you from Qualtrics formatted in quotes.
 #' Learn more about Qualtrics API keys at <https://api.qualtrics.com/>
 #' @param base_url The institution-specific base URL for your Qualtrics account,
-#' formatted in quotes, without the protocol (https://). Find your base URL
-#' at <https://api.qualtrics.com/>
+#' formatted in quotes, without the protocol (do not include `https://`). Find
+#' your base URL at <https://api.qualtrics.com/>
 #' @param install If TRUE, will install the key in your `.Renviron` file
 #' for use in future sessions.  Defaults to FALSE (single session use).
 #' @param overwrite If TRUE, will overwrite existing Qualtrics
