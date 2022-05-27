@@ -14,3 +14,4 @@ qualtrics_response_codes(res, raw = FALSE)
 \description{
 Checks responses against Qualtrics response codes and returns error message.
 }
+\keyword{internal}

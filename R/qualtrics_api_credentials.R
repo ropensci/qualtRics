@@ -1,22 +1,23 @@
-#' Install Qualtrics credentials in your \code{.Renviron} file for repeated use
+#' Install Qualtrics credentials in your `.Renviron` file for repeated use
 #'
 #' @description This function adds your Qualtrics API key and base URL to your
-#' \code{.Renviron} file so it can be called securely without being stored in
+#' `.Renviron` file so it can be called securely without being stored in
 #' your code. After you have installed these two credentials, they can be
-#' called any time with \code{Sys.getenv("QUALTRICS_API_KEY")} or
-#' \code{Sys.getenv("QUALTRICS_BASE_URL")}. If you do not have an
-#' \code{.Renviron} file, the function will create one for you. If you already
-#' have an \code{.Renviron} file, the function will append the key to your
+#' called any time with `Sys.getenv("QUALTRICS_API_KEY")` or
+#' `Sys.getenv("QUALTRICS_BASE_URL")`. If you do not have an
+#' `.Renviron` file, the function will create one for you. If you already
+#' have an `.Renviron` file, the function will append the key to your
 #' existing file, while making a backup of your original file for disaster
 #' recovery purposes.
 #' @param api_key The API key provided to you from Qualtrics formatted in quotes.
-#' Learn more about Qualtrics API keys at \url{https://api.qualtrics.com/docs/}
+#' Learn more about Qualtrics API keys at <https://api.qualtrics.com/>
 #' @param base_url The institution-specific base URL for your Qualtrics account,
-#' formatted in quotes. Find your base URL at \url{https://api.qualtrics.com/docs/}
-#' @param install If TRUE, will install the key in your \code{.Renviron} file
+#' formatted in quotes, without the protocol (do not include `https://`). Find
+#' your base URL at <https://api.qualtrics.com/>
+#' @param install If TRUE, will install the key in your `.Renviron` file
 #' for use in future sessions.  Defaults to FALSE (single session use).
 #' @param overwrite If TRUE, will overwrite existing Qualtrics
-#' credentials that you already have in your \code{.Renviron} file.
+#' credentials that you already have in your `.Renviron` file.
 #' @examples
 #'
 #' \dontrun{

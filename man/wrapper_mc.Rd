@@ -14,3 +14,4 @@ wrapper_mc(data, question_meta)
 \description{
 Convert multiple choice questions to ordered factors
 }
+\keyword{internal}

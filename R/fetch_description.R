@@ -14,6 +14,7 @@
 #' an argument called `questions`, a vector containing the names of questions
 #' for which you want to return metadata.
 #'
+#' @template retry-advice
 #' @return A list containing survey description metadata. The contents of the
 #' returned list depend on `elements`.
 #'
@@ -106,7 +107,8 @@ fetch_description <-
 
     # Function-specific API stuff
     description_url <-
-      create_description_url(Sys.getenv("QUALTRICS_BASE_URL"), surveyID)
+      generate_url(query = "fetchdescription",
+                   surveyID = surveyID)
 
     # Send GET request to survey-definitions endpoint:
     resp <- qualtrics_api_request("GET", description_url)

@@ -9,6 +9,12 @@ all_surveys()
 \description{
 Retrieve a data frame of all active surveys on Qualtrics
 }
+\details{
+If the request to the Qualtrics API made by this function fails, the request
+will be retried. If you see these failures on a 500 error (such as a 504
+error) be patient while the request is retried; it will typically succeed
+on retrying. If you see other types of errors, retrying is unlikely to help.
+}
 \examples{
 \dontrun{
 # Register your Qualtrics credentials if you haven't already
@@ -37,6 +43,6 @@ mysurvey <- fetch_survey(
 
 }
 \seealso{
-See \url{https://api.qualtrics.com/docs/} for documentation on the
+See \url{https://api.qualtrics.com/} for documentation on the
 Qualtrics API.
 }

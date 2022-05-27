@@ -11,8 +11,15 @@ download_qualtrics_export(fetch_url, requestID, verbose = FALSE)
 
 \item{requestID}{ID}
 
-\item{verbose}{See \code{\link{fetch_survey}}}
+\item{verbose}{See \code{\link[=fetch_survey]{fetch_survey()}}}
 }
 \description{
 Download response export
 }
+\details{
+If the request to the Qualtrics API made by this function fails, the request
+will be retried. If you see these failures on a 500 error (such as a 504
+error) be patient while the request is retried; it will typically succeed
+on retrying. If you see other types of errors, retrying is unlikely to help.
+}
+\keyword{internal}

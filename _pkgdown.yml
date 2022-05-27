@@ -18,9 +18,13 @@ reference:
   contents:
   - all_mailinglists
   - column_map
+  - extract_colmap
   - fetch_description
   - fetch_distributions
+  - fetch_distribution_history
+  - fetch_id
   - fetch_mailinglist
+  - list_distribution_links
   - metadata
   - qualtrics_api_credentials
   - survey_questions

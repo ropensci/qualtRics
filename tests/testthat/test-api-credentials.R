@@ -21,6 +21,13 @@ test_that("can store and access credentials", {
     assert_base_url(),
     "The Qualtrics base URL must end with"
   )
+
+  qualtrics_api_credentials(api_key = "1234", base_url = "https://abcd.qualtrics.com")
+  expect_error(
+    assert_base_url(),
+    "The Qualtrics base URL must not include"
+  )
+
   qualtrics_api_credentials(api_key = "1234", base_url = "abcd.qualtrics.com")
   # Now expect this to be true
   expect_true(assert_api_key())
