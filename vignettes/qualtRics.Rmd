@@ -30,7 +30,7 @@ Currently, the package contains three core functions:
 2. `fetch_survey()` downloads a survey from Qualtrics and loads it into R.
 3. `read_survey()` allows you to read CSV files you download manually from Qualtrics.
 
-It also contains helper functions:
+It also contains a number of helper functions, including:
 
 1. `qualtrics_api_credentials()` stores your API key and base url in environment variables.
 2. `survey_questions()` retrieves a data frame containing questions and question IDs for a survey; `extract_colmap()` retrieves a similar data frame with more detailed mapping from columns to labels.
@@ -40,7 +40,7 @@ Note that you can only export surveys that you own, or to which you have been gi
 
 ## Registering your Qualtrics credentials
 
-There are two important credentials you need to authenticate with the Qualtrics API. These are your **API key** and **institution-specific base URL**. The base URL you pass to the qualtRics package should either look like `yourdatacenterid.qualtrics.com` or like `yourorganizationid.yourdatacenterid.qualtrics.com`, without a scheme such as `https://`. The [Qualtrics API documentation](https://api.qualtrics.com/instructions/) explains how you can find your base URL.
+There are two important credentials you need to authenticate with the Qualtrics API. These are your **API key** and **datacenter-specific base URL**. The base URL you pass to the qualtRics package should look like `yourdatacenterid.qualtrics.com`, without a scheme such as `https://`. The [Qualtrics API documentation](https://api.qualtrics.com/instructions/) explains how you can find your base URL.
 
 You can store your API credentials `QUALTRICS_API_KEY` and `QUALTRICS_BASE_URL` in your `.Renviron` file for repeated use across sessions. The qualtRics package has a function to help with this.
 
@@ -53,6 +53,13 @@ qualtrics_api_credentials(api_key = "<YOUR-QUALTRICS_API_KEY>",
 ```
 
 After you use this function, reload your environment (`readRenviron("~/.Renviron")`) so you can use the credentials without restarting R.
+
+**NOTE:** If you get an error when fetching a survey like:
+
+> Request proxied. For faster response times, use this host instead: xxx.qualtrics.com
+
+then change your `QUALTRICS_BASE_URL` to use the suggested host.
+
 
 ## A simple Qualtrics workflow
 
@@ -81,7 +88,7 @@ mysurvey <- fetch_survey(surveys$id[4],
 ```
 
 
-Note that your date and time settings may not correspond to your own timezone. You can find out how to do this [here](https://www.qualtrics.com/support/survey-platform/managing-your-account/research-core-account-settings/#user-settings). See [this page](https://api-test.qualtrics.com/docs/publicapidocs/docs/Instructions/dates-and-times.md) for more information about how Qualtrics handles dates and times. **Keep in mind that this is important if you plan on using times / dates as cut-off points to filter data**.
+Note that your date and time settings may not correspond to your own timezone. You can find out how to do this [here](https://www.qualtrics.com/support/survey-platform/managing-your-account/research-core-account-settings/#user-settings). See ["Dates and Times"](https://api.qualtrics.com/instructions/) for more information about how Qualtrics handles dates and times. **Keep in mind that this is important if you plan on using times / dates as cut-off points to filter data**.
 
 You may also reference a response ID; `fetch_survey()` will then download all responses that were submitted after that response:
 

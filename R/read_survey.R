@@ -6,30 +6,30 @@
 #' Variable labels are stored as attributes.
 #'
 #' @param file_name String. A CSV data file.
-#' @param import_id Logical. If \code{TRUE}, use Qualtrics import IDs instead of
-#' question IDs as column names. Defaults to \code{FALSE}.
-#' @param strip_html Logical. If \code{TRUE}, then remove HTML tags. Defaults
-#' to \code{TRUE}.
+#' @param import_id Logical. If `TRUE`, use Qualtrics import IDs instead of
+#' question IDs as column names. Defaults to `FALSE`.
+#' @param strip_html Logical. If `TRUE`, then remove HTML tags. Defaults
+#' to `TRUE`.
 #' @param time_zone String. A local timezone to determine response date
-#' values. Defaults to \code{NULL} which corresponds to UTC time. See
-#' \url{https://api-test.qualtrics.com/docs/publicapidocs/docs/Instructions/dates-and-times.md}
+#' values. Defaults to `NULL` which corresponds to UTC time. See
+#' ["Dates and Times"](https://api.qualtrics.com/instructions/) from Qualtrics
 #' for more information on format.
-#' @param legacy Logical. If \code{TRUE}, then import "legacy" format CSV files
-#' (as of 2017). Defaults to \code{FALSE}.
-#' @param add_column_map Logical. If \code{TRUE}, then a column map data frame
+#' @param legacy Logical. If `TRUE`, then import "legacy" format CSV files
+#' (as of 2017). Defaults to `FALSE`.
+#' @param add_column_map Logical. If `TRUE`, then a column map data frame
 #' will be added as an attribute to the main response data frame.
 #' This column map captures Qualtrics-provided metadata associated with the
 #' response download, such as an item description and internal ID's. Defaults to
-#' \code{TRUE}.
-#' @param add_var_labels Logical. If \code{TRUE}, then the item description from
+#' `TRUE`.
+#' @param add_var_labels Logical. If `TRUE`, then the item description from
 #' each variable (equivalent to the one in the column map) will be added as a
-#' "label" attribute using \code{\link[sjlabelled]{set_label}}. Useful for
+#' "label" attribute using [sjlabelled::set_label()]. Useful for
 #' reference as well as cross-compatibility with other stats packages (e.g.,
-#' Stata, see documentation in \code{sjlabelled}). Defaults to \code{TRUE}.
+#' Stata, see documentation in `sjlabelled`). Defaults to `TRUE`.
 #' @param col_types Optional. This argument provides a way to manually overwrite
-#' column types that may be incorrectly guessed. Takes a \code{\link[readr]{cols}}
-#' specification. See example below and \code{\link[readr]{cols}} for formatting
-#' details. Defaults to \code{NULL}.
+#' column types that may be incorrectly guessed. Takes a [readr::cols()]
+#' specification. See example below and [readr::cols()] for formatting
+#' details. Defaults to `NULL`.
 #'
 #' @importFrom sjlabelled set_label
 #' @importFrom jsonlite fromJSON
@@ -135,7 +135,9 @@ read_survey <- function(file_name,
     readr::type_convert(
       responsedata,
       locale = readr::locale(tz = time_zone),
-      col_types = col_types)
+      col_types = col_types,
+      na = character()
+      )
 
 
   # GENERATE COLUMN MAP ----

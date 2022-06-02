@@ -3,6 +3,7 @@
 #'
 #' @param surveyID String. Unique survey ID for the distribution data you want to download.
 #'
+#' @template retry-advice
 #' @export
 #'
 #' @examples
@@ -25,8 +26,8 @@ fetch_distributions <- function(surveyID){
   assert_base_url()
   assert_api_key()
 
-  fetch_url <- create_distributions_url(base_url = Sys.getenv("QUALTRICS_BASE_URL"),
-                                        surveyID =surveyID)
+  fetch_url <- generate_url(query = "fetchdistributions",
+                            surveyID = surveyID)
 
   elements <- list()
 

@@ -26,7 +26,7 @@ question IDs as column names. Defaults to \code{FALSE}.}
 
 \item{time_zone}{String. A local timezone to determine response date
 values. Defaults to \code{NULL} which corresponds to UTC time. See
-\url{https://api-test.qualtrics.com/docs/publicapidocs/docs/Instructions/dates-and-times.md}
+\href{https://api.qualtrics.com/instructions/}{"Dates and Times"} from Qualtrics
 for more information on format.}
 
 \item{legacy}{Logical. If \code{TRUE}, then import "legacy" format CSV files
@@ -40,13 +40,13 @@ response download, such as an item description and internal ID's. Defaults to
 
 \item{add_var_labels}{Logical. If \code{TRUE}, then the item description from
 each variable (equivalent to the one in the column map) will be added as a
-"label" attribute using \code{\link[sjlabelled]{set_label}}. Useful for
+"label" attribute using \code{\link[sjlabelled:set_label]{sjlabelled::set_label()}}. Useful for
 reference as well as cross-compatibility with other stats packages (e.g.,
 Stata, see documentation in \code{sjlabelled}). Defaults to \code{TRUE}.}
 
 \item{col_types}{Optional. This argument provides a way to manually overwrite
-column types that may be incorrectly guessed. Takes a \code{\link[readr]{cols}}
-specification. See example below and \code{\link[readr]{cols}} for formatting
+column types that may be incorrectly guessed. Takes a \code{\link[readr:cols]{readr::cols()}}
+specification. See example below and \code{\link[readr:cols]{readr::cols()}} for formatting
 details. Defaults to \code{NULL}.}
 }
 \value{

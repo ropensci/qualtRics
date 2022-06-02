@@ -10,6 +10,6 @@ getSurveyQuestions(...)
 \item{...}{All arguments for \code{survey_questions}}
 }
 \description{
-This function is deprecated; use \code{\link[qualtRics]{survey_questions}}
+This function is deprecated; use \code{\link[=survey_questions]{survey_questions()}}
 instead.
 }

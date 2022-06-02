@@ -1,7 +1,17 @@
 # qualtRics (development version)
 
+- Add `fetch_distribution_history()` and `list_distribution_links()` for more handling of distribution data, thanks to @chrisumphlett and @dsen6644 (#221, #239)
+
+- Changed handling of literal `"NA"` text input from users so it is no longer converted to an R `NA` value thanks to @jmobrien (#244)
+
+- Use `httr::RETRY()` instead of `httr::VERB()` in `qualtrics_api_request()` to implement consistent API error-handling across all of the functions in the package. They will be retried up to 3 times if there is any non-4xx error. Thanks to @chrisumphlett (#217)
+
+# qualtRics 3.1.5
+
 - Add `fetch_description()` to download complete survey description metadata from v3 API endpoint (more up-to-date than older `metadata()`) thanks to @jmobrien (#207)
 - Warn users about possible incorrect results from API when `breakout_sets` and `label` are both FALSE
+- Refactor internal URL creation for API calls thanks to @jmobrien (#225)
+- Add `fetch_id()` to return a `surveyID` based on a unique survey name as it appears in the Qualtrics UI thanks to @markjrieke (#230).  
 
 # qualtRics 3.1.4
 

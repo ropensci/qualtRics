@@ -1,9 +1,10 @@
 #' Retrieve a data frame containing survey column mapping
 #'
 #' @param surveyID A string. Unique ID for the survey you want to download.
-#' Returned as `id` by the \link[qualtRics]{all_surveys} function.
+#' Returned as `id` by the [all_surveys][qualtRics::all_surveys] function.
 #'
-#' @seealso See \url{https://api.qualtrics.com/docs/} for documentation on the
+#' @template retry-advice
+#' @seealso See <https://api.qualtrics.com/> for documentation on the
 #' Qualtrics API.
 #' @export
 #' @examples
@@ -38,18 +39,12 @@ column_map <- function(surveyID) {
   assert_api_key()
 
   # Function-specific API stuff
-  surveys_url <- create_surveys_url(Sys.getenv("QUALTRICS_BASE_URL"))
-  # Add survey id
-  surveys_url <- paste0(
-    surveys_url,
-    "/",
-    surveyID
-  )
+  survey_url <- generate_url(query = "metadata",
+                             surveyID = surveyID)
 
   # SEND REQUEST TO API ----
-
-  # GET request to download metadata
-  resp <- qualtrics_api_request("GET", surveys_url)
+  # Send GET request to specific survey
+  resp <- qualtrics_api_request("GET", survey_url)
 
   # Get question information and map
   c_map <- resp$result$exportColumnMap

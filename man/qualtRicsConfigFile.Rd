@@ -10,7 +10,7 @@ qualtRicsConfigFile(...)
 \item{...}{All arguments for \code{qualtRicsConfigFile}}
 }
 \description{
-This function is deprecated; use \code{\link[qualtRics]{qualtrics_api_credentials}} instead.
+This function is deprecated; use \code{\link[=qualtrics_api_credentials]{qualtrics_api_credentials()}} instead.
 }
 \examples{
 \dontrun{
