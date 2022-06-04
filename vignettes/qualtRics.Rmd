@@ -18,7 +18,7 @@ comment = "#>"
 
 [Qualtrics](https://www.qualtrics.com/) is an online survey and data collection software platform. Qualtrics is used across many domains in both academia and industry for online surveys and research. While users can manually download survey responses from Qualtrics through a browser, importing this data into R is then cumbersome. The qualtRics R package implements the retrieval of survey data using the Qualtrics API and aims to reduce the pre-processing steps needed in analyzing such surveys. 
 
-Note that your institution must support API access and that it must be enabled for your account. Whoever manages your Qualtrics account can help you with this. Please refer to the [Qualtrics documentation](https://api.qualtrics.com/instructions/) to find your API token.
+Note that your institution must support API access and that it must be enabled for your account. Whoever manages your Qualtrics account can help you with this. Please refer to the [Qualtrics documentation](https://api.qualtrics.com/) to find your API token.
 
 The authors and contributors for this R package are not affiliated with Qualtrics and Qualtrics does not offer support for this R package.
 
@@ -40,7 +40,7 @@ Note that you can only export surveys that you own, or to which you have been gi
 
 ## Registering your Qualtrics credentials
 
-There are two important credentials you need to authenticate with the Qualtrics API. These are your **API key** and **datacenter-specific base URL**. The base URL you pass to the qualtRics package should look like `yourdatacenterid.qualtrics.com`, without a scheme such as `https://`. The [Qualtrics API documentation](https://api.qualtrics.com/instructions/) explains how you can find your base URL.
+There are two important credentials you need to authenticate with the Qualtrics API. These are your **API key** and **datacenter-specific base URL**. The base URL you pass to the qualtRics package should look like `yourdatacenterid.qualtrics.com`, without a scheme such as `https://`. The [Qualtrics API documentation](https://api.qualtrics.com/) explains how you can find your base URL.
 
 You can store your API credentials `QUALTRICS_API_KEY` and `QUALTRICS_BASE_URL` in your `.Renviron` file for repeated use across sessions. The qualtRics package has a function to help with this.
 
@@ -88,7 +88,7 @@ mysurvey <- fetch_survey(surveys$id[4],
 ```
 
 
-Note that your date and time settings may not correspond to your own timezone. You can find out how to do this [here](https://www.qualtrics.com/support/survey-platform/managing-your-account/research-core-account-settings/#user-settings). See ["Dates and Times"](https://api.qualtrics.com/instructions/) for more information about how Qualtrics handles dates and times. **Keep in mind that this is important if you plan on using times / dates as cut-off points to filter data**.
+Note that your date and time settings may not correspond to your own timezone. You can find out how to do this [here](https://www.qualtrics.com/support/survey-platform/managing-your-account/research-core-account-settings/#user-settings). See ["Dates and Times" under "Instructions"](https://api.qualtrics.com/) for more information about how Qualtrics handles dates and times. **Keep in mind that this is important if you plan on using times / dates as cut-off points to filter data**.
 
 You may also reference a response ID; `fetch_survey()` will then download all responses that were submitted after that response:
 

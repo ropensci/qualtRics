@@ -43,7 +43,7 @@
 #' used. Defaults to `FALSE`.
 #' @param time_zone String. A local timezone to determine response date
 #' values. Defaults to `NULL` which corresponds to UTC time. See
-#' ["Dates and Times"](https://api.qualtrics.com/instructions/) from Qualtrics
+#' ["Dates and Times"](https://api.qualtrics.com/) from Qualtrics
 #' for more information on format.
 #' @param breakout_sets Logical. If `TRUE`, then the
 #' [qualtRics::fetch_survey()] function will split multiple

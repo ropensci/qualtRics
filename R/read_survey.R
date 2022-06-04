@@ -12,7 +12,7 @@
 #' to `TRUE`.
 #' @param time_zone String. A local timezone to determine response date
 #' values. Defaults to `NULL` which corresponds to UTC time. See
-#' ["Dates and Times"](https://api.qualtrics.com/instructions/) from Qualtrics
+#' ["Dates and Times"](https://api.qualtrics.com/) from Qualtrics
 #' for more information on format.
 #' @param legacy Logical. If `TRUE`, then import "legacy" format CSV files
 #' (as of 2017). Defaults to `FALSE`.

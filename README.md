@@ -10,7 +10,7 @@ Ginn](https://jasperhg90.github.io/)<br/> **License:**
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/ropensci/qualtRics/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/qualtRics/actions)
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/qualtRics)](https://cran.r-project.org/package=qualtRics)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/qualtRics)](https://cran.r-project.org/package=qualtRics)
 [![Codecov test
 coverage](https://codecov.io/gh/ropensci/qualtRics/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ropensci/qualtRics?branch=master)
 [![rOpenSci](https://badges.ropensci.org/192_status.svg)](https://github.com/ropensci/software-review/issues/192)
@@ -68,8 +68,8 @@ Currently, the package contains three core functions:
 
 1.  `all_surveys()` fetches a list of all surveys that you own or have
     access to from Qualtrics.
-2.  `fetch_survey()` downloads a survey from Qualtrics and loads it
-    into R.
+2.  `fetch_survey()` downloads a survey from Qualtrics and loads it into
+    R.
 3.  `read_survey()` allows you to read CSV files you download manually
     from Qualtrics.
 
@@ -94,9 +94,8 @@ There are two important credentials you need to authenticate with the
 Qualtrics API. These are your **API key** and **datacenter-specific base
 URL**. The base URL you pass to the qualtRics package should look like
 `yourdatacenterid.qualtrics.com`, without a scheme such as `https://`.
-The [Qualtrics API
-documentation](https://api.qualtrics.com/instructions/) explains how you
-can find your base URL.
+The [Qualtrics API documentation](https://api.qualtrics.com/) explains
+how you can find your base URL.
 
 You can store your API credentials `QUALTRICS_API_KEY` and
 `QUALTRICS_BASE_URL` in your `.Renviron` file for repeated use across
@@ -154,4 +153,4 @@ Feedback, bug reports (and fixes!), and feature requests are welcome;
 file issues or seek support
 [here](https://github.com/ropensci/qualtRics/issues).
 
-[![ropensci\_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)
+[![ropensci_footer](https://ropensci.org/public_images/ropensci_footer.png)](https://ropensci.org)

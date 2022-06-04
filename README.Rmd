@@ -72,7 +72,7 @@ Note that you can only export surveys that you own, or to which you have been gi
 
 ## Register your Qualtrics credentials
 
-There are two important credentials you need to authenticate with the Qualtrics API. These are your **API key** and **datacenter-specific base URL**. The base URL you pass to the qualtRics package should look like `yourdatacenterid.qualtrics.com`, without a scheme such as `https://`. The [Qualtrics API documentation](https://api.qualtrics.com/instructions/) explains how you can find your base URL.
+There are two important credentials you need to authenticate with the Qualtrics API. These are your **API key** and **datacenter-specific base URL**. The base URL you pass to the qualtRics package should look like `yourdatacenterid.qualtrics.com`, without a scheme such as `https://`. The [Qualtrics API documentation](https://api.qualtrics.com/) explains how you can find your base URL.
 
 You can store your API credentials `QUALTRICS_API_KEY` and `QUALTRICS_BASE_URL` in your `.Renviron` file for repeated use across sessions. The qualtRics package has a function to help with this.
 

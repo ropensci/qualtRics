@@ -84,7 +84,7 @@ used. Defaults to \code{FALSE}.}
 
 \item{time_zone}{String. A local timezone to determine response date
 values. Defaults to \code{NULL} which corresponds to UTC time. See
-\href{https://api.qualtrics.com/instructions/}{"Dates and Times"} from Qualtrics
+\href{https://api.qualtrics.com/}{"Dates and Times"} from Qualtrics
 for more information on format.}
 
 \item{breakout_sets}{Logical. If \code{TRUE}, then the
