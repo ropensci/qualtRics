@@ -6,6 +6,8 @@
 
 - Use `httr::RETRY()` instead of `httr::VERB()` in `qualtrics_api_request()` to implement consistent API error-handling across all of the functions in the package. They will be retried up to 3 times if there is any error. Thanks to @chrisumphlett (#217)
 
+- Update `fetch_distributions()` for changes to the Qualtrics API, thanks to @chrisumphlett (#250)
+
 # qualtRics 3.1.5
 
 - Add `fetch_description()` to download complete survey description metadata from v3 API endpoint (more up-to-date than older `metadata()`) thanks to @jmobrien (#207)
