@@ -28,3 +28,4 @@ Changelog\.md$
 ^\.github$
 ^codecov\.yml$
 ^man-roxygen$
+^CRAN-SUBMISSION$

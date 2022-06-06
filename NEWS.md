@@ -1,3 +1,5 @@
+# qualtRics (development version)
+
 # qualtRics 3.1.6
 
 - Add `fetch_distribution_history()` and `list_distribution_links()` for more handling of distribution data, thanks to @chrisumphlett and @dsen6644 (#221, #239)
