@@ -272,7 +272,8 @@ create_raw_payload <- function(label = TRUE,
                                unanswer_recode_multi = NULL,
                                include_display_order = TRUE,
                                include_questions = NULL,
-                               breakout_sets = NULL) {
+                               breakout_sets = NULL,
+                               responses_in_progress = NULL) {
 
   params <- as.list(environment())
 
@@ -286,7 +287,8 @@ create_raw_payload <- function(label = TRUE,
       unanswer_recode_multi = "multiselectSeenUnansweredRecode",
       include_display_order = "includeDisplayOrder",
       include_questions = "questionIds",
-      breakout_sets = "breakoutSets")
+      breakout_sets = "breakoutSets",
+      responses_in_progress = "exportResponsesInProgress")
 
 
 

@@ -14,7 +14,8 @@ create_raw_payload(
   unanswer_recode_multi = NULL,
   include_display_order = TRUE,
   include_questions = NULL,
-  breakout_sets = NULL
+  breakout_sets = NULL,
+  responses_in_progress = NULL
 )
 }
 \arguments{
