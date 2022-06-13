@@ -21,9 +21,9 @@
 #' surveys <- all_surveys()
 #'
 #' # Retrieve a single survey
-#' mysurvey <- fetch_inprogress(surveyID = surveys$id[6])
+#' mysurvey <- fetch_in_progress(surveyID = surveys$id[6])
 #'
-#' mysurvey <- fetch_inprogress(
+#' mysurvey <- fetch_in_progress(
 #'   surveyID = surveys$id[6],
 #'   save_dir = tempdir(),
 #'   start_date = "2018-01-01",
@@ -38,8 +38,7 @@
 #'
 #' }
 #'
-fetch_inprogress <- function(surveyID,
-                         last_response = deprecated(),
+fetch_in_progress <- function(surveyID,
                          start_date = NULL,
                          end_date = NULL,
                          unanswer_recode = NULL,
@@ -58,10 +57,6 @@ fetch_inprogress <- function(surveyID,
                          add_column_map = TRUE,
                          add_var_labels = TRUE,
                          col_types = NULL) {
-
-  if (lifecycle::is_present(last_response)) {
-    lifecycle::deprecate_warn("3.1.2", "fetch_inprogress(last_response = )")
-  }
 
   ## Are the API credentials stored?
   assert_base_url()
@@ -88,8 +83,8 @@ fetch_inprogress <- function(surveyID,
 
   # See if survey already in tempdir
   if (!force_request) {
-    if (paste0(surveyID, "_inprogress.rds") %in% list.files(tempdir())) {
-      data <- readRDS(paste0(tempdir(), "/", surveyID, "_inprogress.rds"))
+    if (paste0(surveyID, "_in_progress.rds") %in% list.files(tempdir())) {
+      data <- readRDS(paste0(tempdir(), "/", surveyID, "_in_progress.rds"))
       if (verbose) {
         rlang::inform(paste0(
           "Found an earlier download for survey with id ", surveyID, # nolint
@@ -151,14 +146,14 @@ fetch_inprogress <- function(surveyID,
 
   # Save survey as RDS file in temp folder so that it can be easily
   # retrieved this session.
-  saveRDS(data, paste0(tempdir(), "/", surveyID, "_inprogress.rds"))
+  saveRDS(data, paste0(tempdir(), "/", surveyID, "_in_progress.rds"))
 
   # RETURN ----
 
   # Remove tmpfiles
   if (!is.null(save_dir)) {
     # Save file to directory
-    saveRDS(data, file = paste0(save_dir, "/", surveyID, "_inprogress.rds"))
+    saveRDS(data, file = paste0(save_dir, "/", surveyID, "_in_progress.rds"))
     # Return
     return(data)
   } else {
