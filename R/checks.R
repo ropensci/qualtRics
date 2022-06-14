@@ -528,6 +528,31 @@ checkarg_convert_label_breakouts <-
 
 ## directories and files ---------------------------------------------------
 
+#' Check if downloaded file already exists
+#' @params file_location (potential) path to previous download
+#' @params surveyID Qualtrics survey ID
+#' @params verbose whether to report if match is found
+#' @importFrom rlang inform
+#' @importFrom glue glue
+#' @keywords internal
+check_existing_download <-
+  function(file_location,
+           surveyID,
+           verbose = TRUE) {
+    if (file.exists(file_location)) {
+      if (verbose) {
+        rlang::inform(
+          c(glue::glue("Loading saved prior download for surveyID = {surveyID}."),
+            "Set 'force_request = TRUE' to override this.")
+        )
+      }
+      file_exists <- TRUE
+    } else {
+      file_exists <- FALSE
+    }
+    return(file_exists)
+  }
+
 #' Check if save directory exists
 #' @importFrom rlang abort
 #' @keywords internal

@@ -125,6 +125,7 @@
 #'   data variables in the survey being accessed.
 #' @importFrom lifecycle deprecated
 #' @importFrom purrr compact
+#' @importFrom glue glue
 #' @export
 #' @examples
 #' \dontrun{
@@ -180,19 +181,22 @@ fetch_survey <-
            last_response = deprecated()
   ) {
 
+    # Check/format arguments --------------------------------------------------
+
     if (lifecycle::is_present(last_response)) {
       lifecycle::deprecate_warn("3.1.2", "fetch_survey(last_response = )")
     }
 
-    ## Are the API credentials stored (and likely suitable)?
+    # Check if API credentials stored (and likely suitable)
     check_credentials()
 
-    # Check arguments:
+    # Check/format date/time arguments:
     start_date_formatted <-
       checkarg_datetime(start_date, time_zone = time_zone)
     end_date_formatted <-
       checkarg_datetime(end_date, time_zone = time_zone, endofday = FALSE)
 
+    # Check/format include_* arguments
     include_metadata_formatted <-
       checkarg_include_metadata(include_metadata)
     include_questions_formatted <-
@@ -200,15 +204,15 @@ fetch_survey <-
     include_embedded_formatted <-
       checkarg_include_embedded(include_embedded)
 
+    # Check other unique arguments
     checkarg_col_types(col_types)
     checkarg_limit(limit)
     checkarg_save_dir(save_dir)
     checkarg_convert_label_breakouts(convert, label, breakout_sets)
 
-
+    # Check general argument types:
     checkarg_isintegerish(unanswer_recode)
     checkarg_isintegerish(unanswer_recode_multi)
-
     checkarg_isboolean(include_display_order)
     checkarg_isboolean(force_request)
     checkarg_isboolean(verbose)
@@ -216,38 +220,31 @@ fetch_survey <-
     checkarg_isboolean(add_column_map)
     checkarg_isboolean(add_var_labels)
 
-    # Generate a location for downloaded file to go:
+
+    # Re-load existing file if present ----------------------------------------
+
+    # Location for downloaded file to go (or be):
     file_location <-
-      paste0(tempdir(), "/", surveyID, ".rds")
+      glue::glue("{tempdir()}/{surveyID}.rds")
 
     # See if survey already in temporary directory:
     if (!force_request) {
+      download_exists <-
+        check_existing_download(file_location = file_location,
+                                surveyID = surveyID,
+                                verbose = verbose)
 
-      if (file.exists(file_location)) {
-        data <-
-          readRDS(file_location)
-
-        if (verbose) {
-          rlang::inform(
-            c(glue::glue("Loading saved download for surveyID = {surveyID}.",
-                         surveyID = surveyID),
-              "Set 'force_request = TRUE' to override this.")
-          )
-        }
-        return(data)
+      if(download_exists){
+        return(readRDS(file_location))
       }
     }
 
-    # Construct initial API request ----
 
-    # fetch URL:
-    fetch_url <-
-      generate_url(
-        query = "fetchsurvey",
-        surveyID = surveyID
-      )
+    # Make 3-part request to export-responses endpoint -------------------------------
 
-    # Create raw JSON payload
+    # Create raw JSON payload (request body)
+    # Names are param names for endpoint, as specified at:
+    # https://api.qualtrics.com/6b00592b9c013-start-response-export
     raw_payload <-
       create_raw_payload(
         format = "csv",
@@ -265,46 +262,12 @@ fetch_survey <-
       )
 
 
-    # Send POST request to API ----
-
-    # POST request for download
-    res <-
-      qualtrics_api_request(
-        verb = "POST",
-        url = fetch_url,
-        body = raw_payload
-      )
-
-    # Get progress id
-    if (is.null(res$result$progressId)) {
-      rlang::abort(
-        c("Qualtrics failed to return a progress ID for your download request",
-          "Please re-run your query.")
-      )
-    } else {
-      requestID <-
-        res$result$progressId
-    } # NOTE This is not fail safe because ID can still be NULL
-
-
-    # Monitor progress & get location of file path ----------------------------
-
-    fileID <-
-      fetch_survey_progress(
+    survey_fpath <-
+      export_responses_request(
         surveyID = surveyID,
-        requestID = requestID,
+        body = raw_payload,
         verbose = verbose
       )
-
-
-    # Download .zip file and unzip it -----------------------------------------
-
-    survey_fpath <-
-      fetch_survey_filedownload(
-        surveyID = surveyID,
-        fileID = fileID
-      )
-
 
     # Read downloaded .csv & clean -------------------------------------------
 
@@ -334,7 +297,10 @@ fetch_survey <-
 
     # Save file to specified alternative directory if given:
     if (!is.null(save_dir)) {
-      saveRDS(data, file = paste0(save_dir, "/", surveyID, ".rds"))
+      alt_file_location <-
+        glue::glue("{save_dir}/{surveyID}.rds")
+
+      saveRDS(data, alt_file_location)
     }
 
     # Return
@@ -342,136 +308,3 @@ fetch_survey <-
 
   }
 
-
-#' Monitor progress from response request download, then obtain file download
-#' location
-#'
-#' @param surveyID ID of survey whose responses are being pulled
-#' @param requestID exportProgressId from
-#'   https://api.qualtrics.com/37e6a66f74ab4-get-response-export-progress
-#' @param verbose See [fetch_survey()]
-#' @template retry-advice
-#' @keywords internal
-
-fetch_survey_progress <-
-  function(surveyID,
-           requestID,
-           verbose = FALSE) {
-
-    # This is the URL to use when checking the progress
-    progress_url <-
-      generate_url(
-        "fetchsurvey_progress",
-        surveyID = surveyID,
-        requestID = requestID
-      )
-
-    # Create a progress bar and monitor when export is ready
-    if (verbose) {
-      pbar <-
-        utils::txtProgressBar(
-          min = 0,
-          max = 100,
-          style = 3
-        )
-    }
-
-    # Initialize progress
-    progress <- 0
-    # While download is in progress
-    while (progress < 100) {
-      # Get percentage complete
-      CU <-
-        qualtrics_api_request(
-          verb = "GET",
-          url = progress_url
-        )
-
-      progress <-
-        CU$result$percentComplete
-
-      # Set progress
-      if (verbose) {
-        utils::setTxtProgressBar(pbar, progress)
-      }
-    } # end while loop (progress complete)
-    # Kill progress bar
-    if (verbose) {
-      close(pbar)
-    }
-
-    # Get the fileID showing location of the downloadable file:
-    fileID <-
-      CU$result$fileId
-    return(fileID)
-  }
-
-#' Downloads response data (.zip of .csv) from location obtained from
-#' fetch_survey_progress
-#'
-#' @param surveyID survey ID
-#' @param requestID request ID from fetch_survey
-#' @param fileID file ID from fetch_survey_progress
-#' @keywords internal
-
-fetch_survey_filedownload <-
-  function(surveyID,
-           fileID){
-
-    # Construct a url for obtaining the file:
-    file_url <-
-      generate_url(
-        "fetchsurvey_file",
-        surveyID = surveyID,
-        fileID = fileID
-      )
-
-    # Load raw zip file:
-    raw_zip <-
-      qualtrics_api_request(
-        verb = "GET",
-        url = file_url,
-        as = "raw"
-      )
-
-    # To zip file
-    tf_path <-
-      glue::glue(
-        "{temp_dir}/temp.zip",
-        # Remove trailing slash if system includes one:
-        temp_dir = stringr::str_remove(tempdir(), "/$")
-      )
-
-    # Write to temporary file
-    writeBin(raw_zip, tf_path)
-
-    # Create error handling around unzipping:
-    safeunzip <-
-      purrr::possibly(
-        utils::unzip,
-        NULL
-      )
-
-    # Unzip and get the filepath for the csv
-    csv_filepath <-
-      safeunzip(
-        zipfile = tf_path,
-        exdir = tempdir()
-      )
-
-    if(is.null(csv_filepath)){
-      rlang::abort(
-        c("Error extracting CSV from zip file",
-          "The download may have been corrupted; try re-running your query",
-          "Current download file location:",
-          tf_path)
-      )
-    }
-
-    # Remove zipfile
-    file.remove(tf_path)
-
-
-    # Return file location
-    return(csv_filepath)
-  }

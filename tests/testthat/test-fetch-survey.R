@@ -105,7 +105,7 @@ test_that("fetch_survey() reads a stored survey in temporary directory if exists
   # Query with all options
   expect_message(
     qualtRics::fetch_survey("surveyID"),
-    "Loading saved download"
+    "Loading saved prior download"
   )
 })
 
