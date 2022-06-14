@@ -33,8 +33,7 @@
 survey_questions <- function(surveyID) {
 
   # Check params
-  assert_base_url()
-  assert_api_key()
+  check_credentials()
 
   # Generate URL for metadata endpoint:
   surveys_url <- generate_url(query = "metadata",
