@@ -23,7 +23,7 @@ test_that("survey_questions() throws an error where URL & key are bad", {
 
   expect_error(
     qualtRics::survey_questions("1234"),
-    "you may not have the\nrequired authorization"
+    "You may not have the required authorization"
   )
 })
 

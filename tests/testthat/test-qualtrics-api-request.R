@@ -2,41 +2,18 @@ library(webmockr)
 
 context("qualtrics-api-request")
 
-test_that("it should make an http request with verb, url, and api-key", {
-  webmockr::enable()
 
-  mock_url <- 'https://testUrl.com'
-  verb <- 'GET'
-  mock_api_key <- '1234'
-  qualtrics_api_credentials(mock_api_key, mock_url)
-
-  headers <- list('X-API-TOKEN' = mock_api_key,
-                  'Content-Type' = 'application/json',
-                  'Accept' = '*/*',
-                  'accept-encoding' = 'gzip, deflate')
-
-  stub_request("GET", mock_url) %>%
-    wi_th(headers = headers) %>% to_return(status=200)
-
-  with_mock(
-    `qualtRics::check_for_warnings` = function(resp) NULL,
-    expect_is(qualtrics_api_request("GET", mock_url), "raw")
-  )
-  stub_registry_clear()
-
-
-  webmockr::disable()
-})
 
 test_that("it should throw an error after certain 400 and 500 status codes", {
 
   skip_on_cran()
 
   webmockr::enable()
+  mock_base_url <- 'www.qualtrics.com'
   mock_url <- 'https://testUrl.com'
   verb <- 'GET'
   mock_api_key <- '1234'
-  qualtrics_api_credentials(mock_api_key, mock_url)
+  qualtrics_api_credentials(mock_api_key, mock_base_url)
   headers <- list('X-API-TOKEN' = mock_api_key,
                   'Content-Type' = 'application/json',
                   'Accept' = '*/*',

@@ -74,7 +74,7 @@ test_that("setting elements works with legacy = TRUE ", {
 
 })
 
-test_that("passing a list to elements when legacy = TRUE succeeds with message ", {
+test_that("passing a list to elements when legacy = TRUE succeeds with warning ", {
 
   element_list <-
     list(
@@ -87,14 +87,14 @@ test_that("passing a list to elements when legacy = TRUE succeeds with message "
       "comments" = TRUE
     )
 
- expect_message(
+ expect_warning(
     vcr::use_cassette("fetch_description_legacy", {
      x <- fetch_description("SV_6s93xhVtm1e4j3v",
                              legacy = TRUE,
                              elements = element_list
       )
     }),
-    "Use of logical lists for argument"
+    "Use of logical lists"
   )
 
   expect_type(x, "list")

@@ -11,7 +11,7 @@ surveys <-
 
 test_that("fetch_id() returns a surveyID for a unique survey_name", {
 
-  x <- fetch_id(surveys, "Unique Survey Name")
+  x <- unname(fetch_id(surveys, "Unique Survey Name"))
 
   expect_type(x, "character")
   expect_equal(x, "SV_yvele4xrSM5GrN8")
@@ -29,7 +29,7 @@ test_that("Dataframe passed to fetch_id() matches all_surveys() format", {
 
   expect_error(
     fetch_id(z, "Survey Name"),
-    "Error: Please pass a dataframe created by all_surveys() with columns 'id' and 'name'\nExample: all_surveys() %>% fetch_id(survey_name)",
+    "needs a dataframe",
     fixed = TRUE
   )
 
@@ -39,7 +39,7 @@ test_that("survey_name exists", {
 
   expect_error(
     fetch_id(surveys, "Nonexistant Survey Name"),
-    "Error: No survey IDs returned.\nPlease verify that `survey_name` is correct and try again."
+    "Please verify that `survey_name` is correct and try again."
   )
 
 })
@@ -48,7 +48,7 @@ test_that("survey_name is unique", {
 
   expect_error(
     fetch_id(surveys, "Copied Survey Name"),
-    "Error: Multiple survey IDs returned. Please supply a unique `survey_name`."
+    "Multiple survey IDs matched"
   )
 
 })
