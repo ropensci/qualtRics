@@ -6,6 +6,7 @@
 
 #' General check that credentials are present
 #' @importFrom rlang abort
+#' @keywords internal
 check_credentials <- function(){
   creds <- c(
     base_url = Sys.getenv("QUALTRICS_BASE_URL"),
@@ -30,6 +31,7 @@ check_credentials <- function(){
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_remove
 #' @importFrom stringr str_subset
+#' @keywords internal
 checkarg_base_url <- function(base_url){
 
   # Check string:
@@ -74,6 +76,7 @@ checkarg_base_url <- function(base_url){
 #' Is boolean (length-1 logical)
 #' @importFrom rlang abort
 #' @importFrom glue glue
+#' @keywords internal
 checkarg_isboolean <-
   function(arg){
     test <-
@@ -90,6 +93,7 @@ checkarg_isboolean <-
 #' Is string (length-1 character)
 #' @importFrom rlang abort
 #' @importFrom glue glue
+#' @keywords internal
 checkarg_isstring <-
   function(arg, null_okay = TRUE){
     if(null_okay && is.null(arg)){return()}
@@ -109,6 +113,7 @@ checkarg_isstring <-
 #' Is character vector with no missing values:
 #' @importFrom rlang abort
 #' @importFrom glue glue
+#' @keywords internal
 checkarg_ischaracter <-
   function(arg, null_okay = TRUE){
     if(null_okay && is.null(arg)){return()}
@@ -138,6 +143,7 @@ checkarg_ischaracter <-
 #' Is integerish (length-1 numeric w/o any fractional component)
 #' @importFrom rlang abort
 #' @importFrom glue glue
+#' @keywords internal
 checkarg_isintegerish <-
   function(arg, null_okay = TRUE){
     if(null_okay && is.null(arg)){return()}
@@ -162,6 +168,7 @@ checkarg_isintegerish <-
 #' Checks time zone, setting default if needed:
 #' @importFrom rlang abort
 #' @importFrom glue glue
+#' @keywords internal
 checkarg_time_zone <-
   function(time_zone){
 
@@ -205,6 +212,7 @@ checkarg_time_zone <-
 #' @importFrom stringr str_detect
 #' @importFrom glue glue
 #' @importFrom rlang abort
+#' @keywords internal
 #' @return single string date/time formatted in ISO8601
 checkarg_datetime <-
   function(date_arg,
@@ -330,6 +338,7 @@ checkarg_datetime <-
 #' Check that include_metadata has the right elements & format for API call
 #' @importFrom rlang abort
 #' @importFrom dplyr setdiff
+#' @keywords internal
 checkarg_include_metadata <-
   function(include_metadata){
     # If NULL, ignore:
@@ -393,6 +402,7 @@ checkarg_include_metadata <-
 
 #' Check that include_questions uses the QID format, and format for API call:
 #' @importFrom rlang abort
+#' @keywords internal
 checkarg_include_questions <-
   function(include_questions){
     # If NULL, ignore:
@@ -430,6 +440,7 @@ checkarg_include_questions <-
 
 #' Check include_embedded and format for API call:
 #' @importFrom rlang abort
+#' @keywords internal
 checkarg_include_embedded <-
   function(include_embedded){
     # If NULL, ignore:
@@ -451,6 +462,7 @@ checkarg_include_embedded <-
 
 #' col_types must be a col_spec object from readr
 #' @importFrom rlang abort
+#' @keywords internal
 checkarg_col_types <-
   function(col_types){
     if(is.null(col_types)){return()}
@@ -466,6 +478,7 @@ checkarg_col_types <-
 
 #' Check limit for being integer >= 1:
 #' @importFrom rlang abort
+#' @keywords internal
 checkarg_limit <-
   function(limit){
     if(is.null(limit)){return()}
@@ -486,6 +499,7 @@ checkarg_limit <-
 #' Check conditions around combinations of convert, label, and breakout_sets
 #' @importFrom rlang abort
 #' @importFrom rlang warn
+#' @keywords internal
 checkarg_convert_label_breakouts <-
   function(convert, label, breakout_sets){
     # Check type:
@@ -516,6 +530,7 @@ checkarg_convert_label_breakouts <-
 
 #' Check if save directory exists
 #' @importFrom rlang abort
+#' @keywords internal
 checkarg_save_dir <-
   function(save_dir) {
     if(is.null(save_dir)){return()}
@@ -533,6 +548,7 @@ checkarg_save_dir <-
 
 #' Check if survey file specified in file_name exists
 #' @importFrom rlang abort
+#' @keywords internal
 checkarg_file_name <-
   function(file_name) {
     if(!file.exists(file_name)){
@@ -552,6 +568,7 @@ checkarg_file_name <-
 #' Check if elements given in fetch_description are properly specified
 #' @importFrom rlang abort
 #' @importFrom dplyr setdiff
+#' @keywords internal
 checkarg_elements <-
   function(elements){
     # Allowed elements:
@@ -596,6 +613,7 @@ checkarg_elements <-
 #' @importFrom rlang warn
 #' @importFrom dplyr setdiff
 #' @importFrom dplyr union
+#' @keywords internal
 checkarg_get <- function(get){
   # Allowed elements in get :
   allowed <-
@@ -666,6 +684,9 @@ checkarg_get <- function(get){
 
 # fetch_id() --------------------------------------------------------------
 
+#' Check if data for fetch_id() is correct
+#' @importFrom rlang abort
+#' @keywords internal
 checkarg_fetch_id_data <-
   function(.data){
 
