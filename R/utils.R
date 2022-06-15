@@ -7,7 +7,6 @@
 
 #' Checks responses against Qualtrics response codes and returns error message.
 #'
-#' @param raw If TRUE, add 'raw' flag to httr::content() function.
 #' @param res results object from httr#' @keywords internal
 
 qualtrics_response_codes <-

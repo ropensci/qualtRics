@@ -281,8 +281,8 @@ checkarg_datetime <-
     if(endofday){
       # If it's a date, or character w/just a date, append 23:59:59:
       test_dateonly <-
-        is.Date(date_arg) ||
-        str_detect(date_arg, dateonly_format)
+        lubridate::is.Date(date_arg) ||
+        stringr::str_detect(date_arg, dateonly_format)
       if(test_dateonly){
         date_arg <-
           paste0(date_arg, " 23:59:59")
@@ -529,9 +529,9 @@ checkarg_convert_label_breakouts <-
 ## directories and files ---------------------------------------------------
 
 #' Check if downloaded file already exists
-#' @params file_location (potential) path to previous download
-#' @params surveyID Qualtrics survey ID
-#' @params verbose whether to report if match is found
+#' @param file_location (potential) path to previous download
+#' @param surveyID Qualtrics survey ID
+#' @param verbose whether to report if match is found
 #' @importFrom rlang inform
 #' @importFrom glue glue
 #' @keywords internal
