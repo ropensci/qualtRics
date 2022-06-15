@@ -8,8 +8,6 @@ qualtrics_response_codes(res)
 }
 \arguments{
 \item{res}{results object from httr#' @keywords internal}
-
-\item{raw}{If TRUE, add 'raw' flag to httr::content() function.}
 }
 \description{
 Checks responses against Qualtrics response codes and returns error message.
