@@ -4,14 +4,13 @@
 \alias{qualtrics_response_codes}
 \title{Checks responses against Qualtrics response codes and returns error message.}
 \usage{
-qualtrics_response_codes(res, raw = FALSE)
+qualtrics_response_codes(res)
 }
 \arguments{
-\item{res}{Response from httr::GET}
+\item{res}{results object from httr#' @keywords internal}
 
 \item{raw}{If TRUE, add 'raw' flag to httr::content() function.}
 }
 \description{
 Checks responses against Qualtrics response codes and returns error message.
 }
-\keyword{internal}

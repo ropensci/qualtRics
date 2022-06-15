@@ -4,21 +4,20 @@
 \alias{metadata}
 \title{Download metadata for a survey}
 \usage{
-metadata(surveyID, get = NULL, ...)
+metadata(surveyID, get = NULL, questions = NULL)
 }
 \arguments{
 \item{surveyID}{A string. Unique ID for the survey you want to download.
 Returned as "id" by the \link{all_surveys} function.}
 
 \item{get}{A character vector containing any of the following: "metadata",
-"questions", "responsecounts", "blocks", "flow", "embedded_data",
-or "comments". Will return included elements. By default, the function
-returns the "metadata", "questions", and "responsecounts" elements.
-See examples below for more information.}
+"questions", "responsecounts", "blocks", "flow", "embedded_data", or
+"comments". Will return included elements. By default, the function returns
+the "metadata", "questions", and "responsecounts" elements. See examples
+below for more information.}
 
-\item{...}{Additional options. User may pass an argument called \code{questions},
-a vector containing the names of questions for which you want to
-return metadata.}
+\item{questions}{Character vector containing the names of questions for which
+you want to return metadata.  Defaults to NULL (all questions).}
 }
 \description{
 Using this function, you can retrieve metadata about your survey. This
