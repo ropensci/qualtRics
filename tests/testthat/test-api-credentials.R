@@ -15,7 +15,7 @@ test_that("can store and access credentials", {
 
   expect_error(
     qualtrics_api_credentials(api_key = "1234", base_url = "abcd"),
-    "'base_url' must be of the form"
+    "`base_url` must be of the form"
   )
 
   qualtrics_api_credentials(api_key = "1234", base_url = "https://abcd.qualtrics.com")

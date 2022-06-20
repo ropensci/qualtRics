@@ -5,9 +5,9 @@ test_that("logical params should throw error if not TRUE/FALSE", {
   log_NULL <- NULL
   log_notlog <- "what's that?"
 
-  expect_error(checkarg_isboolean(log_NA), "must be a single TRUE or FALSE")
-  expect_error(checkarg_isboolean(log_NULL), "must be a single TRUE or FALSE")
-  expect_error(checkarg_isboolean(log_notlog), "must be a single TRUE or FALSE")
+  expect_error(checkarg_isboolean(log_NA), "must be a single `TRUE` or `FALSE`")
+  expect_error(checkarg_isboolean(log_NULL), "must be a single `TRUE` or `FALSE`")
+  expect_error(checkarg_isboolean(log_notlog), "must be a single `TRUE` or `FALSE`")
 
 })
 
@@ -80,7 +80,7 @@ test_that("include_metadata should error if not character vector of correct name
   expect_null(checkarg_include_questions(ms_NULL))
   expect_equal(checkarg_include_metadata(ms_NA), character())
   expect_equal(checkarg_include_metadata(ms_good), c("_recordId", "recipientEmail"))
-  expect_error(checkarg_include_metadata(ms_names), "income")
+  expect_error(checkarg_include_metadata(ms_names), "invalid names used")
   expect_error(checkarg_include_metadata(ms_missing), "missing values")
   expect_error(checkarg_include_metadata(ms_wrongtype), "character vector")
 
