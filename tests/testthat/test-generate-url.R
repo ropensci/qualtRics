@@ -12,7 +12,7 @@ test_that("all surveys URL", {
 test_that("fetch surveys URL", {
   Sys.setenv("QUALTRICS_BASE_URL" = "www.qualtrics.com")
   expect_equal(
-    generate_url("fetchsurvey", surveyID = "abcdefg"),
+    generate_url("exportresponses", surveyID = "abcdefg"),
     "https://www.qualtrics.com/API/v3/surveys/abcdefg/export-responses/"
   )
 })

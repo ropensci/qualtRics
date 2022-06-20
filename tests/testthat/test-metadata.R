@@ -2,18 +2,20 @@ context("Get metadata for a survey")
 
 test_that("metadata() should throw an error if passing invalid options to input", {
 
+  expect_warning(
   expect_error(
     metadata("mockId1", get = list(invalidKey = TRUE))
+  )
   )
 
 })
 
 
 
-test_that("metadata() should throw error if input questions are not a vector", {
+test_that("metadata() should throw error if input questions are not a character vector", {
 
   expect_error(
-    metadata("mockId1", questions = "I am not a vector")
+    metadata("mockId1", questions = 1:3)
   )
 
 })
@@ -47,9 +49,11 @@ test_that("metadata() returns flow if specified in new way (char vec)", {
 
 test_that("metadata() ADDS flow if specified in old way (logical list)", {
 
+expect_warning(
   vcr::use_cassette("metadata_flow", {
     x <- metadata("SV_3gbwq8aJgqPwQDP", get = list(flow = TRUE))
   })
+)
 
   expect_type(x, c("list"))
   expect_named(x, c("metadata", "questions", "responsecounts", "flow"))

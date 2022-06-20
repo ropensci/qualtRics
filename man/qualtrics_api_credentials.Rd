@@ -8,7 +8,8 @@ qualtrics_api_credentials(
   api_key,
   base_url,
   overwrite = FALSE,
-  install = FALSE
+  install = FALSE,
+  report = FALSE
 )
 }
 \arguments{
@@ -24,6 +25,9 @@ credentials that you already have in your \code{.Renviron} file.}
 
 \item{install}{If TRUE, will install the key in your \code{.Renviron} file
 for use in future sessions.  Defaults to FALSE (single session use).}
+
+\item{report}{If TRUE, ignores other arguments and outputs credentials as a
+2-element named vector.}
 }
 \description{
 This function adds your Qualtrics API key and base URL to your

@@ -36,20 +36,22 @@ all_surveys <- function() {
   # CHECK PARAMS AND PREP QUERY ----
 
   # Check params
-  assert_base_url()
-  assert_api_key()
+  check_credentials()
 
   # Function-specific API stuff
-  surveys_url <- generate_url(query = "allsurveys")
+  surveys_url <-
+    generate_url(query = "allsurveys")
 
   # SEND REQUEST TO QUALTRICS ----
 
   # Send GET request to list all surveys
-  resp <- qualtrics_api_request("GET", surveys_url)
+  resp <-
+    qualtrics_api_request("GET", surveys_url)
   # Put results in list
   master <- list()
   # Append results
-  master <- append(master, resp$result$elements)
+  master <-
+    append(master, resp$result$elements)
   # If nextPage != null, keep calling
   while (!is.null(resp$result$nextPage)) {
     # Send GET request to list all surveys
@@ -64,3 +66,5 @@ all_surveys <- function() {
   d <- bind_rows(master)
   return(d)
 }
+
+

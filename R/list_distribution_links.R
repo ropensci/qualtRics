@@ -24,8 +24,9 @@ list_distribution_links <- function(distributionID, surveyID){
 
   # qualtrics distribution links parameters can be found at https://api.qualtrics.com/guides/reference/distributions.json/paths/~1distributions~1%7BdistributionId%7D~1links/get
 
-  assert_base_url()
-  assert_api_key()
+  check_credentials()
+  checkarg_isstring(distributionID)
+  checkarg_isstring(surveyID)
 
   fetch_url <- generate_url(query = "listdistributionlinks",
                             distributionID = distributionID,

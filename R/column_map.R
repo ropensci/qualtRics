@@ -35,8 +35,7 @@ column_map <- function(surveyID) {
   # OPTIONS AND BUILD QUERY ----
 
   # Check params
-  assert_base_url()
-  assert_api_key()
+  check_credentials()
 
   # Function-specific API stuff
   survey_url <- generate_url(query = "metadata",

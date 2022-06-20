@@ -4,7 +4,13 @@
 \alias{qualtrics_api_request}
 \title{Send httr requests to Qualtrics API}
 \usage{
-qualtrics_api_request(verb = c("GET", "POST"), url = url, body = NULL)
+qualtrics_api_request(
+  verb = c("GET", "POST"),
+  url = url,
+  body = NULL,
+  as = c("parsed", "raw"),
+  ...
+)
 }
 \arguments{
 \item{verb}{Type of request to be sent (@seealso \code{\link[httr:VERB]{httr::VERB()}})}
@@ -12,6 +18,11 @@ qualtrics_api_request(verb = c("GET", "POST"), url = url, body = NULL)
 \item{url}{Qualtrics endpoint URL created by \code{\link[=generate_url]{generate_url()}} functions}
 
 \item{body}{Options created by \code{\link[=create_raw_payload]{create_raw_payload()}} function}
+
+\item{as}{type of content to return, passed to \code{as} in httr::content().
+current options "parsed" (since we get JSON mostly), "raw" (response .zips)}
+
+\item{...}{arguments passed to httr::content when parsing}
 }
 \description{
 Send httr requests to Qualtrics API
