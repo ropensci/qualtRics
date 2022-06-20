@@ -221,8 +221,8 @@ qualtrics_api_request <-
            ...
            ) {
     # Match args
-    verb <- match.arg(verb)
-    as <- match.arg(as)
+    verb <- rlang::arg_match(verb)
+    as <- rlang::arg_match(as)
     # Construct header
     headers <- construct_header(
       Sys.getenv("QUALTRICS_API_KEY")
