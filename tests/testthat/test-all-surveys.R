@@ -29,7 +29,7 @@ test_that("all_surveys() throws an error when URL & key is bad", {
 
   expect_error(
     all_surveys(),
-    "you may not have the\nrequired authorization"
+    "You may not have the required authorization"
   )
 })
 

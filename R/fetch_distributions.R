@@ -21,10 +21,11 @@
 
 fetch_distributions <- function(surveyID){
 
-  # qualtrics distribution parameters can be found at https://api.qualtrics.com/docs/getting-information-about-distributions-1#get-distribution
+  # qualtrics distribution parameters can be found at
+  # https://api.qualtrics.com/docs/getting-information-about-distributions-1#get-distribution
 
-  assert_base_url()
-  assert_api_key()
+  check_credentials()
+  checkarg_isstring(surveyID)
 
   fetch_url <- generate_url(query = "fetchdistributions",
                             surveyID = surveyID)

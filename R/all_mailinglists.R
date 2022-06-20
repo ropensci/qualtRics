@@ -18,8 +18,7 @@
 
 all_mailinglists <- function(){
 
-  assert_base_url()
-  assert_api_key()
+  check_credentials()
 
   # Function-specific API stuff
   fetch_url <- generate_url(query = "allmailinglists")

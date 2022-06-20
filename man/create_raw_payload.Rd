@@ -2,49 +2,14 @@
 % Please edit documentation in R/utils.R
 \name{create_raw_payload}
 \alias{create_raw_payload}
-\title{Create raw JSON payload to post response exports request}
+\title{Create properly-formatted JSON payload for API calls.  Removes NULLS}
 \usage{
-create_raw_payload(
-  label = TRUE,
-  start_date = NULL,
-  end_date = NULL,
-  limit = NULL,
-  time_zone = NULL,
-  unanswer_recode = NULL,
-  unanswer_recode_multi = NULL,
-  include_display_order = TRUE,
-  include_questions = NULL,
-  breakout_sets = NULL
-)
-}
-\arguments{
-\item{label}{Flag}
-
-\item{start_date}{Flag}
-
-\item{end_date}{Flag}
-
-\item{limit}{Flag}
-
-\item{time_zone}{Flag}
-
-\item{unanswer_recode}{Flag}
-
-\item{unanswer_recode_multi}{Flag}
-
-\item{include_display_order}{Flag}
-
-\item{include_questions}{Flag}
-
-\item{breakout_sets}{Flag}
+create_raw_payload(...)
 }
 \value{
 JSON file with options to send to API
 }
 \description{
-Create raw JSON payload to post response exports request
-}
-\seealso{
-See \code{\link[=all_surveys]{all_surveys()}} for more details on these parameters
+Create properly-formatted JSON payload for API calls.  Removes NULLS
 }
 \keyword{internal}

@@ -18,6 +18,8 @@
 #' for use in future sessions.  Defaults to FALSE (single session use).
 #' @param overwrite If TRUE, will overwrite existing Qualtrics
 #' credentials that you already have in your `.Renviron` file.
+#' @param report If TRUE, ignores other arguments and outputs credentials as a
+#' 2-element named vector.
 #' @examples
 #'
 #' \dontrun{
@@ -42,44 +44,69 @@
 #' }
 #' @export
 
-qualtrics_api_credentials <- function(api_key, base_url,
-                                      overwrite = FALSE, install = FALSE) {
-  if (install) {
-    home <- Sys.getenv("HOME")
-    renv <- file.path(home, ".Renviron")
-    if (file.exists(renv)) {
-      # Backup original .Renviron before doing anything else here.
-      file.copy(renv, file.path(home, ".Renviron_backup"))
-    }
-    if (!file.exists(renv)) {
-      file.create(renv)
-    }
-    else {
-      if (isTRUE(overwrite)) {
-        message("Your original .Renviron will be backed up and stored in your R HOME directory if needed.")
-        oldenv <- readLines(renv)
-        newenv <- oldenv[-grep("QUALTRICS_API_KEY|QUALTRICS_BASE_URL", oldenv)]
-        writeLines(newenv, renv)
-      }
-      else {
-        tv <- readLines(renv)
-        if (any(grepl("QUALTRICS_API_KEY|QUALTRICS_BASE_URL", tv))) {
-          stop("Qualtrics credentials already exist. You can overwrite them with the argument overwrite=TRUE", call. = FALSE)
-        }
-      }
+qualtrics_api_credentials <-
+  function(api_key,
+           base_url,
+           overwrite = FALSE,
+           install = FALSE,
+           report = FALSE) {
+
+    checkarg_isboolean(report)
+
+    if(report){
+      creds <- c(
+        api_key = Sys.getenv("QUALTRICS_API_KEY"),
+        base_url = Sys.getenv("QUALTRICS_BASE_URL")
+      )
+      return(creds)
     }
 
-    keyconcat <- paste0("QUALTRICS_API_KEY = '", api_key, "'")
-    urlconcat <- paste0("QUALTRICS_BASE_URL = '", base_url, "'")
-    # Append credentials to .Renviron file
-    write(keyconcat, renv, sep = "\n", append = TRUE)
-    write(urlconcat, renv, sep = "\n", append = TRUE)
-    message('Your Qualtrics key and base URL have been stored in your .Renviron.  \nTo use now, restart R or run `readRenviron("~/.Renviron")`')
-  } else {
-    message("To install your credentials for use in future sessions, run this function with `install = TRUE`.")
-    Sys.setenv(
-      QUALTRICS_API_KEY = api_key,
-      QUALTRICS_BASE_URL = base_url
-    )
+    checkarg_isboolean(overwrite)
+    checkarg_isboolean(install)
+    checkarg_isstring(api_key)
+
+    base_url <- checkarg_base_url(base_url)
+
+    if (install) {
+
+      home <-
+        Sys.getenv("HOME")
+      renv <-
+        file.path(home, ".Renviron")
+
+      # If needed, backup original .Renviron before doing anything else here.
+      if (file.exists(renv)) {
+        file.copy(renv, file.path(home, ".Renviron_backup"))
+      }
+
+      if (!file.exists(renv)) {
+        file.create(renv)
+      } else {
+        if (isTRUE(overwrite)) {
+          message("Your original .Renviron will be backed up and stored in your R HOME directory if needed.")
+          oldenv <- readLines(renv)
+          newenv <- oldenv[-grep("QUALTRICS_API_KEY|QUALTRICS_BASE_URL", oldenv)]
+          writeLines(newenv, renv)
+        }
+        else {
+          tv <- readLines(renv)
+          if (any(grepl("QUALTRICS_API_KEY|QUALTRICS_BASE_URL", tv))) {
+            stop("Qualtrics credentials already exist. You can overwrite them with the argument overwrite=TRUE", call. = FALSE)
+          }
+        }
+      }
+
+      keyconcat <- paste0("QUALTRICS_API_KEY = '", api_key, "'")
+      urlconcat <- paste0("QUALTRICS_BASE_URL = '", base_url, "'")
+      # Append credentials to .Renviron file
+      write(keyconcat, renv, sep = "\n", append = TRUE)
+      write(urlconcat, renv, sep = "\n", append = TRUE)
+      message('Your Qualtrics key and base URL have been stored in your .Renviron.  \nTo use now, restart R or run `readRenviron("~/.Renviron")`')
+    } else {
+      message("To install your credentials for use in future sessions, run this function with `install = TRUE`.")
+      Sys.setenv(
+        QUALTRICS_API_KEY = api_key,
+        QUALTRICS_BASE_URL = base_url
+      )
+    }
   }
-}

@@ -33,7 +33,6 @@
 #'
 #' @importFrom sjlabelled set_label
 #' @importFrom jsonlite fromJSON
-#' @importFrom assertthat has_name
 #' @importFrom purrr map
 #' @importFrom purrr imap
 #' @importFrom purrr map_dfr
@@ -90,13 +89,22 @@ read_survey <- function(file_name,
     import_id = FALSE
   }
 
-  # check if file exists
-  assert_surveyFile_exists(file_name)
 
-  # Set time_zone to UTC if left unspecified
-  if(is.null(time_zone)){
-    time_zone <- "UTC"
-  }
+  # Check time_zone and set to system timezone if left unspecified
+  time_zone <- checkarg_time_zone(time_zone)
+
+  # check if file at file_name exists:
+  checkarg_file_name(file_name)
+
+  # Check col_types argument is the right type:
+  checkarg_col_types(col_types)
+
+  # Check other arguments:
+  checkarg_isboolean(strip_html)
+  checkarg_isboolean(import_id)
+  checkarg_isboolean(legacy)
+  checkarg_isboolean(add_column_map)
+  checkarg_isboolean(add_var_labels)
 
   # Identify metadata rows - single row for legacy, first 2 rows for current:
     if(legacy){
@@ -112,12 +120,13 @@ read_survey <- function(file_name,
   # variable JSON (row 2, v3 only)
   # and descriptions (row 3, or 2 if legacy)
 
-  rawdata <- suppressMessages(
-    readr::read_csv(
-      file = file_name,
-      col_types = readr::cols(.default = readr::col_character()),
-      na = c("")
-    ))
+  rawdata <-
+    suppressMessages(
+      readr::read_csv(
+        file = file_name,
+        col_types = readr::cols(.default = readr::col_character()),
+        na = c("")
+      ))
 
   # If Qualtrics adds an empty column at the end, remove it
   if (grepl(",$", readLines(file_name, n = 1))) {
@@ -171,7 +180,7 @@ read_survey <- function(file_name,
                     .keep = "unused")
 
     # If choiceId does not exist, create it for consistency:
-    if(!assertthat::has_name(col_map, "choiceId")){
+    if(!rlang::has_name(col_map, "choiceId")){
       col_map$choiceId <- NA
     }
 
@@ -187,7 +196,8 @@ read_survey <- function(file_name,
   # If desired, clean variable labels in column map
 
   if (strip_html) {
-    col_map$description <- remove_html(col_map$description)
+    col_map$description <-
+      remove_html(col_map$description)
   }
 
   # New columns in column map for main and sub questions from description:

@@ -23,7 +23,6 @@
 #' @importFrom tibble enframe
 #' @importFrom dplyr bind_rows
 #' @importFrom rlang %||%
-#' @importFrom assertthat assert_that
 #' @export
 #'
 #' @examples
@@ -65,42 +64,13 @@ fetch_description <-
     # OPTIONS AND PREP ----
 
     # Check params
-    assert_base_url()
-    assert_api_key()
+    check_credentials()
+    checkarg_isstring(surveyID)
+    checkarg_isboolean(legacy)
 
-    if (is.null(elements)) {
-      elements <-
-        c(
-          "metadata",
-          "surveyoptions",
-          "flow",
-          "blocks",
-          "questions",
-          "responsesets",
-          "scoring"
-        )
-
-    } else {
-      # case insensitivity:
-      elements <- tolower(elements)
-
-      # Check if bad elements were passed by user:
-      allowed <-
-        c(
-          "metadata",
-          "surveyoptions",
-          "flow",
-          "blocks",
-          "questions",
-          "responsesets",
-          "scoring"
-        )
-
-      assertthat::assert_that(
-        all(tolower(elements) %in% allowed),
-        msg = "One or more entries in 'elements' are not valid. Please check your\ninput and try again."
-      )
-    }
+    # Check and format elements argument:
+    elements <-
+      checkarg_elements(elements)
 
 
     # QUERY API ----
@@ -111,10 +81,12 @@ fetch_description <-
                    surveyID = surveyID)
 
     # Send GET request to survey-definitions endpoint:
-    resp <- qualtrics_api_request("GET", description_url)
+    resp <-
+      qualtrics_api_request("GET", description_url)
 
     # Extract result
-    result <- resp$result
+    result <-
+      resp$result
 
 
 
@@ -191,7 +163,8 @@ fetch_description <-
       )
 
     # Keep only those elements desired:
-    output <- output[names(output) %in% elements]
+    output <-
+      output[names(output) %in% elements]
 
     return(output)
   }

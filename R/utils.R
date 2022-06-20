@@ -1,192 +1,111 @@
 # utils.R contains helper functions for the qualtRics package. These functions should not be called directly by the user and should not be exported.
 
 
+# Constructing/making/checking API requests ---------------------------
+
+
+
 #' Checks responses against Qualtrics response codes and returns error message.
 #'
-#' @param res Response from httr::GET
-#' @param raw If TRUE, add 'raw' flag to httr::content() function.
-#' @keywords internal
+#' @param res results object from httr#' @keywords internal
 
-qualtrics_response_codes <- function(res, raw = FALSE) {
-  # Check status code and raise error/warning
-  if (res$status_code == 200) {
-    if (raw) {
-      result <- httr::content(res, "raw")
-    } else {
-      result <- httr::content(res)
+qualtrics_response_codes <-
+  function(res){
+
+    # Exit if fine:
+    if(res$status_code == 200){
+      return()
     }
-    return(list(
-      "content" = result,
-      "OK" = TRUE
-    ))
-  } else if (res$status_code == 401) {
-    rlang::abort("Qualtrics API raised an authentication (401) error - you may not have the\nrequired authorization. Please check your API key and root url.") # nolint
-  } else if (res$status_code == 403) {
-    rlang::abort("Qualtrics API raised an forbidden (403) error - you may have a valid API\nkey that lacks permissions to query the API. Please check your settings and/or talk to your administrators.") # nolint
-  } else if (res$status_code == 400) {
-    rlang::abort("Qualtrics API raised a bad request (400) error - Please report this on\nhttps://github.com/ropensci/qualtRics/issues") # nolint
-  } else if (res$status_code == 404) {
-    rlang::abort("Qualtrics API complains that the requested resource cannot be found (404 error).\nPlease check if you are using the correct survey ID.") # nolint
-  } else if (res$status_code == 500) {
-    rlang::abort(c(
-      "Qualtrics API reports a temporary internal server (500) error.",
-      "Please contact Qualtrics Support or retry your query",
-      glue::glue("instanceId: {httr::content(res)$meta$error$instanceId}"),
-      glue::glue("errorCode: {httr::content(res)$meta$error$errorCode}")
-    ))
-    return(list(
-      "content" = httr::content(res),
-      "OK" = FALSE
-    ))
-  } else if (res$status_code == 503) {
-    rlang::abort(c(
-      "Qualtrics API reports a temporary internal server (503) error.",
-      "Please contact Qualtrics Support or retry your query",
-      glue::glue("instanceId: {httr::content(res)$meta$error$instanceId}"),
-      glue::glue("errorCode: {httr::content(res)$meta$error$errorCode}")
-    ))
-    return(list(
-      "content" = httr::content(res),
-      "OK" = FALSE
-    ))
-  } else if (res$status_code == 504) {
-    rlang::abort(c(
-      "Qualtrics API reports a gateway timeout (504) error.",
-      "These errors are usually resolved by retrying the request",
-      glue::glue("instanceId: {httr::content(res)$meta$error$instanceId}"),
-      glue::glue("errorCode: {httr::content(res)$meta$error$errorCode}")
-    ))
-    return(list(
-      "content" = httr::content(res),
-      "OK" = FALSE
-    ))
-  } else if (res$status_code == 413) {
-    rlang::abort(c("The request body was too large.",
-                   "This can also happen in cases where a multipart/form-data request is malformed.")) # nolint
-  } else if (res$status_code == 429) {
-    rlang::abort("You have reached the concurrent request limit.")
-  } else {
-    rlang::abort(paste0("Qualtrics API reports a ", res$status_code, " status code."))
+
+    #  Get error message
+    error_message <-
+      switch(
+        as.character(res$status_code),
+        `401` =
+          c("Qualtrics API reported an authentication error (401):",
+            "You may not have the required authorization",
+            "Please check your API key and base URL."),
+        `403` =
+          c("Qualtrics API reported an forbidden error (403):",
+            "You may have a valid API key that lacks API query permissions",
+            "Please check your settings and/or talk to your administrators."),
+        `400` =
+          c("Qualtrics API reported a bad request error (400):",
+            "Please report this on https://github.com/ropensci/qualtRics/issues"),
+        `404` =
+          c("Qualtrics API reported a not found error (404):",
+            "Please check if you are using the correct survey ID."),
+        `500` =
+          c("Qualtrics API reported a temporary internal server error (500):",
+            "Please contact Qualtrics Support or retry your query",
+            glue::glue("instanceId: {httr::content(res)$meta$error$instanceId}"),
+            glue::glue("errorCode: {httr::content(res)$meta$error$errorCode}")),
+        `503` =
+          c("Qualtrics API reported a temporary internal server error (503):",
+            "Please contact Qualtrics Support or retry your query",
+            glue::glue("instanceId: {httr::content(res)$meta$error$instanceId}"),
+            glue::glue("errorCode: {httr::content(res)$meta$error$errorCode}")),
+        `504` =
+          c("Qualtrics API reported a gateway timeout error (504):",
+            "These errors are usually resolved by retrying the request",
+            glue::glue("instanceId: {httr::content(res)$meta$error$instanceId}"),
+            glue::glue("errorCode: {httr::content(res)$meta$error$errorCode}")),
+        `413` =
+          c("Qualtrics API reported a 413 error:",
+            "The request body was likely too large.",
+            "Can also occur when a multipart/form-data request is malformed."),
+        `429` =
+          c("Qualtrics API reported a 429 error:",
+            "You have reached the concurrent request limit."),
+        # Default response for unknown status code:
+        glue::glue("Qualtrics API reported an unknown status code ",
+                   "{res$status_code} ")
+      )
+
+    # Report the error message:
+    rlang::abort(error_message)
+
   }
-}
+
 
 #' Construct a header to send to Qualtrics API
 #'
-#' @param API_TOKEN API token. Available in your Qualtrics account (see: <https://api.qualtrics.com/>)
+#' @param API_TOKEN API token. Available in your Qualtrics account (see:
+#'   <https://api.qualtrics.com/>)
 #' @keywords internal
 
-construct_header <- function(API_TOKEN) {
-  # Construct and return
-  headers <- c(
-    "X-API-TOKEN" = API_TOKEN,
-    "Content-Type" = "application/json",
-    "Accept" = "*/*",
-    "accept-encoding" = "gzip, deflate"
-  )
-  return(headers)
-}
+construct_header <-
+  function(API_TOKEN) {
+
+    # Check again that API token is properly formatted:
+    checkarg_isstring(API_TOKEN)
+
+    # Construct and return
+    headers <- c(
+      "X-API-TOKEN" = API_TOKEN,
+      "Content-Type" = "application/json",
+      "Accept" = "*/*",
+      "accept-encoding" = "gzip, deflate"
+    )
+    return(headers)
+  }
 
 #' Check if httr GET result contains a warning
 #'
 #' @param resp object returned by [qualtrics_response_codes()]
+#' @importFrom purrr pluck
 #' @keywords internal
 
-check_for_warnings <- function(resp) {
-  # Raise warning if resp contains notice
-  if (!is.null(resp$content$meta)) {
-    if (!is.null(resp$content$meta$notice)) {
-      warning(resp$content$meta$notice)
+check_for_warnings <-
+  function(resp) {
+    # Raise warning if resp contains notice
+    notice <-
+      purrr::pluck(resp, "content", "meta", "notice")
+    if (!is.null(notice)) {
+      warning(notice)
     }
+    return(NULL)
   }
-  NULL
-}
-
-#' Check if parameters passed to functions are correct
-#'
-#' @param ... options passed to function
-#' @keywords internal
-
-check_params <- function(...) {
-  args <- list(...)
-
-  ## options
-  if (all(c(
-    "verbose",
-    "convert",
-    "import_id",
-    "label",
-    "include_display_order",
-    "breakout_sets",
-    "add_column_map",
-    "add_var_labels"
-  ) %in% names(args))) {
-    assert_options_logical(
-      args$verbose,
-      args$convert,
-      args$import_id,
-      args$label,
-      args$include_display_order,
-      args$breakout_sets,
-      args$add_column_map,
-      args$add_var_labels
-    )
-  }
-
-  if (args$convert) {
-    assertthat::assert_that(
-      args$label,
-      msg = "To convert to factors, we need the Qualtrics labels.\nUse `label = TRUE` or `convert = FALSE`."
-    )
-  }
-
-  if (!args$label & !args$breakout_sets) {
-    rlang::warn(
-      c("Use caution with `breakout_sets = FALSE` plus `label = FALSE`",
-        "Results will likely be incorrectly guessed and read in as numeric",
-        "Use a `col_types` specification to override")
-    )
-  }
-
-  # Check if params are of the right type
-  if ("start_date" %in% names(args)) {
-    if (!is.null(args$start_date)) {
-      assert_startDate_string(args$start_date)
-    }
-  }
-  if ("end_date" %in% names(args)) {
-    if (!is.null(args$end_date)) assert_endDate_string(args$end_date)
-  }
-  # Check if save_dir exists
-  if ("save_dir" %in% names(args)) {
-    if (!is.null(args$save_dir)) {
-      assert_saveDir_exists(args$save_dir)
-    }
-  }
-  # Check if seenUnansweredRecode is NULL or else integerlike
-  if ("unanswer_recode" %in% names(args)) {
-    if (!is.null(args$unanswer_recode)) {
-      assert_seenUnansweredRecode_integer(args$unanswer_recode)
-    }
-  }
-  # Check if multiselectSeenUnansweredRecode is NULL or else integerlike
-  if ("unanswer_recode_multi" %in% names(args)) {
-    if (!is.null(args$unanswer_recode_multi)) {
-      assert_multiselectSeenUnansweredRecode_integer(args$unanswer_recode_multi)
-    }
-  }
-  # Check if limit > 0
-  if ("limit" %in% names(args)) {
-    if (!is.null(args$limit)) {
-      assert_limit_abovezero(args$limit)
-    }
-  }
-  # Check if includedQuestionIds is a string
-  if ("include_questions" %in% names(args)) {
-    if (!is.null(args$include_questions)) {
-      assert_includedQuestionIds_string(args$include_questions)
-    }
-  }
-}
 
 #' Generate URL for specific API query by type and (if appropriate) ID
 #'
@@ -201,125 +120,86 @@ check_params <- function(...) {
 #' @return Endpoint URL to be passed to querying tools
 #' @keywords internal
 #' @export
-generate_url <- function(query, ...){
+generate_url <-
+  function(query, ...){
 
-  args <- list(...)
-  list2env(args, envir = environment())
+    args <- list(...)
+    list2env(args, envir = environment())
 
-  # Get the user's specific base URL from environment:
-  base_url <- Sys.getenv("QUALTRICS_BASE_URL")
+    # Get the user's specific base URL from environment
+    # (and check it again in case the user has modified it externally somehow):
+    base_url <-
+      checkarg_base_url(
+        Sys.getenv("QUALTRICS_BASE_URL")
+      )
+    # Construct URL root for the v3 api endpoint:
+    root_url <-
+      glue::glue("https://{base_url}/API/v3")
 
-  # make sure that the base_url ends w/o forward slash:
-  base_url <-
-    ifelse(
-      substring(base_url, nchar(base_url)) == "/",
-      substr(base_url, 1, nchar(base_url)-1),
-      base_url
-    )
+    # List of templates for how to build URLs
+    # (add to this when new functions made):
+    endpoint_template <-
+      switch(
+        query,
+        allsurveys = "{rooturl}/surveys/",
+        allmailinglists = "{rooturl}/mailinglists/",
+        metadata = "{rooturl}/surveys/{surveyID}/",
+        exportresponses = "{rooturl}/surveys/{surveyID}/export-responses/",
+        exportresponses_progress = "{rooturl}/surveys/{surveyID}/export-responses/{requestID}",
+        exportresponses_file = "{rooturl}/surveys/{surveyID}/export-responses/{fileID}/file",
+        fetchdescription = "{rooturl}/survey-definitions/{surveyID}/",
+        fetchmailinglist = "{rooturl}/mailinglists/{mailinglistID}/contacts/",
+        fetchdistributions = "{rooturl}/distributions?surveyId={surveyID}",
+        fetchdistributionhistory = "{rooturl}/distributions/{distributionID}/history",
+        listdistributionlinks = "{rooturl}/distributions/{distributionID}/links?surveyId={surveyID}",
+        rlang::abort("Internal error: invalid URL generation query")
+      )
 
-  # Construct URL root for the v3 api endpoint:
-  root_url <- glue::glue("https://{base_url}/API/v3")
+    # Construct the actual URL:
+    glue::glue(endpoint_template, rooturl = root_url, ...)
 
-  # List of templates for how to build URLs
-  # (add to this when new functions made):
-  endpoint_template <-
-    switch(
-      query,
-      allsurveys = "{rooturl}/surveys/",
-      allmailinglists = "{rooturl}/mailinglists/",
-      metadata = "{rooturl}/surveys/{surveyID}/",
-      fetchsurvey = "{rooturl}/surveys/{surveyID}/export-responses/",
-      fetchdescription = "{rooturl}/survey-definitions/{surveyID}/",
-      fetchmailinglist = "{rooturl}/mailinglists/{mailinglistID}/contacts/",
-      fetchdistributions = "{rooturl}/distributions?surveyId={surveyID}",
-      fetchdistributionhistory = "{rooturl}/distributions/{distributionID}/history",
-      listdistributionlinks = "{rooturl}/distributions/{distributionID}/links?surveyId={surveyID}",
-      rlang::abort("Internal error: invalid URL generation query")
-    )
+  }
 
-  # Construct the actual URL:
-  glue::glue(endpoint_template, rooturl = root_url, ...)
-
-}
-
-#' Create raw JSON payload to post response exports request
+#' Create properly-formatted JSON payload for API calls.  Removes NULLS
 #'
-#' @param label Flag
-#' @param start_date Flag
-#' @param end_date Flag
-#' @param limit Flag
-#' @param time_zone Flag
-#' @param unanswer_recode Flag
-#' @param unanswer_recode_multi Flag
-#' @param include_display_order Flag
-#' @param include_questions Flag
-#' @param breakout_sets Flag
-#'
-#' @seealso See [all_surveys()] for more details on these parameters
 #'
 #' @importFrom jsonlite toJSON
-#' @importFrom purrr discard
+#' @importFrom purrr map
 #'
 #' @return JSON file with options to send to API
 #' @keywords internal
 
-create_raw_payload <- function(label = TRUE,
-                               start_date = NULL,
-                               end_date = NULL,
-                               limit = NULL,
-                               time_zone = NULL,
-                               unanswer_recode = NULL,
-                               unanswer_recode_multi = NULL,
-                               include_display_order = TRUE,
-                               include_questions = NULL,
-                               breakout_sets = NULL) {
+create_raw_payload <-
+  function(...) {
 
-  params <- as.list(environment())
+    # Make list of params, dropping NULL's:
+    params <-
+      purrr::compact(
+        list(...)
+        )
 
-  names_crosswalk <-
-    c(label = "useLabels",
-      start_date = "startDate",
-      end_date = "endDate",
-      limit = "limit",
-      time_zone = "timeZone",
-      unanswer_recode = "seenUnansweredRecode",
-      unanswer_recode_multi = "multiselectSeenUnansweredRecode",
-      include_display_order = "includeDisplayOrder",
-      include_questions = "questionIds",
-      breakout_sets = "breakoutSets")
+    # Selectively mark length-1 parameters for unboxing, following the API scheme:
+    params_ub <-
+      purrr::map_if(
+        params,
+        # The element is a length-1 entry:
+        purrr::map_lgl(params, ~length(.x) == 1) &
+        # It's not one of these must-box arguments:
+        # (can add other names if function used for future features)
+        !names(params) %in%
+          c("questionIds", "embeddedDataIds", "surveyMetadataIds"),
+        ~jsonlite::unbox(.x)
+      )
 
+    # convert to JSON payload:
+    payload <-
+      jsonlite::toJSON(
+        params_ub,
+        auto_unbox = FALSE
+      )
 
-
-  if(!is.null(params$start_date)){
-    params$start_date <- paste0(start_date, "T00:00:00Z")
+    return(payload)
   }
-  if(!is.null(params$end_date)){
-    params$end_date <- paste0(end_date, "T00:00:00Z")
-  }
-
-  # Adjust names to fit API names:
-
-  names(params) <- names_crosswalk[names(params)]
-
-  # Add in format param:
-  params$format <- "csv"
-
-  # Unbox
-  params_ub <- map(params, function(x){
-    if(length(x) == 1) jsonlite::unbox(x) else x
-  }
-  )
-
-  # But "questionIds" needs to be boxed
-  params_ub["questionIds"] <- params["questionIds"]
-
-  # Drop any NULL elements:
-  params_ub <- purrr::discard(params_ub, ~ is.null(.x))
-
-  # convert to JSON:
-  jsonlite::toJSON(params_ub, auto_unbox = FALSE)
-
-}
 
 
 #' Send httr requests to Qualtrics API
@@ -327,117 +207,54 @@ create_raw_payload <- function(label = TRUE,
 #' @param verb Type of request to be sent (@seealso [httr::VERB()])
 #' @param url Qualtrics endpoint URL created by [generate_url()] functions
 #' @param body Options created by [create_raw_payload()] function
+#' @param as type of content to return, passed to `as` in httr::content().
+#' current options "parsed" (since we get JSON mostly), "raw" (response .zips)
+#' @param ... arguments passed to httr::content when parsing
 #' @template retry-advice
 #' @keywords internal
 
-qualtrics_api_request <- function(verb = c("GET", "POST"),
-                                  url = url,
-                                  body = NULL) {
-  # Match arg
-  verb <- match.arg(verb)
-  # Construct header
-  headers <- construct_header(Sys.getenv("QUALTRICS_API_KEY"))
-  # Send request to Qualtrics API
-  res <- httr::RETRY(
-    verb,
-    url = url,
-    httr::add_headers(headers),
-    body = body,
-    times = 4,
-    terminate_on = 400:451
-  )
-  # Check if response type is OK
-  cnt <- qualtrics_response_codes(res)
-  # Check if OK
-  if (cnt$OK) {
+qualtrics_api_request <-
+  function(verb = c("GET", "POST"),
+           url = url,
+           body = NULL,
+           as = c("parsed", "raw"),
+           ...
+           ) {
+    # Match args
+    verb <- rlang::arg_match(verb)
+    as <- rlang::arg_match(as)
+    # Construct header
+    headers <- construct_header(
+      Sys.getenv("QUALTRICS_API_KEY")
+    )
+    # Send request to Qualtrics API
+    res <- httr::RETRY(
+      verb,
+      url = url,
+      httr::add_headers(headers),
+      body = body,
+      times = 4,
+      terminate_on = 400:451
+    )
+    # Check if response type is OK
+    qualtrics_response_codes(res)
+
+    # Get content out:
+    cnt <-
+      httr::content(
+        x = res,
+        as = as,
+        ...
+      )
+
+    if(as == "parsed"){
     # If notice occurs, raise warning
-    w <- check_for_warnings(cnt)
-    # return content
-    return(cnt$content)
-  }
-}
-
-#' Download response export
-#'
-#' @param fetch_url URL provided by Qualtrics API that shows the download percentage completeness
-#' @param requestID ID
-#' @param verbose See [fetch_survey()]
-#' @template retry-advice
-#' @keywords internal
-
-download_qualtrics_export <- function(fetch_url, requestID, verbose = FALSE) {
-  # Construct header
-  headers <- construct_header(Sys.getenv("QUALTRICS_API_KEY"))
-
-  # This is the url to use when checking the ID
-  check_url <- paste0(fetch_url, requestID)
-
-  # Create a progress bar and monitor when export is ready
-  if (verbose) {
-    pbar <- utils::txtProgressBar(
-      min = 0,
-      max = 100,
-      style = 3
-    )
-  }
-  # While download is in progress
-  progress <- 0
-  while (progress < 100) {
-    # Get percentage complete
-    CU <- qualtrics_api_request("GET", url = check_url)
-    progress <- CU$result$percentComplete
-    # Set progress
-    if (verbose) {
-      utils::setTxtProgressBar(pbar, progress)
+    check_for_warnings(cnt)
     }
+
+    # return content
+    return(cnt)
   }
-  # Kill progress bar
-  if (verbose) {
-    close(pbar)
-  }
-
-  # Construct a url for obtaining the file:
-  file_url <- paste0(fetch_url, CU$result$fileId, "/file")
-
-
-  # Download file
-  f <- tryCatch({
-    httr::GET(file_url, httr::add_headers(headers))
-  }, error = function(e) {
-    # Retry if first attempt fails
-    httr::GET(file_url, httr::add_headers(headers))
-  })
-
-  # Load raw zip file
-  ty <- qualtrics_response_codes(f, raw = TRUE)
-  # To zip file
-  tf <- paste0(
-    tempdir(),
-    ifelse(substr(
-      tempdir(),
-      nchar(tempdir()),
-      nchar(tempdir())
-    ) == "/",
-    "temp.zip",
-    "/temp.zip"
-    )
-  )
-  # Write to temporary file
-  writeBin(ty$content, tf)
-  # Try to unzip
-  u <- tryCatch({
-    utils::unzip(tf, exdir = tempdir())
-  }, error = function(e) {
-    rlang::abort(paste0(
-      "Error extracting CSV",
-      " from zip file. Please re-run your query."
-    ))
-  })
-  # Remove zipfile
-  p <- file.remove(tf)
-  # Return file location
-  return(u)
-}
 
 #' Set proper data types on survey data.
 #'
@@ -448,6 +265,11 @@ download_qualtrics_export <- function(fetch_url, requestID, verbose = FALSE) {
 #' @importFrom purrr map
 #' @importFrom purrr map_chr
 #' @keywords internal
+
+
+# Amending downloaded responses -------------------------------------------
+
+
 
 infer_data_types <- function(data,
                              surveyID,
@@ -533,3 +355,218 @@ wrapper_mc <- function(data, question_meta) {
 remove_html <- function(string) {
   stringr::str_remove_all(string, '<[^>]+>')
 }
+
+
+
+# Export-responses queries (fetch_survey/in_progress) --------------------------
+
+#' Runs 3-part request to export-responses endpoint,
+#' downloading and unzipping file
+#'
+#' @param surveyID ID of the survey to be downloaded
+#' @param body payload/body of API request containing desired params
+#'
+#' @keywords internal
+export_responses_request <-
+  function(
+    surveyID,
+    body,
+    verbose = TRUE
+  ){
+
+
+    # Initiate request to export-responses
+
+    requestID <-
+      export_responses_init(
+        surveyID = surveyID,
+        body = body
+      )
+
+    # Monitor progress & get location of file path
+
+    fileID <-
+      export_responses_progress(
+        surveyID = surveyID,
+        requestID = requestID,
+        verbose = verbose
+      )
+
+    # Download .zip file and unzip it
+
+    survey_fpath <-
+      export_responses_filedownload(
+        surveyID = surveyID,
+        fileID = fileID
+      )
+
+    return(survey_fpath)
+  }
+
+#' Initiate a request to the export-responses API endpoint
+#'
+#' @param surveyID ID of survey whose responses are being pulled
+#' @template retry-advice
+#' @keywords internal
+export_responses_init <-
+  function(surveyID,
+           body){
+    # construct URL for export-responses:
+    export_url <-
+      generate_url(
+        query = "exportresponses",
+        surveyID = surveyID
+      )
+
+    # POST request for download
+    res <-
+      qualtrics_api_request(
+        verb = "POST",
+        url = export_url,
+        body = body
+      )
+
+    # Get progress id
+    if (is.null(res$result$progressId)) {
+      rlang::abort(
+        c("Qualtrics failed to return a progress ID for your download request",
+          "Please re-run your query.")
+      )
+    } else {
+      requestID <-
+        res$result$progressId
+    } # NOTE This is not fail safe because ID can still be NULL
+
+    return(requestID)
+  }
+
+#' Monitor progress from response request download, then obtain file download
+#' location
+#'
+#' @param surveyID ID of survey whose responses are being pulled
+#' @param requestID exportProgressId from
+#'   https://api.qualtrics.com/37e6a66f74ab4-get-response-export-progress
+#' @param verbose See [fetch_survey()]
+#' @template retry-advice
+#' @keywords internal
+export_responses_progress <-
+  function(surveyID,
+           requestID,
+           verbose = FALSE) {
+
+    # This is the URL to use when checking the progress
+    progress_url <-
+      generate_url(
+        "exportresponses_progress",
+        surveyID = surveyID,
+        requestID = requestID
+      )
+
+    # Create a progress bar and monitor when export is ready
+    if (verbose) {
+      pbar <-
+        utils::txtProgressBar(
+          min = 0,
+          max = 100,
+          style = 3
+        )
+    }
+
+    # Initialize progress
+    progress <- 0
+    # While download is in progress
+    while (progress < 100) {
+      # Get percentage complete
+      CU <-
+        qualtrics_api_request(
+          verb = "GET",
+          url = progress_url
+        )
+
+      progress <-
+        CU$result$percentComplete
+
+      # Set progress
+      if (verbose) {
+        utils::setTxtProgressBar(pbar, progress)
+      }
+    } # end while loop (progress complete)
+    # Kill progress bar
+    if (verbose) {
+      close(pbar)
+    }
+
+    # Get the fileID showing location of the downloadable file:
+    fileID <-
+      CU$result$fileId
+    return(fileID)
+  }
+
+#' Downloads response data (.zip of .csv) from location obtained from
+#' fetch_survey_progress
+#'
+#' @param surveyID survey ID
+#' @param requestID request ID from fetch_survey
+#' @param fileID file ID from fetch_survey_progress
+#' @keywords internal
+export_responses_filedownload <-
+  function(surveyID,
+           fileID){
+
+    # Construct a url for obtaining the file:
+    file_url <-
+      generate_url(
+        "exportresponses_file",
+        surveyID = surveyID,
+        fileID = fileID
+      )
+
+    # Load raw zip file:
+    raw_zip <-
+      qualtrics_api_request(
+        verb = "GET",
+        url = file_url,
+        as = "raw"
+      )
+
+    # To zip file
+    tf_path <-
+      glue::glue(
+        "{temp_dir}/temp.zip",
+        # Remove trailing slash if system includes one:
+        temp_dir = stringr::str_remove(tempdir(), "/$")
+      )
+
+    # Write to temporary file
+    writeBin(raw_zip, tf_path)
+
+    # Create error handling around unzipping:
+    safeunzip <-
+      purrr::possibly(
+        utils::unzip,
+        NULL
+      )
+
+    # Unzip and get the filepath for the csv
+    csv_filepath <-
+      safeunzip(
+        zipfile = tf_path,
+        exdir = tempdir()
+      )
+
+    if(is.null(csv_filepath)){
+      rlang::abort(
+        c("Error extracting CSV from zip file",
+          "The download may have been corrupted; try re-running your query",
+          "Current download file location:",
+          tf_path)
+      )
+    }
+
+    # Remove zipfile
+    file.remove(tf_path)
+
+    # Return file location
+    return(csv_filepath)
+  }
+

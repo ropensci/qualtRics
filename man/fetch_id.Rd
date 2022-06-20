@@ -4,14 +4,17 @@
 \alias{fetch_id}
 \title{Fetch a unique Qualtrics survey ID based on survey name in the Qualtrics UI}
 \usage{
-fetch_id(.data, survey_name)
+fetch_id(.data, survey_name, partial_match = FALSE)
 }
 \arguments{
 \item{.data}{Data frame of active surveys created by the function
 \code{\link[=all_surveys]{all_surveys()}}.}
 
-\item{survey_name}{Name of the survey as it appears in the Qualtrics UI. Must
-be unique to be passed to \code{fetch_id()}.}
+\item{survey_name}{String. Name of the survey as it appears in the Qualtrics
+UI. Must be unique to be passed to \code{fetch_id()}.}
+
+\item{partial_match}{Boolean. Will match all surveys containing the exact
+string provided.  Defaults to FALSE, which matches against the entire name.}
 }
 \description{
 Fetch a unique Qualtrics survey ID based on survey name in the Qualtrics UI
@@ -19,6 +22,8 @@ Fetch a unique Qualtrics survey ID based on survey name in the Qualtrics UI
 \details{
 Survey names in the Qualtrics platform are not required to be
 unique, but the \code{survey_name} argument for this function \emph{must} be unique.
+If input results in multiple surveys being matched, will error with a list
+of up to 5 matches & their IDs
 }
 \examples{
 \dontrun{
