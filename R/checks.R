@@ -14,7 +14,10 @@ check_credentials <- function(){
   )
   # Check that they exist:
   if(any(creds == "")){
-    rlang::abort("Qualtrics API key and/or base URL need registering: use\n'qualtrics_api_credentials()'")
+    rlang::abort(c(
+      "Qualtrics API key and/or base URL need registering:",
+      i = "Use `qualtrics_api_credentials()`"
+    ))
   }
 
   # Check URL again just to be sure:
@@ -30,7 +33,7 @@ check_credentials <- function(){
 #' @importFrom glue glue
 #' @importFrom stringr str_detect
 #' @importFrom stringr str_remove
-#' @importFrom stringr str_subset
+#' @importFrom stringr str_extract
 #' @keywords internal
 checkarg_base_url <- function(base_url){
 
@@ -39,15 +42,11 @@ checkarg_base_url <- function(base_url){
 
   # Remove protocol with warning:
   if(stringr::str_detect(base_url, "^[a-zA-Z]*://")){
-    base_url <-
-      stringr::str_remove(base_url, "^[a-zA-Z]*://")
+    protocol <- stringr::str_extract(base_url, "^[a-zA-Z]*://")
+    base_url <- stringr::str_remove(base_url, "^[a-zA-Z]*://")
 
     rlang::inform(
-      c("In 'base_url:",
-        glue::glue("Protocol (e.g. ",
-                   "{stringr::str_subset(base_url, '^[a-zA-Z]*://')}",
-                   ") not needed, removing.")
-      )
+      glue::glue("Protocol (e.g. '{protocol})' not needed in `base_url`, removing.")
     )
 
   }
@@ -56,9 +55,10 @@ checkarg_base_url <- function(base_url){
     base_url <- stringr::str_remove(base_url, "/$", "")
   } else if (!endsWith(base_url, ".qualtrics.com")){
     rlang::abort(
-      c("Error in argument 'base_url'",
-        "'base_url' must be of the form '[datacenter ID].qualtrics.com'",
-        "see https://api.qualtrics.com/ZG9jOjg3NjYzMw-base-url-and-datacenter-i-ds")
+      c("Error in argument `base_url`",
+        "`base_url` must be of the form '{datacenter ID}.qualtrics.com'",
+        "See https://api.qualtrics.com/ZG9jOjg3NjYzMw-base-url-and-datacenter-i-ds"
+      )
     )
   }
   # Return amended base_url:
@@ -85,7 +85,7 @@ checkarg_isboolean <-
     if(!test){
       rlang::abort(
         c(glue::glue("Error in argument '{deparse(substitute(arg))}':"),
-          "Argument must be a single TRUE or FALSE.")
+          "Argument must be a single `TRUE` or `FALSE`.")
       )
     }
   }
@@ -103,7 +103,7 @@ checkarg_isstring <-
 
     if(!test){
       rlang::abort(
-        c(glue::glue("Error in argument'{deparse(substitute(arg))}':"),
+        c(glue::glue("Error in argument '{deparse(substitute(arg))}':"),
           "Argument must be a single string.")
       )
     }
@@ -182,9 +182,9 @@ checkarg_time_zone <-
     # Check that it's a valid time-zone name:
     if(!time_zone %in% OlsonNames()){
       rlang::abort(
-        c(glue::glue("Error in argument 'time_zone':"),
-          "'time_zone' must be a valid R time zone designation",
-          "See OlsonNames() for list of valid names"
+        c(glue::glue("Error in argument `time_zone`:"),
+          "`time_zone` must be a valid R time zone designation",
+          "See ?OlsonNames for list of valid names"
         )
       )
     }
@@ -384,9 +384,8 @@ checkarg_include_metadata <-
 
       rlang::abort(
         c("Error in argument 'include_metadata': invalid names used",
-          "see Details in ?fetch_survey for more information.",
-          "Problem items:",
-          paste0(test, collapse = ", ")
+          "See Details in ?fetch_survey for more information.",
+          cli::cli_text("Problem items: {test}")
         )
       )
     }
@@ -427,7 +426,7 @@ checkarg_include_questions <-
 
     if(!test){
       rlang::abort(
-        c("Error in 'include_questions'",
+        c("Error in `include_questions`",
           "Argument requires using Qualtrics internal IDs, e.g. c('QID5', 'QID25')",
           "See Details in ?fetch_survey."
         )
@@ -468,8 +467,8 @@ checkarg_col_types <-
     if(is.null(col_types)){return()}
     if(class(col_types) != "col_spec"){
       rlang::abort(
-        c("Error in argument 'col_types'",
-          "Must be a 'col_spec' object from readr::cols()")
+        c("Error in argument `col_types`",
+          "Must be a `col_spec` object from `readr::cols()`")
       )
     }
   }
@@ -487,8 +486,8 @@ checkarg_limit <-
 
     if(limit < 1){
       rlang::abort(
-        c("Error in argument 'limit':",
-          "The value of 'limit' must be 1 or greater.")
+        c("Error in argument `limit`:",
+          "The value of `limit` must be 1 or greater.")
       )
     }
   }
@@ -509,8 +508,8 @@ checkarg_convert_label_breakouts <-
 
     if(convert && !label){
       rlang::abort(
-        c("Error in arguments 'convert' & 'label':",
-          "'convert = TRUE' requires 'label = TRUE' to facilitate factor conversion",
+        c("Error in arguments `convert` & `label`:",
+          "`convert = TRUE` requires `label = TRUE` to facilitate factor conversion",
           "Set `label = TRUE`, or set `convert = FALSE`"
         )
       )
@@ -543,7 +542,7 @@ check_existing_download <-
       if (verbose) {
         rlang::inform(
           c(glue::glue("Loading saved prior download for surveyID = {surveyID}."),
-            "Set 'force_request = TRUE' to override this.")
+            "Set `force_request = TRUE` to override this.")
         )
       }
       file_exists <- TRUE
@@ -562,7 +561,7 @@ checkarg_save_dir <-
 
     if(!dir.exists(save_dir)){
       rlang::abort(
-        c("Error in 'save_dir':",
+        c("Error in `save_dir`:",
           "The directory given does not exist:",
           save_dir)
       )
@@ -578,9 +577,9 @@ checkarg_file_name <-
   function(file_name) {
     if(!file.exists(file_name)){
       rlang::abort(
-        c("Error in 'file_name':",
-          "The file given does not exist:",
-          file_name)
+        c("Error in `file_name`:",
+          glue::glue("The file given does not exist: {file_name}")
+        )
       )
 
     }
@@ -621,10 +620,9 @@ checkarg_elements <-
     if(length(test) > 0){
 
       rlang::abort(
-        c("Error in argument 'elements':",
+        c("Error in argument `elements`:",
           "Invalid elements specified, see ?fetch_description for more information.",
-          "Problem items:",
-          paste0(test, collapse = ", ")
+          cli::cli_text("Problem items: {test}")
         )
       )
     }
@@ -657,9 +655,9 @@ checkarg_get <- function(get){
 
   if(is.list(get)){
     rlang::warn(
-      c("Warning for argument 'get'",
+      c("Warning for argument `get`",
         "Use of logical lists has been deprecated",
-        "In the future, use a character vector of desired elements.")
+        "In the future, use a character vector of desired elements")
     )
 
     # Pull out the TRUE elements of the list:
@@ -693,10 +691,9 @@ checkarg_get <- function(get){
 
     rlang::abort(
       rlang::abort(
-        c("Error in argument 'get':",
+        c("Error in argument `get`:",
           "Invalid elements specified, see ?metadata for more information.",
-          "Problem items:",
-          paste0(test, collapse = ", ")
+          cli::cli_text("Problem items: {test}")
         )
       )
     )
@@ -721,9 +718,9 @@ checkarg_fetch_id_data <-
 
     if(!test){
       rlang::abort(
-        c("Error in '.data':",
-          "fetch_id() needs a dataframe from all_surveys() with columns 'id' & 'name",
-          'Example usage: all_surveys() %>% fetch_id("That Survey I Need")')
+        c("Error in `.data`:",
+          "`fetch_id()` needs a dataframe from `all_surveys()` with columns `id` & `name`",
+          'Example usage: `all_surveys() %>% fetch_id("That Survey I Need")`')
       )
     }
   }
