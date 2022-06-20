@@ -23,7 +23,6 @@
 #' @importFrom tibble enframe
 #' @importFrom dplyr bind_rows
 #' @importFrom rlang %||%
-#' @importFrom assertthat assert_that
 #' @export
 #'
 #' @examples

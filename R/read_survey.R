@@ -33,7 +33,6 @@
 #'
 #' @importFrom sjlabelled set_label
 #' @importFrom jsonlite fromJSON
-#' @importFrom assertthat has_name
 #' @importFrom purrr map
 #' @importFrom purrr imap
 #' @importFrom purrr map_dfr
@@ -181,7 +180,7 @@ read_survey <- function(file_name,
                     .keep = "unused")
 
     # If choiceId does not exist, create it for consistency:
-    if(!assertthat::has_name(col_map, "choiceId")){
+    if(!rlang::has_name(col_map, "choiceId")){
       col_map$choiceId <- NA
     }
 
