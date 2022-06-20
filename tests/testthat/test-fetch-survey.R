@@ -129,7 +129,7 @@ test_that("Limit cannot be less than one", {
 test_that("Handle convert and label conditions", {
   expect_error(
     fetch_survey("1234", label = FALSE),
-    "Error in arguments 'convert' & 'label':"
+    "Error in arguments `convert` & `label`:"
   )
 })
 
