@@ -7,7 +7,6 @@
 #' @seealso See <https://api.qualtrics.com/> for documentation on
 #' the Qualtrics API.
 #' @template retry-advice
-#' @importFrom lifecycle deprecated
 #' @export
 #' @examples
 #' \dontrun{
