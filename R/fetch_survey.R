@@ -99,7 +99,7 @@
 #'   ```
 #'
 #'   fetch_survey(
-#'        surveyID = <survey ID>,
+#'        surveyID = {survey ID},
 #'        limit = 1,
 #'        add_column_map = TRUE
 #'   ) |>

@@ -150,7 +150,7 @@ to QID's can be quickly obtained by calling:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{
 fetch_survey(
-     surveyID = <survey ID>,
+     surveyID = \{survey ID\},
      limit = 1,
      add_column_map = TRUE
 ) |>
