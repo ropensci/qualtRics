@@ -74,11 +74,14 @@ checkarg_base_url <- function(base_url){
 `%||%` <- rlang::`%||%`
 
 #' Is boolean (length-1 logical)
+#' @param arg argument to be checked
+#' @param null_okay Boolean. whether argument can be NULL
 #' @importFrom rlang abort
 #' @importFrom glue glue
 #' @keywords internal
 checkarg_isboolean <-
-  function(arg){
+  function(arg, null_okay = FALSE){
+    if(null_okay && is.null(arg)){return()}
     test <-
       is.logical(arg) && !is.na(arg) && length(arg) == 1
 
@@ -91,26 +94,41 @@ checkarg_isboolean <-
   }
 
 #' Is string (length-1 character)
+#' @param arg argument to be checked
+#' @param null_okay Boolean. whether argument can be NULL
+#' @param na_okay Boolean. whether argument can be a length-1 NA
 #' @importFrom rlang abort
 #' @importFrom glue glue
 #' @keywords internal
 checkarg_isstring <-
-  function(arg, null_okay = TRUE){
+  function(arg, null_okay = TRUE, na_okay = FALSE){
     if(null_okay && is.null(arg)){return()}
 
-    test <-
-      is.character(arg) && length(arg) == 1
+    # Check that length-1 string, non-NA unless na_okay == TRUE
+    if(na_okay) {
+      test <-
+        is.character(arg) && length(arg) == 1
+      msg <-
+        "Argument must be a single string or NA"
+    } else {
+      test <-
+        is.character(arg) && length(arg) == 1 && !is.na(arg)
+      msg <-
+        "Argument must be a single string."
+    }
 
     if(!test){
       rlang::abort(
         c(glue::glue("Error in argument '{deparse(substitute(arg))}':"),
-          "Argument must be a single string.")
+          msg)
       )
     }
 
   }
 
 #' Is character vector with no missing values:
+#' @param arg argument to be checked
+#' @param null_okay Boolean. whether argument can be NULL
 #' @importFrom rlang abort
 #' @importFrom glue glue
 #' @keywords internal
@@ -725,3 +743,19 @@ checkarg_fetch_id_data <-
     }
   }
 
+# update_survey_metadata -------------------------------------------------------
+
+#' Check if active from update_survey_metadata() is boolean, then convert to active/inactive
+#' @importFrom rlang abort
+#' @keywords internal
+checkarg_survey_active <-
+  function(active){
+    if(is.null(active)){return()}
+
+    checkarg_isboolean(active)
+
+    # Format
+    active_formatted <-
+      ifelse(active, "Active", "Inactive")
+
+  }

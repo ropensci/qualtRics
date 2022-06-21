@@ -258,7 +258,8 @@ fetch_survey <-
         questionIds = include_questions_formatted,
         embeddedDataIds = include_embedded_formatted,
         surveyMetadataIds = include_metadata_formatted,
-        breakoutSets = breakout_sets
+        breakoutSets = breakout_sets,
+        .DontUnbox = c("questionIds", "embeddedDataIds", "surveyMetadataIds")
       )
 
 
