@@ -35,21 +35,6 @@ qualtrics_response_codes <-
         `404` =
           c("Qualtrics API reported a not found error (404):",
             "Please check if you are using the correct survey ID."),
-        `500` =
-          c("Qualtrics API reported a temporary internal server error (500):",
-            "Please contact Qualtrics Support or retry your query",
-            glue::glue("instanceId: {httr::content(res)$meta$error$instanceId}"),
-            glue::glue("errorCode: {httr::content(res)$meta$error$errorCode}")),
-        `503` =
-          c("Qualtrics API reported a temporary internal server error (503):",
-            "Please contact Qualtrics Support or retry your query",
-            glue::glue("instanceId: {httr::content(res)$meta$error$instanceId}"),
-            glue::glue("errorCode: {httr::content(res)$meta$error$errorCode}")),
-        `504` =
-          c("Qualtrics API reported a gateway timeout error (504):",
-            "These errors are usually resolved by retrying the request",
-            glue::glue("instanceId: {httr::content(res)$meta$error$instanceId}"),
-            glue::glue("errorCode: {httr::content(res)$meta$error$errorCode}")),
         `413` =
           c("Qualtrics API reported a 413 error:",
             "The request body was likely too large.",
@@ -57,9 +42,25 @@ qualtrics_response_codes <-
         `429` =
           c("Qualtrics API reported a 429 error:",
             "You have reached the concurrent request limit."),
+        `500` =
+          c("After 4 attempts, Qualtrics API reported a temporary internal server error (500):",
+            "Please contact Qualtrics Support or retry your query",
+            glue::glue("instanceId: {httr::content(res)$meta$error$instanceId}"),
+            glue::glue("errorCode: {httr::content(res)$meta$error$errorCode}")),
+        `503` =
+          c("After 4 attempts, Qualtrics API reported a temporary internal server error (503):",
+            "Please contact Qualtrics Support or retry your query",
+            glue::glue("instanceId: {httr::content(res)$meta$error$instanceId}"),
+            glue::glue("errorCode: {httr::content(res)$meta$error$errorCode}")),
+        `504` =
+          c("After 4 attempts, Qualtrics API reported a gateway timeout error (504):",
+            "Please contact Qualtrics Support or retry your query",
+            glue::glue("instanceId: {httr::content(res)$meta$error$instanceId}"),
+            glue::glue("errorCode: {httr::content(res)$meta$error$errorCode}")),
         # Default response for unknown status code:
-        glue::glue("Qualtrics API reported an unknown status code ",
-                   "{res$status_code} ")
+        c(glue::glue("Qualtrics API reported the atypical status code {res$status_code}"),
+          "A dictionary of status codes can be found here: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status",
+          "Please check your request, and report at https://github.com/ropensci/qualtRics/issues if reoccurring:")
       )
 
     # Report the error message:
@@ -234,7 +235,8 @@ qualtrics_api_request <-
       httr::add_headers(headers),
       body = body,
       times = 4,
-      terminate_on = 400:451
+      terminate_on = 400:451,
+      quiet = TRUE
     )
     # Check if response type is OK
     qualtrics_response_codes(res)
