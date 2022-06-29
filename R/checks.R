@@ -52,7 +52,7 @@ checkarg_base_url <- function(base_url){
   }
   # Remove trailing '/' if present (silently), and check for qualtrics.com ending:
   if(endsWith(base_url, "qualtrics.com/")){
-    base_url <- stringr::str_remove(base_url, "/$", "")
+    base_url <- stringr::str_remove(base_url, "/$")
   } else if (!endsWith(base_url, ".qualtrics.com")){
     rlang::abort(
       c("Error in argument `base_url`",

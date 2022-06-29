@@ -18,16 +18,29 @@ test_that("can store and access credentials", {
     "`base_url` must be of the form"
   )
 
-  qualtrics_api_credentials(api_key = "1234", base_url = "https://abcd.qualtrics.com")
+  # Removes protocol with message
+  expect_message(
+    qualtrics_api_credentials(api_key = "1234",
+                              base_url = "https://abcd.qualtrics.com"),
+    "Protocol"
+  )
   expect_false(
     startsWith(Sys.getenv("QUALTRICS_BASE_URL" ), "https://")
   )
 
+  # Removes the trailing slash:
+  qualtrics_api_credentials(api_key = "1234", base_url = "abcd.qualtrics.com/")
+  # Now expect this to no longer have slash
+  expect_false(
+    endsWith(Sys.getenv("QUALTRICS_BASE_URL" ), "/")
+  )
+
+  # Checks pass with correct credentials:
   qualtrics_api_credentials(api_key = "1234", base_url = "abcd.qualtrics.com")
-  # Now expect this to be true
+  # Now expect this to be NULL
   expect_null(
     check_credentials()
-    )
+  )
 })
 
 test_that("qualtRicsConfigFile() gives a warning", {
