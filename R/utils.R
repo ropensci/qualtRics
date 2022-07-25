@@ -177,7 +177,7 @@ create_raw_payload <-
     params <-
       purrr::compact(
         list(...)
-        )
+      )
 
     # Selectively mark length-1 parameters for unboxing, following the API scheme:
     params_ub <-
@@ -185,9 +185,9 @@ create_raw_payload <-
         params,
         # The element is a length-1 entry:
         purrr::map_lgl(params, ~length(.x) == 1) &
-        # It's not one of these must-box arguments:
-        # (can add other names if function used for future features)
-        !names(params) %in%
+          # It's not one of these must-box arguments:
+          # (can add other names if function used for future features)
+          !names(params) %in%
           c("questionIds", "embeddedDataIds", "surveyMetadataIds"),
         ~jsonlite::unbox(.x)
       )
@@ -220,7 +220,7 @@ qualtrics_api_request <-
            body = NULL,
            as = c("parsed", "raw"),
            ...
-           ) {
+  ) {
     # Match args
     verb <- rlang::arg_match(verb)
     as <- rlang::arg_match(as)
@@ -250,8 +250,8 @@ qualtrics_api_request <-
       )
 
     if(as == "parsed"){
-    # If notice occurs, raise warning
-    check_for_warnings(cnt)
+      # If notice occurs, raise warning
+      check_for_warnings(cnt)
     }
 
     # return content
@@ -571,4 +571,3 @@ export_responses_filedownload <-
     # Return file location
     return(csv_filepath)
   }
-
