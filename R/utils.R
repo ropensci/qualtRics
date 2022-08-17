@@ -153,6 +153,9 @@ generate_url <-
         fetchdistributions = "{rooturl}/distributions?surveyId={surveyID}",
         fetchdistributionhistory = "{rooturl}/distributions/{distributionID}/history",
         listdistributionlinks = "{rooturl}/distributions/{distributionID}/links?surveyId={surveyID}",
+        listdirectories = "{rooturl}/directories",
+        listmailinglists = "{rooturl}/directories/{directoryID}/mailinglists",
+        mailinglistcontacts = "{rooturl}/directories/{directoryID}/mailinglists/{mailinglistID}/contacts",
         rlang::abort("Internal error: invalid URL generation query")
       )
 
