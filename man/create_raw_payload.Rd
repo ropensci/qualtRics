@@ -4,7 +4,17 @@
 \alias{create_raw_payload}
 \title{Create properly-formatted JSON payload for API calls.  Removes NULLS}
 \usage{
-create_raw_payload(...)
+create_raw_payload(..., .DontUnbox = NULL, .NAtoNULL = NULL)
+}
+\arguments{
+\item{...}{Arguments to be formatted as a JSON body}
+
+\item{.DontUnbox}{character vector of arguments to leave boxed regardless of
+length}
+
+\item{.NAtoNULL}{character vector of arguments where a single NA will be
+converted to NULL included as a part of the body.  (All explicit NULL's
+included as a part of ... will be excluded)}
 }
 \value{
 JSON file with options to send to API

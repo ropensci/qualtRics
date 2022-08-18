@@ -50,14 +50,14 @@ fetch_description <-
   function(surveyID,
            elements = NULL,
            legacy = FALSE,
-           ...
+           questions = NULL
   ) {
 
     # Revert to old metadata if desired:
     if(legacy){
       return(metadata(surveyID = surveyID,
                       get = elements,
-                      ...)
+                      questions = questions)
       )
     }
 
@@ -77,7 +77,7 @@ fetch_description <-
 
     # Function-specific API stuff
     description_url <-
-      generate_url(query = "fetchdescription",
+      generate_url(query = "surveydefinitions",
                    surveyID = surveyID)
 
     # Send GET request to survey-definitions endpoint:

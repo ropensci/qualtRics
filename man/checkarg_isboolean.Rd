@@ -4,7 +4,12 @@
 \alias{checkarg_isboolean}
 \title{Is boolean (length-1 logical)}
 \usage{
-checkarg_isboolean(arg)
+checkarg_isboolean(arg, null_okay = FALSE)
+}
+\arguments{
+\item{arg}{argument to be checked}
+
+\item{null_okay}{Boolean. whether argument can be NULL}
 }
 \description{
 Is boolean (length-1 logical)

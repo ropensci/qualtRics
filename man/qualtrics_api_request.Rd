@@ -5,7 +5,7 @@
 \title{Send httr requests to Qualtrics API}
 \usage{
 qualtrics_api_request(
-  verb = c("GET", "POST"),
+  verb = c("GET", "POST", "PUT"),
   url = url,
   body = NULL,
   as = c("parsed", "raw"),

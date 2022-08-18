@@ -137,6 +137,7 @@ generate_url <-
     root_url <-
       glue::glue("https://{base_url}/API/v3")
 
+    # https://api.qualtrics.com/ZG9jOjg0MDczOA-api-reference
     # List of templates for how to build URLs
     # (add to this when new functions made):
     endpoint_template <-
@@ -148,7 +149,8 @@ generate_url <-
         exportresponses = "{rooturl}/surveys/{surveyID}/export-responses/",
         exportresponses_progress = "{rooturl}/surveys/{surveyID}/export-responses/{requestID}",
         exportresponses_file = "{rooturl}/surveys/{surveyID}/export-responses/{fileID}/file",
-        fetchdescription = "{rooturl}/survey-definitions/{surveyID}/",
+        surveydefinitions = "{rooturl}/survey-definitions/{surveyID}/",
+        surveydefinitions_metadata = "{rooturl}/survey-definitions/{surveyID}/metadata",
         fetchmailinglist = "{rooturl}/mailinglists/{mailinglistID}/contacts/",
         fetchdistributions = "{rooturl}/distributions?surveyId={surveyID}",
         fetchdistributionhistory = "{rooturl}/distributions/{distributionID}/history",
@@ -163,21 +165,41 @@ generate_url <-
 
 #' Create properly-formatted JSON payload for API calls.  Removes NULLS
 #'
+#' @param ... Arguments to be formatted as a JSON body
+#' @param .DontUnbox character vector of arguments to leave boxed regardless of
+#'   length
+#' @param .NAtoNULL character vector of arguments where a single NA will be
+#'   converted to NULL included as a part of the body.  (All explicit NULL's
+#'   included as a part of ... will be excluded)
 #'
 #' @importFrom jsonlite toJSON
-#' @importFrom purrr map
+#' @importFrom purrr compact
+#' @importFrom purrr map_if
+#' @importFrom purrr map_lgl
 #'
 #' @return JSON file with options to send to API
 #' @keywords internal
 
 create_raw_payload <-
-  function(...) {
+  function(..., .DontUnbox = NULL, .NAtoNULL = NULL) {
 
     # Make list of params, dropping NULL's:
     params <-
       purrr::compact(
         list(...)
-        )
+      )
+
+    # For all the items marked as .NAtoNULL, convert length-1 NA's to NULL:
+    params <-
+      purrr::map_if(
+        params,
+        names(params) %in% .NAtoNULL,
+        ~if(length(.x) == 1 && is.na(.x)){
+          NULL
+        } else {
+          .x
+        }
+      )
 
     # Selectively mark length-1 parameters for unboxing, following the API scheme:
     params_ub <-
@@ -185,10 +207,9 @@ create_raw_payload <-
         params,
         # The element is a length-1 entry:
         purrr::map_lgl(params, ~length(.x) == 1) &
-        # It's not one of these must-box arguments:
-        # (can add other names if function used for future features)
-        !names(params) %in%
-          c("questionIds", "embeddedDataIds", "surveyMetadataIds"),
+          # It's not one of these must-box arguments:
+          # (can add other names if function used for future features)
+          !names(params) %in% .DontUnbox,
         ~jsonlite::unbox(.x)
       )
 
@@ -215,12 +236,12 @@ create_raw_payload <-
 #' @keywords internal
 
 qualtrics_api_request <-
-  function(verb = c("GET", "POST"),
+  function(verb = c("GET", "POST", "PUT"),
            url = url,
            body = NULL,
            as = c("parsed", "raw"),
            ...
-           ) {
+  ) {
     # Match args
     verb <- rlang::arg_match(verb)
     as <- rlang::arg_match(as)
@@ -250,8 +271,8 @@ qualtrics_api_request <-
       )
 
     if(as == "parsed"){
-    # If notice occurs, raise warning
-    check_for_warnings(cnt)
+      # If notice occurs, raise warning
+      check_for_warnings(cnt)
     }
 
     # return content

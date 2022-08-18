@@ -4,7 +4,14 @@
 \alias{checkarg_isstring}
 \title{Is string (length-1 character)}
 \usage{
-checkarg_isstring(arg, null_okay = TRUE)
+checkarg_isstring(arg, null_okay = TRUE, na_okay = FALSE)
+}
+\arguments{
+\item{arg}{argument to be checked}
+
+\item{null_okay}{Boolean. whether argument can be NULL}
+
+\item{na_okay}{Boolean. whether argument can be a length-1 NA}
 }
 \description{
 Is string (length-1 character)

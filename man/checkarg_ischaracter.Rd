@@ -6,6 +6,11 @@
 \usage{
 checkarg_ischaracter(arg, null_okay = TRUE)
 }
+\arguments{
+\item{arg}{argument to be checked}
+
+\item{null_okay}{Boolean. whether argument can be NULL}
+}
 \description{
 Is character vector with no missing values:
 }

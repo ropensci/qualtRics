@@ -5,7 +5,7 @@
 \title{Download complete survey description using the Qualtrics v3 "Get Survey"
 API endpoint.}
 \usage{
-fetch_description(surveyID, elements = NULL, legacy = FALSE, ...)
+fetch_description(surveyID, elements = NULL, legacy = FALSE, questions = NULL)
 }
 \arguments{
 \item{surveyID}{A string. Unique ID for the survey you want to download.
