@@ -2,6 +2,8 @@
 
 - Refactored code for checking arguments and errors, thanks to @jmobrien (#263)
 
+- Fixed bug in `fetch_survey()` for `include_* = NA`, thanks to @jmobrien (#277)
+
 # qualtRics 3.1.6
 
 - Add `fetch_distribution_history()` and `list_distribution_links()` for more handling of distribution data, thanks to @chrisumphlett and @dsen6644 (#221, #239)

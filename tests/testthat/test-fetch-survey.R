@@ -57,6 +57,31 @@ test_that("fetch_survey() returns survey with custom params", {
 
 })
 
+test_that("fetch_survey() excludes variable classes when requested", {
+
+  skip_on_cran()
+
+  vcr::use_cassette("fetch_survey_exclude", {
+    x <-
+      fetch_survey("SV_0pK7FIIGNNM0sNn",
+                   force_request = TRUE,
+                   start_date = "2015-01-01",
+                   end_date = "2022-06-02 18:40:53",
+                   unanswer_recode = 999,
+                   limit = 15,
+                   include_questions = NA,
+                   include_metadata = NA,
+                   breakout_sets = FALSE
+      )
+  })
+
+  expect_s3_class(x, c("tbl_df","tbl","data.frame"))
+  expect_equal(nrow(x), 15)
+  expect_named(x, c("condition"))
+  expect_type(x$condition, "double")
+
+})
+
 test_that("fetch_survey() returns survey with only one QID", {
 
   skip_on_cran()
