@@ -175,8 +175,9 @@ create_raw_payload <-
 
     # Make list of params, dropping NULL's:
     params <-
-      purrr::compact(
-        list(...)
+      purrr::discard(
+        list(...),
+        is.null
         )
 
     # Selectively mark length-1 parameters for unboxing, following the API scheme:
