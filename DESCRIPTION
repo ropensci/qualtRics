@@ -8,7 +8,7 @@ Authors@R: c(
     person("Shaun", "Jackson", , "shaunbjackson@gmail.com", role = "ctb"),
     person("Samuel", "Kaminsky", , "samuel.e.kaminsky@gmail.com", role = "ctb"),
     person("Eric", "Knudsen", , "ericknud1@gmail.com", role = "ctb"),
-    person("Joseph", "O'Brien", , "joseph.obrien@utexas.edu", role = "ctb"),
+    person("Joseph", "O'Brien", , "joseph.obrien@utexas.edu", role = "aut"),
     person("Daniel", "Seneca", , "seneca.danielh@gmail.com", role = "ctb"),
     person("Julia", "Silge", , "julia.silge@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3671-836X")),
