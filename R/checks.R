@@ -252,7 +252,7 @@ checkarg_datetime <-
     if(!test_date_arg_type){
       rlang::abort(
         c(
-          glue::glue("Error in {deparse(substitute(arg))}:"),
+          glue::glue("Error in {deparse(substitute(date_arg))}:"),
           "Argument must be a Date, POSIXlt, or POSIXct object, or length-1 string representation."
         )
       )
@@ -746,7 +746,6 @@ checkarg_fetch_id_data <-
 # update_survey_metadata -------------------------------------------------------
 
 #' Check if active from update_survey_metadata() is boolean, then convert to active/inactive
-#' @importFrom rlang abort
 #' @keywords internal
 checkarg_survey_active <-
   function(active){
@@ -757,5 +756,70 @@ checkarg_survey_active <-
     # Format
     active_formatted <-
       ifelse(active, "Active", "Inactive")
+
+    return(active_formatted)
+  }
+
+#' Check and format activation_date
+#' @importfrom glue glue
+#' @importfrom rlang warn
+#' @keywords internal
+checkarg_activation_date <-
+  function(activation_date,
+           active,
+           time_zone,
+           surveyID
+  ){
+
+    # Return NULL if NULL:
+    if(is.null(activation_date)){return(NULL)}
+    # Return NULL w/message if active == TRUE & activation_date given
+    # (you're starting the survey now, so a future start time makes no sense)
+    if(isTRUE(active)){
+      rlang::warn(
+        c(
+          glue::glue("Warning for survey {surveyID}"),
+          "`active = TRUE` implies immediate activation; ignoring `activation_date`"
+        )
+      )
+      return(NULL)
+    }
+
+    activation_date_formatted <-
+      checkarg_datetime(activation_date, time_zone)
+
+    return(activation_date_formatted)
+
+  }
+
+#' Check and format expiration_date
+#' @importfrom glue glue
+#' @importfrom rlang warn
+#' @keywords internal
+checkarg_expiration_date <-
+  function(expiration_date,
+           active,
+           time_zone,
+           surveyID
+  ){
+
+    # Return NULL if NULL:
+    if(is.null(expiration_date)){return(NULL)}
+    # Return NULL w/message if active == TRUE & expiration_date given
+    # (you're end the survey now, so a future end time makes no sense)
+    if(isFALSE(active)){
+      rlang::warn(
+        c(
+          glue::glue("Warning for survey {surveyID}"),
+          "`active = FALSE` implies immediate deactivation; ignoring `expiration_date`"
+        )
+      )
+      return(NULL)
+    }
+
+    expiration_date_formatted <-
+      checkarg_datetime(expiration_date, time_zone, endofday = TRUE)
+
+    return(expiration_date_formatted)
 
   }
