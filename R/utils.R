@@ -7,7 +7,8 @@
 
 #' Checks responses against Qualtrics response codes and returns error message.
 #'
-#' @param res results object from httr#' @keywords internal
+#' @param res results object from httr
+#' @keywords internal
 
 qualtrics_response_codes <-
   function(res){
