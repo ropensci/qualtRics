@@ -3,7 +3,8 @@
 
 # qualtRics
 
-**Authors:** [Julia Silge](https://juliasilge.com/), [Jasper
+**Authors:** [Julia Silge](https://juliasilge.com/), [Joseph
+O’Brien](joseph.m.obrien@gmail.com), [Jasper
 Ginn](https://jasperhg90.github.io/)<br/> **License:**
 [MIT](https://opensource.org/licenses/MIT)
 
