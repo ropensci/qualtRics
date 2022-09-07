@@ -465,7 +465,7 @@ checkarg_include_embedded <-
 checkarg_col_types <-
   function(col_types){
     if(is.null(col_types)){return()}
-    if(class(col_types) != "col_spec"){
+    if(!inherits(col_types, "col_spec")){
       rlang::abort(
         c("Error in argument `col_types`",
           "Must be a `col_spec` object from `readr::cols()`")
