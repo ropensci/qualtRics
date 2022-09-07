@@ -34,7 +34,7 @@ list_mailing_lists <- function(directoryID){
 
   while(!is.null(fetch_url)){
 
-    res <- qualtrics_api_request("GET", url = fetch_url)
+    res <- qualtrics_api_request("GET", url = fetch_url, query = list(includeCount = "true"))
     elements <- append(elements, res$result$elements)
     fetch_url <- res$result$nextPage
 
