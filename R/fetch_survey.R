@@ -191,6 +191,8 @@ fetch_survey <-
     check_credentials()
 
     # Check/format date/time arguments:
+    time_zone_formatted <-
+      checkarg_time_zone(time_zone)
     start_date_formatted <-
       checkarg_datetime(start_date, time_zone = time_zone)
     end_date_formatted <-
@@ -251,6 +253,7 @@ fetch_survey <-
         useLabels = label,
         startDate = start_date_formatted,
         endDate = end_date_formatted,
+        timeZone = time_zone_formatted,
         limit = limit,
         seenUnansweredRecode = unanswer_recode,
         multiselectSeenUnansweredRecode = unanswer_recode_multi,
