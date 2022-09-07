@@ -43,9 +43,9 @@ list_mailing_lists <- function(directoryID){
   x <- tibble::tibble(mailingListId = purrr::map_chr(elements, "mailingListId", .default = NA_character_),
                       name = purrr::map_chr(elements, "name", .default = NA_character_),
                       ownerId = purrr::map_chr(elements, "ownerId", .default = NA_character_),
-                      lastModifiedDate = purrr::map_chr(elements, "lastModifiedDate", .default = NA_character_),
-                      creationDate = purrr::map_chr(elements, "creationDate", .default = NA_character_),
-                      contactCount = purrr::map_chr(elements, "contactCount", .default = NA_character_))
+                      lastModifiedDate = lubridate::as_datetime(purrr::map_dbl(elements, "lastModifiedDate", .default = NA_character_)/1000),
+                      creationDate = lubridate::as_datetime(purrr::map_dbl(elements, "creationDate", .default = NA_character_)/1000),
+                      contactCount = purrr::map_dbl(elements, "contactCount", .default = NA_character_))
   return(x)
 
 }
