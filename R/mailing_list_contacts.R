@@ -17,7 +17,7 @@
 #'
 #' directories <- list_directories()
 #' mailing_lists <- list_mailing_lists(directories$directoryId[1])
-#' contacts <- mailing_list_contacts(mailing_lists$mailingListId[1])
+#' contacts <- mailing_list_contacts(directories$directoryId[1], mailing_lists$mailingListId[1])
 #'}
 #'
 
