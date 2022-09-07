@@ -220,6 +220,7 @@ create_raw_payload <-
 qualtrics_api_request <-
   function(verb = c("GET", "POST"),
            url = url,
+           query = NULL,
            body = NULL,
            as = c("parsed", "raw"),
            ...
@@ -236,6 +237,7 @@ qualtrics_api_request <-
       verb,
       url = url,
       httr::add_headers(headers),
+      query = query,
       body = body,
       times = 4,
       terminate_on = 400:451,
