@@ -14,13 +14,13 @@
 #'   referencing *RecordedDate*). Each defaults to `NULL` (unbounded).  See
 #'   Details for important information about both the package and Qualtrics'
 #'   handling of start/end times.
-#' @param time_zone String. Desired time zone to use when `start_date` or
-#'   `expiration_date` are given as Date or string objects.  Ignored if
-#'   argument(s) given as POSIXlt/POSIXct objects. Must match a time zone name
-#'   from [base::OlsonNames()]. Defaults to `NULL`, which uses the current
-#'   system timezone ([base::Sys.timezone()]). Note: does not affect the content
-#'   of the returned data frame; all timing variables (e.g. *RecordedDate*) will
-#'   be converted to POSIXlt objects and displayed using system settings.
+#' @param time_zone String. Time zone to use for date/time metadata variables in
+#'   response dataframe (e.g. *StartDate*). Must match a time zone name from
+#'   [base::OlsonNames()]. Defaults to `NULL`, which uses the current system
+#'   timezone (from [base::Sys.timezone()]).  Also applied to arguments
+#'   `start_date` and/or `expiration_date` when given Date or string objects
+#'   (see above); ignored when these arguments are given POSIXlt/POSIXct
+#'   objects.
 #' @param include_display_order Logical.  If `TRUE`, download from surveys using
 #'   block/question/answer display randomization will include contain additional
 #'   variables indicating the randomization pattern used for each case. Defaults
