@@ -42,7 +42,7 @@
 #'   IDs (e.g. "QID123") instead of user-modifiable names (e.g. default names
 #'   like "Q3" or custom names).  Defaults to `FALSE` (user-modifiable names).
 #'   Note that this also affects (otherwise unmodifiable) names of metadata
-#'   columns--see the *include_metadata* section in Details below.
+#'   columns--see the "`include_metadata`" section in Details below.
 #' @param label Logical. If `TRUE` (default), will return text of answer
 #'   choices, instead of recoded values (`FALSE`).
 #' @param convert Logical. If `TRUE`, then the [qualtRics::fetch_survey()]
@@ -80,30 +80,30 @@
 #' @template retry-advice
 #' @details
 #'
-#' **start_date & end_date arguments**
+#' # `start_date` & `end_date` arguments
 #'
 #' The Qualtrics API endpoint for this function treats `start_date` and
-#' `end_date` slightly differently: `end_date` is *exclusive*, meaning only
+#' `end_date` slightly differently; `end_date` is *exclusive*, meaning only
 #' responses recorded up to the moment *before* the specified `end_date` will be
-#' returned.  This permits easier automation: a previously-used `end_date` can
+#' returned.  This permits easier automation; a previously-used `end_date` can
 #' become the `start_date` of a subsequent request without downloading duplicate
 #' records.
 #'
-#' As a convenience for users working interactively, the `*qualtRics* package
+#' As a convenience for users working interactively, the qualtRics package
 #' also accepts Date(-like) input to each argument, which when used implies a
 #' time of 00:00:00 on the given date (and time zone). When a Date(-like) is
 #' passed to `end_date`, however, the date will be incremented by one before
 #' making the API request. This adjustment is intended to provide interactive
-#' users with more intuitive results: for example, specifying "2022/06/02" for
+#' users with more intuitive results; for example, specifying "2022/06/02" for
 #' both `start_date` and `end_date` will return all responses for that day,
 #' (instead of the zero responses that would return if `end_date` was not
 #' adjusted).
 #'
-#' **inclusion/exclusion arguments**
+#' # Inclusion/exclusion arguments
 #'
 #' The three `include_*` arguments each have different requirements:
 #'
-#' *include_metadata*:
+#' ## `include_metadata`
 #'
 #' Elements must be one of the 17 Qualtrics metadata variables, listed here in
 #' their default order: *StartDate* (*startDate*), *EndDate* (*endDate*),
@@ -122,7 +122,7 @@
 #' Duplicate elements passed to `include_metadata` will be silently dropped,
 #' with the de-duplicated variable located in the first position.
 #'
-#' *include_questions*:
+#' ## `include_questions`
 #'
 #' Qualtrics uniquely identifies each question with an internal ID that takes
 #' the form "QID" followed by a number, e.g. *QID5*.  When using
@@ -132,10 +132,12 @@
 #' obtained by calling:
 #'
 #' ```
-#'
-#' fetch_survey( surveyID = {survey ID}, limit = 1, add_column_map = TRUE ) |>
-#' extract_colmap()
-#'
+#' my_survey <- fetch_survey(
+#'     surveyID = {survey ID},
+#'     limit = 1,
+#'     add_column_map = TRUE
+#' )
+#' extract_colmap(my_survey)
 #' ```
 #'
 #' Note that while there is one QID for each "question" in the Qualtrics sense,
@@ -151,7 +153,7 @@
 #' separating these sub-questions via the API does not appear possible (e.g.,
 #' `include_questions = "QID5_3_TEXT"` will result in an API error).
 #'
-#' *include_embedded*:
+#' ## `include_embedded`
 #'
 #' This argument accepts the user-specified names of any embedded data variables
 #' in the survey being accessed.
@@ -172,9 +174,9 @@
 #' surveys <- all_surveys()
 #'
 #' # Retrieve a single survey
-#' mysurvey <- fetch_survey(surveyID = surveys$id[6])
+#' my_survey <- fetch_survey(surveyID = surveys$id[6])
 #'
-#' mysurvey <- fetch_survey(
+#' my_survey <- fetch_survey(
 #'   surveyID = surveys$id[6],
 #'   save_dir = tempdir(),
 #'   start_date = "2018-01-01",
