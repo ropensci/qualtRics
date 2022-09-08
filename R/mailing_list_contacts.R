@@ -38,7 +38,7 @@ mailing_list_contacts <- function(directoryID, mailinglistID){
 
   while(!is.null(fetch_url)){
 
-    res <- qualtrics_api_request("GET", url = fetch_url)
+    res <- qualtrics_api_request("GET", url = fetch_url, query = list(includeEmbedded = "true"))
     elements <- append(elements, res$result$elements)
     fetch_url <- res$result$nextPage
 
@@ -52,6 +52,11 @@ mailing_list_contacts <- function(directoryID, mailinglistID){
                       extRef = purrr::map_chr(elements, "extRef", .default = NA_character_),
                       language = purrr::map_chr(elements, "language", .default = NA_character_),
                       unsubscribed = purrr::map_lgl(elements, "unsubscribed", .default = NA_character_))
+
+  y = purrr::map_df(elements, "embeddedData", .default = NA_character_)
+
+  x <- cbind(x, y)
+
   return(x)
 
 }
