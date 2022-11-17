@@ -29,7 +29,6 @@ http_interactions:
     body:
       encoding: UTF-8
       file: no
-      string: '{"result":{"elements":[],"nextPage":null},"meta":{"httpStatus":"200
-        - OK","requestId":"fa3cd279-8ad0-41e3-9d46-6c22ac6d31e3"}}'
+      string: eyJyZXN1bHQiOnsiZWxlbWVudHMiOltdLCJuZXh0UGFnZSI6bnVsbH0sIm1ldGEiOnsiaHR0cFN0YXR1cyI6IjIwMCAtIE9LIiwicmVxdWVzdElkIjoiZmEzY2QyNzktOGFkMC00MWUzLTlkNDYtNmMyMmFjNmQzMWUzIn19
   recorded_at: 2020-05-24 20:42:16 GMT
   recorded_with: vcr/0.4.0, webmockr/0.5.0
