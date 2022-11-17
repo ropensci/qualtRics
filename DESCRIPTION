@@ -44,7 +44,7 @@ Suggests:
     knitr,
     rmarkdown,
     testthat,
-    vcr,
+    vcr (>= 1.2.0),
     webmockr
 VignetteBuilder: 
     knitr
