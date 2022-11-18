@@ -1,6 +1,6 @@
 ## Release summary
 
-This is the 13th CRAN release of qualtRics (the 7th since it has returned to CRAN after being archived). This release improves error handling when making API calls, as well as updating and adding more handling of distribution data. One update reflects a change in the Qualtrics API.
+This is the 14th CRAN release of qualtRics (the 8th since it has returned to CRAN after being archived). This release makes a change necessary to work with the latest version of [vcr](https://cran.r-project.org/package=vcr) (for automated testing), as well as some bug fixes and refactoring code for checking arguments.
 
 ## R CMD check results
 

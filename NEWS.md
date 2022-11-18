@@ -1,8 +1,10 @@
-# qualtRics (development version)
+# qualtRics 3.1.7
 
 - Refactored code for checking arguments and errors, thanks to @jmobrien (#263)
 
 - Fixed bug in `fetch_survey()` for `include_* = NA`, thanks to @jmobrien (#277)
+
+- Updated test fixture for new version of vcr
 
 # qualtRics 3.1.6
 
