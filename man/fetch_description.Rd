@@ -47,16 +47,19 @@ qualtrics_api_credentials(
 )
 
 # Retrieve a list of surveys
-surveys <- all_surveys()
+surveys <-
+  all_surveys()
 
 # Get description for a survey
-descrip <- fetch_description(surveyID = surveys$id[6])
+descrip <-
+  fetch_description(surveyID = surveys$id[6])
 
 # Get metadata with specific elements
-descrip_specific <- fetch_description(
-  surveyID = id,
-  elements = c("questions", "flow")
-)
+descrip_specific <-
+  fetch_description(
+    surveyID = id,
+    elements = c("questions", "flow")
+  )
 
 }
 }

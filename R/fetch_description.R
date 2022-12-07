@@ -34,16 +34,19 @@
 #' )
 #'
 #' # Retrieve a list of surveys
-#' surveys <- all_surveys()
+#' surveys <-
+#'   all_surveys()
 #'
 #' # Get description for a survey
-#' descrip <- fetch_description(surveyID = surveys$id[6])
+#' descrip <-
+#'   fetch_description(surveyID = surveys$id[6])
 #'
 #' # Get metadata with specific elements
-#' descrip_specific <- fetch_description(
-#'   surveyID = id,
-#'   elements = c("questions", "flow")
-#' )
+#' descrip_specific <-
+#'   fetch_description(
+#'     surveyID = id,
+#'     elements = c("questions", "flow")
+#'   )
 #'
 #' }
 fetch_description <-
@@ -167,4 +170,105 @@ fetch_description <-
       output[names(output) %in% elements]
 
     return(output)
+  }
+
+
+
+#'Download (and potentially save) a description of a survey in Qualtrics Survey
+#'Format (QSF)
+#'
+#'@param surveyID String. Unique ID for the survey you want to download.
+#'  Returned as "id" by the [all_surveys] function.
+#'@param formatting String. Adjustments to the downloaded QSF JSON to be either
+#'  more human-readable or more compact.  Options are "none" (default, no
+#'  adjustment), "pretty" (more human-readable, using
+#'  \code{\link[jsonlite]{prettify}}), or "compact" (more compact, using
+#'  \code{\link[jsonlite]{minify}})
+#'@param save Boolean. Should downloaded QSF be output to R as a json object
+#'  (\code{FALSE}, default), or to a file (\code{TRUE})? Even when TRUE,
+#'  function still invisibly returns results.
+#'@param file String. File to write to (including path if needed).  Typically,
+#'  would end in .qsf, though not required.  Ignored if \code{save == FALSE}.
+#'
+#'
+#'@template retry-advice
+#'@return A JSON object equivalent of a Qualtrics QSF.
+#'
+#'@importFrom jsonlite toJSON
+#'@importFrom jsonlite prettify
+#'@importFrom jsonlite minify
+#'@importFrom rlang arg_match
+#'
+#'
+#'@export
+#'
+fetch_qsf <-
+  function(surveyID,
+           formatting = c("none", "pretty", "compact"),
+           save = FALSE,
+           file = NULL
+  ) {
+
+    # OPTIONS AND PREP ----
+
+    # Check params
+    check_credentials()
+    checkarg_isstring(surveyID)
+    formatting <- rlang::arg_match(formatting)
+    checkarg_isboolean(save)
+    if(save){
+      checkarg_isstring(file)
+    }
+
+    # QUERY API ----
+
+    # Function-specific API stuff
+    description_url <-
+      generate_url(
+        query = "fetchdescription",
+        surveyID = surveyID
+      )
+
+    # Send GET request to survey-definitions endpoint:
+    resp <-
+      qualtrics_api_request(
+        verb = "GET",
+        url = description_url,
+        query = list(format = "qsf"),
+        as = "parsed"
+      )
+
+    result <-
+      resp[["result"]]
+
+    qsf <-
+      toJSON(
+        x = result,
+        auto_unbox = TRUE,
+        digits = NA,
+        null = "null"
+      )
+
+    # Format result as requested for output/saving:
+    if(formatting == "pretty"){
+      qsf <-
+        jsonlite::prettify(txt = qsf)
+    } else if (formatting == "compact") {
+      qsf <-
+        jsonlite::minify(txt = qsf)
+    }
+
+    if(save){
+      # Make connection to specified file and save:
+      connection <-
+        file(file)
+      writeLines(text = qsf, con = connection)
+      close(connection)
+
+      # Return results invisibly:
+      return(invisible(qsf))
+    }
+
+    # Return standard output:
+    return(qsf)
   }
