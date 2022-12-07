@@ -7,6 +7,7 @@
 qualtrics_api_request(
   verb = c("GET", "POST"),
   url = url,
+  query = NULL,
   body = NULL,
   as = c("parsed", "raw"),
   ...
@@ -16,6 +17,8 @@ qualtrics_api_request(
 \item{verb}{Type of request to be sent (@seealso \code{\link[httr:VERB]{httr::VERB()}})}
 
 \item{url}{Qualtrics endpoint URL created by \code{\link[=generate_url]{generate_url()}} functions}
+
+\item{query}{Optional query parameters used by some endpoints}
 
 \item{body}{Options created by \code{\link[=create_raw_payload]{create_raw_payload()}} function}
 

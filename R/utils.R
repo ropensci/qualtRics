@@ -209,6 +209,7 @@ create_raw_payload <-
 #'
 #' @param verb Type of request to be sent (@seealso [httr::VERB()])
 #' @param url Qualtrics endpoint URL created by [generate_url()] functions
+#' @param query Optional query parameters used by some endpoints
 #' @param body Options created by [create_raw_payload()] function
 #' @param as type of content to return, passed to `as` in httr::content().
 #' current options "parsed" (since we get JSON mostly), "raw" (response .zips)
@@ -219,6 +220,7 @@ create_raw_payload <-
 qualtrics_api_request <-
   function(verb = c("GET", "POST"),
            url = url,
+           query = NULL,
            body = NULL,
            as = c("parsed", "raw"),
            ...
@@ -227,19 +229,37 @@ qualtrics_api_request <-
     verb <- rlang::arg_match(verb)
     as <- rlang::arg_match(as)
     # Construct header
-    headers <- construct_header(
-      Sys.getenv("QUALTRICS_API_KEY")
-    )
+    headers <-
+      construct_header(
+        Sys.getenv("QUALTRICS_API_KEY")
+      )
+
+    # Prepare list of args:
+    arglist <-
+      list(
+        verb = verb,
+        url = url,
+        config = httr::add_headers(headers),
+        body = body,
+        times = 4,
+        terminate_on = 400:451,
+        quiet = TRUE
+      )
+
+    # if needed, add query arg in proper place:
+    # (adding query = NULL directly breaks some requests)
+    if(!is.null(query)){
+      arglist <-
+        append(x = arglist,
+               values = list(query = query),
+               after = 3
+        )
+    }
+
     # Send request to Qualtrics API
-    res <- httr::RETRY(
-      verb,
-      url = url,
-      httr::add_headers(headers),
-      body = body,
-      times = 4,
-      terminate_on = 400:451,
-      quiet = TRUE
-    )
+    res <-
+      do.call(httr::RETRY, arglist)
+
     # Check if response type is OK
     qualtrics_response_codes(res)
 
