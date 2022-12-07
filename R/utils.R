@@ -209,6 +209,7 @@ create_raw_payload <-
 #'
 #' @param verb Type of request to be sent (@seealso [httr::VERB()])
 #' @param url Qualtrics endpoint URL created by [generate_url()] functions
+#' @param query Optional query parameters used by some endpoints
 #' @param body Options created by [create_raw_payload()] function
 #' @param as type of content to return, passed to `as` in httr::content().
 #' current options "parsed" (since we get JSON mostly), "raw" (response .zips)
@@ -221,7 +222,7 @@ qualtrics_api_request <-
            url = url,
            query = NULL,
            body = NULL,
-           as = c("parsed", "raw", "text"),
+           as = c("parsed", "raw"),
            ...
            ) {
     # Match args
