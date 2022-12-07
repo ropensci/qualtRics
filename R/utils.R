@@ -154,6 +154,9 @@ generate_url <-
         fetchdistributions = "{rooturl}/distributions?surveyId={surveyID}",
         fetchdistributionhistory = "{rooturl}/distributions/{distributionID}/history",
         listdistributionlinks = "{rooturl}/distributions/{distributionID}/links?surveyId={surveyID}",
+        listdirectories = "{rooturl}/directories",
+        listmailinglists = "{rooturl}/directories/{directoryID}/mailinglists",
+        mailinglistcontacts = "{rooturl}/directories/{directoryID}/mailinglists/{mailinglistID}/contacts",
         rlang::abort("Internal error: invalid URL generation query")
       )
 
@@ -219,6 +222,7 @@ create_raw_payload <-
 qualtrics_api_request <-
   function(verb = c("GET", "POST"),
            url = url,
+           query = NULL,
            body = NULL,
            as = c("parsed", "raw"),
            ...
@@ -235,6 +239,7 @@ qualtrics_api_request <-
       verb,
       url = url,
       httr::add_headers(headers),
+      query = query,
       body = body,
       times = 4,
       terminate_on = 400:451,
