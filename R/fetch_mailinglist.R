@@ -42,13 +42,18 @@ fetch_mailinglist <- function(mailinglistID){
 
   }
 
-  x <- tibble::tibble(id = purrr::map_chr(elements, "id", .default = NA_character_),
-                      firstName = purrr::map_chr(elements, "firstName", .default = NA_character_),
-                      lastName = purrr::map_chr(elements, "lastName", .default = NA_character_),
-                      email = purrr::map_chr(elements, "email", .default = NA_character_),
-                      externalDataReference = purrr::map_chr(elements, "externalDataReference", .default = NA_character_),
-                      language = purrr::map_chr(elements, "language", .default = NA_character_),
-                      unsubscribed = purrr::map_lgl(elements, "unsubscribed", .default = NA))
+  elements <-
+    purrr::map(elements, ~purrr::modify_in(.x, "unsubscribed", as.logical))
+
+  x <- tibble::tibble(
+    id = purrr::map_chr(elements, "id", .default = NA_character_),
+    firstName = purrr::map_chr(elements, "firstName", .default = NA_character_),
+    lastName = purrr::map_chr(elements, "lastName", .default = NA_character_),
+    email = purrr::map_chr(elements, "email", .default = NA_character_),
+    externalDataReference = purrr::map_chr(elements, "externalDataReference", .default = NA_character_),
+    language = purrr::map_chr(elements, "language", .default = NA_character_),
+    unsubscribed = purrr::map_lgl(elements, "unsubscribed", .default = NA)
+    )
 
   embeddedData <- purrr::map(elements, "embeddedData")
   if(!all(purrr::map_lgl(embeddedData, purrr::is_empty))){
