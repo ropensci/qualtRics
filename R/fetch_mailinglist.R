@@ -41,22 +41,30 @@ fetch_mailinglist <- function(mailinglistID){
     fetch_url <- res$result$nextPage
 
   }
+  # Drop list-columns responseHistory & emailHistory
+  elements <-
+    purrr::map(elements, purrr::list_modify, responseHistory = rlang::zap(),
+              emailHistory = rlang::zap())
 
-  x <- tibble::tibble(id = purrr::map_chr(elements, "id", .default = NA_character_),
-                      firstName = purrr::map_chr(elements, "firstName", .default = NA_character_),
-                      lastName = purrr::map_chr(elements, "lastName", .default = NA_character_),
-                      email = purrr::map_chr(elements, "email", .default = NA_character_),
-                      externalDataReference = purrr::map_chr(elements, "externalDataReference", .default = NA_character_),
-                      language = purrr::map_chr(elements, "language", .default = NA_character_),
-                      unsubscribed = purrr::map_lgl(elements, "unsubscribed", .default = NA))
+  # Wrap embeddedData in single-element list for proper row-binding:
+  elements <-
+    purrr::map(elements, purrr::modify_in, "embeddedData", ~list(.x))
 
-  embeddedData <- purrr::map(elements, "embeddedData")
-  if(!all(purrr::map_lgl(embeddedData, purrr::is_empty))){
-    embeddedData <- dplyr::bind_rows(embeddedData)
-    embeddedData <- dplyr::mutate_all(embeddedData, list(~dplyr::na_if(., "")))
-    x <- dplyr::bind_cols(x, embeddedData)
-  }
+  # Row bind to create main df:
+  out <-
+    dplyr::bind_rows(elements)
+  # Ensure unsubscribed is logical:
+  out <-
+    mutate(out, unsubscribed = as.logical(unsubscribed))
+  # put embeddedData at end in preparation for expansion:
+  out <-
+    dplyr::relocate(out,
+                    tidyselect::any_of("embeddedData"),
+                    .after = tidyr::last_col())
+  # wide-expand embeddedData:
+  out <-
+    tidyr::unnest_wider(out, embeddedData)
 
-  return(x)
+  return(out)
 
 }
