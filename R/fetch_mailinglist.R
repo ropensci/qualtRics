@@ -57,6 +57,11 @@ fetch_mailinglist <- function(mailinglistID){
 
   embeddedData <- purrr::map(elements, "embeddedData")
   if(!all(purrr::map_lgl(embeddedData, purrr::is_empty))){
+    # Blank fill if entry lacking embedded data (avoids row mismatch in bind_cols):
+    fill_var_name <- names(bind_rows(embeddedData))[1]
+    fill_var <- setNames(list(NA_character_), fill_var_name)
+    embeddedData <- map(embeddedData, ~.x %||% fill_var)
+
     embeddedData <- dplyr::bind_rows(embeddedData)
     embeddedData <- dplyr::mutate_all(embeddedData, list(~dplyr::na_if(., "")))
     x <- dplyr::bind_cols(x, embeddedData)
