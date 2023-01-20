@@ -11,6 +11,7 @@
 #' @importFrom dplyr relocate
 #' @importFrom dplyr last_col
 #' @importFrom dplyr any_of
+#' @importFrom dplyr across
 #' @importFrom purrr list_modify
 #' @importFrom purrr map
 #' @importFrom purrr modify_in
@@ -70,17 +71,28 @@ fetch_mailinglist <- function(mailinglistID){
       purrr::modify_in,
       "embeddedData",
       ~list(.x)
-      )
+    )
+
+  # Convert any remaining NULLS to (logical) NA:
+  elements <-
+    purrr::map_depth(
+      elements,
+      2,
+      ~.x %||% NA
+    )
 
   # Row bind to create main df:
   out <-
     dplyr::bind_rows(elements)
-  # Ensure unsubscribed is logical:
+
+  # Ensure unsubscribed is logical and others are character:
   out <-
     dplyr::mutate(
       out,
+      dplyr::across(c(-unsubscribed, -embeddedData), as.character),
       unsubscribed = as.logical(unsubscribed)
     )
+
   # put embeddedData at end in preparation for expansion:
   out <-
     dplyr::relocate(
@@ -96,5 +108,4 @@ fetch_mailinglist <- function(mailinglistID){
     )
 
   return(out)
-
 }
