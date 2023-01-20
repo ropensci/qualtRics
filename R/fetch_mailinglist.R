@@ -6,6 +6,15 @@
 #'   function.
 #'
 #' @template retry-advice
+#' @importFrom dplyr bind_rows
+#' @importFrom dplyr mutate
+#' @importFrom dplyr relocate
+#' @importFrom dplyr last_col
+#' @importFrom dplyr any_of
+#' @importFrom purrr list_modify
+#' @importFrom purrr map
+#' @importFrom purrr modify_in
+#' @importFrom purrr zap
 #' @export
 #'
 #' @examples
@@ -29,8 +38,11 @@ fetch_mailinglist <- function(mailinglistID){
   check_credentials()
   checkarg_isstring(mailinglistID)
 
-  fetch_url <- generate_url(query = "fetchmailinglist",
-                            mailinglistID = mailinglistID)
+  fetch_url <-
+    generate_url(
+      query = "fetchmailinglist",
+      mailinglistID = mailinglistID
+    )
 
   elements <- list()
 
@@ -41,29 +53,47 @@ fetch_mailinglist <- function(mailinglistID){
     fetch_url <- res$result$nextPage
 
   }
-  # Drop list-columns responseHistory & emailHistory
+
+  # Drop list-columns responseHistory & emailHistory (diff function for these)
   elements <-
-    purrr::map(elements, purrr::list_modify, responseHistory = rlang::zap(),
-              emailHistory = rlang::zap())
+    purrr::map(
+      elements,
+      purrr::list_modify,
+      responseHistory = purrr::zap(),
+      emailHistory = purrr::zap()
+    )
 
   # Wrap embeddedData in single-element list for proper row-binding:
   elements <-
-    purrr::map(elements, purrr::modify_in, "embeddedData", ~list(.x))
+    purrr::map(
+      elements,
+      purrr::modify_in,
+      "embeddedData",
+      ~list(.x)
+      )
 
   # Row bind to create main df:
   out <-
     dplyr::bind_rows(elements)
   # Ensure unsubscribed is logical:
   out <-
-    mutate(out, unsubscribed = as.logical(unsubscribed))
+    dplyr::mutate(
+      out,
+      unsubscribed = as.logical(unsubscribed)
+    )
   # put embeddedData at end in preparation for expansion:
   out <-
-    dplyr::relocate(out,
-                    tidyselect::any_of("embeddedData"),
-                    .after = tidyr::last_col())
+    dplyr::relocate(
+      out,
+      dplyr::any_of("embeddedData"),
+      .after = dplyr::last_col()
+    )
   # wide-expand embeddedData:
   out <-
-    tidyr::unnest_wider(out, embeddedData)
+    tidyr::unnest_wider(
+      out,
+      embeddedData
+    )
 
   return(out)
 

@@ -1,6 +1,8 @@
 #' Retrieve a data frame of all mailing lists from Qualtrics
 #'
 #' @template retry-advice
+#' @importFrom purrr map_df
+#' @importFrom purrr flatten
 #' @export
 #'
 #' @examples
