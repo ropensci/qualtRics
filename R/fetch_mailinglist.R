@@ -6,6 +6,16 @@
 #'   function.
 #'
 #' @template retry-advice
+#' @importFrom dplyr bind_rows
+#' @importFrom dplyr mutate
+#' @importFrom dplyr relocate
+#' @importFrom dplyr last_col
+#' @importFrom dplyr any_of
+#' @importFrom dplyr across
+#' @importFrom purrr list_modify
+#' @importFrom purrr map
+#' @importFrom purrr modify_in
+#' @importFrom purrr zap
 #' @export
 #'
 #' @examples
@@ -29,8 +39,11 @@ fetch_mailinglist <- function(mailinglistID){
   check_credentials()
   checkarg_isstring(mailinglistID)
 
-  fetch_url <- generate_url(query = "fetchmailinglist",
-                            mailinglistID = mailinglistID)
+  fetch_url <-
+    generate_url(
+      query = "fetchmailinglist",
+      mailinglistID = mailinglistID
+    )
 
   elements <- list()
 
@@ -42,21 +55,57 @@ fetch_mailinglist <- function(mailinglistID){
 
   }
 
-  x <- tibble::tibble(id = purrr::map_chr(elements, "id", .default = NA_character_),
-                      firstName = purrr::map_chr(elements, "firstName", .default = NA_character_),
-                      lastName = purrr::map_chr(elements, "lastName", .default = NA_character_),
-                      email = purrr::map_chr(elements, "email", .default = NA_character_),
-                      externalDataReference = purrr::map_chr(elements, "externalDataReference", .default = NA_character_),
-                      language = purrr::map_chr(elements, "language", .default = NA_character_),
-                      unsubscribed = purrr::map_lgl(elements, "unsubscribed", .default = NA))
+  # Drop list-columns responseHistory & emailHistory (diff function for these)
+  elements <-
+    purrr::map(
+      elements,
+      purrr::list_modify,
+      responseHistory = purrr::zap(),
+      emailHistory = purrr::zap()
+    )
 
-  embeddedData <- purrr::map(elements, "embeddedData")
-  if(!all(purrr::map_lgl(embeddedData, purrr::is_empty))){
-    embeddedData <- dplyr::bind_rows(embeddedData)
-    embeddedData <- dplyr::mutate_all(embeddedData, list(~dplyr::na_if(., "")))
-    x <- dplyr::bind_cols(x, embeddedData)
-  }
+  # Wrap embeddedData in single-element list for proper row-binding:
+  elements <-
+    purrr::map(
+      elements,
+      purrr::modify_in,
+      "embeddedData",
+      ~list(.x)
+    )
 
-  return(x)
+  # Convert any remaining NULLS to (logical) NA:
+  elements <-
+    purrr::map_depth(
+      elements,
+      2,
+      ~.x %||% NA
+    )
 
+  # Row bind to create main df:
+  out <-
+    dplyr::bind_rows(elements)
+
+  # Ensure unsubscribed is logical and others are character:
+  out <-
+    dplyr::mutate(
+      out,
+      dplyr::across(c(-unsubscribed, -embeddedData), as.character),
+      unsubscribed = as.logical(unsubscribed)
+    )
+
+  # put embeddedData at end in preparation for expansion:
+  out <-
+    dplyr::relocate(
+      out,
+      dplyr::any_of("embeddedData"),
+      .after = dplyr::last_col()
+    )
+  # wide-expand embeddedData:
+  out <-
+    tidyr::unnest_wider(
+      out,
+      embeddedData
+    )
+
+  return(out)
 }
