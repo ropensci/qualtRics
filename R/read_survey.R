@@ -113,6 +113,29 @@ read_survey <- function(file_name,
       header_rows <- 1:2
     }
 
+  # Make connection to zip file: ------
+
+  # Create error handling around unzipping:
+
+  # Unzip and get the filepath for the csv
+  csv_filename_df <-
+    unzip(
+      zipfile = file_name,
+      list = TRUE
+    )
+
+  csv_filename <-
+    csv_filename_df[["Name"]][1]
+
+  cat(paste0("\nInternal filename is: ", csv_filename))
+  cat("\n\n")
+
+  zipcon <-
+    unz(
+      description = file_name,
+      filename = csv_filename,
+      open = "rb"
+    )
 
   # READ RAW DATA ----
 
@@ -123,15 +146,17 @@ read_survey <- function(file_name,
   rawdata <-
     suppressMessages(
       readr::read_csv(
-        file = file_name,
+        file = zipcon,
         col_types = readr::cols(.default = readr::col_character()),
         na = c("")
       ))
 
+  close(zipcon)
+
   # If Qualtrics adds an empty column at the end, remove it
-  if (grepl(",$", readLines(file_name, n = 1))) {
-    rawdata <- rawdata[, 1:(ncol(rawdata) - 1)]
-  }
+  # if (grepl(",$", readLines(zipcon, n = 1))) {
+  #   rawdata <- rawdata[, 1:(ncol(rawdata) - 1)]
+  # }
 
   # CREATE RESPONSE DATA FRAME ----
 
@@ -141,12 +166,14 @@ read_survey <- function(file_name,
 
   # Infer data types from data:
   responsedata <-
+    suppressMessages(
     readr::type_convert(
       responsedata,
       locale = readr::locale(tz = time_zone),
       col_types = col_types,
       na = character()
       )
+    )
 
 
   # GENERATE COLUMN MAP ----

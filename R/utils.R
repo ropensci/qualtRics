@@ -416,7 +416,7 @@ export_responses_request <-
         verbose = verbose
       )
 
-    # Download .zip file and unzip it
+    # Download .zip file and get name
 
     survey_fpath <-
       export_responses_filedownload(
@@ -564,33 +564,6 @@ export_responses_filedownload <-
     # Write to temporary file
     writeBin(raw_zip, tf_path)
 
-    # Create error handling around unzipping:
-    safeunzip <-
-      purrr::possibly(
-        utils::unzip,
-        NULL
-      )
-
-    # Unzip and get the filepath for the csv
-    csv_filepath <-
-      safeunzip(
-        zipfile = tf_path,
-        exdir = tempdir()
-      )
-
-    if(is.null(csv_filepath)){
-      rlang::abort(
-        c("Error extracting CSV from zip file",
-          "The download may have been corrupted; try re-running your query",
-          "Current download file location:",
-          tf_path)
-      )
-    }
-
-    # Remove zipfile
-    file.remove(tf_path)
-
-    # Return file location
-    return(csv_filepath)
+   return(tf_path)
   }
 
