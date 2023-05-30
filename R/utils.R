@@ -370,8 +370,8 @@ wrapper_mc <- function(data, question_meta) {
     !!col_name := as.character(!!col_name),
     !!col_name := readr::parse_factor(!!col_name,
                                       levels = ln,
-                                      ordered = TRUE
-    )
+                                      ordered = TRUE,
+                                      include_na = FALSE)
   )
 }
 
