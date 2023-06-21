@@ -58,19 +58,13 @@
 #'   "label" attribute using [sjlabelled::set_label()]. Useful for reference as
 #'   well as cross-compatibility with other stats packages (e.g., Stata, see
 #'   documentation in `sjlabelled`). Defaults to `TRUE`.
+#' @param strip_html Logical. If `TRUE`, then remove HTML tags from variable
+#'   descriptions. Defaults to `TRUE`.  Ignored if  `add_column_map` and
+#'   `add_var_labels` are both a`FALSE`.
 #' @param col_types Optional. This argument provides a way to manually overwrite
 #'   column types that may be incorrectly guessed. Takes a [readr::cols()]
 #'   specification. See example below and [readr::cols()] for formatting
 #'   details. Defaults to `NULL`. Overwritten by `convert = TRUE`.
-#' @param force_request Logical. fetch_survey() saves each survey in a temporary
-#'   directory so that it can quickly be retrieved later. If force_request is
-#'   `TRUE`, fetch_survey() always downloads the survey from the API instead of
-#'   loading it from the temporary directory. Defaults to `FALSE`.
-#' @param save_dir String. Directory where survey results will be stored.
-#'   Defaults to a temporary directory which is cleaned when your R session is
-#'   terminated. This argument is useful if you'd like to store survey results.
-#'   The downloaded survey will be stored as an RDS file (see
-#'   [base::readRDS()]).
 #' @param verbose Logical. If `TRUE`, verbose messages will be printed to the R
 #'   console. Defaults to `TRUE`.
 #' @param last_response Deprecated.
@@ -209,17 +203,24 @@ fetch_survey <-
            convert = TRUE,
            add_column_map = TRUE,
            add_var_labels = TRUE,
+           strip_html = TRUE,
            col_types = NULL,
-           force_request = FALSE,
            verbose = TRUE,
-           save_dir = NULL,
-           last_response = deprecated()
+           last_response = deprecated(),
+           force_request = deprecated(),
+           save_dir = deprecated()
   ) {
 
     # Check/format arguments --------------------------------------------------
 
     if (lifecycle::is_present(last_response)) {
       lifecycle::deprecate_warn("3.1.2", "fetch_survey(last_response = )")
+    }
+    if (lifecycle::is_present(force_request)) {
+      lifecycle::deprecate_warn("XXX", "fetch_survey(force_request = )")
+    }
+    if (lifecycle::is_present(save_dir)) {
+      lifecycle::deprecate_warn("XXX", "fetch_survey(save_dir = )")
     }
 
     # Check if API credentials stored (and likely suitable)
@@ -244,38 +245,17 @@ fetch_survey <-
     # Check other unique arguments
     checkarg_col_types(col_types)
     checkarg_limit(limit)
-    checkarg_save_dir(save_dir)
     checkarg_convert_label_breakouts(convert, label, breakout_sets)
 
     # Check general argument types:
     checkarg_isintegerish(unanswer_recode)
     checkarg_isintegerish(unanswer_recode_multi)
     checkarg_isboolean(include_display_order)
-    checkarg_isboolean(force_request)
     checkarg_isboolean(verbose)
     checkarg_isboolean(import_id)
     checkarg_isboolean(add_column_map)
     checkarg_isboolean(add_var_labels)
-
-
-    # Re-load existing file if present ----------------------------------------
-
-    # Location for downloaded file to go (or be):
-    file_location <-
-      glue::glue("{tempdir()}/{surveyID}.rds")
-
-    # See if survey already in temporary directory:
-    if (!force_request) {
-      download_exists <-
-        check_existing_download(file_location = file_location,
-                                surveyID = surveyID,
-                                verbose = verbose)
-
-      if(download_exists){
-        return(readRDS(file_location))
-      }
-    }
-
+    checkarg_isboolean(strip_html)
 
     # Make 3-part request to export-responses endpoint -------------------------------
 
@@ -300,7 +280,7 @@ fetch_survey <-
       )
 
 
-    survey_fpath <-
+    rawdata <-
       export_responses_request(
         surveyID = surveyID,
         body = raw_payload,
@@ -310,16 +290,15 @@ fetch_survey <-
     # Read downloaded .csv & clean -------------------------------------------
 
     data <-
-      read_survey(
-        file_name = survey_fpath,
+      process_raw_survey(
+        rawdata = rawdata,
         import_id = import_id,
-        time_zone = time_zone,
+        time_zone = time_zone_formatted,
         col_types = col_types,
-        add_column_map = add_column_map
+        add_column_map = add_column_map,
+        add_var_labels = add_var_labels,
+        strip_html = strip_html
       )
-
-    # Remove pre-cleaned temporary file:
-    file.remove(survey_fpath)
 
     # Add types
     if (convert & label) {
@@ -327,22 +306,243 @@ fetch_survey <-
         infer_data_types(data, surveyID)
     }
 
-    # Save and return data -----------------------------------------------------
+    # Return data -----------------------------------------------------
 
-    # Save survey as RDS file in temp folder so that it can be easily
-    # retrieved again this session.
-    saveRDS(data, file_location)
-
-    # Save file to specified alternative directory if given:
-    if (!is.null(save_dir)) {
-      alt_file_location <-
-        glue::glue("{save_dir}/{surveyID}.rds")
-
-      saveRDS(data, alt_file_location)
-    }
-
-    # Return
     return(data)
 
   }
+
+
+
+# Export-responses queries (fetch_survey/in_progress) --------------------------
+
+#' Runs 3-part request to export-responses endpoint,
+#' downloading and unzipping file
+#'
+#' @param surveyID ID of the survey to be downloaded
+#' @param body payload/body of API request containing desired params
+#'
+#' @keywords internal
+export_responses_request <-
+  function(
+    surveyID,
+    body,
+    verbose = TRUE
+  ){
+
+
+    # Initiate request to export-responses
+
+    requestID <-
+      export_responses_init(
+        surveyID = surveyID,
+        body = body
+      )
+
+    # Monitor progress & get location of file path
+
+    fileID <-
+      export_responses_progress(
+        surveyID = surveyID,
+        requestID = requestID,
+        verbose = verbose
+      )
+
+    # Download .zip file and extract raw response data:
+
+    survey_rawdata <-
+      export_responses_filedownload(
+        surveyID = surveyID,
+        fileID = fileID
+      )
+
+    return(survey_rawdata)
+  }
+
+#' Initiate a request to the export-responses API endpoint
+#'
+#' @param surveyID ID of survey whose responses are being pulled
+#' @template retry-advice
+#' @keywords internal
+export_responses_init <-
+  function(surveyID,
+           body){
+    # construct URL for export-responses:
+    export_url <-
+      generate_url(
+        query = "exportresponses",
+        surveyID = surveyID
+      )
+
+    # POST request for download
+    res <-
+      qualtrics_api_request(
+        verb = "POST",
+        url = export_url,
+        body = body
+      )
+
+    # Get progress id
+    if (is.null(res$result$progressId)) {
+      rlang::abort(
+        c("Qualtrics failed to return a progress ID for your download request",
+          "Please re-run your query.")
+      )
+    } else {
+      requestID <-
+        res$result$progressId
+    } # NOTE This is not fail safe because ID can still be NULL
+
+    return(requestID)
+  }
+
+#' Monitor progress from response request download, then obtain file download
+#' location
+#'
+#' @param surveyID ID of survey whose responses are being pulled
+#' @param requestID exportProgressId from
+#'   https://api.qualtrics.com/37e6a66f74ab4-get-response-export-progress
+#' @param verbose See [fetch_survey()]
+#' @template retry-advice
+#' @keywords internal
+export_responses_progress <-
+  function(surveyID,
+           requestID,
+           verbose = FALSE) {
+
+    # This is the URL to use when checking the progress
+    progress_url <-
+      generate_url(
+        "exportresponses_progress",
+        surveyID = surveyID,
+        requestID = requestID
+      )
+
+    # Create a progress bar and monitor when export is ready
+    if (verbose) {
+      pbar <-
+        utils::txtProgressBar(
+          min = 0,
+          max = 100,
+          style = 3
+        )
+    }
+
+    # Initialize progress
+    progress <- 0
+    # While download is in progress
+    while (progress < 100) {
+      # Get percentage complete
+      CU <-
+        qualtrics_api_request(
+          verb = "GET",
+          url = progress_url
+        )
+
+      progress <-
+        CU$result$percentComplete
+
+      # Set progress
+      if (verbose) {
+        utils::setTxtProgressBar(pbar, progress)
+      }
+    } # end while loop (progress complete)
+    # Kill progress bar
+    if (verbose) {
+      close(pbar)
+    }
+
+    # Get the fileID showing location of the downloadable file:
+    fileID <-
+      CU$result$fileId
+    return(fileID)
+  }
+
+#' Downloads response data from location obtained from
+#' fetch_survey_progress (extracting from .zip file)
+#'
+#' @param surveyID survey ID
+#' @param requestID request ID from fetch_survey
+#' @param fileID file ID from fetch_survey_progress
+#' @keywords internal
+export_responses_filedownload <-
+  function(surveyID,
+           fileID){
+
+    # Construct a url for obtaining the file:
+    file_url <-
+      generate_url(
+        "exportresponses_file",
+        surveyID = surveyID,
+        fileID = fileID
+      )
+
+    # Load raw zip file:
+    raw_zip <-
+      qualtrics_api_request(
+        verb = "GET",
+        url = file_url,
+        as = "raw"
+      )
+
+    # To zip file
+    zip_path <-
+      glue::glue(
+        "{temp_dir}/temp.zip",
+        # Remove trailing slash if system includes one:
+        temp_dir = stringr::str_remove(tempdir(), "/$")
+      )
+
+    # Write to temporary file
+    writeBin(raw_zip, zip_path)
+
+    # Get the name of the internal csv file:
+    csv_filename_df <-
+      unzip(
+        zipfile = zip_path,
+        list = TRUE
+      )
+
+    csv_filename <-
+      csv_filename_df[["Name"]][1]
+
+    if(is.null(csv_filename)){
+      # Clean up zip file (for security)
+      file.remove(zip_path)
+      # Give error message
+      rlang::abort(
+        c("Error in downloaded zip file.",
+          "The download may have been corrupted; try re-running your request.")
+      )
+    }
+
+
+    # Make connection to zip file:
+    zipcon <-
+      unz(
+        description = zip_path,
+        filename = csv_filename,
+        open = "rb"
+      )
+
+    # Read in raw data:
+    rawdata <-
+      suppressMessages(
+        readr::read_csv(
+          file = zipcon,
+          col_types = readr::cols(.default = readr::col_character()),
+          na = c("")
+        )
+      )
+
+    # Close connection:
+    close(zipcon)
+
+    # Remove zipfile (for security)
+    file.remove(zip_path)
+
+    # Return raw data:
+    return(rawdata)
+  }
+
 

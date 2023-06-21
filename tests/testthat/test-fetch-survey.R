@@ -32,7 +32,6 @@ test_that("fetch_survey() returns survey with custom params", {
   vcr::use_cassette("fetch_survey_custom", {
     x <-
       fetch_survey("SV_0pK7FIIGNNM0sNn",
-                   force_request = TRUE,
                    start_date = "2015-01-01",
                    end_date = "2022-06-02 18:40:53",
                    unanswer_recode = 999,
@@ -64,7 +63,6 @@ test_that("fetch_survey() excludes variable classes when requested", {
   vcr::use_cassette("fetch_survey_exclude", {
     x <-
       fetch_survey("SV_0pK7FIIGNNM0sNn",
-                   force_request = TRUE,
                    start_date = "2015-01-01",
                    end_date = "2022-06-02 18:40:53",
                    unanswer_recode = 999,
@@ -89,7 +87,6 @@ test_that("fetch_survey() returns survey with only one QID", {
   vcr::use_cassette("fetch_one_qid", {
     x <- fetch_survey(
       "SV_56icaa9YAafpAqx",
-      force_request = TRUE,
       limit = 15,
       include_questions = c("QID9"),
       breakout_sets = FALSE
@@ -118,31 +115,6 @@ test_that("fetch_survey() returns survey with only one QID", {
 
 })
 
-
-
-test_that("fetch_survey() reads a stored survey in temporary directory if exists", {
-  # Store RDS file
-  data <- "SUCCESS"
-  curr.wd <- getwd()
-  setwd(tempdir())
-  on.exit(setwd(curr.wd))
-  saveRDS(data, "surveyID.rds")
-  # Query with all options
-  expect_message(
-    qualtRics::fetch_survey("surveyID"),
-    "Loading saved prior download"
-  )
-})
-
-test_that("Save directory exists for fetch_survey()", {
-  expect_error(
-    qualtRics::fetch_survey(
-      "1234",
-      save_dir = "/users/jasper/desktop/idonotexist"
-    ),
-    "does not exist."
-  )
-})
 
 test_that("Limit cannot be less than one", {
   expect_error(
