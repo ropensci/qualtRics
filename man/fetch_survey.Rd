@@ -113,6 +113,10 @@ details. Defaults to \code{NULL}. Overwritten by \code{convert = TRUE}.}
 console. Defaults to \code{TRUE}.}
 
 \item{last_response}{Deprecated.}
+
+\item{force_request}{Deprecated.}
+
+\item{save_dir}{Deprecated.}
 }
 \description{
 Download a Qualtrics survey you own via API and import the survey directly

@@ -68,6 +68,8 @@
 #' @param verbose Logical. If `TRUE`, verbose messages will be printed to the R
 #'   console. Defaults to `TRUE`.
 #' @param last_response Deprecated.
+#' @param force_request Deprecated.
+#' @param save_dir Deprecated.
 #'
 #' @seealso See <https://api.qualtrics.com/> for documentation on the Qualtrics
 #'   API.
@@ -217,10 +219,10 @@ fetch_survey <-
       lifecycle::deprecate_warn("3.1.2", "fetch_survey(last_response = )")
     }
     if (lifecycle::is_present(force_request)) {
-      lifecycle::deprecate_warn("XXX", "fetch_survey(force_request = )")
+      lifecycle::deprecate_warn("3.2.0", "fetch_survey(force_request = )")
     }
     if (lifecycle::is_present(save_dir)) {
-      lifecycle::deprecate_warn("XXX", "fetch_survey(save_dir = )")
+      lifecycle::deprecate_warn("3.2.0", "fetch_survey(save_dir = )")
     }
 
     # Check if API credentials stored (and likely suitable)
@@ -464,6 +466,8 @@ export_responses_progress <-
 #' @param surveyID survey ID
 #' @param requestID request ID from fetch_survey
 #' @param fileID file ID from fetch_survey_progress
+#'
+#' @importFrom utils unzip
 #' @keywords internal
 export_responses_filedownload <-
   function(surveyID,
