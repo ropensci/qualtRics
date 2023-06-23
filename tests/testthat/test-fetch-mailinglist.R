@@ -1,5 +1,3 @@
-context("Fetch a single mailing list by ID")
-
 test_that("fetch_mailinglist returns a tbl_df with expected column names and types", {
 
   vcr::use_cassette("fetch_mailinglist", {

@@ -1,9 +1,5 @@
 library(webmockr)
 
-context("qualtrics-api-request")
-
-
-
 test_that("it should throw an error after certain 400 and 500 status codes", {
 
   skip_on_cran()

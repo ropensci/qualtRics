@@ -1,5 +1,3 @@
-context("Get survey questions for a survey")
-
 test_that("survey_questions() makes a request with expected structure, and parses response", {
 
   vcr::use_cassette("survey_questions", {

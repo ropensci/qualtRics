@@ -1,5 +1,3 @@
-context("Arguments should be properly checked")
-
 test_that("logical params should throw error if not TRUE/FALSE", {
   log_NA <- NA
   log_NULL <- NULL

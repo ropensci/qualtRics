@@ -1,5 +1,3 @@
-context("Download a survey from qualtRics and pull it into R using the fetch_survey() function")
-
 test_that("fetch_survey() returns survey with default params", {
 
   skip_on_cran()
@@ -138,6 +136,18 @@ test_that("unanswer_recode is integer-ish", {
   )
 })
 
+test_that("correct error for deprecated args", {
+  skip_on_cran()
+
+  expect_snapshot(
+    fetch_survey("1234", force_request = TRUE),
+    error = TRUE
+  )
+  expect_snapshot(
+    fetch_survey("1234", save_dir = "~/Desktop"),
+    error = TRUE
+  )
+})
 
 # Restore the credentials for other tests:
 qualtrics_api_credentials(api_key = holder_API, base_url = holder_URL)

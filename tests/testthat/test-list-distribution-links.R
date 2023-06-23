@@ -1,5 +1,3 @@
-context("Fetch survey distribution links to respondent data")
-
 test_that("list_distribution_links() returns a tbl_df with expected column names and types", {
 
   skip_on_cran()

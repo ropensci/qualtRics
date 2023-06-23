@@ -1,5 +1,3 @@
-context("Generate URLs")
-
 test_that("all surveys URL", {
   Sys.setenv("QUALTRICS_BASE_URL" = "www.qualtrics.com")
   expect_equal(

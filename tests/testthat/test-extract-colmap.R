@@ -1,5 +1,3 @@
-context("Column mapping for one survey from response download (v3 approach)")
-
 test_that("extract_colmap() retrieves an appropriate column map generated within read_survey", {
 
   vcr::use_cassette("extract_colmap", {

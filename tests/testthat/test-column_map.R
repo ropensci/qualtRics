@@ -1,5 +1,3 @@
-context("Column mapping for one survey")
-
 test_that("column_map() retrieves survey column mapping", {
 
   vcr::use_cassette("column_map", {

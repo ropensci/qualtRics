@@ -1,6 +1,3 @@
-context("API credentials")
-
-
 test_that("absence of API key or base URL raises an error", {
   Sys.setenv("QUALTRICS_API_KEY" = "")
   Sys.setenv("QUALTRICS_BASE_URL" = "")

@@ -1,5 +1,3 @@
-context("All surveys that the user has access to on Qualtrics")
-
 test_that("all_surveys() sends the proper request to Qualtrics", {
 
   vcr::use_cassette("all_surveys", {
