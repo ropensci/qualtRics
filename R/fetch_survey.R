@@ -60,7 +60,7 @@
 #'   documentation in `sjlabelled`). Defaults to `TRUE`.
 #' @param strip_html Logical. If `TRUE`, then remove HTML tags from variable
 #'   descriptions. Defaults to `TRUE`.  Ignored if  `add_column_map` and
-#'   `add_var_labels` are both a`FALSE`.
+#'   `add_var_labels` are both `FALSE`.
 #' @param col_types Optional. This argument provides a way to manually overwrite
 #'   column types that may be incorrectly guessed. Takes a [readr::cols()]
 #'   specification. See example below and [readr::cols()] for formatting

@@ -102,7 +102,7 @@ documentation in \code{sjlabelled}). Defaults to \code{TRUE}.}
 
 \item{strip_html}{Logical. If \code{TRUE}, then remove HTML tags from variable
 descriptions. Defaults to \code{TRUE}.  Ignored if  \code{add_column_map} and
-\code{add_var_labels} are both a\code{FALSE}.}
+\code{add_var_labels} are both \code{FALSE}.}
 
 \item{col_types}{Optional. This argument provides a way to manually overwrite
 column types that may be incorrectly guessed. Takes a \code{\link[readr:cols]{readr::cols()}}
