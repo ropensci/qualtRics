@@ -464,7 +464,6 @@ export_responses_progress <-
 #' fetch_survey_progress (extracting from .zip file)
 #'
 #' @param surveyID survey ID
-#' @param requestID request ID from fetch_survey
 #' @param fileID file ID from fetch_survey_progress
 #'
 #' @importFrom utils unzip
@@ -472,6 +471,10 @@ export_responses_progress <-
 export_responses_filedownload <-
   function(surveyID,
            fileID){
+
+    # Clean up zip file (for security)
+    zip_path <- fs::file_temp(ext = "zip")
+    withr::defer(fs::file_delete(zip_path))
 
     # Construct a url for obtaining the file:
     file_url <-
@@ -489,14 +492,6 @@ export_responses_filedownload <-
         as = "raw"
       )
 
-    # To zip file
-    zip_path <-
-      glue::glue(
-        "{temp_dir}/temp.zip",
-        # Remove trailing slash if system includes one:
-        temp_dir = stringr::str_remove(tempdir(), "/$")
-      )
-
     # Write to temporary file
     writeBin(raw_zip, zip_path)
 
@@ -511,9 +506,6 @@ export_responses_filedownload <-
       csv_filename_df[["Name"]][1]
 
     if(is.null(csv_filename)){
-      # Clean up zip file (for security)
-      file.remove(zip_path)
-      # Give error message
       rlang::abort(
         c("Error in downloaded zip file.",
           "The download may have been corrupted; try re-running your request.")
@@ -541,9 +533,6 @@ export_responses_filedownload <-
 
     # Close connection:
     close(zipcon)
-
-    # Remove zipfile (for security)
-    file.remove(zip_path)
 
     # Return raw data:
     return(rawdata)

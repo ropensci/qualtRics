@@ -11,8 +11,6 @@ export_responses_filedownload(surveyID, fileID)
 \item{surveyID}{survey ID}
 
 \item{fileID}{file ID from fetch_survey_progress}
-
-\item{requestID}{request ID from fetch_survey}
 }
 \description{
 Downloads response data from location obtained from
