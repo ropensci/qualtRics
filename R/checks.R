@@ -552,23 +552,6 @@ check_existing_download <-
     return(file_exists)
   }
 
-#' Check if save directory exists
-#' @importFrom rlang abort
-#' @keywords internal
-checkarg_save_dir <-
-  function(save_dir) {
-    if(is.null(save_dir)){return()}
-
-    if(!dir.exists(save_dir)){
-      rlang::abort(
-        c("Error in `save_dir`:",
-          "The directory given does not exist:",
-          save_dir)
-      )
-
-    }
-  }
-
 
 #' Check if survey file specified in file_name exists
 #' @importFrom rlang abort

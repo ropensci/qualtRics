@@ -1,6 +1,8 @@
-# qualtRics (development version)
+# qualtRics (development version, to be released as 3.2.0)
 
 - Changed how multiple choice questions are mapped to an R factor with the `convert` argument to `fetch_survey()`, to now excluding `NA` as a factor level (#315)
+
+- Deprecated the `save_dir` and `force_request` arguments for `fetch_survey()`, so that survey response downloads are no longer cached; calls to `fetch_survey()` now always query the Qualtrics API (#317)
 
 # qualtRics 3.1.7
 

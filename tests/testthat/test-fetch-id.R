@@ -1,5 +1,3 @@
-context("Retreive surveyID from a unique survey_name")
-
 # create toy all_surveys() tibble for testing
 surveys <-
   tidyr::tribble(

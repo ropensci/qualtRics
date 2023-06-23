@@ -1,5 +1,3 @@
-context("Get metadata for a survey")
-
 test_that("metadata() should throw an error if passing invalid options to input", {
 
   expect_warning(
@@ -9,8 +7,6 @@ test_that("metadata() should throw an error if passing invalid options to input"
   )
 
 })
-
-
 
 test_that("metadata() should throw error if input questions are not a character vector", {
 

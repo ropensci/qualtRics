@@ -22,11 +22,12 @@ fetch_survey(
   convert = TRUE,
   add_column_map = TRUE,
   add_var_labels = TRUE,
+  strip_html = TRUE,
   col_types = NULL,
-  force_request = FALSE,
   verbose = TRUE,
-  save_dir = NULL,
-  last_response = deprecated()
+  last_response = deprecated(),
+  force_request = deprecated(),
+  save_dir = deprecated()
 )
 }
 \arguments{
@@ -99,26 +100,23 @@ variable (equivalent to the one in the column map) will be added as a
 well as cross-compatibility with other stats packages (e.g., Stata, see
 documentation in \code{sjlabelled}). Defaults to \code{TRUE}.}
 
+\item{strip_html}{Logical. If \code{TRUE}, then remove HTML tags from variable
+descriptions. Defaults to \code{TRUE}.  Ignored if  \code{add_column_map} and
+\code{add_var_labels} are both \code{FALSE}.}
+
 \item{col_types}{Optional. This argument provides a way to manually overwrite
 column types that may be incorrectly guessed. Takes a \code{\link[readr:cols]{readr::cols()}}
 specification. See example below and \code{\link[readr:cols]{readr::cols()}} for formatting
 details. Defaults to \code{NULL}. Overwritten by \code{convert = TRUE}.}
 
-\item{force_request}{Logical. fetch_survey() saves each survey in a temporary
-directory so that it can quickly be retrieved later. If force_request is
-\code{TRUE}, fetch_survey() always downloads the survey from the API instead of
-loading it from the temporary directory. Defaults to \code{FALSE}.}
-
 \item{verbose}{Logical. If \code{TRUE}, verbose messages will be printed to the R
 console. Defaults to \code{TRUE}.}
 
-\item{save_dir}{String. Directory where survey results will be stored.
-Defaults to a temporary directory which is cleaned when your R session is
-terminated. This argument is useful if you'd like to store survey results.
-The downloaded survey will be stored as an RDS file (see
-\code{\link[base:readRDS]{base::readRDS()}}).}
-
 \item{last_response}{Deprecated.}
+
+\item{force_request}{Deprecated.}
+
+\item{save_dir}{Deprecated.}
 }
 \description{
 Download a Qualtrics survey you own via API and import the survey directly

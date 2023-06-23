@@ -1,5 +1,3 @@
-context("Arguments should be properly checked")
-
 test_that("logical params should throw error if not TRUE/FALSE", {
   log_NA <- NA
   log_NULL <- NULL
@@ -9,14 +7,6 @@ test_that("logical params should throw error if not TRUE/FALSE", {
   expect_error(checkarg_isboolean(log_NULL), "must be a single `TRUE` or `FALSE`")
   expect_error(checkarg_isboolean(log_notlog), "must be a single `TRUE` or `FALSE`")
 
-})
-
-test_that("save_dir should produce error if location does not exist", {
-  save_dir <- "/i/do/not/exist123"
-  file_name <- "/i/do/not/exist123/file.zip"
-
-  expect_error(checkarg_save_dir(save_dir), "not exist")
-  expect_error(checkarg_file_name(file_name), "not exist")
 })
 
 test_that("integer-likes should error only if present and not integer-like", {

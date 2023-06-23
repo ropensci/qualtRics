@@ -1,5 +1,3 @@
-context("Fetch data for a survey distribution")
-
 test_that("fetch_distribution_history() returns a tbl_df with expected column names and types", {
 
   skip_on_cran()

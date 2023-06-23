@@ -1,5 +1,3 @@
-context("fetch_descriptionI(), updating metadata() to v3, with legacy access")
-
 test_that("fetch_description() retrieves an appropriate survey description", {
 
   vcr::use_cassette("fetch_description", {

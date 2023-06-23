@@ -1,5 +1,3 @@
-context("Fetch distribution data for a survey")
-
 test_that("fetch_distributions returns a tbl_df with expected column names and types", {
 
   vcr::use_cassette("fetch_distributions", {
