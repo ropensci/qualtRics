@@ -235,7 +235,8 @@ checkarg_time_zone <-
 checkarg_datetime <-
   function(date_arg,
            time_zone = NULL,
-           endofday = FALSE){
+           endofday = FALSE
+  ){
 
     if(is.null(date_arg)){return()}
 
@@ -253,7 +254,7 @@ checkarg_datetime <-
       rlang::abort(
         c(
           glue::glue("Error in {deparse(substitute(date_arg))}:"),
-          "Argument must be a Date, POSIXlt, or POSIXct object, or length-1 string representation."
+          "Argument must be a length-1 Date, POSIXlt, or POSIXct object, or string representation thereof."
         )
       )
     }
@@ -261,17 +262,17 @@ checkarg_datetime <-
     if(is.character(date_arg)){
       date_format <-
         glue::glue(
-          "[0-9]{{4}}",
-          "(0[1-9]|1[0-2])",
-          "([0-2][0-9]|3[0-1])",
-          .sep = "[-/]"
+          "[0-9]{{4}}", # Years
+          "(0[1-9]|1[0-2])", # Months
+          "([0-2][0-9]|3[0-1])", # Days
+          .sep = "[-/]" # Either / or - separating them
         )
       time_format <-
         glue::glue(
-          "(0[0-9]|1[0-9]|2[0-3])",
-          "[0-5][0-9]",
-          "[0-5][0-9]",
-          .sep = ":"
+          "(0[0-9]|1[0-9]|2[0-3])", # Hours
+          "[0-5][0-9]", # Minutes
+          "[0-5][0-9]", # Seconds
+          .sep = ":" # Separated by :
         )
       # Any string format with dates or dates & times:
       datetime_format <-
@@ -285,11 +286,12 @@ checkarg_datetime <-
       if(!test_datetime_format){
         rlang::abort(
           c(
-            glue::glue("Error in {deparse(substitute(arg))}:"),
+            glue::glue("Error in {deparse(substitute(date_arg))}:"),
             "String input must follow one of the following formats:",
             "'YYYY/MM/DD' or 'YYYY-MM-DD'",
             "'YYYY/MM/DD HH:MM:SS' or 'YYYY-MM-DD HH:MM:SS'",
-            "Times use 24-hour notation"
+            "Times use 24-hour notation",
+            "If string ends w/time zone (e.g. EST), remove and use argument `time_zone`"
           )
         )
       }
@@ -297,10 +299,13 @@ checkarg_datetime <-
 
     # Check if we need to add end-of-day adjustment, and do so:
     if(endofday){
-      # If it's a date, or character w/just a date, append 23:59:59:
+      # Check if date or a string w/just a date:
       test_dateonly <-
-        lubridate::is.Date(date_arg) ||
-        stringr::str_detect(date_arg, dateonly_format)
+        lubridate::is.Date(date_arg) || (
+          is.character(date_arg) &&
+          stringr::str_detect(date_arg, dateonly_format)
+        )
+      # If so, append 23:59:59:
       if(test_dateonly){
         date_arg <-
           paste0(date_arg, " 23:59:59")
@@ -326,22 +331,14 @@ checkarg_datetime <-
       )
     }
 
-    # Format in appropriate form for API call:
-    date_formatted_pre <-
+    # Format in ISO 8601 (displayed in UTC using Z notation) for API call:
+    date_formatted <-
       lubridate::format_ISO8601(
-        x = date_parsed, usetz = TRUE,
+        x = date_parsed, usetz = "Z",
         precision = "ymdhms"
       )
 
-    # lubridate and Qualtrics use slightly different implementations
-    # of ISO 8601, so add colon in the time zone component:
-    date_formatted <-
-      stringr::str_replace(
-        date_formatted_pre,
-        "(..$)",
-        ":\\1"
-      )
-
+    # Return formatted date:
     return(date_formatted)
   }
 
@@ -773,6 +770,8 @@ checkarg_activation_date <-
 
     # Return NULL if NULL:
     if(is.null(activation_date)){return(NULL)}
+    # Return NA if length-1 NA:
+    if(length(activation_date) == 1 && is.na(activation_date)){return(NA)}
     # Return NULL w/message if active == TRUE & activation_date given
     # (you're starting the survey now, so a future start time makes no sense)
     if(isTRUE(active)){
@@ -786,7 +785,10 @@ checkarg_activation_date <-
     }
 
     activation_date_formatted <-
-      checkarg_datetime(activation_date, time_zone)
+      checkarg_datetime(
+        activation_date,
+        time_zone = time_zone
+      )
 
     return(activation_date_formatted)
 
@@ -805,6 +807,8 @@ checkarg_expiration_date <-
 
     # Return NULL if NULL:
     if(is.null(expiration_date)){return(NULL)}
+    # Return NA if length-1 NA:
+    if(length(expiration_date) == 1 && is.na(expiration_date)){return(NA)}
     # Return NULL w/message if active == TRUE & expiration_date given
     # (you're end the survey now, so a future end time makes no sense)
     if(isFALSE(active)){
@@ -818,7 +822,11 @@ checkarg_expiration_date <-
     }
 
     expiration_date_formatted <-
-      checkarg_datetime(expiration_date, time_zone, endofday = TRUE)
+      checkarg_datetime(
+        expiration_date,
+        time_zone = time_zone,
+        endofday = TRUE
+      )
 
     return(expiration_date_formatted)
 

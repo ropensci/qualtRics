@@ -13,7 +13,7 @@
 #'   date/time for survey becoming active. Ignored with warning if `active` is
 #'   set to `TRUE`. See Details.
 #' @param expiration_date POSIXlt, POSIXct, Date, or string equivalent.  Sets
-#'   date/time for survey becoming inactive  Ignored with warning if `active` is
+#'   date/time for survey becoming inactive. Ignored with warning if `active` is
 #'   set to `FALSE`. See Details.
 #' @param time_zone String. Desired time zone to use when `start_date` or
 #'   `expiration_date` are given as Date or string objects.  Ignored if
@@ -69,6 +69,21 @@ update_survey_metadata <-
       checkarg_expiration_date(expiration_date, active,
                                   time_zone, surveyID)
 
+    # Convert ISO 8601 datetimes to MySQL datetimes by removing T&Z:
+    #
+    #  NOTE: process below changes NULL's to length-0 character() vectors,
+    #  but create_raw_payload() below handles that fine.
+    activation_date_formatted <-
+      stringr::str_replace_all(
+        string = activation_date_formatted,
+        pattern = c("T" = " ", "Z" = "")
+      )
+
+    expiration_date_formatted <-
+      stringr::str_replace_all(
+        string = expiration_date_formatted,
+        pattern = c("T" = " ", "Z" = "")
+      )
 
     # BUILD REQUEST -----
 
@@ -83,7 +98,7 @@ update_survey_metadata <-
         SurveyStatus = active_formatted,
         SurveyStartDate = activation_date_formatted,
         SurveyExpirationDate = expiration_date_formatted,
-        .NAtoNULL = c("SurveyDescription")
+        .NAtoNULL = c("SurveyDescription", "SurveyExpirationDate")
       )
 
     # Check that at least one option has been specified, and
@@ -112,11 +127,30 @@ update_survey_metadata <-
       body = update_metadata_body
     )
 
+    # CHECK FOR SUCCESS ------------------------------------------------------
     if(confirm){
       # Check that options are now matching
       names_call_args <-
         names(call_args)
 
+      # NOTES:
+      #  Have to convert any activation/expiration args back to ISO 8601 here.
+      #  ONLY the PUT request uses MySQL format. The GET request for the same
+      #  thing here that we're now checking against
+      #  returns dates in ISO 8601 (like everywhere else in Qualtrics's API).
+
+      call_args <-
+        purrr::map_if(
+          call_args,
+          names(call_args) %in% c("SurveyStartDate", "SurveyExpirationDate"),
+          ~lubridate::format_ISO8601(
+            lubridate::ymd_hms(.x),
+            usetz = "Z"
+          )
+        )
+
+
+      # Query the GET survey metadata endpoint for a comparison:
       update_check <-
         .get_survey_metadata(surveyID)[names_call_args]
 
@@ -204,6 +238,7 @@ fetch_survey_metadata <-
 #' @param surveyID String. Unique ID for the survey whose metadata you wish to
 #'   update.
 #'
+#' @keyword internal
 #' @return named vector of survey metadata
 #'
 .get_survey_metadata <-

@@ -182,13 +182,14 @@ generate_url <-
 create_raw_payload <-
   function(..., .DontUnbox = NULL, .NAtoNULL = NULL) {
 
-    # Make list of params, dropping NULL's:
+    # Make list of params, dropping NULL's (and any length-0 vectors):
     params <-
       purrr::compact(
         list(...)
       )
 
-    # For all the items marked as .NAtoNULL, convert length-1 NA's to NULL:
+    # For all the items marked as .NAtoNULL,
+    # convert length-1 NA's to explicit NULL's:
     params <-
       purrr::map_if(
         params,
