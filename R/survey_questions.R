@@ -35,24 +35,50 @@ survey_questions <- function(surveyID) {
   assert_base_url()
   assert_api_key()
 
-  # Generate URL for metadata endpoint:
   surveys_url <- generate_url(query = "metadata",
                               surveyID = surveyID)
 
   # SEND REQUEST TO API ----
 
   # GET request to download metadata
-  resp <- qualtrics_api_request("GET", surveys_url)
+  resp <- qualtRics:::qualtrics_api_request("GET", surveys_url)
 
   # Get question information
-  qi <- resp$result$questions
+  survey_metadata <- resp$result
 
-  # Questions, question labels, question names, and force response info
-  quest <- tibble::tibble(
+  # Get questions
+  qi <- survey_metadata$questions
+
+  # Get blocks
+  blocks <- survey_metadata$blocks
+
+  blocks_tib <- tibble(blocks) %>%
+    unnest_wider(blocks) %>%
+    unnest_longer(elements) %>%
+    unnest(elements) %>%
+    filter(names(elements) == "questionId") %>%
+    unnest(elements) %>%
+    rename("qid" = elements,"block_name" = description)
+
+
+  # Extract and join choiceText values with line breaks
+
+  response_options <- map(qi, 6) %>%
+    map(., ~ .x %>% map_chr("choiceText") %>%
+          paste0(.x$choiceText, collapse = "\n")) %>%
+    unlist()
+
+
+  # Create a data frame with question information
+  quest <- tibble(
     qid = names(qi),
     qname = purrr::map_chr(qi, "questionName"),
     question = purrr::map_chr(qi, "questionText"),
-    force_resp = purrr::map_lgl(qi, ~ .$validation$doesForceResponse))
+    force_resp = purrr::map_lgl(qi, ~ .$validation$doesForceResponse),
+    response_options = response_options  # Add response options as a string
+  )
+
+  quest <- left_join(quest, blocks_tib, by = "qid")
 
   return(quest)
 }
