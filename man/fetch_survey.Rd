@@ -25,6 +25,7 @@ fetch_survey(
   strip_html = TRUE,
   col_types = NULL,
   verbose = TRUE,
+  tmp_dir = tempdir(),
   last_response = deprecated(),
   force_request = deprecated(),
   save_dir = deprecated()
@@ -112,6 +113,12 @@ details. Defaults to \code{NULL}. Overwritten by \code{convert = TRUE}.}
 \item{verbose}{Logical. If \code{TRUE}, verbose messages will be printed to the R
 console. Defaults to \code{TRUE}.}
 
+\item{tmp_dir}{Path to filesystem directory. Qualtrics returns response data
+in compressed (zip) form. To extract raw data, the zip file must be briefly
+written to disk (the file is then promptly deleted). By default, the
+system's temporary directory is used for this (see \code{tempdir()}), but
+users needing more control can specify an alternate location here.}
+
 \item{last_response}{Deprecated.}
 
 \item{force_request}{Deprecated.}
@@ -136,15 +143,14 @@ returned.  This permits easier automation; a previously-used \code{end_date} can
 become the \code{start_date} of a subsequent request without downloading duplicate
 records.
 
-As a convenience for users working interactively, the qualtRics package
-also accepts Date(-like) input to each argument, which when used implies a
-time of 00:00:00 on the given date (and time zone). When a Date(-like) is
-passed to \code{end_date}, however, the date will be incremented by one before
-making the API request. This adjustment is intended to provide interactive
-users with more intuitive results; for example, specifying "2022/06/02" for
-both \code{start_date} and \code{end_date} will return all responses for that day,
-(instead of the zero responses that would return if \code{end_date} was not
-adjusted).
+As a convenience for users working interactively, the qualtRics package also
+accepts Date(-like) input to each argument, which when used implies a time of
+00:00:00 on the given date (and time zone). When a Date(-like) is passed to
+\code{end_date}, however, the date will be incremented by one before making the
+API request. This adjustment is intended to provide interactive users with
+more intuitive results; for example, specifying "2022/06/02" for both
+\code{start_date} and \code{end_date} will return all responses for that day, (instead
+of the zero responses that would return if \code{end_date} was not adjusted).
 }
 
 \section{Inclusion/exclusion arguments}{
@@ -223,7 +229,6 @@ my_survey <- fetch_survey(surveyID = surveys$id[6])
 
 my_survey <- fetch_survey(
   surveyID = surveys$id[6],
-  save_dir = tempdir(),
   start_date = "2018-01-01",
   end_date = "2018-01-31",
   limit = 100,

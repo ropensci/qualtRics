@@ -5,12 +5,16 @@
 \title{Runs 3-part request to export-responses endpoint,
 downloading and unzipping file}
 \usage{
-export_responses_request(surveyID, body, verbose = TRUE)
+export_responses_request(surveyID, body, verbose = TRUE, tmp_dir)
 }
 \arguments{
 \item{surveyID}{ID of the survey to be downloaded}
 
 \item{body}{payload/body of API request containing desired params}
+
+\item{verbose}{give verbose response}
+
+\item{tmp_dir}{temporary directory for zip file}
 }
 \description{
 Runs 3-part request to export-responses endpoint,

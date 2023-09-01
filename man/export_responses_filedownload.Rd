@@ -5,12 +5,14 @@
 \title{Downloads response data from location obtained from
 fetch_survey_progress (extracting from .zip file)}
 \usage{
-export_responses_filedownload(surveyID, fileID)
+export_responses_filedownload(surveyID, fileID, tmp_dir)
 }
 \arguments{
 \item{surveyID}{survey ID}
 
 \item{fileID}{file ID from fetch_survey_progress}
+
+\item{tmp_dir}{temporary directory to use}
 }
 \description{
 Downloads response data from location obtained from

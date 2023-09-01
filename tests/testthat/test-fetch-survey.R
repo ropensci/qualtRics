@@ -149,6 +149,16 @@ test_that("correct error for deprecated args", {
   )
 })
 
+test_that("error if bad temporary directory", {
+  skip_on_cran()
+
+  expect_error(
+    fetch_survey("1234", tmp_dir = "/unrealistictempdirectory/"),
+    "not an existing directory"
+  )
+})
+
+
 # Restore the credentials for other tests:
 qualtrics_api_credentials(api_key = holder_API, base_url = holder_URL)
 

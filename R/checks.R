@@ -493,7 +493,7 @@ checkarg_limit <-
   }
 
 
-# ## convert,  label,  and breakouts --------------------
+## convert,  label,  and breakouts --------------------
 
 #' Check conditions around combinations of convert, label, and breakout_sets
 #' @importFrom rlang abort
@@ -568,6 +568,20 @@ checkarg_file_name <-
     }
   }
 
+#' Check if the temporary directory exists:
+#' @importFrom rlang abort
+#' @keywords internal
+checkarg_tempdir <-
+  function(tmp_dir){
+    if(!dir.exists(tmp_dir)){
+      rlang::abort(
+        c("Error in `tempdir`:",
+          glue::glue("{tmp_dir} is not an existing directory")
+        )
+      )
+
+    }
+  }
 
 
 # fetch_description() & metadata()----------------------------------------------
