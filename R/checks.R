@@ -575,7 +575,7 @@ checkarg_tempdir <-
   function(tmp_dir){
     if(!dir.exists(tmp_dir)){
       rlang::abort(
-        c("Error in `tempdir`:",
+        c("Error in `tmp_dir`:",
           glue::glue("{tmp_dir} is not an existing directory")
         )
       )

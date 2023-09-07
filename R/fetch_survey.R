@@ -70,7 +70,7 @@
 #' @param tmp_dir Path to filesystem directory. Qualtrics returns response data
 #'   in compressed (zip) form. To extract raw data, the zip file must be briefly
 #'   written to disk (the file is then promptly deleted). By default, the
-#'   system's temporary directory is used for this (see \code{tempdir()}), but
+#'   system's temporary directory is used for this (see [tempdir()]), but
 #'   users needing more control can specify an alternate location here.
 #' @param last_response Deprecated.
 #' @param force_request Deprecated.
