@@ -67,6 +67,11 @@
 #'   details. Defaults to `NULL`. Overwritten by `convert = TRUE`.
 #' @param verbose Logical. If `TRUE`, verbose messages will be printed to the R
 #'   console. Defaults to `TRUE`.
+#' @param tmp_dir Path to filesystem directory. Qualtrics returns response data
+#'   in compressed (zip) form. To extract raw data, the zip file must be briefly
+#'   written to disk (the file is then promptly deleted). By default, the
+#'   system's temporary directory is used for this (see [tempdir()]), but
+#'   users needing more control can specify an alternate location here.
 #' @param last_response Deprecated.
 #' @param force_request Deprecated.
 #' @param save_dir Deprecated.
@@ -85,15 +90,14 @@
 #' become the `start_date` of a subsequent request without downloading duplicate
 #' records.
 #'
-#' As a convenience for users working interactively, the qualtRics package
-#' also accepts Date(-like) input to each argument, which when used implies a
-#' time of 00:00:00 on the given date (and time zone). When a Date(-like) is
-#' passed to `end_date`, however, the date will be incremented by one before
-#' making the API request. This adjustment is intended to provide interactive
-#' users with more intuitive results; for example, specifying "2022/06/02" for
-#' both `start_date` and `end_date` will return all responses for that day,
-#' (instead of the zero responses that would return if `end_date` was not
-#' adjusted).
+#' As a convenience for users working interactively, the qualtRics package also
+#' accepts Date(-like) input to each argument, which when used implies a time of
+#' 00:00:00 on the given date (and time zone). When a Date(-like) is passed to
+#' `end_date`, however, the date will be incremented by one before making the
+#' API request. This adjustment is intended to provide interactive users with
+#' more intuitive results; for example, specifying "2022/06/02" for both
+#' `start_date` and `end_date` will return all responses for that day, (instead
+#' of the zero responses that would return if `end_date` was not adjusted).
 #'
 #' # Inclusion/exclusion arguments
 #'
@@ -174,7 +178,6 @@
 #'
 #' my_survey <- fetch_survey(
 #'   surveyID = surveys$id[6],
-#'   save_dir = tempdir(),
 #'   start_date = "2018-01-01",
 #'   end_date = "2018-01-31",
 #'   limit = 100,
@@ -208,6 +211,7 @@ fetch_survey <-
            strip_html = TRUE,
            col_types = NULL,
            verbose = TRUE,
+           tmp_dir = tempdir(),
            last_response = deprecated(),
            force_request = deprecated(),
            save_dir = deprecated()
@@ -248,6 +252,7 @@ fetch_survey <-
     checkarg_col_types(col_types)
     checkarg_limit(limit)
     checkarg_convert_label_breakouts(convert, label, breakout_sets)
+    checkarg_tempdir(tmp_dir)
 
     # Check general argument types:
     checkarg_isintegerish(unanswer_recode)
@@ -286,7 +291,8 @@ fetch_survey <-
       export_responses_request(
         surveyID = surveyID,
         body = raw_payload,
-        verbose = verbose
+        verbose = verbose,
+        tmp_dir = tmp_dir
       )
 
     # Read downloaded .csv & clean -------------------------------------------
@@ -323,13 +329,16 @@ fetch_survey <-
 #'
 #' @param surveyID ID of the survey to be downloaded
 #' @param body payload/body of API request containing desired params
+#' @param verbose give verbose response
+#' @param tmp_dir temporary directory for zip file
 #'
 #' @keywords internal
 export_responses_request <-
   function(
     surveyID,
     body,
-    verbose = TRUE
+    verbose = TRUE,
+    tmp_dir
   ){
 
 
@@ -355,7 +364,8 @@ export_responses_request <-
     survey_rawdata <-
       export_responses_filedownload(
         surveyID = surveyID,
-        fileID = fileID
+        fileID = fileID,
+        tmp_dir = tmp_dir
       )
 
     return(survey_rawdata)
@@ -465,15 +475,17 @@ export_responses_progress <-
 #'
 #' @param surveyID survey ID
 #' @param fileID file ID from fetch_survey_progress
+#' @param tmp_dir temporary directory to use
 #'
 #' @importFrom utils unzip
 #' @keywords internal
 export_responses_filedownload <-
   function(surveyID,
-           fileID){
+           fileID,
+           tmp_dir){
 
     # Clean up zip file (for security)
-    zip_path <- fs::file_temp(ext = "zip")
+    zip_path <- fs::file_temp(ext = "zip", tmp_dir = tmp_dir)
     withr::defer(fs::file_delete(zip_path))
 
     # Construct a url for obtaining the file:
