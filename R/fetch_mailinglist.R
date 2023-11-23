@@ -59,7 +59,7 @@ fetch_mailinglist <- function(mailinglistID){
   elements <-
     purrr::map(
       elements,
-      purrr::list_modify,
+      purrr::list_assign,
       responseHistory = purrr::zap(),
       emailHistory = purrr::zap()
     )
