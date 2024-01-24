@@ -1,7 +1,7 @@
 Type: Package
 Package: qualtRics
 Title: Download 'Qualtrics' Survey Data
-Version: 3.1.7.9000
+Version: 3.2.0
 Authors@R: c(
     person("Jasper", "Ginn", , "jasperginn@gmail.com", role = "aut"),
     person("Jackson", "Curtis", , "jcurtis210@gmail.com", role = "ctb"),
@@ -53,5 +53,5 @@ VignetteBuilder:
 Encoding: UTF-8
 LazyData: FALSE
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Config/testthat/edition: 3
