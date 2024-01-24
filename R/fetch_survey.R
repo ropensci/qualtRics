@@ -220,7 +220,7 @@ fetch_survey <-
     # Check/format arguments --------------------------------------------------
 
     if (lifecycle::is_present(last_response)) {
-      lifecycle::deprecate_warn("3.1.2", "fetch_survey(last_response = )")
+      lifecycle::deprecate_stop("3.1.2", "fetch_survey(last_response = )")
     }
     if (lifecycle::is_present(force_request)) {
       lifecycle::deprecate_warn("3.2.0", "fetch_survey(force_request = )")

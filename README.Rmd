@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 [Joseph O'Brien](joseph.m.obrien@gmail.com),
 [Jasper Ginn](https://jasperhg90.github.io/)<br/>
 **License:** 
-[MIT](https://opensource.org/licenses/MIT)
+[MIT](https://opensource.org/license/mit/)
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/ropensci/qualtRics/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/qualtRics/actions)
