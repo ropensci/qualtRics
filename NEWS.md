@@ -1,3 +1,5 @@
+# qualtRics (development version)
+
 # qualtRics 3.2.0
 
 - Changed how multiple choice questions are mapped to an R factor with the `convert` argument to `fetch_survey()`, to now excluding `NA` as a factor level (#315)
