@@ -9,7 +9,7 @@ qualtrics_api_request(
   url = url,
   query = NULL,
   body = NULL,
-  as = c("parsed", "raw"),
+  as = c("parsed", "raw", "text"),
   ...
 )
 }
