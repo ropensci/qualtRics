@@ -10,6 +10,7 @@ fetch_survey(
   start_date = NULL,
   end_date = NULL,
   time_zone = NULL,
+  filter_id = NULL,
   include_display_order = TRUE,
   include_metadata = NULL,
   include_questions = NULL,
@@ -53,6 +54,10 @@ timezone (from \code{\link[base:timezones]{base::Sys.timezone()}}).  Also applie
 \code{start_date} and/or \code{expiration_date} when given Date or string objects
 (see above); ignored when these arguments are given POSIXlt/POSIXct
 objects.}
+
+\item{filter_id}{String. Unique ID for the response filter created in the
+Data & Analysis section of the Qualtrics UI. See \href{https://www.qualtrics.com/support/survey-platform/data-and-analysis-module/data/filtering-responses/}{Filtering Responses} for
+more information.}
 
 \item{include_display_order}{Logical.  If \code{TRUE}, download from surveys using
 block/question/answer display randomization will include contain additional
