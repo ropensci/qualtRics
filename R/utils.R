@@ -358,10 +358,18 @@ wrapper_mc <- function(data, question_meta) {
   meta <- tibble::enframe(question_meta$choices)
 
   # Level names
-  ln <- dplyr::pull(dplyr::mutate(meta,
-                                  meta_levels = purrr::map_chr(value,
-                                                               "choiceText")),
-                    meta_levels)
+ln <-
+  dplyr::pull(
+    dplyr::mutate(meta,
+      meta_levels = ifelse(
+        purrr::map(value, function(x) is.null(x$variableName)),
+        purrr::map_chr(value, "choiceText"),
+        purrr::map_chr(value, "variableName")
+      )
+    ),
+    meta_levels
+  )
+
   ln <- remove_html(ln)
 
   # Convert
