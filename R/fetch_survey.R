@@ -525,13 +525,23 @@ export_responses_filedownload <-
     }
 
 
+    if(grepl(":", csv_filename)){
+       warning("Survey title cannot be a file name '",csv_filename, "'")
+       #if(grepl("'|\\\\",zip_path) ) stop("unsafe zip_path ", zip_path)
+       tmp_csv_path <- fs::file_temp(ext = "csv", tmp_dir = tmp_dir)
+       withr::defer(fs::file_delete(tmp_csv_path))
+       unsafe_unzip_cmd <- paste0("unzip -p '",zip_path,"' > '",tmp_csv_path,"'")
+       system(unsafe_unzip_cmd)
+       zipcon <- tmp_csv_path
+    } else {
     # Make connection to zip file:
-    zipcon <-
-      unz(
-        description = zip_path,
-        filename = csv_filename,
-        open = "rb"
-      )
+       zipcon <-
+         unz(
+           description = zip_path,
+           filename = csv_filename,
+           open = "rb"
+         )
+    }
 
     # Read in raw data:
     rawdata <-
@@ -544,7 +554,7 @@ export_responses_filedownload <-
       )
 
     # Close connection:
-    close(zipcon)
+    if(!is.character(zipcon)) close(zipcon) # todo: defer after unz()
 
     # Return raw data:
     return(rawdata)
