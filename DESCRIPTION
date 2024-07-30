@@ -25,6 +25,7 @@ URL: https://docs.ropensci.org/qualtRics/,
     https://github.com/ropensci/qualtRics
 BugReports: https://github.com/ropensci/qualtRics/issues
 Imports:
+    archive,
     cli,
     dplyr (>= 1.0),
     fs,

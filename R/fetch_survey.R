@@ -480,9 +480,7 @@ export_responses_progress <-
 #' @importFrom utils unzip
 #' @keywords internal
 export_responses_filedownload <-
-  function(surveyID,
-           fileID,
-           tmp_dir){
+  function(surveyID, fileID, tmp_dir){
 
     # Clean up zip file (for security)
     zip_path <- fs::file_temp(ext = "zip", tmp_dir = tmp_dir)
@@ -524,27 +522,18 @@ export_responses_filedownload <-
       )
     }
 
-
-    # Make connection to zip file:
-    zipcon <-
-      unz(
-        description = zip_path,
-        filename = csv_filename,
-        open = "rb"
-      )
+    # Extract CSV from zip file:
+    archive::archive_extract(zip_path, tmp_dir, csv_filename)
 
     # Read in raw data:
     rawdata <-
       suppressMessages(
         readr::read_csv(
-          file = zipcon,
+          file = fs::path(tmp_dir, csv_filename),
           col_types = readr::cols(.default = readr::col_character()),
           na = c("")
         )
       )
-
-    # Close connection:
-    close(zipcon)
 
     # Return raw data:
     return(rawdata)
