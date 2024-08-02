@@ -32,25 +32,19 @@ list_distribution_links <- function(distributionID, surveyID){
                             distributionID = distributionID,
                             surveyID = surveyID)
 
-  elements <- list()
-
-  while(!is.null(fetch_url)){
-    res <- qualtrics_api_request("GET", url = fetch_url)
-    elements <- append(elements, res$result$elements)
-    fetch_url <- res$result$nextPage
-  }
+  elements <- paginate_api_request(fetch_url)
 
   x <- tibble::tibble(contactId = purrr::map_chr(elements, "contactId", .default = NA_character_),
                       transactionId = purrr::map_chr(elements, "transactionId", .default = NA_character_),
                       link = purrr::map_chr(elements, "link", .default = NA_character_),
-                      exceededContactFrequency = purrr::map_chr(elements, "exceededContactFrequency", .default = NA_character_),
+                      exceededContactFrequency = purrr::map_lgl(elements, "exceededContactFrequency", .default = NA),
                       linkExpiration = lubridate::ymd_hms(purrr::map_chr(elements, "linkExpiration", .default = NA_character_)),
                       status = purrr::map_chr(elements, "status", .default = NA_character_),
                       lastName = purrr::map_chr(elements, "lastName", .default = NA_character_),
                       firstName = purrr::map_chr(elements, "firstName", .default = NA_character_),
                       externalDataReference = purrr::map_chr(elements, "externalDataReference", .default = NA_character_),
                       email = purrr::map_chr(elements, "email", .default = NA_character_),
-                      unsubscribed = purrr::map_chr(elements, "unsubscribed", .default = NA_character_))
+                      unsubscribed = purrr::map_lgl(elements, "unsubscribed", .default = NA))
 
   return(x)
 
