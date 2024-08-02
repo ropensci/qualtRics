@@ -1,25 +1,23 @@
 test_that("absence of API key or base URL raises an error", {
-  Sys.setenv("QUALTRICS_API_KEY" = "")
-  Sys.setenv("QUALTRICS_BASE_URL" = "")
-  expect_error(
-    check_credentials(),
-    "Qualtrics API key and/or base URL need registering"
-  )
+  withr::with_envvar(
+    new = c("QUALTRICS_API_KEY" = "", "QUALTRICS_BASE_URL" = ""), 
+    expect_snapshot_error(check_credentials())
+  )  
 })
 
 test_that("can store and access credentials", {
   # Store dummy credentials in environment
 
-  expect_error(
+  expect_snapshot(
     qualtrics_api_credentials(api_key = "1234", base_url = "abcd"),
-    "`base_url` must be of the form"
+    error = TRUE
   )
 
   # Removes protocol with message
-  expect_message(
-    qualtrics_api_credentials(api_key = "1234",
-                              base_url = "https://abcd.qualtrics.com"),
-    "Protocol"
+  expect_snapshot(
+    qualtrics_api_credentials(
+      api_key = "1234", base_url = "https://abcd.qualtrics.com"
+    )
   )
   expect_false(
     startsWith(Sys.getenv("QUALTRICS_BASE_URL" ), "https://")

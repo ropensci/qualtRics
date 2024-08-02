@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("survey_questions() makes a request with expected structure, and parses response", {
 
   vcr::use_cassette("survey_questions", {
@@ -14,17 +16,9 @@ test_that("survey_questions() makes a request with expected structure, and parse
 
 })
 
-# Change credentials to
-qualtrics_api_credentials(api_key = "1234", base_url = "t.qualtrics.com")
-
 test_that("survey_questions() throws an error where URL & key are bad", {
-
-  expect_error(
-    qualtRics::survey_questions("1234"),
-    "You may not have the required authorization"
+  withr::with_envvar(
+    new = c("QUALTRICS_API_KEY" = "abcdef", "QUALTRICS_BASE_URL" = "t.qualtrics.com"), 
+    expect_snapshot_error(qualtRics::survey_questions("1234"))
   )
 })
-
-# Restore the credentials for other tests:
-qualtrics_api_credentials(api_key = holder_API, base_url = holder_URL)
-

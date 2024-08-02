@@ -45,15 +45,7 @@ fetch_mailinglist <- function(mailinglistID){
       mailinglistID = mailinglistID
     )
 
-  elements <- list()
-
-  while(!is.null(fetch_url)){
-
-    res <- qualtrics_api_request("GET", url = fetch_url)
-    elements <- append(elements, res$result$elements)
-    fetch_url <- res$result$nextPage
-
-  }
+  elements <- paginate_api_request(fetch_url)
 
   # Drop list-columns responseHistory & emailHistory (diff function for these)
   elements <-

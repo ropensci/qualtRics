@@ -2,6 +2,7 @@
 
 - Fixed bug when a survey question has *both* recoded values and variable naming thanks to @Haunfelder (#343)
 - Changed how CSV files are extracted from the Qualtrics zip archive, to handle special characters in survey titles (#349)
+- Fixed problem with a test using internet resources on CRAN (#350)
 
 # qualtRics 3.2.0
 

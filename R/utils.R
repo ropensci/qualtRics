@@ -135,15 +135,14 @@ generate_url <-
         Sys.getenv("QUALTRICS_BASE_URL")
       )
     # Construct URL root for the v3 api endpoint:
-    root_url <-
-      glue::glue("https://{base_url}/API/v3")
+    root_url <- glue_api_v3(base_url)
 
     # List of templates for how to build URLs
     # (add to this when new functions made):
     endpoint_template <-
       switch(
         query,
-        allsurveys = "{rooturl}/surveys/",
+        allsurveys = "{rooturl}/surveys",
         allmailinglists = "{rooturl}/mailinglists/",
         metadata = "{rooturl}/surveys/{surveyID}/",
         exportresponses = "{rooturl}/surveys/{surveyID}/export-responses/",
@@ -161,6 +160,10 @@ generate_url <-
     glue::glue(endpoint_template, rooturl = root_url, ...)
 
   }
+
+glue_api_v3 <- function(base_url) {
+  glue::glue("https://{base_url}/API/v3")
+}
 
 #' Create properly-formatted JSON payload for API calls.  Removes NULLS
 #'
@@ -279,6 +282,22 @@ qualtrics_api_request <-
     # return content
     return(cnt)
   }
+
+paginate_api_request <- function(fetch_url) {
+  elements <- list()
+
+  while(!is.null(fetch_url)) {
+    res <- qualtrics_api_request("GET", url = fetch_url)
+    elements <- append(elements, res$result$elements)
+    fetch_url <- res$result$nextPage
+    # check for "string" placeholder from mock server:
+    if (!is.null(fetch_url) && fetch_url == "string") {
+      fetch_url <- NULL
+    }
+  }
+  
+  elements
+}
 
 #' Set proper data types on survey data.
 #'

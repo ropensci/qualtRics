@@ -2,7 +2,7 @@ test_that("all surveys URL", {
   Sys.setenv("QUALTRICS_BASE_URL" = "www.qualtrics.com")
   expect_equal(
     generate_url("allsurveys"),
-    "https://www.qualtrics.com/API/v3/surveys/"
+    "https://www.qualtrics.com/API/v3/surveys"
   )
 })
 

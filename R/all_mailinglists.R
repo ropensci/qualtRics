@@ -24,19 +24,8 @@ all_mailinglists <- function(){
 
   # Function-specific API stuff
   fetch_url <- generate_url(query = "allmailinglists")
-
-  elements <- list()
-
-  while(!is.null(fetch_url)){
-
-    res <- qualtrics_api_request("GET", url = fetch_url)
-    elements <- append(elements, res$result$elements)
-    fetch_url <- res$result$nextPage
-
-  }
-
+  elements <- paginate_api_request(fetch_url)
   x <- purrr::map_df(elements, purrr::flatten)
-
   return(x)
 
 }

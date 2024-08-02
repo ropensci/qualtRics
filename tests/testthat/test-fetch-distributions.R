@@ -1,9 +1,9 @@
+skip_on_cran()
+
 test_that("fetch_distributions returns a tbl_df with expected column names and types", {
+  local_mocked_bindings(glue_api_v3 = function(base_url) "https://stoplight.io/mocks/qualtricsv2/publicapidocs/60919")
 
-  vcr::use_cassette("fetch_distributions", {
-    x <- fetch_distributions("SV_0CBoEpG6UVXH4SV")
-  })
-
+  x <- fetch_distributions("SV_abcdef123456789")
   expect_s3_class(x, c("tbl_df","tbl","data.frame"))
   expect_s3_class(x$sendDate,  c("POSIXct", "POSIXt"))
   expect_s3_class(x$createdDate,  c("POSIXct", "POSIXt"))

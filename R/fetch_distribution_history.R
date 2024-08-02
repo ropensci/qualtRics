@@ -29,16 +29,7 @@ fetch_distribution_history <- function(distributionID){
 
   fetch_url <- generate_url(query = "fetchdistributionhistory",
                             distributionID = distributionID)
-
-  elements <- list()
-
-  while(!is.null(fetch_url)){
-
-    res <- qualtrics_api_request("GET", url = fetch_url)
-    elements <- append(elements, res$result$elements)
-    fetch_url <- res$result$nextPage
-
-  }
+  elements <- paginate_api_request(fetch_url)
 
   x <- tibble::tibble(contactId = purrr::map_chr(elements, "contactId", .default = NA_character_),
                       contactLookupId = purrr::map_chr(elements, "contactLookupId", .default = NA_character_),
