@@ -135,15 +135,14 @@ generate_url <-
         Sys.getenv("QUALTRICS_BASE_URL")
       )
     # Construct URL root for the v3 api endpoint:
-    root_url <-
-      glue::glue("https://{base_url}/API/v3")
+    root_url <- glue_api_v3(base_url)
 
     # List of templates for how to build URLs
     # (add to this when new functions made):
     endpoint_template <-
       switch(
         query,
-        allsurveys = "{rooturl}/surveys/",
+        allsurveys = "{rooturl}/surveys",
         allmailinglists = "{rooturl}/mailinglists/",
         metadata = "{rooturl}/surveys/{surveyID}/",
         exportresponses = "{rooturl}/surveys/{surveyID}/export-responses/",
@@ -161,6 +160,10 @@ generate_url <-
     glue::glue(endpoint_template, rooturl = root_url, ...)
 
   }
+
+glue_api_v3 <- function(base_url) {
+  glue::glue("https://{base_url}/API/v3")
+}
 
 #' Create properly-formatted JSON payload for API calls.  Removes NULLS
 #'
