@@ -33,11 +33,14 @@ fetch_distributions <- function(surveyID){
   elements <- list()
 
   while(!is.null(fetch_url)){
-
     res <- qualtrics_api_request("GET", url = fetch_url)
     elements <- append(elements, res$result$elements)
-    fetch_url <- res$result$nextPage
-
+    # check for "string" placeholder from mock server:
+    if (res$result$nextPage == "string") {
+      fetch_url <- NULL
+    } else {
+      fetch_url <- res$result$nextPage
+    }
   }
 
   headers <- purrr::map(elements, "headers", .default = NA_character_)

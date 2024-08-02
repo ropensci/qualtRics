@@ -2,7 +2,6 @@ skip_on_cran()
 
 test_that("all_surveys() sends the proper request to Qualtrics", {
   local_mocked_bindings(glue_api_v3 = function(base_url) "https://stoplight.io/mocks/qualtricsv2/publicapidocs/60937")
-  local_mocked_bindings(check_credentials = function() return())
 
   x <- all_surveys()
   expect_s3_class(x, c("tbl_df","tbl","data.frame"))
