@@ -30,19 +30,7 @@ fetch_distributions <- function(surveyID){
   fetch_url <- generate_url(query = "fetchdistributions",
                             surveyID = surveyID)
 
-  elements <- list()
-
-  while(!is.null(fetch_url)){
-    res <- qualtrics_api_request("GET", url = fetch_url)
-    elements <- append(elements, res$result$elements)
-    # check for "string" placeholder from mock server:
-    if (res$result$nextPage == "string") {
-      fetch_url <- NULL
-    } else {
-      fetch_url <- res$result$nextPage
-    }
-  }
-
+  elements <- paginate_api_request(fetch_url)
   headers <- purrr::map(elements, "headers", .default = NA_character_)
   subjectMessage <- purrr::map(headers, "subjectMessage", .default = NA_character_)
   recipients <- purrr::map(elements, "recipients", .default = NA_character_)
