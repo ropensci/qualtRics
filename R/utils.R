@@ -286,15 +286,14 @@ qualtrics_api_request <-
 paginate_api_request <- function(fetch_url) {
   elements <- list()
 
-  while(!is.null(fetch_url)){
+  while(!is.null(fetch_url)) {
     res <- qualtrics_api_request("GET", url = fetch_url)
     elements <- append(elements, res$result$elements)
+    fetch_url <- res$result$nextPage
     # check for "string" placeholder from mock server:
-    if (res$result$nextPage == "string") {
+    if (!is.null(fetch_url) && fetch_url == "string") {
       fetch_url <- NULL
-    } else {
-      fetch_url <- res$result$nextPage
-    }    
+    }
   }
   
   elements

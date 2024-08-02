@@ -45,7 +45,7 @@ fetch_mailinglist <- function(mailinglistID){
       mailinglistID = mailinglistID
     )
 
-    elements <- paginate_api_request(fetch_url)
+  elements <- paginate_api_request(fetch_url)
 
   # Drop list-columns responseHistory & emailHistory (diff function for these)
   elements <-
