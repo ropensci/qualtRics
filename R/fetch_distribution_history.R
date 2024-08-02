@@ -36,7 +36,12 @@ fetch_distribution_history <- function(distributionID){
 
     res <- qualtrics_api_request("GET", url = fetch_url)
     elements <- append(elements, res$result$elements)
-    fetch_url <- res$result$nextPage
+    # check for "string" placeholder from mock server:
+    if (res$result$nextPage == "string") {
+      fetch_url <- NULL
+    } else {
+      fetch_url <- res$result$nextPage
+    }
 
   }
 
