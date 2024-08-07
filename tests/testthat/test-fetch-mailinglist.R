@@ -4,7 +4,7 @@ test_that("fetch_mailinglist returns a tbl_df with expected column names and typ
   local_mocked_bindings(glue_api_v3 = function(base_url) "https://stoplight.io/mocks/qualtricsv2/publicapidocs/60928")
   local_mocked_bindings(paginate_api_request = function(fetch_url) qualtrics_api_request("GET", url = fetch_url)$result$elements)
 
-  x <- fetch_mailinglist("ML_6xLATuSWeOcGWyh")
+  x <- fetch_mailinglist("ML_abcdef123456789")
   expect_s3_class(x, c("tbl_df","tbl","data.frame"))
   expect_true(all(c("id", "firstName", "lastName", "email",
                     "externalDataReference", "language",
