@@ -1,4 +1,5 @@
 skip_on_cran()
+skip_on_ci()
 
 test_that("fetch_distribution_history() returns a tbl_df with expected column names and types", {
   local_mocked_bindings(glue_api_v3 = function(base_url) "https://stoplight.io/mocks/qualtricsv2/publicapidocs/60919")

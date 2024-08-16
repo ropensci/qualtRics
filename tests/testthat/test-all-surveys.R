@@ -1,4 +1,5 @@
 skip_on_cran()
+skip_on_ci()
 
 test_that("all_surveys() sends the proper request to Qualtrics", {
   local_mocked_bindings(glue_api_v3 = function(base_url) "https://stoplight.io/mocks/qualtricsv2/publicapidocs/60937")

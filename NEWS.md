@@ -1,4 +1,4 @@
-# qualtRics (development version)
+# qualtRics 3.2.1
 
 - Fixed bug when a survey question has *both* recoded values and variable naming thanks to @Haunfelder (#343)
 

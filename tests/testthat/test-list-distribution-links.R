@@ -1,4 +1,6 @@
 skip_on_cran()
+## mock server is returning 500 on 2024-08-16:
+skip_on_ci()
 
 test_that("list_distribution_links() returns a tbl_df with expected column names and types", {
   local_mocked_bindings(glue_api_v3 = function(base_url) "https://stoplight.io/mocks/qualtricsv2/publicapidocs/60919")
