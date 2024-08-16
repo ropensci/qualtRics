@@ -23,6 +23,7 @@ Changelog\.md$
 ^todo\.md$
 ^revamp\.md$
 ^pkgdown$
+^revdep$
 ^cran-comments\.md$
 ^CRAN-RELEASE$
 ^\.github$
