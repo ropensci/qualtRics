@@ -6,7 +6,7 @@
 **Authors:** [Julia Silge](https://juliasilge.com/), [Joseph
 O’Brien](joseph.m.obrien@gmail.com), [Jasper
 Ginn](https://jasperhg90.github.io/)<br/> **License:**
-[MIT](https://opensource.org/license/mit/)
+[MIT](https://opensource.org/license/mit)
 
 <!-- badges: start -->
 
@@ -137,13 +137,13 @@ dates or for specific survey items, and more.
 
 ## Related work
 
--   [Jason Bryer](https://github.com/jbryer/qualtrics) wrote an R
-    package to work with the previous version of the Qualtrics API
--   [QualtricsTools](https://github.com/emma-morgan/QualtricsTools)
-    creates automatic reports in shiny.
--   [qsurvey](https://github.com/jamesdunham/qsurvey) by James Dunham
-    focuses on testing and review of surveys before fielding, and
-    analysis of responses afterward.
+- [Jason Bryer](https://github.com/jbryer/qualtrics) wrote an R package
+  to work with the previous version of the Qualtrics API
+- [QualtricsTools](https://github.com/emma-morgan/QualtricsTools)
+  creates automatic reports in shiny.
+- [qsurvey](https://github.com/jamesdunham/qsurvey) by James Dunham
+  focuses on testing and review of surveys before fielding, and analysis
+  of responses afterward.
 
 ### Community Guidelines
 

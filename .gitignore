@@ -8,3 +8,5 @@
 inst/doc
 /man/qualtRicsResponseCodes.Rd
 /dev/*
+/revdep/*noindex/
+*sqlite
