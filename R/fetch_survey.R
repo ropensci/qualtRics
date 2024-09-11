@@ -523,7 +523,7 @@ export_responses_filedownload <-
     }
 
     # Extract CSV from zip file:
-    archive::archive_extract(zip_path, tmp_dir, csv_filename)
+    archive::archive_extract(zip_path, tmp_dir)
 
     # Read in raw data:
     rawdata <-
