@@ -1,5 +1,7 @@
 # qualtRics (development version)
 
+- Again hanged how CSV files are extracted from the Qualtrics zip archive, to handle more special characters in survey titles (#355)
+
 # qualtRics 3.2.1
 
 - Fixed bug when a survey question has *both* recoded values and variable naming thanks to @Haunfelder (#343)
