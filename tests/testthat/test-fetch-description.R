@@ -55,7 +55,7 @@ test_that("setting elements works with legacy = TRUE ", {
                            elements = c("metadata", "questions",
                                         "responsecounts", "blocks",
                                         "flow", "embedded_data", "comments")
-                           )
+    )
   })
 
   expect_type(x, "list")
@@ -85,9 +85,9 @@ test_that("passing a list to elements when legacy = TRUE succeeds with warning "
       "comments" = TRUE
     )
 
- expect_warning(
+  expect_warning(
     vcr::use_cassette("fetch_description_legacy", {
-     x <- fetch_description("SV_6s93xhVtm1e4j3v",
+      x <- fetch_description("SV_6s93xhVtm1e4j3v",
                              legacy = TRUE,
                              elements = element_list
       )
@@ -97,6 +97,45 @@ test_that("passing a list to elements when legacy = TRUE succeeds with warning "
 
   expect_type(x, "list")
   expect_named(x, c("metadata", "responsecounts", "flow", "comments"))
+
+})
+
+
+
+test_that("write_qsf saves a properly formatted qsf file", {
+
+  # Outputs invisible:
+  vcr::use_cassette("write_qsf", {
+    x <-
+      expect_invisible(
+        write_qsf("SV_6s93xhVtm1e4j3v",
+                  file = "test_qsf.qsf")
+      )
+  })
+
+  # Re-loads properly:
+  expect_type(
+    jsonlite::read_json("test_qsf.qsf"),
+    "list"
+  )
+  # clean up:
+  invisible(file.remove("test_qsf.qsf"))
+
+  # Output visible w/o writing:
+  vcr::use_cassette("write_qsf", {
+    x_pretty <-
+      expect_visible(
+        write_qsf("SV_6s93xhVtm1e4j3v",
+                  formatting = "pretty",
+                  save = FALSE)
+      )
+  })
+
+  # Prettification worked (got longer)
+  expect_gt(
+    nchar(x_pretty),
+    nchar(x)
+  )
 
 })
 

@@ -168,3 +168,111 @@ fetch_description <-
 
     return(output)
   }
+
+
+#'Download and save a description of a survey in Qualtrics Survey Format (QSF)
+#'
+#'@param surveyID String. Unique ID for the survey you want to download.
+#'  Returned as "id" by the [all_surveys] function.
+#'@param formatting String. Adjustments to the downloaded QSF JSON to be either
+#'  more human-readable or more compact.  Options are "none" (default, no
+#'  adjustment), "pretty" (more human-readable, using
+#'  \code{\link[jsonlite]{prettify}}), or "compact" (more compact, using
+#'  \code{\link[jsonlite]{minify}})
+#'@param file String. Desired filename, including path if desired.
+#'  Typical filename extension is .qsf, though not required (and will not be
+#'  added if absent).  Argument ignored if \code{save == FALSE}.
+#'@param save Boolean. Should downloaded QSF be saved to a file (\code{TRUE},
+#'  default), or returned as output (\code{FALSE})?  Even when \code{TRUE},
+#'  downloaded JSON is returned invisibly.
+#'
+#'
+#'@template retry-advice
+#'@return A JSON object equivalent of a Qualtrics QSF, invisibly unless
+#'  \code{save == FALSE}
+#'
+#'@importFrom jsonlite prettify
+#'@importFrom jsonlite minify
+#'@importFrom rlang arg_match
+#'@importFrom stringr str_remove_all
+#'
+#'
+#'@export
+#'
+write_qsf <-
+  function(surveyID,
+           formatting = c("none", "pretty", "compact"),
+           file = NULL,
+           save = TRUE
+  ) {
+
+    # OPTIONS AND PREP ----
+
+    # Check params
+    check_credentials()
+    checkarg_isstring(surveyID)
+    formatting <- rlang::arg_match(formatting)
+    checkarg_isboolean(save)
+    if(save){
+      checkarg_isstring(file)
+    }
+
+    # QUERY API ----
+
+    # Function-specific API stuff
+    description_url <-
+      generate_url(
+        query = "fetchdescription",
+        surveyID = surveyID
+      )
+
+    # Send GET request to survey-definitions endpoint:
+    # (Uses "text" plus some string manip below to get at the exact downloaded
+    #  JSON text for QSF.  Bit awkward vs. parsing and reconverting via
+    #  toJSON(), but avoids adding unneeded escape characters.)
+    resp <-
+      qualtrics_api_request(
+        verb = "GET",
+        url = description_url,
+        query = list(format = "qsf"),
+        as = "text",
+        encoding = "UTF-8" # Prevents a warning from guessing encoding
+      )
+
+    # 2nd element of response JSON "result" is the actual qsf data.
+    # Manually removing 1st element (call metadata) & outer most layer of
+    # structure, keeping just the 2nd element as it's own JSON object.
+    qsf <-
+      stringr::str_remove_all(resp, "(\\{\"meta.*?result\":)|(\\}$)")
+
+    # add "json" class for consistent object returning (& cleaner console display)
+    qsf <-
+      structure(qsf, class = "json")
+
+    # FORMATTING & OUTPUT -----------------------------------------------------
+
+
+    # If requested, format JSON:
+    if(formatting == "pretty"){
+      qsf <-
+        jsonlite::prettify(txt = qsf)
+    } else if (formatting == "compact") {
+      qsf <-
+        jsonlite::minify(txt = qsf)
+    }
+
+    # If saving not desired, just return JSON object:
+    if(!save){
+      return(qsf)
+    }
+
+    # Otherwise, make connection to specified file and save:
+    connection <-
+      file(file)
+    writeLines(text = qsf, con = connection)
+    close(connection)
+
+    # Then return results invisibly:
+    return(invisible(qsf))
+
+}
