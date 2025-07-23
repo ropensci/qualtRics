@@ -1,12 +1,21 @@
 test_that("fetch_description() retrieves an appropriate survey description", {
-
   vcr::use_cassette("fetch_description", {
-    x <- fetch_description("SV_6s93xhVtm1e4j3v")
+    x <- fetch_description("SV_3gbwq8aJgqPwQDP")
   })
 
   expect_type(x, "list")
-  expect_named(x, c("metadata", "surveyoptions", "flow", "blocks", "questions",
-                    "responsesets", "scoring"))
+  expect_named(
+    x,
+    c(
+      "metadata",
+      "surveyoptions",
+      "flow",
+      "blocks",
+      "questions",
+      "responsesets",
+      "scoring"
+    )
+  )
   expect_s3_class(x$metadata, c("tbl_df", "tbl", "data.frame"))
   expect_s3_class(x$surveyoptions, c("tbl_df", "tbl", "data.frame"))
   expect_type(x$flow, "list")
@@ -14,27 +23,24 @@ test_that("fetch_description() retrieves an appropriate survey description", {
   expect_type(x$questions, "list")
   expect_type(x$responsesets, "list")
   expect_type(x$scoring, "list")
-
 })
 
 
 test_that("fetch_description() with elements set works", {
-
   vcr::use_cassette("fetch_description", {
-    x <- fetch_description("SV_6s93xhVtm1e4j3v",
-                           elements = c("surveyoptions", "flow", "blocks"))
+    x <- fetch_description(
+      "SV_3gbwq8aJgqPwQDP",
+      elements = c("surveyoptions", "flow", "blocks")
+    )
   })
 
   expect_type(x, "list")
   expect_named(x, c("surveyoptions", "flow", "blocks"))
-
-
 })
 
 test_that("fetch_description() with legacy = TRUE reverts to metadata()", {
-
   vcr::use_cassette("fetch_description_legacy", {
-    x <- fetch_description("SV_6s93xhVtm1e4j3v", legacy = TRUE)
+    x <- fetch_description("SV_3gbwq8aJgqPwQDP", legacy = TRUE)
   })
 
   expect_type(x, "list")
@@ -42,26 +48,39 @@ test_that("fetch_description() with legacy = TRUE reverts to metadata()", {
   expect_s3_class(x$metadata, "data.frame")
   expect_type(x$questions, "list")
   expect_s3_class(x$responsecounts, "data.frame")
-
 })
 
 
 test_that("setting elements works with legacy = TRUE ", {
-
-
   vcr::use_cassette("fetch_description_legacy", {
-    x <- fetch_description("SV_6s93xhVtm1e4j3v",
-                           legacy = TRUE,
-                           elements = c("metadata", "questions",
-                                        "responsecounts", "blocks",
-                                        "flow", "embedded_data", "comments")
-                           )
+    x <- fetch_description(
+      "SV_3gbwq8aJgqPwQDP",
+      legacy = TRUE,
+      elements = c(
+        "metadata",
+        "questions",
+        "responsecounts",
+        "blocks",
+        "flow",
+        "embedded_data",
+        "comments"
+      )
+    )
   })
 
   expect_type(x, "list")
-  expect_named(x, c("metadata", "questions",
-                    "responsecounts", "blocks",
-                    "flow", "embedded_data", "comments"))
+  expect_named(
+    x,
+    c(
+      "metadata",
+      "questions",
+      "responsecounts",
+      "blocks",
+      "flow",
+      "embedded_data",
+      "comments"
+    )
+  )
   expect_s3_class(x$metadata, "data.frame")
   expect_type(x$questions, "list")
   expect_s3_class(x$responsecounts, "data.frame")
@@ -69,11 +88,9 @@ test_that("setting elements works with legacy = TRUE ", {
   expect_type(x$flow, "list")
   expect_type(x$embedded_data, "list")
   expect_type(x$comments, "list")
-
 })
 
 test_that("passing a list to elements when legacy = TRUE succeeds with warning ", {
-
   element_list <-
     list(
       "metadata" = TRUE,
@@ -85,11 +102,12 @@ test_that("passing a list to elements when legacy = TRUE succeeds with warning "
       "comments" = TRUE
     )
 
- expect_warning(
+  expect_warning(
     vcr::use_cassette("fetch_description_legacy", {
-     x <- fetch_description("SV_6s93xhVtm1e4j3v",
-                             legacy = TRUE,
-                             elements = element_list
+      x <- fetch_description(
+        "SV_3gbwq8aJgqPwQDP",
+        legacy = TRUE,
+        elements = element_list
       )
     }),
     "Use of logical lists"
@@ -97,6 +115,4 @@ test_that("passing a list to elements when legacy = TRUE succeeds with warning "
 
   expect_type(x, "list")
   expect_named(x, c("metadata", "responsecounts", "flow", "comments"))
-
 })
-
