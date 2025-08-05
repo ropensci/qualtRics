@@ -1,171 +1,639 @@
 http_interactions:
 - request:
-    method: post
-    uri: https://www.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/
+    method: POST
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/
     body:
-      encoding: ''
-      string: '{"useLabels":true,"includeDisplayOrder":true,"breakoutSets":true,"format":"csv"}'
-    headers:
-      X-API-TOKEN: <<<my_api_key>>>
-      Content-Type: application/json
-      Accept: '*/*'
-      accept-encoding: gzip, deflate
+      string: '{"format":"csv","useLabels":true,"timeZone":"America/Denver","includeDisplayOrder":true,"breakoutSets":true}'
   response:
-    status:
-      status_code: 200
-      category: Success
-      reason: OK
-      message: 'Success: (200) OK'
+    status: 200
     headers:
+      request-time: '594'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      x-permitted-cross-domain-policies: master-only
+      content-type: application/json
       content-length: '174'
-      content-type: application/json
-      request-time: '142'
-      server: devplat-gateway
-      date: Thu, 07 May 2020 22:54:46 GMT
-      connection: keep-alive
-      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com;
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
         report-uri https://sjc1.qualtrics.com/csp-report
-      strict-transport-security: max-age=31536000; includeSubDomains; preload
+      date: Tue, 05 Aug 2025 00:46:29 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
     body:
-      encoding: ASCII-8BIT
-      file: no
-      string: eyJyZXN1bHQiOnsicHJvZ3Jlc3NJZCI6IkVTX2Q0NWNvYWVLdnU2ZHp5QiIsInBlcmNlbnRDb21wbGV0ZSI6MC4wLCJzdGF0dXMiOiJpblByb2dyZXNzIn0sIm1ldGEiOnsicmVxdWVzdElkIjoiOGQ0ZTVmZTItYzZlMS00YWZkLWE2ZDYtMzlhNmIxN2MzNWE4IiwiaHR0cFN0YXR1cyI6IjIwMCAtIE9LIn19
-  recorded_at: 2020-05-07 22:54:47 GMT
-  recorded_with: vcr/0.5.4, webmockr/0.6.2
+      string: '{"result":{"progressId":"ES_9FZQ8Vtw1tTNtTU","percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"ca5ba3b1-600c-4524-9a99-22281b2dafc5","httpStatus":"200
+        - OK"}}'
+  recorded_at: 2025-08-05 00:46:29
 - request:
-    method: get
-    uri: https://www.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_d45coaeKvu6dzyB
-    body:
-      encoding: ''
-      string: ''
-    headers:
-      X-API-TOKEN: <<<my_api_key>>>
-      Content-Type: application/json
-      Accept: '*/*'
-      accept-encoding: gzip, deflate
+    method: GET
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_9FZQ8Vtw1tTNtTU
   response:
-    status:
-      status_code: 200
-      category: Success
-      reason: OK
-      message: 'Success: (200) OK'
+    status: 200
     headers:
+      request-time: '59'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      x-permitted-cross-domain-policies: master-only
+      content-type: application/json
       content-length: '140'
-      content-type: application/json
-      request-time: '32'
-      server: devplat-gateway
-      date: Thu, 07 May 2020 22:54:46 GMT
-      connection: keep-alive
-      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com;
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
         report-uri https://sjc1.qualtrics.com/csp-report
-      strict-transport-security: max-age=31536000; includeSubDomains; preload
+      date: Tue, 05 Aug 2025 00:46:29 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
     body:
-      encoding: ASCII-8BIT
-      file: no
-      string: eyJyZXN1bHQiOnsicGVyY2VudENvbXBsZXRlIjowLjAsInN0YXR1cyI6ImluUHJvZ3Jlc3MifSwibWV0YSI6eyJyZXF1ZXN0SWQiOiIzOWVmOGU4My0yNzg3LTQxMzMtOWVjZi1lMmE0YzRjYjk3NTEiLCJodHRwU3RhdHVzIjoiMjAwIC0gT0sifX0=
-  recorded_at: 2020-05-07 22:54:47 GMT
-  recorded_with: vcr/0.5.4, webmockr/0.6.2
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"20b6226d-1e6f-495c-89a0-d7690e7b7734","httpStatus":"200
+        - OK"}}'
+  recorded_at: 2025-08-05 00:46:29
 - request:
-    method: get
-    uri: https://www.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_d45coaeKvu6dzyB
-    body:
-      encoding: ''
-      string: ''
-    headers:
-      X-API-TOKEN: <<<my_api_key>>>
-      Content-Type: application/json
-      Accept: '*/*'
-      accept-encoding: gzip, deflate
+    method: GET
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_9FZQ8Vtw1tTNtTU
   response:
-    status:
-      status_code: 200
-      category: Success
-      reason: OK
-      message: 'Success: (200) OK'
+    status: 200
     headers:
-      content-length: '188'
+      request-time: '47'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      x-permitted-cross-domain-policies: master-only
       content-type: application/json
-      request-time: '41'
-      server: devplat-gateway
-      date: Thu, 07 May 2020 22:54:47 GMT
-      connection: keep-alive
-      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com;
+      content-length: '140'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
         report-uri https://sjc1.qualtrics.com/csp-report
-      strict-transport-security: max-age=31536000; includeSubDomains; preload
+      date: Tue, 05 Aug 2025 00:46:29 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
     body:
-      encoding: ASCII-8BIT
-      file: no
-      string: eyJyZXN1bHQiOnsiZmlsZUlkIjoiNGY5MmIzMzgtOWY0OS00OTIyLTkxNjAtMGNkNjM4ZjkxMjlkIiwicGVyY2VudENvbXBsZXRlIjoxMDAuMCwic3RhdHVzIjoiY29tcGxldGUifSwibWV0YSI6eyJyZXF1ZXN0SWQiOiJhY2Q5YTIxZS1iMTliLTRlOWYtOWMyOS1iYjBlZWNmMzMwYzYiLCJodHRwU3RhdHVzIjoiMjAwIC0gT0sifX0=
-  recorded_at: 2020-05-07 22:54:47 GMT
-  recorded_with: vcr/0.5.4, webmockr/0.6.2
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"880d966e-836e-4272-a108-b9e882b5eaa5","httpStatus":"200
+        - OK"}}'
+  recorded_at: 2025-08-05 00:46:29
 - request:
-    method: get
-    uri: https://www.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/4f92b338-9f49-4922-9160-0cd638f9129d/file
-    body:
-      encoding: ''
-      string: ''
-    headers:
-      X-API-TOKEN: <<<my_api_key>>>
-      Content-Type: application/json
-      Accept: '*/*'
-      accept-encoding: gzip, deflate
+    method: GET
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_9FZQ8Vtw1tTNtTU
   response:
-    status:
-      status_code: 200
-      category: Success
-      reason: OK
-      message: 'Success: (200) OK'
+    status: 200
     headers:
-      content-disposition: attachment; filename=Beskar+Armor.zip
-      content-length: '3174'
-      content-type: application/zip
+      request-time: '46'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      x-permitted-cross-domain-policies: master-only
+      content-type: application/json
+      content-length: '140'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
+        report-uri https://sjc1.qualtrics.com/csp-report
+      date: Tue, 05 Aug 2025 00:46:29 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
+    body:
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"d8d3db06-cbde-4e2c-9deb-319ccdf89aac","httpStatus":"200
+        - OK"}}'
+  recorded_at: 2025-08-05 00:46:29
+- request:
+    method: GET
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_9FZQ8Vtw1tTNtTU
+  response:
+    status: 200
+    headers:
+      request-time: '45'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      x-permitted-cross-domain-policies: master-only
+      content-type: application/json
+      content-length: '140'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
+        report-uri https://sjc1.qualtrics.com/csp-report
+      date: Tue, 05 Aug 2025 00:46:30 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
+    body:
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"8cf9b655-2a7b-447c-882a-1fec5a4e6ed7","httpStatus":"200
+        - OK"}}'
+  recorded_at: 2025-08-05 00:46:30
+- request:
+    method: GET
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_9FZQ8Vtw1tTNtTU
+  response:
+    status: 200
+    headers:
       request-time: '112'
-      server: devplat-gateway
-      content-encoding: gzip
-      date: Thu, 07 May 2020 22:54:47 GMT
-      connection: keep-alive
-      vary: Accept-Encoding
-      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com;
-        report-uri https://sjc1.qualtrics.com/csp-report
-      strict-transport-security: max-age=31536000; includeSubDomains; preload
-    body:
-      encoding: ASCII-8BIT
-      file: no
-      string: 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
-  recorded_at: 2020-05-07 22:54:47 GMT
-  recorded_with: vcr/0.5.4, webmockr/0.6.2
-- request:
-    method: get
-    uri: https://www.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/
-    body:
-      encoding: ''
-      string: ''
-    headers:
-      X-API-TOKEN: <<<my_api_key>>>
-      Content-Type: application/json
-      Accept: '*/*'
-      accept-encoding: gzip, deflate
-  response:
-    status:
-      status_code: 200
-      category: Success
-      reason: OK
-      message: 'Success: (200) OK'
-    headers:
-      content-length: '2782'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      x-permitted-cross-domain-policies: master-only
       content-type: application/json
-      request-time: '133'
-      server: devplat-gateway
-      content-encoding: gzip
-      date: Thu, 07 May 2020 22:54:47 GMT
-      connection: keep-alive
-      vary: Accept-Encoding
-      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com;
+      content-length: '140'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
         report-uri https://sjc1.qualtrics.com/csp-report
-      strict-transport-security: max-age=31536000; includeSubDomains; preload
+      date: Tue, 05 Aug 2025 00:46:30 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
     body:
-      encoding: ASCII-8BIT
-      file: no
-      string: eyJyZXN1bHQiOnsiaWQiOiJTVl8zZ2J3cThhSmdxUHdRRFAiLCJuYW1lIjoiQmVza2FyIEFybW9yIiwib3duZXJJZCI6IlVSXzh3Zkc1cXNNeHVoMEpybiIsIm9yZ2FuaXphdGlvbklkIjoiY29uam9pbnQiLCJpc0FjdGl2ZSI6dHJ1ZSwiY3JlYXRpb25EYXRlIjoiMjAyMC0wMi0yMFQwMDozNTo0MFoiLCJsYXN0TW9kaWZpZWREYXRlIjoiMjAyMC0wMi0yMFQwMToxOToxMVoiLCJleHBpcmF0aW9uIjp7InN0YXJ0RGF0ZSI6bnVsbCwiZW5kRGF0ZSI6bnVsbH0sInF1ZXN0aW9ucyI6eyJRSUQ2MyI6eyJxdWVzdGlvblR5cGUiOnsidHlwZSI6Ik1DIiwic2VsZWN0b3IiOiJTQVZSIiwic3ViU2VsZWN0b3IiOiJUWCJ9LCJxdWVzdGlvblRleHQiOiJIb3cgb2Z0ZW4gZG8geW91IHR5cGljYWxseSB1c2UgeW91ciBiZXNrYXIgYXJtb3I/IiwicXVlc3Rpb25MYWJlbCI6bnVsbCwidmFsaWRhdGlvbiI6eyJkb2VzRm9yY2VSZXNwb25zZSI6dHJ1ZX0sInF1ZXN0aW9uTmFtZSI6IlE2MyIsImNob2ljZXMiOnsiMSI6eyJyZWNvZGUiOiIxIiwiZGVzY3JpcHRpb24iOiI8c3BhbiBzdHlsZT1cImNvbG9yOiM4ZTQ0YWQ7XCI+RGFpbHk8L3NwYW4+IiwiY2hvaWNlVGV4dCI6IjxzcGFuIHN0eWxlPVwiY29sb3I6IzhlNDRhZDtcIj5EYWlseTwvc3Bhbj4iLCJpbWFnZURlc2NyaXB0aW9uIjpudWxsLCJ2YXJpYWJsZU5hbWUiOm51bGwsImFuYWx5emUiOnRydWV9LCIyIjp7InJlY29kZSI6IjIiLCJkZXNjcmlwdGlvbiI6IldlZWtseSIsImNob2ljZVRleHQiOiJXZWVrbHkiLCJpbWFnZURlc2NyaXB0aW9uIjpudWxsLCJ2YXJpYWJsZU5hbWUiOm51bGwsImFuYWx5emUiOnRydWV9LCIzIjp7InJlY29kZSI6IjMiLCJkZXNjcmlwdGlvbiI6Ik9uY2UgYSA8c3BhbiBzdHlsZT1cImJhY2tncm91bmQtY29sb3I6IzliNTliNjtcIj5tb250aDwvc3Bhbj4iLCJjaG9pY2VUZXh0IjoiT25jZSBhIDxzcGFuIHN0eWxlPVwiYmFja2dyb3VuZC1jb2xvcjojOWI1OWI2O1wiPm1vbnRoPC9zcGFuPiIsImltYWdlRGVzY3JpcHRpb24iOm51bGwsInZhcmlhYmxlTmFtZSI6bnVsbCwiYW5hbHl6ZSI6dHJ1ZX0sIjQiOnsicmVjb2RlIjoiNCIsImRlc2NyaXB0aW9uIjoiPGEgaHJlZj1cImh0dHBzOi8vd3d3Lmluc3RhZ3JhbS5jb20vcC9CNXFuNWF0aDBpai8/aGw9ZW5cIj5MZXNzIG9mdGVuPC9hPiIsImNob2ljZVRleHQiOiI8YSBocmVmPVwiaHR0cHM6Ly93d3cuaW5zdGFncmFtLmNvbS9wL0I1cW41YXRoMGlqLz9obD1lblwiPkxlc3Mgb2Z0ZW48L2E+IiwiaW1hZ2VEZXNjcmlwdGlvbiI6bnVsbCwidmFyaWFibGVOYW1lIjpudWxsLCJhbmFseXplIjp0cnVlfSwiNSI6eyJyZWNvZGUiOiI1IiwiZGVzY3JpcHRpb24iOiJEbyBub3QgdXNlIiwiY2hvaWNlVGV4dCI6IkRvIG5vdCB1c2UiLCJpbWFnZURlc2NyaXB0aW9uIjpudWxsLCJ2YXJpYWJsZU5hbWUiOm51bGwsImFuYWx5emUiOnRydWV9fX0sIlFJRDE2Ijp7InF1ZXN0aW9uVHlwZSI6eyJ0eXBlIjoiTUMiLCJzZWxlY3RvciI6IlNBVlIiLCJzdWJTZWxlY3RvciI6IlRYIn0sInF1ZXN0aW9uVGV4dCI6Ik92ZXJhbGwsIGhvdyBzYXRpc2ZpZWQgYXJlIHlvdSB3aXRoIHlvdXIgYmVza2FyIGFybW9yPyIsInF1ZXN0aW9uTGFiZWwiOm51bGwsInZhbGlkYXRpb24iOnsiZG9lc0ZvcmNlUmVzcG9uc2UiOnRydWV9LCJxdWVzdGlvbk5hbWUiOiJRMTYiLCJjaG9pY2VzIjp7IjUiOnsicmVjb2RlIjoiNSIsImRlc2NyaXB0aW9uIjoiPHN0cm9uZz5FeHRyZW1lbHk8L3N0cm9uZz4gc2F0aXNmaWVkIiwiY2hvaWNlVGV4dCI6IjxzdHJvbmc+RXh0cmVtZWx5PC9zdHJvbmc+IHNhdGlzZmllZCIsImltYWdlRGVzY3JpcHRpb24iOm51bGwsInZhcmlhYmxlTmFtZSI6bnVsbCwiYW5hbHl6ZSI6dHJ1ZX0sIjQiOnsicmVjb2RlIjoiNCIsImRlc2NyaXB0aW9uIjoiPGEgaHJlZj1cImh0dHBzOi8vZ2lwaHkuY29tL2V4cGxvcmUvYmFieS15b2RhXCI+U29tZXdoYXQgc2F0aXNmaWVkPC9hPiIsImNob2ljZVRleHQiOiI8YSBocmVmPVwiaHR0cHM6Ly9naXBoeS5jb20vZXhwbG9yZS9iYWJ5LXlvZGFcIj5Tb21ld2hhdCBzYXRpc2ZpZWQ8L2E+IiwiaW1hZ2VEZXNjcmlwdGlvbiI6bnVsbCwidmFyaWFibGVOYW1lIjpudWxsLCJhbmFseXplIjp0cnVlfSwiMyI6eyJyZWNvZGUiOiIzIiwiZGVzY3JpcHRpb24iOiI8c3BhbiBzdHlsZT1cImJhY2tncm91bmQtY29sb3I6I2U3NGMzYztcIj5OZWl0aGVyPC9zcGFuPiA8c3BhbiBzdHlsZT1cImJhY2tncm91bmQtY29sb3I6I2U2N2UyMjtcIj5zYXRpc2ZpZWQ8L3NwYW4+IDxzcGFuIHN0eWxlPVwiYmFja2dyb3VuZC1jb2xvcjojZjFjNDBmO1wiPm5vcjwvc3Bhbj4gPHNwYW4gc3R5bGU9XCJiYWNrZ3JvdW5kLWNvbG9yOiMyN2FlNjA7XCI+ZGlzc2F0aXNmaWVkPC9zcGFuPiIsImNob2ljZVRleHQiOiI8c3BhbiBzdHlsZT1cImJhY2tncm91bmQtY29sb3I6I2U3NGMzYztcIj5OZWl0aGVyPC9zcGFuPiA8c3BhbiBzdHlsZT1cImJhY2tncm91bmQtY29sb3I6I2U2N2UyMjtcIj5zYXRpc2ZpZWQ8L3NwYW4+IDxzcGFuIHN0eWxlPVwiYmFja2dyb3VuZC1jb2xvcjojZjFjNDBmO1wiPm5vcjwvc3Bhbj4gPHNwYW4gc3R5bGU9XCJiYWNrZ3JvdW5kLWNvbG9yOiMyN2FlNjA7XCI+ZGlzc2F0aXNmaWVkPC9zcGFuPiIsImltYWdlRGVzY3JpcHRpb24iOm51bGwsInZhcmlhYmxlTmFtZSI6bnVsbCwiYW5hbHl6ZSI6dHJ1ZX0sIjIiOnsicmVjb2RlIjoiMiIsImRlc2NyaXB0aW9uIjoiPGEgaHJlZj1cImh0dHBzOi8vd3d3LmdxLmNvbS9zdG9yeS93ZXJuZXItaGVyem9nLWJhYnkteW9kYVwiPlNvbWV3aGF0IGRpc3NhdGlzZmllZDwvYT4iLCJjaG9pY2VUZXh0IjoiPGEgaHJlZj1cImh0dHBzOi8vd3d3LmdxLmNvbS9zdG9yeS93ZXJuZXItaGVyem9nLWJhYnkteW9kYVwiPlNvbWV3aGF0IGRpc3NhdGlzZmllZDwvYT4iLCJpbWFnZURlc2NyaXB0aW9uIjpudWxsLCJ2YXJpYWJsZU5hbWUiOm51bGwsImFuYWx5emUiOnRydWV9LCIxIjp7InJlY29kZSI6IjEiLCJkZXNjcmlwdGlvbiI6IjxlbT5FeHRyZW1lbHk8L2VtPiBkaXNzYXRpc2ZpZWQiLCJjaG9pY2VUZXh0IjoiPGVtPkV4dHJlbWVseTwvZW0+IGRpc3NhdGlzZmllZCIsImltYWdlRGVzY3JpcHRpb24iOm51bGwsInZhcmlhYmxlTmFtZSI6bnVsbCwiYW5hbHl6ZSI6dHJ1ZX19fSwiUUlEMTciOnsicXVlc3Rpb25UeXBlIjp7InR5cGUiOiJNQyIsInNlbGVjdG9yIjoiU0FIUiIsInN1YlNlbGVjdG9yIjoiVFgifSwicXVlc3Rpb25UZXh0IjoiSGF2ZSB5b3UgZXZlciBjb250YWN0ZWQgY3VzdG9tZXIgc2VydmljZSBhYm91dCB5b3VyIGJlc2thciBhcm1vcj8iLCJxdWVzdGlvbkxhYmVsIjpudWxsLCJ2YWxpZGF0aW9uIjp7ImRvZXNGb3JjZVJlc3BvbnNlIjp0cnVlfSwicXVlc3Rpb25OYW1lIjoiUTE3IiwiY2hvaWNlcyI6eyIxIjp7InJlY29kZSI6IjEiLCJkZXNjcmlwdGlvbiI6IlllcyIsImNob2ljZVRleHQiOiJZZXMiLCJpbWFnZURlc2NyaXB0aW9uIjpudWxsLCJ2YXJpYWJsZU5hbWUiOm51bGwsImFuYWx5emUiOnRydWV9LCIyIjp7InJlY29kZSI6IjIiLCJkZXNjcmlwdGlvbiI6Ik5vIiwiY2hvaWNlVGV4dCI6Ik5vIiwiaW1hZ2VEZXNjcmlwdGlvbiI6bnVsbCwidmFyaWFibGVOYW1lIjpudWxsLCJhbmFseXplIjp0cnVlfX19LCJRSUQxOCI6eyJxdWVzdGlvblR5cGUiOnsidHlwZSI6Ik1DIiwic2VsZWN0b3IiOiJTQVZSIiwic3ViU2VsZWN0b3IiOiJUWCJ9LCJxdWVzdGlvblRleHQiOiJIYXZlIGFsbCBwcm9ibGVtcyBiZWVuIHJlc29sdmVkIHRvIHlvdXIgY29tcGxldGUgc2F0aXNmYWN0aW9uPyIsInF1ZXN0aW9uTGFiZWwiOm51bGwsInZhbGlkYXRpb24iOnsiZG9lc0ZvcmNlUmVzcG9uc2UiOmZhbHNlfSwicXVlc3Rpb25OYW1lIjoiUTE4IiwiY2hvaWNlcyI6eyIxIjp7InJlY29kZSI6IjEiLCJkZXNjcmlwdGlvbiI6IlllcywgYnkgdGhlIHRyaWJlIG9yIGl0cyByZXByZXNlbnRhdGl2ZXMgXG48dmlkZW8gY2xhc3M9XCJxbWVkaWFcIiBjb250cm9scz1cInRydWVcIiBoZWlnaHQ9XCIyNjhcIiBwcmVsb2FkPVwiYXV0b1wiIHdpZHRoPVwiMjY4XCI+PHNvdXJjZSBzcmM9XCJodHRwczovL2kuaW1ndXIuY29tL1FsQW1lMHEubXA0XCIgdHlwZT1cInZpZGVvL21wNFwiIC8+PGVtYmVkIGFsaWduPVwibWlkZGxlXCIgYXV0b3BsYXk9XCJmYWxzZVwiIGJnY29sb3I9XCJ3aGl0ZVwiIGNsYXNzPVwicW1lZGlhXCIgY29udHJvbGxlcj1cInRydWVcIiBoZWlnaHQ9XCIyNjhcIiBwbHVnaW5zcGFnZT1cImh0dHA6Ly93d3cuYXBwbGUuY29tL3F1aWNrdGltZS9kb3dubG9hZC9cIiBzcmM9XCJodHRwczovL2kuaW1ndXIuY29tL1FsQW1lMHEubXA0XCIgdHlwZT1cInZpZGVvL3F1aWNrdGltZVwiIHdpZHRoPVwiMjY4XCIgLz48L3ZpZGVvPlxuIiwiY2hvaWNlVGV4dCI6IlllcywgYnkgdGhlIHRyaWJlIG9yIGl0cyByZXByZXNlbnRhdGl2ZXMgXG48dmlkZW8gY2xhc3M9XCJxbWVkaWFcIiBjb250cm9scz1cInRydWVcIiBoZWlnaHQ9XCIyNjhcIiBwcmVsb2FkPVwiYXV0b1wiIHdpZHRoPVwiMjY4XCI+PHNvdXJjZSBzcmM9XCJodHRwczovL2kuaW1ndXIuY29tL1FsQW1lMHEubXA0XCIgdHlwZT1cInZpZGVvL21wNFwiIC8+PGVtYmVkIGFsaWduPVwibWlkZGxlXCIgYXV0b3BsYXk9XCJmYWxzZVwiIGJnY29sb3I9XCJ3aGl0ZVwiIGNsYXNzPVwicW1lZGlhXCIgY29udHJvbGxlcj1cInRydWVcIiBoZWlnaHQ9XCIyNjhcIiBwbHVnaW5zcGFnZT1cImh0dHA6Ly93d3cuYXBwbGUuY29tL3F1aWNrdGltZS9kb3dubG9hZC9cIiBzcmM9XCJodHRwczovL2kuaW1ndXIuY29tL1FsQW1lMHEubXA0XCIgdHlwZT1cInZpZGVvL3F1aWNrdGltZVwiIHdpZHRoPVwiMjY4XCIgLz48L3ZpZGVvPlxuIiwiaW1hZ2VEZXNjcmlwdGlvbiI6bnVsbCwidmFyaWFibGVOYW1lIjpudWxsLCJhbmFseXplIjp0cnVlfSwiMiI6eyJyZWNvZGUiOiIyIiwiZGVzY3JpcHRpb24iOiJZZXMsIGJ5IG1lIG9yIHNvbWVvbmUgb3V0c2lkZSB0aGUgdHJpYmUgXG48dmlkZW8gY2xhc3M9XCJxbWVkaWFcIiBjb250cm9scz1cInRydWVcIiBoZWlnaHQ9XCIyNjhcIiBwcmVsb2FkPVwiYXV0b1wiIHdpZHRoPVwiMjY4XCI+PHNvdXJjZSBzcmM9XCJodHRwczovL2kuaW1ndXIuY29tLzVzUlZPNGQubXA0XCIgdHlwZT1cInZpZGVvL21wNFwiIC8+PGVtYmVkIGFsaWduPVwibWlkZGxlXCIgYXV0b3BsYXk9XCJmYWxzZVwiIGJnY29sb3I9XCJ3aGl0ZVwiIGNsYXNzPVwicW1lZGlhXCIgY29udHJvbGxlcj1cInRydWVcIiBoZWlnaHQ9XCIyNjhcIiBwbHVnaW5zcGFnZT1cImh0dHA6Ly93d3cuYXBwbGUuY29tL3F1aWNrdGltZS9kb3dubG9hZC9cIiBzcmM9XCJodHRwczovL2kuaW1ndXIuY29tLzVzUlZPNGQubXA0XCIgdHlwZT1cInZpZGVvL3F1aWNrdGltZVwiIHdpZHRoPVwiMjY4XCIgLz48L3ZpZGVvPlxuIiwiY2hvaWNlVGV4dCI6IlllcywgYnkgbWUgb3Igc29tZW9uZSBvdXRzaWRlIHRoZSB0cmliZSBcbjx2aWRlbyBjbGFzcz1cInFtZWRpYVwiIGNvbnRyb2xzPVwidHJ1ZVwiIGhlaWdodD1cIjI2OFwiIHByZWxvYWQ9XCJhdXRvXCIgd2lkdGg9XCIyNjhcIj48c291cmNlIHNyYz1cImh0dHBzOi8vaS5pbWd1ci5jb20vNXNSVk80ZC5tcDRcIiB0eXBlPVwidmlkZW8vbXA0XCIgLz48ZW1iZWQgYWxpZ249XCJtaWRkbGVcIiBhdXRvcGxheT1cImZhbHNlXCIgYmdjb2xvcj1cIndoaXRlXCIgY2xhc3M9XCJxbWVkaWFcIiBjb250cm9sbGVyPVwidHJ1ZVwiIGhlaWdodD1cIjI2OFwiIHBsdWdpbnNwYWdlPVwiaHR0cDovL3d3dy5hcHBsZS5jb20vcXVpY2t0aW1lL2Rvd25sb2FkL1wiIHNyYz1cImh0dHBzOi8vaS5pbWd1ci5jb20vNXNSVk80ZC5tcDRcIiB0eXBlPVwidmlkZW8vcXVpY2t0aW1lXCIgd2lkdGg9XCIyNjhcIiAvPjwvdmlkZW8+XG4iLCJpbWFnZURlc2NyaXB0aW9uIjpudWxsLCJ2YXJpYWJsZU5hbWUiOm51bGwsImFuYWx5emUiOnRydWV9LCIzIjp7InJlY29kZSI6IjMiLCJkZXNjcmlwdGlvbiI6Ik5vLCB0aGUgcHJvYmxlbSB3YXMgbm90IHJlc29sdmVkIFxuPHZpZGVvIGNsYXNzPVwicW1lZGlhXCIgY29udHJvbHM9XCJ0cnVlXCIgaGVpZ2h0PVwiMTY4XCIgcHJlbG9hZD1cImF1dG9cIiB3aWR0aD1cIjI2OFwiPjxzb3VyY2Ugc3JjPVwiaHR0cHM6Ly9pLmltZ3VyLmNvbS9pNDBtNzJvLm1wNFwiIHR5cGU9XCJ2aWRlby9tcDRcIiAvPjxlbWJlZCBhbGlnbj1cIm1pZGRsZVwiIGF1dG9wbGF5PVwiZmFsc2VcIiBiZ2NvbG9yPVwid2hpdGVcIiBjbGFzcz1cInFtZWRpYVwiIGNvbnRyb2xsZXI9XCJ0cnVlXCIgaGVpZ2h0PVwiMTY4XCIgcGx1Z2luc3BhZ2U9XCJodHRwOi8vd3d3LmFwcGxlLmNvbS9xdWlja3RpbWUvZG93bmxvYWQvXCIgc3JjPVwiaHR0cHM6Ly9pLmltZ3VyLmNvbS9pNDBtNzJvLm1wNFwiIHR5cGU9XCJ2aWRlby9xdWlja3RpbWVcIiB3aWR0aD1cIjI2OFwiIC8+PC92aWRlbz5cbiIsImNob2ljZVRleHQiOiJObywgdGhlIHByb2JsZW0gd2FzIG5vdCByZXNvbHZlZCBcbjx2aWRlbyBjbGFzcz1cInFtZWRpYVwiIGNvbnRyb2xzPVwidHJ1ZVwiIGhlaWdodD1cIjE2OFwiIHByZWxvYWQ9XCJhdXRvXCIgd2lkdGg9XCIyNjhcIj48c291cmNlIHNyYz1cImh0dHBzOi8vaS5pbWd1ci5jb20vaTQwbTcyby5tcDRcIiB0eXBlPVwidmlkZW8vbXA0XCIgLz48ZW1iZWQgYWxpZ249XCJtaWRkbGVcIiBhdXRvcGxheT1cImZhbHNlXCIgYmdjb2xvcj1cIndoaXRlXCIgY2xhc3M9XCJxbWVkaWFcIiBjb250cm9sbGVyPVwidHJ1ZVwiIGhlaWdodD1cIjE2OFwiIHBsdWdpbnNwYWdlPVwiaHR0cDovL3d3dy5hcHBsZS5jb20vcXVpY2t0aW1lL2Rvd25sb2FkL1wiIHNyYz1cImh0dHBzOi8vaS5pbWd1ci5jb20vaTQwbTcyby5tcDRcIiB0eXBlPVwidmlkZW8vcXVpY2t0aW1lXCIgd2lkdGg9XCIyNjhcIiAvPjwvdmlkZW8+XG4iLCJpbWFnZURlc2NyaXB0aW9uIjpudWxsLCJ2YXJpYWJsZU5hbWUiOm51bGwsImFuYWx5emUiOnRydWV9fX0sIlFJRDE5Ijp7InF1ZXN0aW9uVHlwZSI6eyJ0eXBlIjoiVEUiLCJzZWxlY3RvciI6IkVTVEIiLCJzdWJTZWxlY3RvciI6bnVsbH0sInF1ZXN0aW9uVGV4dCI6IldoeSBub3Q/IiwicXVlc3Rpb25MYWJlbCI6bnVsbCwidmFsaWRhdGlvbiI6eyJkb2VzRm9yY2VSZXNwb25zZSI6ZmFsc2V9LCJxdWVzdGlvbk5hbWUiOiJRMTkifSwiUUlEMjIiOnsicXVlc3Rpb25UeXBlIjp7InR5cGUiOiJURSIsInNlbGVjdG9yIjoiRVNUQiIsInN1YlNlbGVjdG9yIjpudWxsfSwicXVlc3Rpb25UZXh0IjoiSWYgeW91IHdvdWxkIGxpa2UgdG8gc2hhcmUgYW55IGFkZGl0aW9uYWwgY29tbWVudHMgb3IgZXhwZXJpZW5jZXMgYWJvdXQgeW91ciBiZXNrYXIgYXJtb3IsIHBsZWFzZSBlbnRlciB0aGVtIGJlbG93LiIsInF1ZXN0aW9uTGFiZWwiOm51bGwsInZhbGlkYXRpb24iOnsiZG9lc0ZvcmNlUmVzcG9uc2UiOmZhbHNlfSwicXVlc3Rpb25OYW1lIjoiUTIyIn19LCJleHBvcnRDb2x1bW5NYXAiOnsiUTYzIjp7InF1ZXN0aW9uIjoiUUlENjMifSwiUTE2Ijp7InF1ZXN0aW9uIjoiUUlEMTYifSwiUTE3Ijp7InF1ZXN0aW9uIjoiUUlEMTcifSwiUTE4Ijp7InF1ZXN0aW9uIjoiUUlEMTgifSwiUTE5Ijp7InF1ZXN0aW9uIjoiUUlEMTkifSwiUTIyIjp7InF1ZXN0aW9uIjoiUUlEMjIifX0sImJsb2NrcyI6eyJCTF85ejZ0blpQa1lCTDYyTEgiOnsiZGVzY3JpcHRpb24iOiJDU0FUIEludHJvIiwiZWxlbWVudHMiOlt7InR5cGUiOiJRdWVzdGlvbiIsInF1ZXN0aW9uSWQiOiJRSUQ2MyJ9XX0sIkJMX2J2SlNEYkxKNldYcURVOSI6eyJkZXNjcmlwdGlvbiI6Ik92ZXJhbGwgU2F0aXNmYWN0aW9uLCBDdXN0b21lciBTZXJ2aWNlLCBGdXR1cmUiLCJlbGVtZW50cyI6W3sidHlwZSI6IlF1ZXN0aW9uIiwicXVlc3Rpb25JZCI6IlFJRDE2In0seyJ0eXBlIjoiUGFnZUJyZWFrIn0seyJ0eXBlIjoiUXVlc3Rpb24iLCJxdWVzdGlvbklkIjoiUUlEMTcifSx7InR5cGUiOiJQYWdlQnJlYWsifSx7InR5cGUiOiJRdWVzdGlvbiIsInF1ZXN0aW9uSWQiOiJRSUQxOCJ9LHsidHlwZSI6IlBhZ2VCcmVhayJ9LHsidHlwZSI6IlF1ZXN0aW9uIiwicXVlc3Rpb25JZCI6IlFJRDE5In0seyJ0eXBlIjoiUGFnZUJyZWFrIn0seyJ0eXBlIjoiUXVlc3Rpb24iLCJxdWVzdGlvbklkIjoiUUlEMjIifV19fSwiZmxvdyI6W3sidHlwZSI6Ikdyb3VwIiwiZmxvdyI6W3sidHlwZSI6IkVtYmVkZGVkRGF0YSJ9XX0seyJpZCI6IkJMXzl6NnRuWlBrWUJMNjJMSCIsInR5cGUiOiJCbG9jayJ9LHsidHlwZSI6IkJsb2NrUmFuZG9taXplciIsInJhbmRvbWl6YXRpb25PcHRpb25zIjp7InJhbmRvbVN1YnNldCI6MCwiZXZlblByZXNlbnRhdGlvbiI6ZmFsc2V9fSx7ImlkIjoiQkxfYnZKU0RiTEo2V1hxRFU5IiwidHlwZSI6IkJsb2NrIn1dLCJlbWJlZGRlZERhdGEiOlt7Im5hbWUiOiJTb2x1dGlvblJldmlzaW9uIiwiZGVmYXVsdFZhbHVlIjoiMiJ9XSwiY29tbWVudHMiOnt9LCJsb29wQW5kTWVyZ2UiOnt9LCJyZXNwb25zZUNvdW50cyI6eyJhdWRpdGFibGUiOjEwLCJnZW5lcmF0ZWQiOjE2LCJkZWxldGVkIjowfX0sIm1ldGEiOnsiaHR0cFN0YXR1cyI6IjIwMCAtIE9LIiwicmVxdWVzdElkIjoiMThkZGRjMDEtZDhmNi00YzkyLTkwYzItZGU5MjNlMTBiNTg2In19
-  recorded_at: 2020-05-07 22:54:47 GMT
-  recorded_with: vcr/0.5.4, webmockr/0.6.2
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"1f4f832d-a8ec-46fd-bc3b-84b379406f2b","httpStatus":"200
+        - OK"}}'
+  recorded_at: 2025-08-05 00:46:30
+- request:
+    method: GET
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_9FZQ8Vtw1tTNtTU
+  response:
+    status: 200
+    headers:
+      request-time: '58'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      x-permitted-cross-domain-policies: master-only
+      content-type: application/json
+      content-length: '140'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
+        report-uri https://sjc1.qualtrics.com/csp-report
+      date: Tue, 05 Aug 2025 00:46:30 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
+    body:
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"0d0d3f69-e81e-4c6b-b7cc-c9aa56eeea48","httpStatus":"200
+        - OK"}}'
+  recorded_at: 2025-08-05 00:46:30
+- request:
+    method: GET
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_9FZQ8Vtw1tTNtTU
+  response:
+    status: 200
+    headers:
+      request-time: '56'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      x-permitted-cross-domain-policies: master-only
+      content-type: application/json
+      content-length: '140'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
+        report-uri https://sjc1.qualtrics.com/csp-report
+      date: Tue, 05 Aug 2025 00:46:30 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
+    body:
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"91b784f7-326d-4813-a09d-332f779be1b5","httpStatus":"200
+        - OK"}}'
+  recorded_at: 2025-08-05 00:46:30
+- request:
+    method: GET
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_9FZQ8Vtw1tTNtTU
+  response:
+    status: 200
+    headers:
+      request-time: '39'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      x-permitted-cross-domain-policies: master-only
+      content-type: application/json
+      content-length: '140'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
+        report-uri https://sjc1.qualtrics.com/csp-report
+      date: Tue, 05 Aug 2025 00:46:31 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
+    body:
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"c89b96bc-3f47-4331-a096-1e1910ebc683","httpStatus":"200
+        - OK"}}'
+  recorded_at: 2025-08-05 00:46:31
+- request:
+    method: GET
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_9FZQ8Vtw1tTNtTU
+  response:
+    status: 200
+    headers:
+      request-time: '62'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      x-permitted-cross-domain-policies: master-only
+      content-type: application/json
+      content-length: '140'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
+        report-uri https://sjc1.qualtrics.com/csp-report
+      date: Tue, 05 Aug 2025 00:46:31 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
+    body:
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"5dcc79ce-78d3-4b71-9ae6-c43f47c7314f","httpStatus":"200
+        - OK"}}'
+  recorded_at: 2025-08-05 00:46:31
+- request:
+    method: GET
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_9FZQ8Vtw1tTNtTU
+  response:
+    status: 200
+    headers:
+      request-time: '62'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      x-permitted-cross-domain-policies: master-only
+      content-type: application/json
+      content-length: '140'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
+        report-uri https://sjc1.qualtrics.com/csp-report
+      date: Tue, 05 Aug 2025 00:46:31 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
+    body:
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"10466103-82b0-40a1-b508-e95dc4867e3c","httpStatus":"200
+        - OK"}}'
+  recorded_at: 2025-08-05 00:46:31
+- request:
+    method: GET
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_9FZQ8Vtw1tTNtTU
+  response:
+    status: 200
+    headers:
+      request-time: '51'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      x-permitted-cross-domain-policies: master-only
+      content-type: application/json
+      content-length: '140'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
+        report-uri https://sjc1.qualtrics.com/csp-report
+      date: Tue, 05 Aug 2025 00:46:31 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
+    body:
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"da92fb45-3412-4df4-ad23-ea56a153e8bd","httpStatus":"200
+        - OK"}}'
+  recorded_at: 2025-08-05 00:46:31
+- request:
+    method: GET
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_9FZQ8Vtw1tTNtTU
+  response:
+    status: 200
+    headers:
+      request-time: '39'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      x-permitted-cross-domain-policies: master-only
+      content-type: application/json
+      content-length: '140'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
+        report-uri https://sjc1.qualtrics.com/csp-report
+      date: Tue, 05 Aug 2025 00:46:32 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
+    body:
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"aff701e0-d751-44f4-8289-ee8b54589db4","httpStatus":"200
+        - OK"}}'
+  recorded_at: 2025-08-05 00:46:32
+- request:
+    method: GET
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_9FZQ8Vtw1tTNtTU
+  response:
+    status: 200
+    headers:
+      request-time: '35'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      x-permitted-cross-domain-policies: master-only
+      content-type: application/json
+      content-length: '140'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
+        report-uri https://sjc1.qualtrics.com/csp-report
+      date: Tue, 05 Aug 2025 00:46:32 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
+    body:
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"3712d212-e387-414c-9697-12bade611021","httpStatus":"200
+        - OK"}}'
+  recorded_at: 2025-08-05 00:46:32
+- request:
+    method: GET
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_9FZQ8Vtw1tTNtTU
+  response:
+    status: 200
+    headers:
+      request-time: '56'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      x-permitted-cross-domain-policies: master-only
+      content-type: application/json
+      content-length: '192'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
+        report-uri https://sjc1.qualtrics.com/csp-report
+      date: Tue, 05 Aug 2025 00:46:32 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
+    body:
+      string: '{"result":{"fileId":"95260334-043d-442c-a3eb-05aa95df2e56-def","percentComplete":100.0,"status":"complete"},"meta":{"requestId":"dbe63977-bb31-4a60-b099-00fcb965b062","httpStatus":"200
+        - OK"}}'
+  recorded_at: 2025-08-05 00:46:32
+- request:
+    method: GET
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/95260334-043d-442c-a3eb-05aa95df2e56-def/file
+  response:
+    status: 200
+    headers:
+      request-time: '84'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      content-disposition: attachment; filename=Beskar+Armor.zip
+      x-permitted-cross-domain-policies: master-only
+      content-type: application/zip
+      content-length: '4757'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
+        report-uri https://sjc1.qualtrics.com/csp-report
+      date: Tue, 05 Aug 2025 00:46:33 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
+    body:
+      raw_gzip: |-
+        eJxdWFVQFADXXZbupRt2CVGkpaSR7kWQkAWBJaRZYOlGQkkXqUUQSUlpcKVrSZEWkG4QJCSW
+        kN//6fv
+        mO3fu3Jl75rycmfNyoLr4BPQAEhISwHdCQkvAfwH0b584+LjaeoNVvN09vYXhPn59
+        zxc81rV82rlWwu
+        OaQPZ+eOge1dOim4FOp+H9NPskbB5bIV9TEecp+BRsQQX8RU5w5/63om3Q
+        4ZAO7Fkvkhr6ykSy7JEkP
+        Bg7YOck71GnPTP7IvTZtJUZi25daAZiE3yyOVaR6BBYLiHsH6K0
+        6lwOu4d48ReuZGh+by3+hpcbdeLB
+        jtsdG/oYrya70j4R9bZ3u8/4uTxHv9EQmzeMgjClzjjD
+        cVtw4/St6ttKKo5XegRDXfD+tHhCoaV10hQ
+        M7HHS15PN0iP/jGtyfMSUiMa5OpqvIG19ZylC
+        nYb6neEDQwOLqTGLDw/1F0zQGMpw9sv1bi5DZ9ZYbw
+        Zi76cJKWpkSncnh2S2EGPYAEq7SIHF
+        uzOulTE/HSt5vj1D1xsvyPOEV6cielhmlYfFQjOhsku9/Jg7I
+        eItix32OKu3LVGzN2WQ95u2
+        FMsbYfIo0sHVSVteCEfeUv2rGt7EtBSdA7teuhYVCH5WTrfcZB4gx4Lb
+        kx/+llJga/odXErg
+        cOUIAPzhUJnT1euR54ggUT2y5RnffIVck68IagwBtqIp0lrojkRj9o82ayQQolH
+        8DgixCra4
+        ngin1hvZAErAkRFOPiv1/rfOVxqfL6dkqENo44OTjSfx0J0FpLbtIl5knVQpZLaST2n5Xy
+        lR
+        BXKD/vpOSgsQWI8AZLLwGR3wObvPwJwVjWS0M3+LTV1f9cgMsoZVmX6eniirn3HRqcp4nRr+
+        mkdY
+        5ADwpEaU6zyQ4Gja5Y7Mv9JgOyauw8NbwOHjFZo5oxoaGmh+pXn2rMMXvVfRNhFY/vke
+        OepUtv7wjaa
+        EVIeNxdd2nwW97+0+H/4sUVaYYCSC/ox8rPCkNJU4lvPX5wjvka2scDpLwkUV
+        mS6Pu/1a2OrXxbThUP
+        U41Fccyn9WscXZs9WDebmlfc8vYPbFEgv6o7trf9MhzWLVvl8u69BQ
+        lnHcDiKdn0cRkkk6sgVXH5fUF
+        +Mozt0IuQ1TNX7uL2dgowg775BKDJvkbGS4SXEpX5fN2P6R
+        4W4+1KT6bPREfqxWcPZED/s0dpOc6ls6
+        6B0CpKcs8kSRs8atunZIyDCd9a+6LB2tN30x/SEw
+        HAzWLDt6rEPV5bC1sfgVXTCVvPbDjKRSPrXw+6c
+        qtF0l0MYFOfxcbKAIWeMLoQiqLjeebnjW
+        806GGWTxMKIzUBjwEWuo7759HiKyyxqds0VBoistz+Y2yz
+        46xcdasocpKcmO1bZakICxOxix
+        63cz0zJE8EbMMtm6JJN9DyTMOjV/u5U5Hplo8SZIKYU6foB0bCAV+
+        Vt7IMqac/B7qp0E8Dah
+        zqaAtg7LDXJXq10m/v2H5lcASS2MCBh/A6GWiWP7LGrQI/4n6jXAV53AiPd9
+        qsH7ko67qwt6
+        RgOCoh6Uolk6cqTMrPSQzC/DlNiLSdRfcFrSRNf4gVCLZgVYpKTxcCQuYUZkcbUvUmr
+        HmvOM
+        d+PeM+Ssn8RCQYRcDXRuBmkmaYWdpljMZ81PpoABQ4a6fKjG2VVPBUc0O79I7jBs3t8/C1o0
+        W
+        jrWRvsT89LeevwWG5W1B5AAIpprx0zFAIDOY18Hh5Ey1ysyIgz8E6Z6b8UWFTgvS9anhg8d
+        SEbPqQ9T
+        yfIE2QZdEx6zT3+PgMdK43eJmuxhYjUUhmcEBTQzlSMSSXbxvS/Z2SNC35xgPe+O
+        X4TfnDff4W5nw69
+        vf3f8/R1+575oP1zNdjiUaWlt1cyoP6NQ/jzPxRzjshMzinE3Y7HSc19M
+        Sk5+n4/g9OUUyV0ZDyz55X
+        YiriVHRyXxIZUBfwEfTzhVR4mtfrAgMFZDosKDGWllPNMv6D8u
+        v2CKZJsi+FT1NUOCGmY7iMHpUb8Ov
+        Tn7m5kAF9G9qQ1UIbeLfrGD3jfC1uoZpjFiTM7YU1zQ
+        7hMTe7/JBpuFTGb1Jc76GASxiRhHEfRLoLO+
+        2ZkN6Z9un4eUvYFUrFnvs8ZxZ6+sg67NUjIn
+        lHueqfBQjtZZ+buMNlVU5OkjRxsUZsUayeaTH3eE5+0
+        znp9IWDaPozo/J2Yj4YMa0UBVFWsb
+        SatmL73SoQE7u30P6TlPLvXR6HqRD/eCF7F2DBzTBJ+nwFk7Tc
+        ZXJetlec47yiaaPpKjOEe1
+        LB/kYotWxASxoPZquwMbsqpaiNRLLPaOTVdlLHqlaI/5mox8Fx1T71wlt
+        4yhGXR3lT7BLib4
+        mZi/LActfNKkXKhRqIgPxBx+Yr0h6ujR2TOxLCyn7lrHVWRVfeZ+Ex35FKPoqHfK
+        +uUyprUy
+        R7KtGYmtPBL3Ex5ru/w7zL+9lb3G3bErKRDUB06JoUlnV95VFuckeGxqY6WCIY1eNcQjcLK
+        I
+        daB+3LtM0P2ZBFiCUqhs4fLOcH+rQXDq8za2tmOv99FkHmHSudDLhvpTjXXHiVavZA8izb/D
+        +W91Y
+        bnjWuD8TpXQ7jdRBK3kZ3OaJ6QuxKjoWsiUJDSVsaWmNQcvAxKtCarhGjIYwONRok5Y
+        1sgipLY4j9UK
+        0IwbbfeX21NKGpHoCKOhHZutzCztdE/eBNArPmDpBzNng3k4R46PI3leIUlX
+        4kAarZbKGV3yWXSQGU+
+        SnApkCyPnFpYx4X3/kXqNgjGhK3GkctDZxykDdZJfDxZLJRD3L+BP
+        vN6Z8+lHqEJUKAwf5tO0pEcqI0
+        95Cd255ekAKfGKqGitV0fBtKUuBwcgu5DPLBYXM4X+wbYv
+        RXxqf/P8uZn42JTi1wMfFLVhIW6ciyRNL
+        DUnsiHE4xyqZ++khyjvkXtZzxxsPSDH28Bl9ZpC
+        wgTv8Aam/YoSu3g0BEkI2mXRp48YsoGCiZhNoFZr
+        80ApBSNQHqBmS3fpSJi/Rd6JRUVZEfMz
+        9TN77xb25I5tfz7e43o6kNenrSnoJWPPDGkaKNvZxlvgRq0
+        ppHZ1j0PsVxhhZC3lIFIdojix
+        IwgdDCgIxxJh/9IMBHZQHOQxpORWNC2LPVcSFBe0ldYkBdND8+6FZG
+        lpdN/yeB3bMeUrk2b1
+        MCLBw2mQGsopKJ58YKam8rUHJ8Uc0FMFn8wbbpL+xih+1xJlEP1kxv46e9bGY
+        B8SXIVVkl5u
+        Ya8x2WK23EBTqzF9ZP1nbLbeE+HhT1028XieovcTUEon0npaW8cydEZml49fAusoPNQY
+        QlXz
+        LFY3XNuDz4r9O+O2P1gz+EtnBD8ayyaMBGMl1E549PCS1PJ50/UEvOm1WiLlizJLrdqVc98O
+        MP
+        N3f9gS8BFIvwtRTRwp8jnaaDo1XpX72rPOVWSn7rVoaRI25diN8qhGuXoVsf9M1T26CkHn
+        IkwExPROo
+        XzqHt1bh82DFS9jbP8QgqHZ5XktF5o/5xelq8L+iIMY6y71lX+N+caokhCmqOBf
+        QAL7GPIo08Ej72Tj
+        fP0S3q+wfJeYFCrYlzjAskmJrmtG2Cm9hjHf7mwFhCws3V7dVUzELANU
+        lJFUpSQxldQsSt4uWzGdTLW
+        Ec3F6EDBxZCJFajrddh/ocsey7vU4RK1xHZvQZaSkGBqkmhSm
+        Ejsj7EsS48+rIR6WXoSiMusP+fktM/
+        5jwENyPARz6UpvSN40EsiIW6nuYx3oZRJdjIxkrifP
+        ImOBhKAintNpRBLE7DHoiolID+U/HQlSlTpNi
+        J2UEw02o9y/qfTBFahnH+JMCaPNanDglQJi
+        lkpYojcNOJ1PEFRDVAwM43WabFUt0HpqPsjd28qnY6vj
+        71c9Yqjo3oQ7tDS+cCCWyoTGOgLx
+        N2CPJn84Ha2lbDTEt5tHK4t1ygKBIiXMdVqEX9qEh29iaoYdkkw
+        Zm8Xx7JW7GRzy1UpbuBzn
+        h+azNoUOcM7V5a4lLsbTR/SLRhTGj+1VZPvmX32RobmYPaIfOPLX2Lr9tH
+        nw/tCasOTpjVnt
+        5DO3QNOQtMYbfYNcVqTrro3O7KdyY2NkmY5knyTDohesaq3eptpi1usrjDqv+qBQ9
+        +rIK3hS
+        cWHuxmK5nPXFFqgYccR32FRNt9gL17TKwwilGNWf/EDYeiI3wzYaHu/sZQ7eOnxlkaKOnnxQ
+
+        KjR25tVsZGZF19LhNXJZJ5RZPibt+/PUmq1Q97oU41xRUvFUd7rKm+dneR0+v11JyUXDYikH
+        wju1kV
+        XhwDmaw/kng2BA/8e+YY6aCYO06rBqI+lMqr2jeKqxrE6hN2myXjkCjzZbZ3KDfzas
+        Jdz+Kqv97bw2/
+        Cdx6PiTFbs+C8ZJOAvnhghbyjA/Y8Gu+aMZXMmt23wT4Vnltt1clsV5DXPj
+        D91LAlBLmATPzwbmNw+O
+        PW5+yLMwSFmWO8tR7VQVy95rOfu5EfPu1DLHklLcpu6MP349GEWd
+        eYVQ3g+ZCOAaYn+A/907/pByIKf
+        g4mQwArD1nFLL8fE5Ha5gtgeau4ofDLz3yNdRax2yGzHX
+        YwsOqHs2SLNXOZ+EldPFWlNplZavU4Pm10
+        ja5lk29HyJrJQeu+JSGpAv7+yYaHfLpgBCP847
+        K+ThNLXTOpvTFlMy9/h/xmG4aHlJftQhATUR7BzQT
+        joPUrF3IvigMjFHPYhJf5QqnlCccgCc
+        RPfFF7ejJ+KoDqo60Usnee67fWKcIY5DnvU1b7LoyK3xMVlr
+        Jh/oB22G3gDIcMdnbrFAQOm2
+        RynsEvAQ1f0wGhAu/rRCYUPsnGjUCft0bKk0lahndmh4N/hkUjRdLYJ
+        ad52AMxRFHPXW3aYH
+        zMlN4+Vf+IfcRkOEeoCr4/Y6/C9FgESEJY9i49XiVx/Fe5HxRzeQLjJpKpMTyB
+        WoLbg5wCnB
+        9ySxoSSMCD7n5zoTUtsybxBI0i6ztfplpSA5qpM5tgStnL9WOdr4sGydATHb6vlT6TyJv
+        PTs
+        u1fyxBovGecqRosDyjrpczeCuBhWL410/qMQMZNSawlk1+vurlOhxUKgUD+Ob/I1Ou/eY76w
+        iiR
+        NExDKESor6pfPExrIFj9Tzk7NfylOV6OZu7Ta4t+WlnvwPEbgS3mhZQPULpV/eyG7y+UT
+        ARf4RddAJZ
+        gEKkx3izdBHoqfQxGs4EWpBkmU4wbl6ynZQrBpeKp5UUV4CVcUMlv4c4iTsR33
+        ZWP3SeH64j4x4l7nM
+        3v0vEBel3HwmZ6Pu93+N9d6jdNTSQZsKfW6gYQDqthIV3xQUuL3GLsV
+        UKTzPmB3rwUR9tWDvnGcwbQf
+        Bmvtgz/XPPN1MxR/o1W0r5Gu39c6sziq7AqLcb44WQ0QmaJK
+        UJd+Njrl67DQd+p2zTBKk/Tr1sSARev
+        Jl8QH55/EBfmMf5Ee9IKsrsS0dXR4EUtcyjPxF06I
+        e7n5KWOgHogN40XQHqxQ5jFJHJB5Ayvfx0xkMF
+        xAusPo9WBNIYPkcqmAmMmiRRqER6CcP6Fl
+        QP1QC/5shRzuWwbpE6tN78ovVzX7ymJasqoS7pP6NNrqh
+        0pAu08hAyEjb2RT4f6OcQvUGjnb
+        reF28djvjWMAX9QbGi0C1m/f1SfcYt2p8y3qQQs/TOlk3Izwd83r
+        QAsJgpUQHTILBmux3FnM
+        9clwWfDc+XMm/NIH8/VSSgsF1YKc7s+dl0tG67Nlot6VwL8p04jmv66U68x
+        oIILl0vva8bbF
+        vaEOHlOnYZr91WhPYc5ev8fKe39eR/qDrZ1ZevFEwQfDZoGQkqzXsqnXHzrUgqkbQt
+        dO037m
+        lFRmqJ49ua/vWRW9l/ME131FOiFl3YBUJTphaRAlTz37yn1sTHLaSTmhm7+16cC2TCUVttK0
+
+        n6ofxezdW7DItkT7+lBWvxOqfdVYu3lU0DPPCv4Y67HOyoRXQitVmijywjCqHzo7zy/d1o+Y
+        yyquiN0
+        EuuXFJAnnXH9rT7+sZosQ+tRUJ+U491Aeu/LSRjw/8+qFUTn9o1rJwRq/D5weflR/
+        cs4vT7qFKCKmm7
+        pKm1ad0YU54RjE4aOrV1pmrH+ZhIrUfGhMyh88hB/q7DPYA1LN4KIRMM35
+        ZrT92Jb29fu0R2ZKhu2sP
+        Od8LVl9wDg7CyDBrG1xGJRpzu5+wX6fUmNNvZtDLYWmH0pF0E//
+        +yquSUNsXIgfrSUF317ZxYRz/LZA
+        yxncy2mWlAr1x+X6Wtav7IpT1gwd1fwLa0lPUPpneLaS
+        kPt7XFjfkMnPCDGP9jy/99jbSSkGzeNfot3
+        nsMLK091H0HCHmHq5Ay0rvW/N7+oHvY/jnbWT
+        NYPcRsS+PJsd/xj0hc8iMZCvNuOiFOoYaQQdV60rMk
+        fbLfgiIJuwxbxv6ZQpo9pboYq+ak7y
+        7QbR5TGwfbrlGufTcKguMckSyIwGnxYAAEoBAFBdPCA94D8V0
+        n9zIMD/4n8LJaguIdH///H+
+        jeK/q/JPCQD8H8TN9Q8=
+  recorded_at: 2025-08-05 00:46:33
+- request:
+    method: GET
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/
+  response:
+    status: 200
+    headers:
+      request-time: '221'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      x-permitted-cross-domain-policies: master-only
+      content-type: application/json
+      content-length: '8489'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
+        report-uri https://sjc1.qualtrics.com/csp-report
+      date: Tue, 05 Aug 2025 00:46:33 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
+    body:
+      string: '{"result":{"id":"SV_3gbwq8aJgqPwQDP","name":"Beskar Armor","ownerId":"UR_8wfG5qsMxuh0Jrn","organizationId":"conjoint","isActive":true,"creationDate":"2020-02-20T00:35:40Z","lastModifiedDate":"2024-06-10T23:20:09Z","expiration":{"startDate":null,"endDate":null},"questions":{"QID63":{"questionType":{"type":"MC","selector":"SAVR","subSelector":"TX"},"questionText":"How
+        often do you typically use your beskar armor?","questionLabel":null,"validation":{"doesForceResponse":true},"questionName":"Q63","choices":{"1":{"recode":"1","description":"daily","choiceText":"<span
+        style=\"color:#8e44ad;\">Daily</span>","imageDescription":null,"variableName":"daily","analyze":true},"2":{"recode":"2","description":"weekly","choiceText":"Weekly","imageDescription":null,"variableName":"weekly","analyze":true},"3":{"recode":"3","description":"monthly","choiceText":"Once
+        a <span style=\"background-color:#9b59b6;\">month</span>","imageDescription":null,"variableName":"monthly","analyze":true},"4":{"recode":"4","description":"less
+        often","choiceText":"<a href=\"https://www.instagram.com/p/B5qn5ath0ij/?hl=en\">Less
+        often</a>","imageDescription":null,"variableName":"less often","analyze":true},"5":{"recode":"5","description":"do
+        not use","choiceText":"Do not use","imageDescription":null,"variableName":"do
+        not use","analyze":true}}},"QID16":{"questionType":{"type":"MC","selector":"SAVR","subSelector":"TX"},"questionText":"Overall,
+        how satisfied are you with your beskar armor?","questionLabel":null,"validation":{"doesForceResponse":true},"questionName":"Q16","choices":{"5":{"recode":"5","description":"<strong>Extremely</strong>
+        satisfied","choiceText":"<strong>Extremely</strong> satisfied","imageDescription":null,"variableName":null,"analyze":true},"4":{"recode":"4","description":"<a
+        href=\"https://giphy.com/explore/baby-yoda\">Somewhat satisfied</a>","choiceText":"<a
+        href=\"https://giphy.com/explore/baby-yoda\">Somewhat satisfied</a>","imageDescription":null,"variableName":null,"analyze":true},"3":{"recode":"3","description":"<span
+        style=\"background-color:#e74c3c;\">Neither</span> <span style=\"background-color:#e67e22;\">satisfied</span>
+        <span style=\"background-color:#f1c40f;\">nor</span> <span style=\"background-color:#27ae60;\">dissatisfied</span>","choiceText":"<span
+        style=\"background-color:#e74c3c;\">Neither</span> <span style=\"background-color:#e67e22;\">satisfied</span>
+        <span style=\"background-color:#f1c40f;\">nor</span> <span style=\"background-color:#27ae60;\">dissatisfied</span>","imageDescription":null,"variableName":null,"analyze":true},"2":{"recode":"2","description":"<a
+        href=\"https://www.gq.com/story/werner-herzog-baby-yoda\">Somewhat dissatisfied</a>","choiceText":"<a
+        href=\"https://www.gq.com/story/werner-herzog-baby-yoda\">Somewhat dissatisfied</a>","imageDescription":null,"variableName":null,"analyze":true},"1":{"recode":"1","description":"<em>Extremely</em>
+        dissatisfied","choiceText":"<em>Extremely</em> dissatisfied","imageDescription":null,"variableName":null,"analyze":true}}},"QID17":{"questionType":{"type":"MC","selector":"SAHR","subSelector":"TX"},"questionText":"Have
+        you ever contacted customer service about your beskar armor?","questionLabel":null,"validation":{"doesForceResponse":true},"questionName":"Q17","choices":{"1":{"recode":"1","description":"Yes","choiceText":"Yes","imageDescription":null,"variableName":null,"analyze":true},"2":{"recode":"2","description":"No","choiceText":"No","imageDescription":null,"variableName":null,"analyze":true}}},"QID18":{"questionType":{"type":"MC","selector":"SAVR","subSelector":"TX"},"questionText":"Have
+        all problems been resolved to your complete satisfaction?","questionLabel":null,"validation":{"doesForceResponse":false},"questionName":"Q18","choices":{"1":{"recode":"1","description":"Yes,
+        by the tribe or its representatives \n<video class=\"qmedia\" controls=\"true\"
+        height=\"268\" preload=\"auto\" width=\"268\"><source src=\"https://i.imgur.com/QlAme0q.mp4\"
+        type=\"video/mp4\" /><embed align=\"middle\" autoplay=\"false\" bgcolor=\"white\"
+        class=\"qmedia\" controller=\"true\" height=\"268\" pluginspage=\"http://www.apple.com/quicktime/download/\"
+        src=\"https://i.imgur.com/QlAme0q.mp4\" type=\"video/quicktime\" width=\"268\"
+        /></video>\n","choiceText":"Yes, by the tribe or its representatives \n<video
+        class=\"qmedia\" controls=\"true\" height=\"268\" preload=\"auto\" width=\"268\"><source
+        src=\"https://i.imgur.com/QlAme0q.mp4\" type=\"video/mp4\" /><embed align=\"middle\"
+        autoplay=\"false\" bgcolor=\"white\" class=\"qmedia\" controller=\"true\"
+        height=\"268\" pluginspage=\"http://www.apple.com/quicktime/download/\" src=\"https://i.imgur.com/QlAme0q.mp4\"
+        type=\"video/quicktime\" width=\"268\" /></video>\n","imageDescription":null,"variableName":null,"analyze":true},"2":{"recode":"2","description":"Yes,
+        by me or someone outside the tribe \n<video class=\"qmedia\" controls=\"true\"
+        height=\"268\" preload=\"auto\" width=\"268\"><source src=\"https://i.imgur.com/5sRVO4d.mp4\"
+        type=\"video/mp4\" /><embed align=\"middle\" autoplay=\"false\" bgcolor=\"white\"
+        class=\"qmedia\" controller=\"true\" height=\"268\" pluginspage=\"http://www.apple.com/quicktime/download/\"
+        src=\"https://i.imgur.com/5sRVO4d.mp4\" type=\"video/quicktime\" width=\"268\"
+        /></video>\n","choiceText":"Yes, by me or someone outside the tribe \n<video
+        class=\"qmedia\" controls=\"true\" height=\"268\" preload=\"auto\" width=\"268\"><source
+        src=\"https://i.imgur.com/5sRVO4d.mp4\" type=\"video/mp4\" /><embed align=\"middle\"
+        autoplay=\"false\" bgcolor=\"white\" class=\"qmedia\" controller=\"true\"
+        height=\"268\" pluginspage=\"http://www.apple.com/quicktime/download/\" src=\"https://i.imgur.com/5sRVO4d.mp4\"
+        type=\"video/quicktime\" width=\"268\" /></video>\n","imageDescription":null,"variableName":null,"analyze":true},"3":{"recode":"3","description":"No,
+        the problem was not resolved \n<video class=\"qmedia\" controls=\"true\" height=\"168\"
+        preload=\"auto\" width=\"268\"><source src=\"https://i.imgur.com/i40m72o.mp4\"
+        type=\"video/mp4\" /><embed align=\"middle\" autoplay=\"false\" bgcolor=\"white\"
+        class=\"qmedia\" controller=\"true\" height=\"168\" pluginspage=\"http://www.apple.com/quicktime/download/\"
+        src=\"https://i.imgur.com/i40m72o.mp4\" type=\"video/quicktime\" width=\"268\"
+        /></video>\n","choiceText":"No, the problem was not resolved \n<video class=\"qmedia\"
+        controls=\"true\" height=\"168\" preload=\"auto\" width=\"268\"><source src=\"https://i.imgur.com/i40m72o.mp4\"
+        type=\"video/mp4\" /><embed align=\"middle\" autoplay=\"false\" bgcolor=\"white\"
+        class=\"qmedia\" controller=\"true\" height=\"168\" pluginspage=\"http://www.apple.com/quicktime/download/\"
+        src=\"https://i.imgur.com/i40m72o.mp4\" type=\"video/quicktime\" width=\"268\"
+        /></video>\n","imageDescription":null,"variableName":null,"analyze":true}}},"QID19":{"questionType":{"type":"TE","selector":"ESTB","subSelector":null},"questionText":"Why
+        not?","questionLabel":null,"validation":{"doesForceResponse":false},"questionName":"Q19"},"QID22":{"questionType":{"type":"TE","selector":"ESTB","subSelector":null},"questionText":"If
+        you would like to share any additional comments or experiences about your
+        beskar armor, please enter them below.","questionLabel":null,"validation":{"doesForceResponse":false},"questionName":"Q22"}},"exportColumnMap":{"Q63":{"question":"QID63"},"Q16":{"question":"QID16"},"Q17":{"question":"QID17"},"Q18":{"question":"QID18"},"Q19":{"question":"QID19"},"Q22":{"question":"QID22"}},"blocks":{"BL_9z6tnZPkYBL62LH":{"description":"CSAT
+        Intro","elements":[{"type":"Question","questionId":"QID63"}]},"BL_bvJSDbLJ6WXqDU9":{"description":"Overall
+        Satisfaction, Customer Service, Future","elements":[{"type":"Question","questionId":"QID16"},{"type":"PageBreak"},{"type":"Question","questionId":"QID17"},{"type":"PageBreak"},{"type":"Question","questionId":"QID18"},{"type":"PageBreak"},{"type":"Question","questionId":"QID19"},{"type":"PageBreak"},{"type":"Question","questionId":"QID22"}]}},"flow":[{"type":"Group","flow":[{"type":"EmbeddedData"}]},{"id":"BL_9z6tnZPkYBL62LH","type":"Block"},{"type":"BlockRandomizer","randomizationOptions":{"randomSubset":0,"evenPresentation":false}},{"id":"BL_bvJSDbLJ6WXqDU9","type":"Block"}],"embeddedData":[{"name":"SolutionRevision","defaultValue":"2"}],"comments":{},"loopAndMerge":{},"responseCounts":{"auditable":27,"generated":17,"deleted":0}},"meta":{"httpStatus":"200
+        - OK","requestId":"e0d9541a-c4bb-46e7-bd95-d82903218806"}}'
+  recorded_at: 2025-08-05 00:46:34
+recorded_with: VCR-vcr/2.0.0
