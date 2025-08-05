@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      QUALTRICS_BASE_URL: ${{ secrets.QUALTRICS_BASE_URL }}
+      QUALTRICS_API_KEY: ${{ secrets.QUALTRICS_API_KEY }}
 
     steps:
       - uses: actions/checkout@v4
