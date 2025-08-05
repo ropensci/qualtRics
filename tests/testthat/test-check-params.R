@@ -4,9 +4,14 @@ test_that("logical params should throw error if not TRUE/FALSE", {
   log_notlog <- "what's that?"
 
   expect_error(checkarg_isboolean(log_NA), "must be a single `TRUE` or `FALSE`")
-  expect_error(checkarg_isboolean(log_NULL), "must be a single `TRUE` or `FALSE`")
-  expect_error(checkarg_isboolean(log_notlog), "must be a single `TRUE` or `FALSE`")
-
+  expect_error(
+    checkarg_isboolean(log_NULL),
+    "must be a single `TRUE` or `FALSE`"
+  )
+  expect_error(
+    checkarg_isboolean(log_notlog),
+    "must be a single `TRUE` or `FALSE`"
+  )
 })
 
 test_that("integer-likes should error only if present and not integer-like", {
@@ -15,7 +20,7 @@ test_that("integer-likes should error only if present and not integer-like", {
   int_NA <- NA
   int_string <- "what"
   int_nonint <- 1.1
-  int_multiple <- c(1,4)
+  int_multiple <- c(1, 4)
 
   expect_null(checkarg_isintegerish(int_NULL))
   expect_null(checkarg_isintegerish(int_int))
@@ -24,8 +29,6 @@ test_that("integer-likes should error only if present and not integer-like", {
   expect_error(checkarg_isintegerish(int_nonint), "a single integer")
   expect_error(checkarg_isintegerish(int_multiple), "a single integer")
 })
-
-
 
 test_that("limit should error if present and not integer >= 1", {
   limit_integer <- 2
@@ -37,9 +40,7 @@ test_that("limit should error if present and not integer >= 1", {
   expect_error(checkarg_limit(limit_nonint), "a single integer")
   expect_error(checkarg_limit(limit_nonnum), "a single integer")
   expect_error(checkarg_limit(limit_toolow), "must be 1 or greater")
-
 })
-
 
 test_that("include_questions should error if not character vector of QID[nums] w/no missings", {
   qs_NULL <- NULL #acceptable
@@ -55,7 +56,6 @@ test_that("include_questions should error if not character vector of QID[nums] w
   expect_error(checkarg_include_questions(qs_names), "Qualtrics internal IDs")
   expect_error(checkarg_include_questions(qs_missing), "missing values")
   expect_error(checkarg_include_questions(qs_wrongtype), "character vector")
-
 })
 
 test_that("include_metadata should error if not character vector of correct names", {
@@ -69,11 +69,13 @@ test_that("include_metadata should error if not character vector of correct name
 
   expect_null(checkarg_include_questions(ms_NULL))
   expect_equal(checkarg_include_metadata(ms_NA), character())
-  expect_equal(checkarg_include_metadata(ms_good), c("_recordId", "recipientEmail"))
+  expect_equal(
+    checkarg_include_metadata(ms_good),
+    c("_recordId", "recipientEmail")
+  )
   expect_error(checkarg_include_metadata(ms_names), "invalid names used")
   expect_error(checkarg_include_metadata(ms_missing), "missing values")
   expect_error(checkarg_include_metadata(ms_wrongtype), "character vector")
-
 })
 
 test_that("include_embedded should error if not character vector names", {
@@ -88,5 +90,4 @@ test_that("include_embedded should error if not character vector names", {
   expect_equal(checkarg_include_embedded(es_good), es_good)
   expect_error(checkarg_include_embedded(es_missing), "missing values")
   expect_error(checkarg_include_embedded(es_wrongtype), "character vector")
-
 })

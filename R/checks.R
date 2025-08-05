@@ -717,7 +717,7 @@ checkarg_fetch_id_data <-
       rlang::abort(
         c("Error in `.data`:",
           "`fetch_id()` needs a dataframe from `all_surveys()` with columns `id` & `name`",
-          'Example usage: `all_surveys() %>% fetch_id("That Survey I Need")`')
+          'Example usage: `all_surveys() |> fetch_id("That Survey I Need")`')
       )
     }
   }
