@@ -1,6 +1,8 @@
 # qualtRics (development version)
 
-- Again hanged how CSV files are extracted from the Qualtrics zip archive, to handle more special characters in survey titles (#355)
+- Again changed how CSV files are extracted from the Qualtrics zip archive, to handle more special characters in survey titles (#355)
+
+- Updated tests for latest versions of vcr and webmockr (#374, #375)
 
 # qualtRics 3.2.1
 
