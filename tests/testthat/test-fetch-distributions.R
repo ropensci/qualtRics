@@ -2,13 +2,16 @@ skip_on_cran()
 skip_on_ci()
 
 test_that("fetch_distributions returns a tbl_df with expected column names and types", {
-  local_mocked_bindings(glue_api_v3 = function(base_url) "https://stoplight.io/mocks/qualtricsv2/publicapidocs/60919")
+  local_mocked_bindings(
+    glue_api_v3 = function(base_url)
+      "https://stoplight.io/mocks/qualtricsv2/publicapidocs/60919"
+  )
 
   x <- fetch_distributions("SV_abcdef123456789")
-  expect_s3_class(x, c("tbl_df","tbl","data.frame"))
-  expect_s3_class(x$sendDate,  c("POSIXct", "POSIXt"))
-  expect_s3_class(x$createdDate,  c("POSIXct", "POSIXt"))
-  expect_s3_class(x$modifiedDate,  c("POSIXct", "POSIXt"))
+  expect_s3_class(x, c("tbl_df", "tbl", "data.frame"))
+  expect_s3_class(x$sendDate, c("POSIXct", "POSIXt"))
+  expect_s3_class(x$createdDate, c("POSIXct", "POSIXt"))
+  expect_s3_class(x$modifiedDate, c("POSIXct", "POSIXt"))
 
   expect_type(x$id, "character")
   expect_type(x$parentDistributionId, "character")
@@ -41,5 +44,4 @@ test_that("fetch_distributions returns a tbl_df with expected column names and t
   expect_type(x$stats_finished, "integer")
   expect_type(x$stats_complaints, "integer")
   expect_type(x$stats_blocked, "integer")
-
 })
