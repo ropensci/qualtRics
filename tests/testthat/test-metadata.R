@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("metadata() should throw an error if passing invalid options to input", {
   expect_warning(
     expect_error(

@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("column_map() retrieves survey column mapping", {
   vcr::use_cassette("column_map", {
     x <- column_map("SV_5BJRo2RGHajIlOB")

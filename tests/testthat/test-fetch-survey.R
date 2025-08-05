@@ -1,6 +1,6 @@
-test_that("fetch_survey() returns survey with default params", {
-  skip_on_cran()
+skip_on_cran()
 
+test_that("fetch_survey() returns survey with default params", {
   x <- fetch_survey("SV_3gbwq8aJgqPwQDP")
 
   expect_s3_class(x, c("spec_tbl_df", "tbl_df", "tbl", "data.frame"))
@@ -43,8 +43,6 @@ test_that("fetch_survey() returns survey with default params", {
 })
 
 test_that("fetch_survey() returns survey with custom params", {
-  skip_on_cran()
-
   x <- fetch_survey(
     "SV_3gbwq8aJgqPwQDP",
     start_date = "2015-01-01",
@@ -72,8 +70,6 @@ test_that("fetch_survey() returns survey with custom params", {
 })
 
 test_that("fetch_survey() excludes variable classes when requested", {
-  skip_on_cran()
-
   x <- fetch_survey(
     "SV_3gbwq8aJgqPwQDP",
     start_date = "2015-01-01",
@@ -92,8 +88,6 @@ test_that("fetch_survey() excludes variable classes when requested", {
 })
 
 test_that("fetch_survey() returns survey with only one QID", {
-  skip_on_cran()
-
   x <- fetch_survey(
     "SV_3gbwq8aJgqPwQDP",
     limit = 15,
@@ -157,8 +151,6 @@ test_that("unanswer_recode is integer-ish", {
 })
 
 test_that("correct error for deprecated args", {
-  skip_on_cran()
-
   expect_snapshot(
     fetch_survey("1234", force_request = TRUE),
     error = TRUE
@@ -170,8 +162,6 @@ test_that("correct error for deprecated args", {
 })
 
 test_that("error if bad temporary directory", {
-  skip_on_cran()
-
   expect_error(
     fetch_survey("1234", tmp_dir = "/unrealistictempdirectory/"),
     "not an existing directory"

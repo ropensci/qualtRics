@@ -1,3 +1,5 @@
+skip_on_cran()
+
 test_that("fetch_description() retrieves an appropriate survey description", {
   vcr::use_cassette("fetch_description", {
     x <- fetch_description("SV_3gbwq8aJgqPwQDP")
