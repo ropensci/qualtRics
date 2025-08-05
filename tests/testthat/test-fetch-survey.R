@@ -1,9 +1,7 @@
 test_that("fetch_survey() returns survey with default params", {
   skip_on_cran()
 
-  vcr::use_cassette("fetch_survey", {
-    x <- fetch_survey("SV_3gbwq8aJgqPwQDP")
-  })
+  x <- fetch_survey("SV_3gbwq8aJgqPwQDP")
 
   expect_s3_class(x, c("spec_tbl_df", "tbl_df", "tbl", "data.frame"))
   expect_named(
@@ -47,20 +45,17 @@ test_that("fetch_survey() returns survey with default params", {
 test_that("fetch_survey() returns survey with custom params", {
   skip_on_cran()
 
-  vcr::use_cassette("fetch_survey_custom", {
-    x <-
-      fetch_survey(
-        "SV_3gbwq8aJgqPwQDP",
-        start_date = "2015-01-01",
-        end_date = "2022-06-02 18:40:53",
-        unanswer_recode = 999,
-        limit = 15,
-        include_questions = c("QID16", "QID17"),
-        include_metadata = c("StartDate", "EndDate", "ResponseId"),
-        breakout_sets = FALSE,
-        col_types = readr::cols(EndDate = readr::col_character())
-      )
-  })
+  x <- fetch_survey(
+    "SV_3gbwq8aJgqPwQDP",
+    start_date = "2015-01-01",
+    end_date = "2022-06-02 18:40:53",
+    unanswer_recode = 999,
+    limit = 15,
+    include_questions = c("QID16", "QID17"),
+    include_metadata = c("StartDate", "EndDate", "ResponseId"),
+    breakout_sets = FALSE,
+    col_types = readr::cols(EndDate = readr::col_character())
+  )
 
   expect_s3_class(x, c("tbl_df", "tbl", "data.frame"))
   expect_equal(nrow(x), 15)
@@ -79,19 +74,16 @@ test_that("fetch_survey() returns survey with custom params", {
 test_that("fetch_survey() excludes variable classes when requested", {
   skip_on_cran()
 
-  vcr::use_cassette("fetch_survey_exclude", {
-    x <-
-      fetch_survey(
-        "SV_3gbwq8aJgqPwQDP",
-        start_date = "2015-01-01",
-        end_date = "2022-06-02 18:40:53",
-        unanswer_recode = 999,
-        limit = 15,
-        include_questions = NA,
-        include_metadata = NA,
-        breakout_sets = FALSE
-      )
-  })
+  x <- fetch_survey(
+    "SV_3gbwq8aJgqPwQDP",
+    start_date = "2015-01-01",
+    end_date = "2022-06-02 18:40:53",
+    unanswer_recode = 999,
+    limit = 15,
+    include_questions = NA,
+    include_metadata = NA,
+    breakout_sets = FALSE
+  )
 
   expect_s3_class(x, c("tbl_df", "tbl", "data.frame"))
   expect_equal(nrow(x), 15)
@@ -102,14 +94,12 @@ test_that("fetch_survey() excludes variable classes when requested", {
 test_that("fetch_survey() returns survey with only one QID", {
   skip_on_cran()
 
-  vcr::use_cassette("fetch_one_qid", {
-    x <- fetch_survey(
-      "SV_3gbwq8aJgqPwQDP",
-      limit = 15,
-      include_questions = c("QID17"),
-      breakout_sets = FALSE
-    )
-  })
+  x <- fetch_survey(
+    "SV_3gbwq8aJgqPwQDP",
+    limit = 15,
+    include_questions = c("QID17"),
+    breakout_sets = FALSE
+  )
 
   expect_s3_class(x, c("spec_tbl_df", "tbl_df", "tbl", "data.frame"))
   expect_equal(nrow(x), 15)

@@ -1,8 +1,7 @@
-test_that("extract_colmap() retrieves an appropriate column map generated within read_survey", {
-  vcr::use_cassette("extract_colmap", {
-    x <- fetch_survey("SV_56icaa9YAafpAqx", add_column_map = TRUE)
-  })
+skip_on_cran()
 
+test_that("extract_colmap() retrieves an appropriate column map generated within read_survey", {
+  x <- fetch_survey("SV_56icaa9YAafpAqx", add_column_map = TRUE)
   cm <- extract_colmap(x)
 
   expect_s3_class(cm, c("tbl_df", "tbl", "data.frame"))

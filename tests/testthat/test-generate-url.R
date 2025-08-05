@@ -1,4 +1,4 @@
-test_that("all surveys URL", {
+test_that("generate survey URLs", {
   withr::with_envvar(
     new = c(
       "QUALTRICS_API_KEY" = "1234",
