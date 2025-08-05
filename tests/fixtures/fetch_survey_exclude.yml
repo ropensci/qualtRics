@@ -7,7 +7,7 @@ http_interactions:
   response:
     status: 200
     headers:
-      request-time: '267'
+      request-time: '254'
       x-frame-options: DENY
       x-xss-protection: 1; mode=block
       x-permitted-cross-domain-policies: master-only
@@ -19,19 +19,19 @@ http_interactions:
       content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
         *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
         report-uri https://sjc1.qualtrics.com/csp-report
-      date: Tue, 05 Aug 2025 00:46:39 GMT
+      date: Tue, 05 Aug 2025 02:59:46 GMT
       strict-transport-security: max-age=63072000; includeSubDomains; preload
     body:
-      string: '{"result":{"progressId":"ES_6DzAhMowMc7ryN8","percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"051e8cdc-ae85-4a36-b636-4e7d5c0c9999","httpStatus":"200
+      string: '{"result":{"progressId":"ES_etDRRwbspBwHPLg","percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"d95ec224-36a4-4ee1-9808-3d680f7e47bc","httpStatus":"200
         - OK"}}'
-  recorded_at: 2025-08-05 00:46:39
+  recorded_at: 2025-08-05 02:59:46
 - request:
     method: GET
-    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_6DzAhMowMc7ryN8
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_etDRRwbspBwHPLg
   response:
     status: 200
     headers:
-      request-time: '51'
+      request-time: '57'
       x-frame-options: DENY
       x-xss-protection: 1; mode=block
       x-permitted-cross-domain-policies: master-only
@@ -43,15 +43,63 @@ http_interactions:
       content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
         *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
         report-uri https://sjc1.qualtrics.com/csp-report
-      date: Tue, 05 Aug 2025 00:46:40 GMT
+      date: Tue, 05 Aug 2025 02:59:47 GMT
       strict-transport-security: max-age=63072000; includeSubDomains; preload
     body:
-      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"411b02ae-5455-4cdd-baa8-20df589f2c9e","httpStatus":"200
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"b2485638-7f40-49b4-a5aa-7c9852e3a57a","httpStatus":"200
         - OK"}}'
-  recorded_at: 2025-08-05 00:46:40
+  recorded_at: 2025-08-05 02:59:47
 - request:
     method: GET
-    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_6DzAhMowMc7ryN8
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_etDRRwbspBwHPLg
+  response:
+    status: 200
+    headers:
+      request-time: '57'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      x-permitted-cross-domain-policies: master-only
+      content-type: application/json
+      content-length: '140'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
+        report-uri https://sjc1.qualtrics.com/csp-report
+      date: Tue, 05 Aug 2025 02:59:47 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
+    body:
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"1f368b44-8ba5-430e-891e-4b77babe5b5c","httpStatus":"200
+        - OK"}}'
+  recorded_at: 2025-08-05 02:59:47
+- request:
+    method: GET
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_etDRRwbspBwHPLg
+  response:
+    status: 200
+    headers:
+      request-time: '53'
+      x-frame-options: DENY
+      x-xss-protection: 1; mode=block
+      x-permitted-cross-domain-policies: master-only
+      content-type: application/json
+      content-length: '140'
+      referrer-policy: strict-origin-when-cross-origin
+      x-content-type-options: nosniff
+      permissions-policy: camera=(), geolocation=(), microphone=()
+      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
+        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
+        report-uri https://sjc1.qualtrics.com/csp-report
+      date: Tue, 05 Aug 2025 02:59:47 GMT
+      strict-transport-security: max-age=63072000; includeSubDomains; preload
+    body:
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"f6857873-19dc-4119-a862-e298474df5f9","httpStatus":"200
+        - OK"}}'
+  recorded_at: 2025-08-05 02:59:47
+- request:
+    method: GET
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_etDRRwbspBwHPLg
   response:
     status: 200
     headers:
@@ -67,19 +115,19 @@ http_interactions:
       content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
         *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
         report-uri https://sjc1.qualtrics.com/csp-report
-      date: Tue, 05 Aug 2025 00:46:40 GMT
+      date: Tue, 05 Aug 2025 02:59:47 GMT
       strict-transport-security: max-age=63072000; includeSubDomains; preload
     body:
-      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"cafb0330-775d-429d-873e-dd1e9b4cdcae","httpStatus":"200
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"817e5615-1d98-4560-8105-da292314abc5","httpStatus":"200
         - OK"}}'
-  recorded_at: 2025-08-05 00:46:40
+  recorded_at: 2025-08-05 02:59:47
 - request:
     method: GET
-    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_6DzAhMowMc7ryN8
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_etDRRwbspBwHPLg
   response:
     status: 200
     headers:
-      request-time: '46'
+      request-time: '65'
       x-frame-options: DENY
       x-xss-protection: 1; mode=block
       x-permitted-cross-domain-policies: master-only
@@ -91,19 +139,19 @@ http_interactions:
       content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
         *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
         report-uri https://sjc1.qualtrics.com/csp-report
-      date: Tue, 05 Aug 2025 00:46:40 GMT
+      date: Tue, 05 Aug 2025 02:59:48 GMT
       strict-transport-security: max-age=63072000; includeSubDomains; preload
     body:
-      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"8149c4bb-12b4-4f53-a9a6-a080c20eb44b","httpStatus":"200
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"f963fc84-539b-4df9-9586-f0cf2cb41fb2","httpStatus":"200
         - OK"}}'
-  recorded_at: 2025-08-05 00:46:40
+  recorded_at: 2025-08-05 02:59:48
 - request:
     method: GET
-    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_6DzAhMowMc7ryN8
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_etDRRwbspBwHPLg
   response:
     status: 200
     headers:
-      request-time: '41'
+      request-time: '57'
       x-frame-options: DENY
       x-xss-protection: 1; mode=block
       x-permitted-cross-domain-policies: master-only
@@ -115,19 +163,19 @@ http_interactions:
       content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
         *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
         report-uri https://sjc1.qualtrics.com/csp-report
-      date: Tue, 05 Aug 2025 00:46:40 GMT
+      date: Tue, 05 Aug 2025 02:59:48 GMT
       strict-transport-security: max-age=63072000; includeSubDomains; preload
     body:
-      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"fa4b29ac-8eb3-4024-8c0c-e18daaa131c2","httpStatus":"200
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"822a2f2f-00e2-4f60-9706-1a01d2959c61","httpStatus":"200
         - OK"}}'
-  recorded_at: 2025-08-05 00:46:40
+  recorded_at: 2025-08-05 02:59:48
 - request:
     method: GET
-    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_6DzAhMowMc7ryN8
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_etDRRwbspBwHPLg
   response:
     status: 200
     headers:
-      request-time: '63'
+      request-time: '45'
       x-frame-options: DENY
       x-xss-protection: 1; mode=block
       x-permitted-cross-domain-policies: master-only
@@ -139,43 +187,19 @@ http_interactions:
       content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
         *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
         report-uri https://sjc1.qualtrics.com/csp-report
-      date: Tue, 05 Aug 2025 00:46:41 GMT
+      date: Tue, 05 Aug 2025 02:59:48 GMT
       strict-transport-security: max-age=63072000; includeSubDomains; preload
     body:
-      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"b9413807-fab7-4b97-b880-326aa70f441c","httpStatus":"200
+      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"8e621645-7c98-4852-9cad-4aa19f70f9dc","httpStatus":"200
         - OK"}}'
-  recorded_at: 2025-08-05 00:46:40
+  recorded_at: 2025-08-05 02:59:48
 - request:
     method: GET
-    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_6DzAhMowMc7ryN8
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_etDRRwbspBwHPLg
   response:
     status: 200
     headers:
-      request-time: '51'
-      x-frame-options: DENY
-      x-xss-protection: 1; mode=block
-      x-permitted-cross-domain-policies: master-only
-      content-type: application/json
-      content-length: '140'
-      referrer-policy: strict-origin-when-cross-origin
-      x-content-type-options: nosniff
-      permissions-policy: camera=(), geolocation=(), microphone=()
-      content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
-        *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
-        report-uri https://sjc1.qualtrics.com/csp-report
-      date: Tue, 05 Aug 2025 00:46:41 GMT
-      strict-transport-security: max-age=63072000; includeSubDomains; preload
-    body:
-      string: '{"result":{"percentComplete":0.0,"status":"inProgress"},"meta":{"requestId":"feae99da-b036-4727-89fc-43a34a47333f","httpStatus":"200
-        - OK"}}'
-  recorded_at: 2025-08-05 00:46:41
-- request:
-    method: GET
-    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/ES_6DzAhMowMc7ryN8
-  response:
-    status: 200
-    headers:
-      request-time: '67'
+      request-time: '43'
       x-frame-options: DENY
       x-xss-protection: 1; mode=block
       x-permitted-cross-domain-policies: master-only
@@ -187,19 +211,19 @@ http_interactions:
       content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
         *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
         report-uri https://sjc1.qualtrics.com/csp-report
-      date: Tue, 05 Aug 2025 00:46:41 GMT
+      date: Tue, 05 Aug 2025 02:59:48 GMT
       strict-transport-security: max-age=63072000; includeSubDomains; preload
     body:
-      string: '{"result":{"fileId":"5729ae67-3b50-4ec0-8e34-236d63762557-def","percentComplete":100.0,"status":"complete"},"meta":{"requestId":"c6dc38ca-94bb-41d9-b838-ecbae33e163f","httpStatus":"200
+      string: '{"result":{"fileId":"5edfbbae-ebe1-45a1-9cb0-a7c6bd2bb4f4-def","percentComplete":100.0,"status":"complete"},"meta":{"requestId":"9c2ea0dc-6767-45d4-b8ee-fc348edf782a","httpStatus":"200
         - OK"}}'
-  recorded_at: 2025-08-05 00:46:41
+  recorded_at: 2025-08-05 02:59:48
 - request:
     method: GET
-    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/5729ae67-3b50-4ec0-8e34-236d63762557-def/file
+    uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/export-responses/5edfbbae-ebe1-45a1-9cb0-a7c6bd2bb4f4-def/file
   response:
     status: 200
     headers:
-      request-time: '72'
+      request-time: '82'
       x-frame-options: DENY
       x-xss-protection: 1; mode=block
       content-disposition: attachment; filename=Beskar+Armor.zip
@@ -212,23 +236,23 @@ http_interactions:
       content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
         *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
         report-uri https://sjc1.qualtrics.com/csp-report
-      date: Tue, 05 Aug 2025 00:46:41 GMT
+      date: Tue, 05 Aug 2025 02:59:49 GMT
       strict-transport-security: max-age=63072000; includeSubDomains; preload
     body:
       raw_gzip: |-
-        eJwL8GZmEWHg4OBguMLKGs2ABASA2Cm1ODuxSMGxKDe/SC+5uIz73HlN3ZNnznN76Z7WYbu0
-        J+aghJL
-        XVS+veTtZf7qqztP08grz8nrhNWVK1tSKnT0ejgwB3uwcc2dtNjYEGlYBxAHejEwi
-        DAgLkeUEGNABuv
-        UB3qxsIHFGILQD0vlgVQDvRizM
-  recorded_at: 2025-08-05 00:46:41
+        eJwL8GZmEWHg4OBgqBBnjWZAAgJA7JRanJ1YpOBYlJtfpJdcXMZ97rym7skz57m9dE/rsF3a
+        E3NQQsn
+        rqpfXvJ2sP11V52l6eYV5eb3wmjIla2rFzh4PR4YAb3aOubM2GxsCDasA4gBvRiYR
+        BoSFyHICDOgA3f
+        oAb1Y2kDgjENoB6XywKgCk2Cw4
+  recorded_at: 2025-08-05 02:59:49
 - request:
     method: GET
     uri: https://iad1.qualtrics.com/API/v3/surveys/SV_3gbwq8aJgqPwQDP/
   response:
     status: 200
     headers:
-      request-time: '217'
+      request-time: '220'
       x-frame-options: DENY
       x-xss-protection: 1; mode=block
       x-permitted-cross-domain-policies: master-only
@@ -240,7 +264,7 @@ http_interactions:
       content-security-policy-report-only: frame-ancestors 'self' *.qualtrics.com
         *.my.salesforce.com *.visualforce.com *.visual.force.com *.lightning.force.com;
         report-uri https://sjc1.qualtrics.com/csp-report
-      date: Tue, 05 Aug 2025 00:46:42 GMT
+      date: Tue, 05 Aug 2025 02:59:49 GMT
       strict-transport-security: max-age=63072000; includeSubDomains; preload
     body:
       string: '{"result":{"id":"SV_3gbwq8aJgqPwQDP","name":"Beskar Armor","ownerId":"UR_8wfG5qsMxuh0Jrn","organizationId":"conjoint","isActive":true,"creationDate":"2020-02-20T00:35:40Z","lastModifiedDate":"2024-06-10T23:20:09Z","expiration":{"startDate":null,"endDate":null},"questions":{"QID63":{"questionType":{"type":"MC","selector":"SAVR","subSelector":"TX"},"questionText":"How
@@ -302,6 +326,6 @@ http_interactions:
         beskar armor, please enter them below.","questionLabel":null,"validation":{"doesForceResponse":false},"questionName":"Q22"}},"exportColumnMap":{"Q63":{"question":"QID63"},"Q16":{"question":"QID16"},"Q17":{"question":"QID17"},"Q18":{"question":"QID18"},"Q19":{"question":"QID19"},"Q22":{"question":"QID22"}},"blocks":{"BL_9z6tnZPkYBL62LH":{"description":"CSAT
         Intro","elements":[{"type":"Question","questionId":"QID63"}]},"BL_bvJSDbLJ6WXqDU9":{"description":"Overall
         Satisfaction, Customer Service, Future","elements":[{"type":"Question","questionId":"QID16"},{"type":"PageBreak"},{"type":"Question","questionId":"QID17"},{"type":"PageBreak"},{"type":"Question","questionId":"QID18"},{"type":"PageBreak"},{"type":"Question","questionId":"QID19"},{"type":"PageBreak"},{"type":"Question","questionId":"QID22"}]}},"flow":[{"type":"Group","flow":[{"type":"EmbeddedData"}]},{"id":"BL_9z6tnZPkYBL62LH","type":"Block"},{"type":"BlockRandomizer","randomizationOptions":{"randomSubset":0,"evenPresentation":false}},{"id":"BL_bvJSDbLJ6WXqDU9","type":"Block"}],"embeddedData":[{"name":"SolutionRevision","defaultValue":"2"}],"comments":{},"loopAndMerge":{},"responseCounts":{"auditable":27,"generated":17,"deleted":0}},"meta":{"httpStatus":"200
-        - OK","requestId":"87b4bcde-dbc2-4e3c-9445-51538a2b5f6b"}}'
-  recorded_at: 2025-08-05 00:46:42
+        - OK","requestId":"61e450d4-ddd2-4347-bc2d-d24efd69e8b7"}}'
+  recorded_at: 2025-08-05 02:59:49
 recorded_with: VCR-vcr/2.0.0
