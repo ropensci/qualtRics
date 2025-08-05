@@ -1,7 +1,7 @@
 test_that("extract_colmap() retrieves an appropriate column map generated within read_survey", {
 
   vcr::use_cassette("extract_colmap", {
-    x <- fetch_survey("SV_6s93xhVtm1e4j3v", force_request = TRUE, add_column_map = TRUE)
+    x <- fetch_survey("SV_56icaa9YAafpAqx", add_column_map = TRUE)
   })
 
   cm <- extract_colmap(x)
