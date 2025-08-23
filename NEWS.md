@@ -1,4 +1,4 @@
-# qualtRics (development version)
+# qualtRics 3.2.2
 
 - Again changed how CSV files are extracted from the Qualtrics zip archive, to handle more special characters in survey titles (#355)
 
