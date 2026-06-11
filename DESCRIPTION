@@ -10,9 +10,10 @@ Authors@R: c(
     person("Eric", "Knudsen", , "ericknud1@gmail.com", role = "ctb"),
     person("Joseph", "O'Brien", , "joseph.obrien@utexas.edu", role = "aut"),
     person("Daniel", "Seneca", , "seneca.danielh@gmail.com", role = "ctb"),
-    person("Julia", "Silge", , "julia.silge@gmail.com", role = c("aut", "cre"),
+    person("Julia", "Silge", , "julia.silge@gmail.com", role = "aut",
            comment = c(ORCID = "0000-0002-3671-836X")),
-    person("Phoebe", "Wong", , "phoebe.wong@berkeley.edu", role = "ctb")
+    person("Phoebe", "Wong", , "phoebe.wong@berkeley.edu", role = "ctb"),
+    person("Adam", "Pilipshen", , "martialmetrics@gmail.com", role = c("aut", "cre"))
   )
 Description: Provides functions to access survey results directly into R
     using the 'Qualtrics' API. 'Qualtrics'
