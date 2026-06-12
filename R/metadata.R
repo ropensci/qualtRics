@@ -28,7 +28,7 @@
 #' surveys <- all_surveys()
 #'
 #' # Get metadata for a survey
-#' md <- metadata(surveyID = surveys$id[6])
+#' md <- metadata(surveyID = "SV_xxxxxxx1")
 #'
 #' # Get metadata with specific elements
 #' md_specific <- metadata(

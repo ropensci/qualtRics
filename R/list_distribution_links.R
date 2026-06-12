@@ -15,8 +15,8 @@
 #' )
 #'
 #' surveys <- all_surveys()
-#' distributions <- fetch_distributions(surveys$id[1])
-#' distribution_links <- list_distribution_links(distributions$id[1], surveyID = surveys$id[1])
+#' distributions <- fetch_distributions("SV_xxxxxxx1")
+#' distribution_links <- list_distribution_links(distributions$id[1], surveyID = "SV_xxxxxxx1")
 #'}
 #'
 

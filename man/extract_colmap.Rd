@@ -26,7 +26,7 @@ on retrying. If you see other types of errors, retrying is unlikely to help.
 surveys <- all_surveys()
 
 # Retrieve a single survey
-mysurvey <- fetch_survey(surveyID = surveys$id[6])
+mysurvey <- fetch_survey(surveyID = "SV_xxxxxxx1")
 
 # Extract column mapping for survey
 extract_colmap(mysurvey)
