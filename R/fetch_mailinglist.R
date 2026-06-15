@@ -39,10 +39,12 @@ fetch_mailinglist <- function(mailinglistID){
   check_credentials()
   checkarg_isstring(mailinglistID)
 
+  directory_id <- fetch_directory_id()
   fetch_url <-
     generate_url(
       query = "fetchmailinglist",
-      mailinglistID = mailinglistID
+      mailinglistID = mailinglistID,
+      directoryID = directory_id
     )
 
   elements <- paginate_api_request(fetch_url)

@@ -135,7 +135,7 @@ generate_url <-
         Sys.getenv("QUALTRICS_BASE_URL")
       )
     # Construct URL root for the v3 api endpoint:
-    root_url <- glue_api_v3(base_url)
+    rooturl <- glue_api_v3(base_url)
 
     # List of templates for how to build URLs
     # (add to this when new functions made):
@@ -143,13 +143,14 @@ generate_url <-
       switch(
         query,
         allsurveys = "{rooturl}/surveys",
-        allmailinglists = "{rooturl}/mailinglists",
+        alldirectories = "{rooturl}/directories",
+        allmailinglists = "{rooturl}/directories/{directoryID}/mailinglists",
         metadata = "{rooturl}/surveys/{surveyID}/",
         exportresponses = "{rooturl}/surveys/{surveyID}/export-responses/",
         exportresponses_progress = "{rooturl}/surveys/{surveyID}/export-responses/{requestID}",
         exportresponses_file = "{rooturl}/surveys/{surveyID}/export-responses/{fileID}/file",
         fetchdescription = "{rooturl}/survey-definitions/{surveyID}/",
-        fetchmailinglist = "{rooturl}/mailinglists/{mailinglistID}/contacts",
+        fetchmailinglist = "{rooturl}/directories/{directoryID}/mailinglists/{mailinglistID}/contacts",
         fetchdistributions = "{rooturl}/distributions?surveyId={surveyID}",
         fetchdistributionhistory = "{rooturl}/distributions/{distributionID}/history",
         listdistributionlinks = "{rooturl}/distributions/{distributionID}/links?surveyId={surveyID}",
@@ -157,12 +158,33 @@ generate_url <-
       )
 
     # Construct the actual URL:
-    glue::glue(endpoint_template, rooturl = root_url, ...)
+    glue::glue(endpoint_template, .envir = environment())
 
   }
 
 glue_api_v3 <- function(base_url) {
   glue::glue("https://{base_url}/API/v3")
+}
+
+#' Retrieve and cache the user's default XM Directory ID
+#'
+#' Checks QUALTRICS_DIRECTORY_ID env var first; if unset, calls GET /directories
+#' to discover it and caches the result for the session.
+#'
+#' @keywords internal
+fetch_directory_id <- function() {
+  cached <- Sys.getenv("QUALTRICS_DIRECTORY_ID")
+  if (nzchar(cached)) return(cached)
+
+  url <- generate_url(query = "alldirectories")
+  res <- qualtrics_api_request("GET", url = url)
+  dirs <- res$result$elements
+  if (length(dirs) == 0) {
+    rlang::abort("No XM Directories found for this Qualtrics account.")
+  }
+  dir_id <- dirs[[1]]$directoryId
+  Sys.setenv(QUALTRICS_DIRECTORY_ID = dir_id)
+  dir_id
 }
 
 #' Create properly-formatted JSON payload for API calls.  Removes NULLS

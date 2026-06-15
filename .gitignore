@@ -10,3 +10,5 @@ inst/doc
 /dev/*
 /revdep/*noindex/
 *sqlite
+MAINTAINER_NOTES.md
+ROPENSCI_MAINTAINER_GUIDE.md

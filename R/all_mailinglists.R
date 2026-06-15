@@ -22,8 +22,8 @@ all_mailinglists <- function(){
 
   check_credentials()
 
-  # Function-specific API stuff
-  fetch_url <- generate_url(query = "allmailinglists")
+  directory_id <- fetch_directory_id()
+  fetch_url <- generate_url(query = "allmailinglists", directoryID = directory_id)
   elements <- paginate_api_request(fetch_url)
   x <- purrr::map_df(elements, purrr::flatten)
   return(x)

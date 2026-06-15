@@ -1,5 +1,11 @@
 # qualtRics (development version)
 
+- Migrated `all_mailinglists()` and `fetch_mailinglist()` from the deprecated
+  Research Core Contacts API endpoints to the XM Directory API endpoints, ahead
+  of Qualtrics retiring the old endpoints on June 30, 2026 (#386). The directory
+  ID is now discovered automatically from the API, so existing code requires no
+  changes.
+
 # qualtRics 3.2.2
 
 - Again changed how CSV files are extracted from the Qualtrics zip archive, to handle more special characters in survey titles (#355)
