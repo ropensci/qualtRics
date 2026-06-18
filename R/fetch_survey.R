@@ -21,6 +21,9 @@
 #'   `start_date` and/or `expiration_date` when given Date or string objects
 #'   (see above); ignored when these arguments are given POSIXlt/POSIXct
 #'   objects.
+#' @param filter_id String. Unique ID for the response filter created in the
+#'   Data & Analysis section of the Qualtrics UI. See [Filtering Responses](https://www.qualtrics.com/support/survey-platform/data-and-analysis-module/data/filtering-responses/) for
+#'   more information.
 #' @param include_display_order Logical.  If `TRUE`, download from surveys using
 #'   block/question/answer display randomization will include contain additional
 #'   variables indicating the randomization pattern used for each case. Defaults
@@ -196,6 +199,7 @@ fetch_survey <-
            start_date = NULL,
            end_date = NULL,
            time_zone = NULL,
+           filter_id = NULL,
            include_display_order = TRUE,
            include_metadata = NULL,
            include_questions = NULL,
@@ -255,6 +259,7 @@ fetch_survey <-
     checkarg_tempdir(tmp_dir)
 
     # Check general argument types:
+    checkarg_ischaracter(filter_id)
     checkarg_isintegerish(unanswer_recode)
     checkarg_isintegerish(unanswer_recode_multi)
     checkarg_isboolean(include_display_order)
@@ -276,6 +281,7 @@ fetch_survey <-
         startDate = start_date_formatted,
         endDate = end_date_formatted,
         timeZone = time_zone_formatted,
+        filterId = filter_id,
         limit = limit,
         seenUnansweredRecode = unanswer_recode,
         multiselectSeenUnansweredRecode = unanswer_recode_multi,
