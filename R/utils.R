@@ -183,6 +183,20 @@ fetch_directory_id <- function() {
     rlang::abort("No XM Directories found for this Qualtrics account.")
   }
   dir_id <- dirs[[1]]$directoryId
+  if (length(dirs) > 1) {
+    rlang::warn(
+      c(
+        glue::glue(
+          "This Qualtrics account has {length(dirs)} XM Directories; ",
+          "using the first one (\"{dir_id}\")."
+        ),
+        i = paste0(
+          "Set the QUALTRICS_DIRECTORY_ID environment variable to choose a ",
+          "specific directory."
+        )
+      )
+    )
+  }
   Sys.setenv(QUALTRICS_DIRECTORY_ID = dir_id)
   dir_id
 }

@@ -10,6 +10,12 @@ all_mailinglists()
 Retrieve a data frame of all mailing lists from Qualtrics
 }
 \details{
+This function uses the Qualtrics XM Directory API. The directory it queries
+is discovered automatically from your account. If your account has more than
+one XM Directory, set the \code{QUALTRICS_DIRECTORY_ID} environment variable to
+the directory ID you want to use; otherwise the first directory returned by
+the API is used (with a warning).
+
 If the request to the Qualtrics API made by this function fails, the request
 will be retried. If you see these failures on a 500 error (such as a 504
 error) be patient while the request is retried; it will typically succeed

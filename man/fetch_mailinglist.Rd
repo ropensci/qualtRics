@@ -8,13 +8,19 @@ fetch_mailinglist(mailinglistID)
 }
 \arguments{
 \item{mailinglistID}{String. Unique ID for the mailing list you want to
-download. Returned as \code{id} by the \link[=all_mailinglists]{all_mailinglists}
-function.}
+download. Returned as \code{mailingListId} by the
+\link[=all_mailinglists]{all_mailinglists} function.}
 }
 \description{
 Download a mailing list from Qualtrics
 }
 \details{
+This function uses the Qualtrics XM Directory API. The directory it queries
+is discovered automatically from your account. If your account has more than
+one XM Directory, set the \code{QUALTRICS_DIRECTORY_ID} environment variable to
+the directory ID you want to use; otherwise the first directory returned by
+the API is used (with a warning).
+
 If the request to the Qualtrics API made by this function fails, the request
 will be retried. If you see these failures on a 500 error (such as a 504
 error) be patient while the request is retried; it will typically succeed
@@ -32,7 +38,7 @@ qualtrics_api_credentials(
 mailinglists <- all_mailinglists()
 
 # Retrieve a single mailing list
-mailinglist <- fetch_mailinglist(mailinglists$id[1])
+mailinglist <- fetch_mailinglist(mailinglists$mailingListId[1])
 }
 
 }

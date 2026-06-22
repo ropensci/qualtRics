@@ -3,8 +3,19 @@
 - Migrated `all_mailinglists()` and `fetch_mailinglist()` from the deprecated
   Research Core Contacts API endpoints to the XM Directory API endpoints, ahead
   of Qualtrics retiring the old endpoints on June 30, 2026 (#386). The directory
-  ID is now discovered automatically from the API, so existing code requires no
-  changes.
+  ID is discovered automatically from the API (or can be set with the
+  `QUALTRICS_DIRECTORY_ID` environment variable), so no change to your code is
+  needed to keep these functions working.
+
+  Note that the XM Directory endpoints return a **different data shape**, so code
+  that referenced the old column names will need to be updated:
+
+  - `all_mailinglists()`: the `id` column is now `mailingListId`; the
+    `libraryId`, `category`, and `folder` columns are no longer returned; and
+    `contactCount`, `ownerId`, and creation/modification date columns are now
+    included.
+  - `fetch_mailinglist()`: the `id` column is now `contactId`, and
+    `externalDataReference` is now `extRef`.
 
 # qualtRics 3.2.2
 
