@@ -1,4 +1,4 @@
-# qualtRics (development version)
+# qualtRics 3.3.0
 
 - Migrated `all_mailinglists()` and `fetch_mailinglist()` from the deprecated
   Research Core Contacts API endpoints to the XM Directory API endpoints, ahead
