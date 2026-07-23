@@ -19,11 +19,11 @@
 #' surveys <- all_surveys()
 #'
 #' # Retrieve questions for a survey
-#' questions <- survey_questions(surveyID = surveys$id[6])
+#' questions <- survey_questions(surveyID = "SV_xxxxxxx1")
 #'
 #' # Retrieve a single survey, filtering for specific questions
 #' mysurvey <- fetch_survey(
-#'   surveyID = surveys$id[6],
+#'   surveyID = "SV_xxxxxxx1",
 #'   save_dir = tempdir(),
 #'   include_questions = c("QID1", "QID2", "QID3"),
 #'   verbose = TRUE

@@ -225,10 +225,10 @@ qualtrics_api_credentials(
 surveys <- all_surveys()
 
 # Retrieve a single survey
-my_survey <- fetch_survey(surveyID = surveys$id[6])
+my_survey <- fetch_survey(surveyID = "SV_xxxxxxx1")
 
 my_survey <- fetch_survey(
-  surveyID = surveys$id[6],
+  surveyID = "SV_xxxxxxx1",
   start_date = "2018-01-01",
   end_date = "2018-01-31",
   limit = 100,

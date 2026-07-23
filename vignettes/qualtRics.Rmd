@@ -69,10 +69,10 @@ Once your Qualtrics API credentials are stored, you can see what surveys are ava
 surveys <- all_surveys() 
 ```
 
-You can then download the data from any of these individual surveys (for example, perhaps the sixth one) directly into R.
+You can then download the data from any of these individual surveys directly into R. Qualtrics survey IDs start with SV_ followed by a string of numbers and upper- and lower-case letters, e.g., SV_xxxxxxx1. You can either use the survey ID directly or the element from the survey object (for example, surveys$id[6] for the sixth survey ID).
 
 ```{r, eval=FALSE}
-mysurvey <- fetch_survey(surveyID = surveys$id[6], 
+mysurvey <- fetch_survey(surveyID = "SV_xxxxxxx1", 
                          verbose = TRUE)
 ```
 
@@ -81,7 +81,7 @@ mysurvey <- fetch_survey(surveyID = surveys$id[6],
 You can add date parameters to only retrieve responses between certain dates:
 
 ```{r, eval=FALSE}
-mysurvey <- fetch_survey(surveys$id[4],
+mysurvey <- fetch_survey("SV_xxxxxxx1",
                          start_date = "2018-10-01",
                          end_date = "2018-10-31",
                          label = FALSE)
@@ -93,7 +93,7 @@ Note that your date and time settings may not correspond to your own timezone. Y
 You may also reference a response ID; `fetch_survey()` will then download all responses that were submitted after that response:
 
 ```{r eval=FALSE}
-mysurvey <- fetch_survey(surveys$id[4],
+mysurvey <- fetch_survey("SV_xxxxxxx1",
                          last_response = "R_3mmovCIeMllvsER",
                          label = FALSE,
                          verbose = TRUE)
@@ -105,10 +105,10 @@ You can filter a survey for specific questions:
 
 ```{r eval=FALSE}
 # what are the questions in a certain survey?
-questions <- survey_questions(surveyID = surveys$id[6])
+questions <- survey_questions(surveyID = "SV_xxxxxxx1")
 
 # download that survey, filtering for only certain questions
-mysurvey <- fetch_survey(surveyID = surveys$id[6],
+mysurvey <- fetch_survey(surveyID = "SV_xxxxxxx1",
                          save_dir = tempdir(),
                          include_questions = c("QID1", "QID2", "QID3"),
                          verbose = TRUE)
@@ -119,7 +119,7 @@ mysurvey <- fetch_survey(surveyID = surveys$id[6],
 You can store the results in a specific location if you like:
 
 ```{r, eval=FALSE}
-mysurvey <- fetch_survey(surveyID = surveys$id[6], 
+mysurvey <- fetch_survey(surveyID = "SV_xxxxxxx1", 
                          save_dir = "/users/Julia/Desktop/", 
                          verbose = TRUE)
 ```

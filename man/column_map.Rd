@@ -31,11 +31,11 @@ qualtrics_api_credentials(
 surveys <- all_surveys()
 
 # Retrieve column mapping for a survey
-mapping <- column_map(surveyID = surveys$id[6])
+mapping <- column_map(surveyID = "SV_xxxxxxx1")
 
 # Retrieve a single survey, filtering for specific questions
 mysurvey <- fetch_survey(
-  surveyID = surveys$id[6],
+  surveyID = "SV_xxxxxxx1",
   save_dir = tempdir(),
   include_questions = c("QID1", "QID2", "QID3"),
   verbose = TRUE

@@ -37,7 +37,7 @@
 #' surveys <- all_surveys()
 #'
 #' # Get description for a survey
-#' descrip <- fetch_description(surveyID = surveys$id[6])
+#' descrip <- fetch_description(surveyID = "SV_xxxxxxx1")
 #'
 #' # Get metadata with specific elements
 #' descrip_specific <- fetch_description(

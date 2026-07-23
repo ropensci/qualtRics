@@ -15,7 +15,7 @@
 #' )
 #'
 #' surveys <- all_surveys()
-#' distributions <- fetch_distributions(surveys$id[1])
+#' distributions <- fetch_distributions("SV_xxxxxxx1")
 #'}
 #'
 

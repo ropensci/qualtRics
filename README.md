@@ -124,10 +124,10 @@ surveys <- all_surveys()
 ```
 
 You can then download the data from any of these individual surveys (for
-example, perhaps the sixth one) directly into R.
+example, perhaps survey ID SV_xxxxxxx1) directly into R.
 
 ``` r
-mysurvey <- fetch_survey(surveyID = surveys$id[6], 
+mysurvey <- fetch_survey(surveyID = "SV_xxxxxxx1", 
                          verbose = TRUE)
 ```
 
