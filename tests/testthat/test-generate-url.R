@@ -17,6 +17,18 @@ test_that("generate survey URLs", {
         generate_url("fetchdistributions", surveyID = "potato"),
         "https://www.qualtrics.com/API/v3/distributions?surveyId=potato"
       )
+      expect_equal(
+        generate_url("fetchsurveyversions", surveyID = "abcdefg"),
+        "https://www.qualtrics.com/API/v3/survey-definitions/abcdefg/versions"
+      )
+      expect_equal(
+        generate_url(
+          "fetchdescription_version",
+          surveyID = "abcdefg",
+          versionID = "123456"
+        ),
+        "https://www.qualtrics.com/API/v3/survey-definitions/abcdefg/versions/123456"
+      )
       expect_error(
         generate_url("potatoURL", surveyID = "potato"),
         "Internal error: invalid URL generation query"

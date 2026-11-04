@@ -150,6 +150,8 @@ generate_url <-
         exportresponses_progress = "{rooturl}/surveys/{surveyID}/export-responses/{requestID}",
         exportresponses_file = "{rooturl}/surveys/{surveyID}/export-responses/{fileID}/file",
         fetchdescription = "{rooturl}/survey-definitions/{surveyID}/",
+        fetchsurveyversions = "{rooturl}/survey-definitions/{surveyID}/versions",
+        fetchdescription_version = "{rooturl}/survey-definitions/{surveyID}/versions/{versionID}",
         fetchmailinglist = "{rooturl}/directories/{directoryID}/mailinglists/{mailinglistID}/contacts",
         fetchdistributions = "{rooturl}/distributions?surveyId={surveyID}",
         fetchdistributionhistory = "{rooturl}/distributions/{distributionID}/history",
