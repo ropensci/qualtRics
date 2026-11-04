@@ -1,5 +1,11 @@
 # qualtRics (development version)
 
+- Added `fetch_survey_versions()` to list the saved versions of a survey, and a
+  new `version` argument to `fetch_description()` to download the definition of
+  a specific survey version, or of the currently published version with
+  `version = "published"`. Previously only the current (possibly unpublished)
+  survey definition could be retrieved.
+
 # qualtRics 3.3.0
 
 - Migrated `all_mailinglists()` and `fetch_mailinglist()` from the deprecated
