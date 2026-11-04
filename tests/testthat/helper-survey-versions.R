@@ -42,3 +42,22 @@ mock_versions <- function() {
     ))
   )
 }
+
+# Survey definition, in the shape returned by both
+# GET survey-definitions/{surveyId} and .../versions/{versionId}:
+mock_definition <- function(name = "Mock survey") {
+  list(result = list(
+    SurveyName = name,
+    SurveyStatus = "Active",
+    SurveyID = "SV_abcdef123456789",
+    LastModified = "2024-03-01T12:00:00Z",
+    ProjectInfo = list(SurveyID = "SV_abcdef123456789",
+                       ProjectCategory = "CORE"),
+    SurveyOptions = list(BackButton = "false"),
+    SurveyFlow = list(Type = "Root", FlowID = "FL_1"),
+    Blocks = list(BL_1 = list(Type = "Default")),
+    Questions = list(QID1 = list(QuestionText = "Q1")),
+    ResponseSets = list(RS_1 = list()),
+    Scoring = list()
+  ))
+}

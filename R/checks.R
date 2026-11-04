@@ -628,6 +628,36 @@ checkarg_elements <-
 
   }
 
+#' Check the version argument of fetch_description()
+#' @importFrom rlang abort
+#' @keywords internal
+checkarg_version <-
+  function(version, legacy){
+    # NULL means the current survey definition:
+    if(is.null(version)){
+      return()
+    }
+
+    # Otherwise a single string (a version ID or "published"):
+    checkarg_isstring(version)
+
+    if(is.na(version) || version == ""){
+      rlang::abort(
+        c("Error in argument `version`:",
+          "`version` must be `NULL`, a version ID, or \"published\".",
+          i = "Version IDs are returned by `fetch_survey_versions()`.")
+      )
+    }
+
+    if(isTRUE(legacy)){
+      rlang::abort(
+        c("Error in arguments `version` & `legacy`:",
+          "`version` is not supported with `legacy = TRUE`.",
+          i = "Set `legacy = FALSE` to fetch a specific survey version.")
+      )
+    }
+  }
+
 #' Check if elements given in metadata's 'get' are properly specified
 #' @importFrom rlang abort
 #' @importFrom rlang warn
