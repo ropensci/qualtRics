@@ -5,7 +5,13 @@
 \title{Download complete survey description using the Qualtrics v3 "Get Survey"
 API endpoint.}
 \usage{
-fetch_description(surveyID, elements = NULL, legacy = FALSE, ...)
+fetch_description(
+  surveyID,
+  elements = NULL,
+  legacy = FALSE,
+  version = NULL,
+  ...
+)
 }
 \arguments{
 \item{surveyID}{A string. Unique ID for the survey you want to download.
@@ -19,6 +25,15 @@ If \code{legacy = TRUE}, then possible elements are "metadata", "questions",
 
 \item{legacy}{Logical.  If TRUE, will use older Get Survey API endpoint
 via a call to legacy function \link{metadata}.}
+
+\item{version}{A string, or \code{NULL} (the default). Which version of the
+survey definition to download. \code{NULL} returns the current state of the
+survey in the editor, which may include unpublished changes. A version ID
+(the \code{versionID} column of \code{\link[=fetch_survey_versions]{fetch_survey_versions()}}) returns that saved
+version. The keyword \code{"published"} returns the version currently published
+to respondents, found by listing the survey's versions with
+\code{\link[=fetch_survey_versions]{fetch_survey_versions()}} and taking the one marked \code{published}. Cannot be
+combined with \code{legacy = TRUE}.}
 
 \item{...}{Additional options, only used when \code{legacy = TRUE}. User may pass
 an argument called \code{questions}, a vector containing the names of questions
@@ -56,6 +71,12 @@ descrip <- fetch_description(surveyID = surveys$id[6])
 descrip_specific <- fetch_description(
   surveyID = id,
   elements = c("questions", "flow")
+)
+
+# Get the description of the version currently published to respondents
+descrip_published <- fetch_description(
+  surveyID = surveys$id[6],
+  version = "published"
 )
 
 }

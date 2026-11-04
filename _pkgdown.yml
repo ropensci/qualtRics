@@ -24,6 +24,7 @@ reference:
   - fetch_distribution_history
   - fetch_id
   - fetch_mailinglist
+  - fetch_survey_versions
   - list_distribution_links
   - metadata
   - qualtrics_api_credentials
